@@ -10,4 +10,32 @@
 
 @implementation HealSpell
 
+- (id)initWithCaster:(Character *)caster
+{
+    if ( self = [super initWithCaster:caster] )
+    {
+        self.name = @"Heal";
+        self.image = [ImageFactory imageNamed:@"heal"];
+        self.tooltip = @"A slow casting heal that heals a single target.";
+        self.triggersGCD = YES;
+        self.targeted = YES;
+        self.cooldown = @0;
+        self.isBeneficial = YES;
+        self.castableRange = @40;
+        self.hitRange = @0;
+        
+        self.castTime = 2.5;
+        self.manaCost = @( 0.02 * caster.baseMana.floatValue );
+        self.damage = @0;
+        self.healing = @( [caster.spellPower floatValue] * 3.3264 );
+        self.absorb = @0;
+    }
+    return self;
+}
+
+- (NSArray *)hdClasses
+{
+    return @[ [HDClass discPriest], [HDClass holyPriest] ];
+}
+
 @end

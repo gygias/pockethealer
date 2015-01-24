@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Entity.h"
+#import "Enemy.h"
 
-@interface KargathBladefist : Entity
+@interface KargathBladefist : Enemy
 
 @end

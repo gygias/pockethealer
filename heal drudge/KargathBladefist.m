@@ -10,4 +10,23 @@
 
 @implementation KargathBladefist
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        
+    }    
+    return self;
+}
+
+- (void)beginEncounter:(Encounter *)encounter
+{
+    [super beginEncounter:encounter];
+}
+
+- (NSArray *)abilityNames
+{
+    return @[@"Attack",@"BladeDance",@"Impale"];
+}
+
 @end

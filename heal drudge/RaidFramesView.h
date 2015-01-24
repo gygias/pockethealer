@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Raid.h"
+
+typedef void(^TargetedPlayerBlock)(Player *);
 
 @interface RaidFramesView : UIView
+
+@property (nonatomic,copy) TargetedPlayerBlock targetedPlayerBlock;
+
+@property (strong,retain) Raid *raid;
+@property NSUInteger selectedFrame;
 
 @end

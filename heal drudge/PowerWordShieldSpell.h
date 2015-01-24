@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PowerWordShieldSpell : NSObject
+#import "SpellPriv.h"
+
+@interface PowerWordShieldSpell : Spell
 
 @end

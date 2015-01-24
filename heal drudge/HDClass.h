@@ -6,8 +6,161 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+extern const NSString *HealerRole;
+extern const NSString *DPSRole;
+extern const NSString *TankRole;
+
+typedef enum
+{
+    HDCLASSMIN = 1,
+    HDWARRIOR = 1,
+    HDPALADIN = 2,
+    HDHUNTER = 3,
+    HDROGUE = 4,
+    HDPRIEST = 5,
+    HDDEATHKNIGHT = 6,
+    HDSHAMAN = 7,
+    HDMAGE = 8,
+    HDWARLOCK = 9,
+    HDMONK = 10,
+    HDDRUID = 11,
+    HDCLASSMAX
+} HDCLASSID;
+
+// tauren == 6
+// orc == 2
+// undead == 5
+// belf == 10
+// human == 1
+// 
+
+typedef enum
+{
+    HDPRIESTSPECMIN = 0,
+    HDHOLYPRIEST = HDPRIESTSPECMIN,
+    HDDISCPRIEST,
+    HDSHADOWPRIEST,
+    
+    HDPALADINSPECMIN,
+    HDHOLYPALADIN = HDPALADINSPECMIN,
+    HDPROTPALADIN,
+    HDRETPALADIN,
+    
+    HDSHAMANSPECMIN,
+    HDRESTOSHAMAN = HDSHAMANSPECMIN,
+    HDENHANCESHAMAN,
+    HDELESHAMAN,
+    
+    HDDRUIDSPECMIN,
+    HDRESTODRUID = HDDRUIDSPECMIN,
+    HDBALANCEDRUID,
+    HDFERALDRUID,
+    
+    HDMONKSPECMIN,
+    HDMISTWEAVERMONK = HDMONKSPECMIN,
+    HDBREWMASTERMONK,
+    HDWINDWALKERMONK,
+    
+    HDHUNTERSPECMIN,
+    HDSURVIVALHUNTER = HDHUNTERSPECMIN,
+    HDBEASTMASTERHUNTER,
+    HDMARKSMANHUNTER,
+    
+    HDMAGESPECMIN,
+    HDFROSTMAGE = HDMAGESPECMIN,
+    HDFIREMAGE,
+    HDARCANEMAGE,
+    
+    HDWARRIORSPECMIN,
+    HDPROTWARRIOR = HDWARRIORSPECMIN,
+    HDFURYWARRIOR,
+    HDARMSWARRIOR,
+    
+    HDWARLOCKSPECMIN,
+    HDDESTROWARLOCK = HDWARLOCKSPECMIN,
+    HDAFFLICTIONWARLOCK,
+    HDDEMONOLOGYWARLOCK,
+    
+    HDROGUESPECMIN,
+    HDSUBTLETYROGUE = HDROGUESPECMIN,
+    HDCOMBATROGUE,
+    HDASSASSINATIONROGUE,
+    
+    HDDKSPECMIN,
+    HDUNHOLYDK = HDDKSPECMIN,
+    HDBLOODDK,
+    HDFROSTDK,
+    
+    HDSPECMAX
+} HDSPECID;
 
 @interface HDClass : NSObject
+{
+    HDCLASSID _classID;
+    HDSPECID _specID;
+}
+
+@property (readonly) HDCLASSID classID;
+@property (readonly) HDSPECID specID;
+@property (readonly) UIColor *classColor;
+@property (readonly) UIColor *resourceColor;
+
++ (id)classWithID:(HDCLASSID)classID spec:(HDSPECID)specID;
++ (HDClass *)classWithAPICharacterDictionary:(NSDictionary *)apiDict apiSpecName:(NSString *)apiSpecName;
++ (HDClass *)randomClass;
+
++ (BOOL)isHealerClass:(HDClass *)hdClass;
+- (BOOL)isHealerClass;
+- (NSString *)primaryStatKey;
+
+- (BOOL)isRanged;
+- (const NSString *)role;
+- (BOOL)hasRole:(const NSString *)role;
+
++ (HDClass *)discPriest;
++ (HDClass *)holyPriest;
++ (HDClass *)shadowPriest;
+
++ (HDClass *)holyPaladin;
++ (HDClass *)protPaladin;
++ (HDClass *)retPaladin;
+
++ (HDClass *)restoShaman;
++ (HDClass *)eleShaman;
++ (HDClass *)enhanceShaman;
+
++ (HDClass *)restoDruid;
++ (HDClass *)feralDruid;
++ (HDClass *)balanceDruid;
+
++ (HDClass *)mistweaverMonk;
++ (HDClass *)windwalkerMonk;
++ (HDClass *)brewmasterMonk;
+
++ (HDClass *)combatRogue;
++ (HDClass *)subtletyRogue;
++ (HDClass *)assassinationRogue;
+
++ (HDClass *)destroWarlock;
++ (HDClass *)demoWarlock;
++ (HDClass *)afflictionWarlock;
+
++ (HDClass *)protWarrior;
++ (HDClass *)armsWarrior;
++ (HDClass *)furyWarrior;
+
++ (HDClass *)bloodDK;
++ (HDClass *)frostDK;
++ (HDClass *)unholyDK;
+
++ (HDClass *)bmHunter;
++ (HDClass *)survivalHunter;
++ (HDClass *)marksHunter;
+
++ (HDClass *)fireMage;
++ (HDClass *)frostMage;
++ (HDClass *)arcaneMage;
 
 @end

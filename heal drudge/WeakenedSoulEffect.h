@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "Effect.h"
+
 @interface WeakenedSoulEffect : Effect
 
 @end

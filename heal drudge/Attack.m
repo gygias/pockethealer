@@ -10,4 +10,26 @@
 
 @implementation Attack
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        self.name = @"Attack";
+        self.image = [ImageFactory imageNamed:@"melee_attack"];
+        self.tooltip = @"Attacks the target.";
+        //self.triggersGCD = YES;
+        //self.cooldown = @15; // XXX
+        self.cooldown = @2;
+        //self.isPeriodic = YES;
+        //self.period = 0.5;
+        //self.periodicDamage = @35714;
+        //self.periodicDuration = 10;
+        //self.hitRange = @7;
+        self.damage = @15000;
+        
+        //self.affectsMainTarget = YES;
+    }
+    return self;
+}
+
 @end

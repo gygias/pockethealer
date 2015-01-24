@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface LoadingFromArmoryViewController : UIViewController
+@interface LoadingFromArmoryViewController : BaseViewController
+
+@property IBOutlet UIProgressView *progressBar;
+@property IBOutlet UILabel *upperProgressLabel;
+@property IBOutlet UILabel *lowerProgressLabel;
+@property IBOutlet UIButton *doneButton;
 
 @end

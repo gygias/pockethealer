@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Player.h"
 
-@interface Healer : NSObject
+@interface Healer : Player
 
 @end

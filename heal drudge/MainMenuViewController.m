@@ -1,18 +1,18 @@
 //
-//  ViewController.m
+//  MainMenuViewController.m
 //  heal drudge
 //
 //  Created by david on 12/29/14.
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainMenuViewController.h"
 
-@interface ViewController ()
+@interface MainMenuViewController ()
 
 @end
 
-@implementation ViewController
+@implementation MainMenuViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +22,21 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)pressedCreateCharacter:(id)sender
+{
+    NSLog(@"create character");
+}
+
+- (IBAction)pressedQuickPlay:(id)sender
+{
+    NSLog(@"quick play");
+}
+
+- (IBAction)pressedLoadFromArmory:(id)sender
+{
+    NSLog(@"load from armory");
 }
 
 @end

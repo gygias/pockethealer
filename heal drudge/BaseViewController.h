@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "State.h"
 
 @interface BaseViewController : UIViewController
+
+@property (readonly) State *state;
 
 @end

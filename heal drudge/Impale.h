@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Impale : NSObject
+#import "Ability.h"
+
+@interface Impale : Ability
 
 @end

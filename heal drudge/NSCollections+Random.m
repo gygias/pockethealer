@@ -8,6 +8,13 @@
 
 #import "NSCollections+Random.h"
 
-@implementation NSCollections_Random
+@implementation NSArray (NSCollectionsRandom)
+
+- (id)randomObject
+{
+    if ( [self count] > 0 )
+        return [self objectAtIndex:arc4random() % [self count]];
+    return nil;
+}
 
 @end

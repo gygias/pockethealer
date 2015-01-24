@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MainMenuViewController.h
 //  heal drudge
 //
 //  Created by david on 12/29/14.
@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface ViewController : UIViewController
+@interface MainMenuViewController : BaseViewController
 
+- (IBAction)pressedCreateCharacter:(id)sender;
+- (IBAction)pressedQuickPlay:(id)sender;
+- (IBAction)pressedLoadFromArmory:(id)sender;
 
 @end
 

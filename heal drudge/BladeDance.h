@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Ability.h"
 
-@interface BladeDance : NSObject
+@interface BladeDance : Ability
 
 @end

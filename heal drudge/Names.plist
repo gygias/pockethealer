@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<array>
+	<string>한국어</string>
+	<string>キミたち</string>
+	<string>संस्कृतम्</string>
+	<string>お前ら</string>
+	<string>Venixx</string>
+	<string>Msbehavin</string>
+	<string>Naturesdeath</string>
+	<string>Finalx</string>
+	<string>Anevia</string>
+	<string>Peroña</string>
+	<string>Kurenei</string>
+	<string>Kahleera</string>
+	<string>Gygias</string>
+	<string>Haos</string>
+	<string>Kalanrahl</string>
+	<string>Ffinesse</string>
+	<string>Foxianna</string>
+	<string>Slyeri</string>
+	<string>Savinass</string>
+	<string>Lireal</string>
+</array>
 </plist>

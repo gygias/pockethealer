@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HDClass.h"
+#import "Player.h"
 
 @interface RaidFrameView : UIView
+
++ (CGSize)desiredSize;
+
+@property (strong,retain) Player *player;
+@property BOOL selected;
 
 @end

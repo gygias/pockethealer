@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Enemy : NSObject
+#import "Entity.h"
+
+@class Encounter;
+
+@interface Enemy : Entity
+{
+    NSArray *_abilities;
+}
+
++ (Enemy *)randomEnemy;
+- (NSArray *)abilityNames;
+- (NSArray *)abilities;
+
+- (BOOL)targetNextThreatWithEncounter:(Encounter *)encounter;
 
 @end

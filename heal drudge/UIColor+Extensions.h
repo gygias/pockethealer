@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface UIColor_Extensions : NSObject
+@interface UIColor (UIColorExtensions)
+
++ (UIColor *)pinkColor;
 
 @end

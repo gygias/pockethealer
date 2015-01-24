@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HolyFireSpell : NSObject
+#import "Spell.h"
+
+@interface HolyFireSpell : Spell
 
 @end

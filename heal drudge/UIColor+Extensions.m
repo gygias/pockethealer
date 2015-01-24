@@ -8,6 +8,11 @@
 
 #import "UIColor+Extensions.h"
 
-@implementation UIColor_Extensions
+@implementation UIColor (UIColorExtensions)
+
++ (UIColor *)pinkColor
+{
+    return [UIColor colorWithRed:1 green: 0.6 blue:0.8 alpha:1];
+}
 
 @end

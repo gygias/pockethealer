@@ -8,6 +8,9 @@
 
 #import "LoadFromArmoryViewController.h"
 
+#import "WoWAPIRequest.h"
+#import "ImageFactory.h"
+
 @interface LoadFromArmoryViewController ()
 
 @end
@@ -17,6 +20,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldChanged:) name:UITextFieldTextDidChangeNotification object:self.realmField];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldEndedEditing:) name:UITextFieldTextDidEndEditingNotification object:self.realmField];
+    [self.continueButton setEnabled:NO];
+    [self.loadButton setEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +32,153 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)textFieldEndedEditing:(id)wut
+{
+    WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
+    if ( suggestedRealm )
+        self.realmField.text = (NSString *)suggestedRealm.name;
+    
+    [self.loadButton setEnabled:YES];
 }
-*/
+
+- (void)textFieldChanged:(id)huh
+{
+    WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
+    //NSLog(@"sup: %@ -> %@",self.realmField.text,suggestedRealm);
+    
+    NSString *suggestedText = (NSString *)suggestedRealm.name;
+    
+    NSString *replacementText = self.realmField.text;
+    if ( [suggestedText length] > [replacementText length] )
+    {
+        NSString *remainder = [suggestedText substringFromIndex:[replacementText length]];
+        replacementText = [replacementText stringByAppendingString:remainder];
+        
+        // Get current selected range , this example assumes is an insertion point or empty selection
+        UITextRange *selectedRange = [self.realmField selectedTextRange];
+        
+        self.realmField.text = replacementText;
+        
+        // Calculate the new position, - for left and + for right
+        UITextPosition *newPosition = [self.realmField positionFromPosition:selectedRange.start offset:[remainder length]];
+        // Construct a new range using the object that adopts the UITextInput, our textfield
+        UITextRange *newRange = [self.realmField textRangeFromPosition:selectedRange.start toPosition:newPosition];
+        // Set new range
+        [self.realmField setSelectedTextRange:newRange];
+    }
+    
+    [self.loadButton setEnabled:YES];
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+//    if ( textField == self.nameField )
+//        NSLog(@"name field should");
+//    else if ( textField == self.realmField )
+//    {
+//        NSLog(@"realm field should");
+//        //dispatch_async(dispatch_get_current_queue(), ^{
+////            WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
+////            if ( suggestedRealm )
+////            {
+////                self.realmField.text = suggestedRealm.name;
+////                UITextRange *range = UITextRange
+////                [self.realmField setSelectedTextRange:self.realmField.selectedTextRange.end];
+////            }
+//        //});
+//    }
+    return YES;
+}
+
+- (IBAction)pressedLoad:(id)sender
+{
+    [self.loadButton setEnabled:NO];
+    
+    WoWRealm *realm = [WoWRealm realmWithString:self.realmField.text];
+    //NSArray *realmCountries = @[ WoWRealmUS, WoWRealmEU, WoWRealmKR, WoWRealmTW];
+    //for ( NSString *realmCountry in realmCountries )
+    {
+        WoWAPIRequest *apiRequest = [WoWAPIRequest new];
+        //        apiRequest.isRealmStatusRequest = YES;
+        //        apiRequest.realmStatusCountry = realmCountry;
+//        apiRequest.realm = zuljinRealm;
+//        apiRequest.isGuildMemberListRequest = YES;
+//        NSString *guildName = @"Knightfall";
+//        apiRequest.guildName = guildName;
+        apiRequest.realm = realm;
+        apiRequest.isCharacterInfoRequest = YES;
+        apiRequest.characterName = self.nameField.text;
+        [apiRequest sendRequestWithCompletionHandler:^(BOOL success, id response) {
+            NSLog(@"initial character load claims %@",success?@"success":@"failure");
+            //NSLog(@"%@",response);
+            
+            if ( ! success || ! [response isKindOfClass:[NSDictionary class]] )
+            {
+                [self.loadButton setEnabled:YES];
+                [self.continueButton setEnabled:NO];
+                self.thumbnailView.image = nil;
+                self.nameLabel.text = @"???";
+                self.specLabel.text = @"???";
+                self.guildLabel.text = @"???";
+                return;
+            }
+//            NSLog(@"%@",[WoWAPIRequest characterNamesFromGuildListResponse:response]);
+//            
+//            NSUInteger randomIndex = arc4random() % [response count];
+//            NSDictionary *aAPICharacterGuildDict = [[response objectForKey:@"members"] objectAtIndex:randomIndex]; // XXX
+//            NSDictionary *aAPICharacterDict = aAPICharacterGuildDict[@"character"]; // also includes a 'rank' number
+//            NSLog(@"%@",aAPICharacterDict);
+            Character *character = [WoWAPIRequest characterWithAPICharacterDict:response
+                                                                  fetchingImage:YES];
+//            character.guildName = guildName;
+            if ( character.image )
+                self.thumbnailView.image = character.image;
+            else
+                self.thumbnailView.image = nil;
+            
+            if ( character.name )
+                self.nameLabel.text = [NSString stringWithFormat:@"%@-%@",character.titleAndName,character.realm.name?character.realm.name:@"???"];
+            else
+                self.nameLabel.text = @"???";
+            
+            if ( character.specName )
+                self.specLabel.text = [NSString stringWithFormat:@"%@ %@ / %@",character.level?character.level:@"???",character.specName,character.offspecName?character.offspecName:@"???"];
+            else
+                self.specLabel.text = @"???";
+            
+            if ( character.guild )
+                self.guildLabel.text = character.guild.name;
+            else
+                self.guildLabel.text = @"???";
+            
+            if ( character.averageItemLevel )
+                self.ilvlLabel.text = [NSString stringWithFormat:@"%@ ilvl (%@ equipped)",character.averageItemLevel,character.averageItemLevelEquipped?character.averageItemLevelEquipped:@"???"];
+            else
+                self.ilvlLabel.text = @"???";
+            
+            self.specView.image = [ImageFactory imageForSpec:character.hdClass];
+            
+            //            NSArray *realmsArray = [WoWAPIRequest realmsFromRealmStatusResponse:response country:realmCountry];
+            //            NSLog(@"%@",realmsArray);
+            //            NSArray *realmsPlist = [WoWRealm realmsAsPropertyList:realmsArray];
+            //
+            //            NSString *filePath = @"/tmp/Realms.plist";
+            //            NSMutableDictionary *fileDict = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+            //            if ( ! fileDict )
+            //                fileDict = [NSMutableDictionary dictionary];
+            //            fileDict[apiRequest.realmStatusCountry] = realmsPlist;
+            //            [fileDict writeToFile:filePath atomically:YES];
+            
+            [self.loadButton setEnabled:NO];
+            [self.continueButton setEnabled:YES];
+            
+            self.state.character = character;
+        }];
+    }
+}
+
+- (IBAction)pressedContinue:(id)sender
+{
+    NSLog(@"continue...");
+}
 
 @end

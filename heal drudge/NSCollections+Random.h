@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSCollections_Random : NSObject
+@interface NSArray (NSCollectionsRandom)
+
+- (id)randomObject;
 
 @end

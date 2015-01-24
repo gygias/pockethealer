@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class Spell;
+@class Player;
+
+typedef BOOL(^SpellCastAttemptBlock)(Spell *);
+
 @interface SpellBarView : UIView
+
+@property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;
+
+@property (nonatomic,retain) Player *player;
+@property (nonatomic,retain) NSArray *spells;
 
 @end

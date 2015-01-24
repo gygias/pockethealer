@@ -6,8 +6,14 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#ifndef heal_drudge_SpellPriv_h
-#define heal_drudge_SpellPriv_h
+#import "Spell.h"
 
+@interface Spell (Priv)
 
-#endif
+- (void)_applyDamage:(Entity *)entity;
+- (void)_applyHealing:(Entity *)entity;
+- (void)_applyAbsorbs:(Entity *)entity;
+- (void)_applyStatusEffects:(Entity *)entity;
+
+@end
+

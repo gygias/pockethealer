@@ -8,6 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Guild : NSObject
+#import "ModelBase.h"
+#import "WoWRealm.h"
+
+@interface Guild : ModelBase
+
++ (Guild *)guildWithAPIDictionary:(NSDictionary *)apiDictionary;
++ (Guild *)guildWithAPIName:(NSString *)guildName apiRealm:(NSString *)apiRealm;
+
+@property NSString *name;
+@property NSNumber *achievementPoints;
+@property NSNumber *members;
+@property WoWRealm *realm;
+@property NSString *battlegroup;
+
+@property NSNumber *icon;
+@property NSNumber *iconColor;
+@property NSNumber *border;
+@property NSNumber *borderColor;
+@property NSNumber *backgroundColor;
 
 @end

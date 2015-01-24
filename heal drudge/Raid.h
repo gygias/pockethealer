@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class Player;
+
 @interface Raid : NSObject
 
++ (Raid *)randomRaid;
++ (Raid *)randomRaidWithGygiasTheDiscPriest:(Player **)outGygias;
+
+@property (strong,retain) NSArray *players;
+@property (nonatomic,readonly) NSArray *tankPlayers;
+@property (nonatomic,readonly) NSArray *meleePlayers;
+@property (nonatomic,readonly) NSArray *rangePlayers;
+@property (nonatomic,readonly) NSArray *healers;
+@property (nonatomic,readonly) NSArray *dpsPlayers;
 @end

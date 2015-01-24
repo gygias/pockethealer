@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+#import "RaidFramesView.h"
+#import "SpellBarView.h"
+#import "CastBarView.h"
 
-@interface QuickPlayViewController : UIViewController
+@interface QuickPlayViewController : BaseViewController
+
+@property IBOutlet RaidFramesView *raidFramesView;
+@property IBOutlet SpellBarView *spellBarView;
+@property IBOutlet CastBarView *castBarView;
 
 @end

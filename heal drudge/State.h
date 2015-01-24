@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Character.h"
 
 @interface State : NSObject
+
+@property Character *character;
+
+// setup
+@property BOOL saveGuildToo;
 
 @end

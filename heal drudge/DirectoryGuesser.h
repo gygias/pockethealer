@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Guild.h"
+#import "Character.h"
+
 @interface DirectoryGuesser : NSObject
+
++ (BOOL)guessWhereToPutGuild:(Guild *)guild;
++ (BOOL)guessWhereToPutCharacter:(Character *)character;
 
 @end

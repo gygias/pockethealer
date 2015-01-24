@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Ability.h"
+
 @interface SoundManager : NSObject
+
++ (void)playNoteSound;
++ (void)playDangerSound;
++ (void)playCatastrophicSound;
++ (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
 
 @end

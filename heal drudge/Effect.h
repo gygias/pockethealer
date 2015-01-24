@@ -6,8 +6,27 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@class Spell;
+@class Entity;
+
+typedef NS_ENUM(NSInteger, EffectType) {
+    StandardEffect      = 0,
+    MagicEffect         = 1,
+    CurseEffect         = 2,
+    PoisonEffect        = 3,
+    DiseaseEffect       = 4
+};
 
 @interface Effect : NSObject
+
+@property EffectType type;
+@property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
+@property NSDate *startDate;
+@property NSTimeInterval duration;
+@property UIImage *image;
+
+- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
 
 @end

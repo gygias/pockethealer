@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Attack : NSObject
+#import "Ability.h"
+
+@interface Attack : Ability
 
 @end

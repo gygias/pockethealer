@@ -10,4 +10,15 @@
 
 @implementation Effect
 
+- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
+{
+    return YES;
+}
+
++ (NSArray *)_effectNames
+{
+    return @[ @"WeakenedSoulEffect"
+              ];
+}
+
 @end
