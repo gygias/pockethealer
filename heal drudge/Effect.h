@@ -23,10 +23,16 @@ typedef NS_ENUM(NSInteger, EffectType) {
 
 @property EffectType type;
 @property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
+@property NSNumber *maxStacks;
+@property NSNumber *currentStacks;
+@property BOOL stacksAreInvisible;
 @property NSDate *startDate;
 @property NSTimeInterval duration;
 @property UIImage *image;
 
+- (void)addStack;
+- (void)addStacks:(NSUInteger)nStacks;
+- (void)removeStack;
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
 
 @end

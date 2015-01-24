@@ -8,6 +8,9 @@
 
 #import "SmiteSpell.h"
 
+#import "Entity.h"
+#import "EvangelismEffect.h"
+
 @implementation SmiteSpell
 
 - (id)initWithCaster:(Character *)caster
@@ -30,6 +33,25 @@
         self.damageType = HolyDamage;
     }
     return self;
+}
+
+- (void)hitWithSource:(Entity *)source target:(Entity *)target
+{
+    EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
+    if ( currentEvangelism )
+        [currentEvangelism addStack];
+}
+
+- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[EvangelismEffect class]] )
+        {
+            return (EvangelismEffect *)effect;
+        }
+    }
+    return nil;
 }
 
 - (NSArray *)hdClasses

@@ -50,6 +50,9 @@
         }
     }
     
+    if ( ! [spell validateWithSource:self target:self.target message:messagePtr] )
+        return NO;
+    
     __block BOOL okay = YES;
     [_statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         

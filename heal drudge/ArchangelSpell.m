@@ -8,6 +8,10 @@
 
 #import "ArchangelSpell.h"
 
+#import "ArchangelEffect.h"
+#import "EvangelismEffect.h"
+#import "Entity.h"
+
 @implementation ArchangelSpell
 
 - (id)initWithCaster:(Character *)caster
@@ -30,6 +34,34 @@
         self.absorb = @0;
     }
     return self;
+}
+
+- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[EvangelismEffect class]] )
+        {
+            return (EvangelismEffect *)effect;
+        }
+    }
+    return nil;
+}
+
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message
+{
+    EvangelismEffect *evangelism = [self _evangelismForEntity:source];
+    //NSLog(@"%@ has%@ evangelism stacks",source,evangelism?@"":@" no");
+    return evangelism != nil;
+}
+
+- (void)hitWithSource:(Entity *)source target:(Entity *)target
+{
+    EvangelismEffect *evangelism = [self _evangelismForEntity:source];
+    ArchangelEffect *effect = [ArchangelEffect new];
+    [effect addStacks:evangelism.currentStacks.unsignedIntegerValue];
+    
+    [source addStatusEffect:effect];
 }
 
 - (NSArray *)hdClasses

@@ -20,6 +20,11 @@
     return self;
 }
 
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message
+{
+    return YES;
+}
+
 - (void)hitWithSource:(Entity *)source target:(Entity *)target
 {
 }

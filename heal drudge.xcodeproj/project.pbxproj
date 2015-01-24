@@ -163,6 +163,8 @@
 		634F48E71A7441AE008761C6 /* hunger_for_blood.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 634F48E31A7441AE008761C6 /* hunger_for_blood.jpg */; };
 		634F48E81A7441AE008761C6 /* melee_attack.gif in Resources */ = {isa = PBXBuildFile; fileRef = 634F48E41A7441AE008761C6 /* melee_attack.gif */; };
 		634F48E91A7441AE008761C6 /* range_attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 634F48E51A7441AE008761C6 /* range_attack.png */; };
+		634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EB1A7443F3008761C6 /* ArchangelEffect.m */; };
+		634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EE1A744472008761C6 /* EvangelismEffect.m */; };
 		63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D601A570C8C0025ACDE /* RaidFrameView.m */; };
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
@@ -388,6 +390,10 @@
 		634F48E31A7441AE008761C6 /* hunger_for_blood.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hunger_for_blood.jpg; sourceTree = "<group>"; };
 		634F48E41A7441AE008761C6 /* melee_attack.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = melee_attack.gif; sourceTree = "<group>"; };
 		634F48E51A7441AE008761C6 /* range_attack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = range_attack.png; sourceTree = "<group>"; };
+		634F48EA1A7443F3008761C6 /* ArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchangelEffect.h; sourceTree = "<group>"; };
+		634F48EB1A7443F3008761C6 /* ArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchangelEffect.m; sourceTree = "<group>"; };
+		634F48ED1A744472008761C6 /* EvangelismEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvangelismEffect.h; sourceTree = "<group>"; };
+		634F48EE1A744472008761C6 /* EvangelismEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvangelismEffect.m; sourceTree = "<group>"; };
 		63564D5F1A570C8C0025ACDE /* RaidFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFrameView.h; sourceTree = "<group>"; };
 		63564D601A570C8C0025ACDE /* RaidFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaidFrameView.m; sourceTree = "<group>"; };
 		63564D621A57233A0025ACDE /* RaidFramesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFramesView.h; sourceTree = "<group>"; };
@@ -654,6 +660,10 @@
 				632074A01A718E0700AA4416 /* PowerWordShieldSpell.m */,
 				634F48D91A734B6C008761C6 /* WeakenedSoulEffect.h */,
 				634F48DA1A734B6C008761C6 /* WeakenedSoulEffect.m */,
+				634F48EA1A7443F3008761C6 /* ArchangelEffect.h */,
+				634F48EB1A7443F3008761C6 /* ArchangelEffect.m */,
+				634F48ED1A744472008761C6 /* EvangelismEffect.h */,
+				634F48EE1A744472008761C6 /* EvangelismEffect.m */,
 				632074A31A7194C000AA4416 /* HolyFireSpell.h */,
 				632074A41A7194C000AA4416 /* HolyFireSpell.m */,
 				632074B11A719DCC00AA4416 /* SmiteSpell.h */,
@@ -1016,6 +1026,7 @@
 				63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */,
 				63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */,
 				632073931A70538F00AA4416 /* Character.m in Sources */,
+				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
 				632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */,
@@ -1025,6 +1036,7 @@
 				639E1DB91A702E290062E803 /* WoWRealm.m in Sources */,
 				63564D6A1A5724B80025ACDE /* Player.m in Sources */,
 				63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */,
+				634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */,
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				6328FB591A73178B00DF6B50 /* SpellBarViewController.m in Sources */,

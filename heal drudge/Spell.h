@@ -28,6 +28,8 @@ typedef NS_ENUM(NSInteger, DamageType) {
 // on character stats
 - (id)initWithCaster:(Character *)caster;
 
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message;
+
 // state
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
