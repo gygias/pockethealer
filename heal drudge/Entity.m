@@ -29,7 +29,7 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateSpell:(Spell *)spell message:(NSString **)messagePtr
+- (BOOL)validateSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
 {
     if ( ! spell.isBeneficial )
     {
@@ -50,7 +50,7 @@
         }
     }
     
-    if ( ! [spell validateWithSource:self target:self.target message:messagePtr] )
+    if ( ! [spell validateWithSource:source target:self.target message:messagePtr] )
         return NO;
     
     __block BOOL okay = YES;
@@ -82,6 +82,27 @@
         else
             NSLog(@"%@ on %@ was removed some other way",statusEffect,self);
     });
+}
+
+- (void)removeStatusEffect:(Effect *)effect
+{
+    [(NSMutableArray *)_statusEffects removeObject:effect];
+    NSLog(@"removed %@'s %@",self,effect);
+}
+
+- (void)removeStatusEffectNamed:(NSString *)statusEffectName
+{
+    __block id object = nil;
+    [_statusEffects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ( [NSStringFromClass([obj class]) isEqualToString:statusEffectName] )
+        {
+            object = obj;
+            *stop = YES;
+        }
+    }];
+    
+    if ( object )
+        [self removeStatusEffect:object];
 }
 
 - (void)handleDeathFromAbility:(Ability *)ability

@@ -26,8 +26,15 @@
     if ( self = [super init] )
     {
         [self _initializeAbilities];
+        self.health = @1;
+        self.currentHealth = self.health;
     }
     return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ [%@,%@]",NSStringFromClass([self class]),self.currentHealth,self.currentResources];
 }
 
 - (NSArray *)abilities
@@ -38,6 +45,11 @@
 - (NSArray *)abilityNames
 {
     return nil;
+}
+
+- (NSString *)name
+{
+    return NSStringFromClass([self class]);
 }
 
 - (void)beginEncounter:(Encounter *)encounter

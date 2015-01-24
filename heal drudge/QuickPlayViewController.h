@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "EnemyFrameView.h"
 #import "RaidFramesView.h"
 #import "SpellBarView.h"
 #import "CastBarView.h"
 
 @interface QuickPlayViewController : BaseViewController
 
+@property IBOutlet EnemyFrameView *enemyFrameView;
 @property IBOutlet RaidFramesView *raidFramesView;
 @property IBOutlet SpellBarView *spellBarView;
 @property IBOutlet CastBarView *castBarView;

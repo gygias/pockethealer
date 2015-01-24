@@ -73,14 +73,7 @@
     
     dispatch_async(_encounterQueue, ^{
         
-        if ( periodicTick )
-        {
-            [self _doDamage:ability.periodicDamage source:source target:target];
-        }
-        else
-        {
-            [self _doDamage:ability.damage source:source target:target];
-        }
+        [self _doDamage:ability source:source target:target periodic:periodicTick];
         
         if ( target.currentHealth.integerValue <= 0 )
         {
@@ -108,24 +101,46 @@
     dispatch_async(_encounterQueue, ^{
     
         NSLog(@"%@ has cast %@ on %@!",source,spell.name,target);
+        [self _doDamage:spell source:source target:target periodic:periodicTick];
         [self _doHealing:spell source:source target:target periodic:periodicTick];
         spell.nextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
         
         [spell hitWithSource:source target:target];
+        
+        if ( target.currentHealth.integerValue <= 0 )
+        {
+            [target handleDeathFromAbility:nil];
+            
+            __block BOOL someEnemyIsAlive = NO;
+            [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
+                if ( ! obj.isDead )
+                {
+                    someEnemyIsAlive = YES;
+                    *stop = YES;
+                }
+            }];
+            if ( ! someEnemyIsAlive )
+            {
+                NSLog(@"the encounter is over because all enemies are dead");
+                [self endEncounter];
+                return;
+            }
+        }
         
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);
     });
 }
 
-- (void)_doDamage:(NSNumber *)damage source:(Entity *)source target:(Entity *)target
+- (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target periodic:(BOOL)periodic
 {
-    NSInteger newAbsorb = target.currentAbsorb.doubleValue - damage.doubleValue;
+    NSNumber *theDamage = periodic ? spell.periodicDamage : spell.damage;
+    NSInteger newAbsorb = target.currentAbsorb.doubleValue - theDamage.doubleValue;
     if ( newAbsorb < 0 )
         newAbsorb = 0;
     
     NSInteger amountAbsorbed = target.currentAbsorb.doubleValue - newAbsorb;
-    NSInteger effectiveDamage = ( damage.doubleValue - amountAbsorbed );
+    NSInteger effectiveDamage = ( theDamage.doubleValue - amountAbsorbed );
     
     NSInteger newHealth = target.currentHealth.doubleValue - effectiveDamage;
     if ( newHealth < 0 )

@@ -606,6 +606,8 @@ const NSString *WoWAPIClassKey = @"class";
         case HDDEATHKNIGHT:
             return @"strength";
             break;
+        case HDCLASSMAX:
+            break;
     }
     
     NSLog(@"bug at -primaryStatName");

@@ -30,9 +30,11 @@
 // being dealt a killing blow can trigger spirit of redemption
 - (void)handleDeathFromAbility:(Ability *)ability;
 
-- (BOOL)validateSpell:(Spell *)spell message:(NSString **)message;
+- (BOOL)validateSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
 
 - (void)addStatusEffect:(Effect *)statusEffect;
+- (void)removeStatusEffect:(Effect *)effect;
+- (void)removeStatusEffectNamed:(NSString *)statusEffectName;
 
 - (void)beginEncounter:(Encounter *)encounter;
 - (void)updateEncounter:(Encounter *)encounter;

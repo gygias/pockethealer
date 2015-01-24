@@ -8,7 +8,6 @@
 
 #import "SmiteSpell.h"
 
-#import "Entity.h"
 #import "EvangelismEffect.h"
 
 @implementation SmiteSpell
@@ -38,7 +37,12 @@
 - (void)hitWithSource:(Entity *)source target:(Entity *)target
 {
     EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
-    if ( currentEvangelism )
+    if ( ! currentEvangelism )
+    {
+        currentEvangelism = [EvangelismEffect new];
+        [source addStatusEffect:currentEvangelism];
+    }
+    else
         [currentEvangelism addStack];
 }
 

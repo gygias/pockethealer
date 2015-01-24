@@ -14,7 +14,8 @@
 {
     if ( self = [super init] )
     {
-        
+        self.health = @100000;
+        self.currentHealth = self.health;
     }    
     return self;
 }

@@ -8,6 +8,8 @@
 
 #import "HolyFireSpell.h"
 
+#import "EvangelismEffect.h"
+
 @implementation HolyFireSpell
 
 - (id)initWithCaster:(Character *)caster
@@ -37,6 +39,30 @@
         self.periodicDamageType = HolyDamage;
     }
     return self;
+}
+
+- (void)hitWithSource:(Entity *)source target:(Entity *)target
+{
+    EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
+    if ( ! currentEvangelism )
+    {
+        currentEvangelism = [EvangelismEffect new];
+        [source addStatusEffect:currentEvangelism];
+    }
+    else
+        [currentEvangelism addStack];
+}
+
+- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[EvangelismEffect class]] )
+        {
+            return (EvangelismEffect *)effect;
+        }
+    }
+    return nil;
 }
 
 - (NSArray *)hdClasses

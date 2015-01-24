@@ -51,7 +51,7 @@
         Entity *spellTarget = self.player.target;
         if ( ! spellTarget )
             spellTarget = self.player;
-        BOOL canStartCastingSpell = [spellTarget validateSpell:spell message:&message];
+        BOOL canStartCastingSpell = [spellTarget validateSpell:spell withSource:self.player message:&message];
         
         UIImage *spellImage = spell.image;
         if ( ! canStartCastingSpell )

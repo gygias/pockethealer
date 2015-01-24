@@ -39,13 +39,24 @@
         NSLog(@"there is no healer in this random raid!");
     }
     
+    Enemy *enemy = [Enemy randomEnemy];
+    self.enemyFrameView.enemy = enemy;
+    
     Encounter *encounter = [Encounter new];
     encounter.encounterUpdatedHandler = ^(Encounter *encounter){
         [self _forceDraw:self];
     };
     encounter.player = aHealer;
     encounter.raid = raid;
-    encounter.enemies = @[ [Enemy randomEnemy] ];
+    encounter.enemies = @[ enemy ];
+    
+    BOOL (^enemyTouchedBlock)(Enemy *);
+    enemyTouchedBlock = ^(Enemy *enemy){
+        encounter.player.target = enemy;
+        NSLog(@"%@ has targeted %@",encounter.player,enemy);
+        return YES;
+    };
+    self.enemyFrameView.enemyTouchedHandler = enemyTouchedBlock;
     
     self.raidFramesView.raid = raid;
     self.raidFramesView.targetedPlayerBlock = ^(Entity *target){
@@ -113,7 +124,7 @@
         if ( doCast )
         {
             NSString *message = nil;
-            doCast = [target validateSpell:spell message:&message];
+            doCast = [target validateSpell:spell withSource:encounter.player message:&message];
             if ( doCast )
             {
                 [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
@@ -143,6 +154,7 @@
         [self.raidFramesView setNeedsDisplay];
         [self.spellBarView setNeedsDisplay];
         [self.castBarView setNeedsDisplay];
+        [self.enemyFrameView setNeedsDisplay];
     });
 }
 

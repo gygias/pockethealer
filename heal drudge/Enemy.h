@@ -17,6 +17,9 @@
     NSArray *_abilities;
 }
 
+@property (readonly) NSString *name;
+@property NSNumber *health;
+
 + (Enemy *)randomEnemy;
 - (NSArray *)abilityNames;
 - (NSArray *)abilities;

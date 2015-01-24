@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "Character.h"
+#import "Entity.h"
 #import "ImageFactory.h"
 
 @class Entity;

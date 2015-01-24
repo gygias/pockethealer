@@ -165,6 +165,7 @@
 		634F48E91A7441AE008761C6 /* range_attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 634F48E51A7441AE008761C6 /* range_attack.png */; };
 		634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EB1A7443F3008761C6 /* ArchangelEffect.m */; };
 		634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EE1A744472008761C6 /* EvangelismEffect.m */; };
+		634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48F11A744AEA008761C6 /* EnemyFrameView.m */; };
 		63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D601A570C8C0025ACDE /* RaidFrameView.m */; };
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
@@ -394,6 +395,8 @@
 		634F48EB1A7443F3008761C6 /* ArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchangelEffect.m; sourceTree = "<group>"; };
 		634F48ED1A744472008761C6 /* EvangelismEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EvangelismEffect.h; sourceTree = "<group>"; };
 		634F48EE1A744472008761C6 /* EvangelismEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvangelismEffect.m; sourceTree = "<group>"; };
+		634F48F01A744AEA008761C6 /* EnemyFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemyFrameView.h; sourceTree = "<group>"; };
+		634F48F11A744AEA008761C6 /* EnemyFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnemyFrameView.m; sourceTree = "<group>"; };
 		63564D5F1A570C8C0025ACDE /* RaidFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFrameView.h; sourceTree = "<group>"; };
 		63564D601A570C8C0025ACDE /* RaidFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaidFrameView.m; sourceTree = "<group>"; };
 		63564D621A57233A0025ACDE /* RaidFramesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFramesView.h; sourceTree = "<group>"; };
@@ -482,6 +485,8 @@
 				6328FB561A73178B00DF6B50 /* SpellBarViewController.h */,
 				6328FB571A73178B00DF6B50 /* SpellBarViewController.m */,
 				6328FB581A73178B00DF6B50 /* SpellBarViewController.xib */,
+				634F48F01A744AEA008761C6 /* EnemyFrameView.h */,
+				634F48F11A744AEA008761C6 /* EnemyFrameView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -662,6 +667,8 @@
 				634F48DA1A734B6C008761C6 /* WeakenedSoulEffect.m */,
 				634F48EA1A7443F3008761C6 /* ArchangelEffect.h */,
 				634F48EB1A7443F3008761C6 /* ArchangelEffect.m */,
+				6328FB611A732B4400DF6B50 /* ArchangelSpell.h */,
+				6328FB621A732B4400DF6B50 /* ArchangelSpell.m */,
 				634F48ED1A744472008761C6 /* EvangelismEffect.h */,
 				634F48EE1A744472008761C6 /* EvangelismEffect.m */,
 				632074A31A7194C000AA4416 /* HolyFireSpell.h */,
@@ -672,8 +679,6 @@
 				632074B51A71A19200AA4416 /* HealSpell.m */,
 				632074B71A71A25600AA4416 /* FlashHealSpell.h */,
 				632074B81A71A25600AA4416 /* FlashHealSpell.m */,
-				6328FB611A732B4400DF6B50 /* ArchangelSpell.h */,
-				6328FB621A732B4400DF6B50 /* ArchangelSpell.m */,
 				6328FB661A732C1800DF6B50 /* DivineStarSpell.h */,
 				6328FB671A732C1800DF6B50 /* DivineStarSpell.m */,
 			);
@@ -1044,6 +1049,7 @@
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
+				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,
 				632074B91A71A25600AA4416 /* FlashHealSpell.m in Sources */,
 				639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */,
 				63C5F4281A52464300B9AE46 /* CreateHealerViewController.m in Sources */,
