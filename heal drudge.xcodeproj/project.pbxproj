@@ -183,6 +183,18 @@
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
+		63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */; };
+		63A37ED01A75A1A80036C9D0 /* UR_Algalon_BHole01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */; };
+		63A37EF31A75ABE30036C9D0 /* 1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EE91A75ABE30036C9D0 /* 1.wav */; };
+		63A37EF41A75ABE30036C9D0 /* 2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EEA1A75ABE30036C9D0 /* 2.wav */; };
+		63A37EF51A75ABE30036C9D0 /* 3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EEB1A75ABE30036C9D0 /* 3.wav */; };
+		63A37EF61A75ABE30036C9D0 /* 4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EEC1A75ABE30036C9D0 /* 4.wav */; };
+		63A37EF71A75ABE30036C9D0 /* 5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EED1A75ABE30036C9D0 /* 5.wav */; };
+		63A37EF81A75ABE30036C9D0 /* 6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EEE1A75ABE30036C9D0 /* 6.wav */; };
+		63A37EF91A75ABE30036C9D0 /* 7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EEF1A75ABE30036C9D0 /* 7.wav */; };
+		63A37EFA1A75ABE30036C9D0 /* 8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF01A75ABE30036C9D0 /* 8.wav */; };
+		63A37EFB1A75ABE30036C9D0 /* 9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF11A75ABE30036C9D0 /* 9.wav */; };
+		63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF21A75ABE30036C9D0 /* 10.wav */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -440,6 +452,19 @@
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
 		639E1DB81A702E290062E803 /* WoWRealm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWRealm.m; sourceTree = "<group>"; };
 		639E1DBA1A702E4B0062E803 /* WoWRealms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WoWRealms.plist; sourceTree = "<group>"; };
+		63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = KILJAEDEN02.wav; sourceTree = "<group>"; };
+		63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = UR_Algalon_BHole01.wav; sourceTree = "<group>"; };
+		63A37ED11A75A45C0036C9D0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		63A37EE91A75ABE30036C9D0 /* 1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 1.wav; path = Corsica/1.wav; sourceTree = "<group>"; };
+		63A37EEA1A75ABE30036C9D0 /* 2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 2.wav; path = Corsica/2.wav; sourceTree = "<group>"; };
+		63A37EEB1A75ABE30036C9D0 /* 3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 3.wav; path = Corsica/3.wav; sourceTree = "<group>"; };
+		63A37EEC1A75ABE30036C9D0 /* 4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 4.wav; path = Corsica/4.wav; sourceTree = "<group>"; };
+		63A37EED1A75ABE30036C9D0 /* 5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 5.wav; path = Corsica/5.wav; sourceTree = "<group>"; };
+		63A37EEE1A75ABE30036C9D0 /* 6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 6.wav; path = Corsica/6.wav; sourceTree = "<group>"; };
+		63A37EEF1A75ABE30036C9D0 /* 7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 7.wav; path = Corsica/7.wav; sourceTree = "<group>"; };
+		63A37EF01A75ABE30036C9D0 /* 8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 8.wav; path = Corsica/8.wav; sourceTree = "<group>"; };
+		63A37EF11A75ABE30036C9D0 /* 9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 9.wav; path = Corsica/9.wav; sourceTree = "<group>"; };
+		63A37EF21A75ABE30036C9D0 /* 10.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 10.wav; path = Corsica/10.wav; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -746,9 +771,37 @@
 			name = Shaman;
 			sourceTree = "<group>";
 		};
+		63A37EC81A75A15B0036C9D0 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				63A37ED31A75ABC90036C9D0 /* Corsica */,
+				63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */,
+				63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */,
+			);
+			name = sounds;
+			sourceTree = "<group>";
+		};
+		63A37ED31A75ABC90036C9D0 /* Corsica */ = {
+			isa = PBXGroup;
+			children = (
+				63A37EE91A75ABE30036C9D0 /* 1.wav */,
+				63A37EEA1A75ABE30036C9D0 /* 2.wav */,
+				63A37EEB1A75ABE30036C9D0 /* 3.wav */,
+				63A37EEC1A75ABE30036C9D0 /* 4.wav */,
+				63A37EED1A75ABE30036C9D0 /* 5.wav */,
+				63A37EEE1A75ABE30036C9D0 /* 6.wav */,
+				63A37EEF1A75ABE30036C9D0 /* 7.wav */,
+				63A37EF01A75ABE30036C9D0 /* 8.wav */,
+				63A37EF11A75ABE30036C9D0 /* 9.wav */,
+				63A37EF21A75ABE30036C9D0 /* 10.wav */,
+			);
+			name = Corsica;
+			sourceTree = "<group>";
+		};
 		63C5F3F41A5243E900B9AE46 = {
 			isa = PBXGroup;
 			children = (
+				63A37ED11A75A45C0036C9D0 /* AVFoundation.framework */,
 				63C5F3FF1A5243E900B9AE46 /* heal drudge */,
 				63C5F4191A5243EA00B9AE46 /* heal drudgeTests */,
 				63C5F3FE1A5243E900B9AE46 /* Products */,
@@ -767,6 +820,7 @@
 		63C5F3FF1A5243E900B9AE46 /* heal drudge */ = {
 			isa = PBXGroup;
 			children = (
+				63A37EC81A75A15B0036C9D0 /* sounds */,
 				632074BA1A71A4E400AA4416 /* Encounter.h */,
 				632074BB1A71A4E400AA4416 /* Encounter.m */,
 				632074BD1A71A5CA00AA4416 /* Entity.h */,
@@ -925,6 +979,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A37EF51A75ABE30036C9D0 /* 3.wav in Resources */,
 				6320746D1A70E93A00AA4416 /* cleanse_spirit.png in Resources */,
 				6320741A1A7095B800AA4416 /* power_word_shield.png in Resources */,
 				632074211A7095B800AA4416 /* renew.png in Resources */,
@@ -941,6 +996,7 @@
 				632074671A70E93A00AA4416 /* beast_mastery.jpg in Resources */,
 				632074941A70E93A00AA4416 /* windwalk_totem.png in Resources */,
 				634F48E91A7441AE008761C6 /* range_attack.png in Resources */,
+				63A37EFA1A75ABE30036C9D0 /* 8.wav in Resources */,
 				6320748E1A70E93A00AA4416 /* totem_cooldown_refund.png in Resources */,
 				632074061A7095B800AA4416 /* hand_of_salvation.png in Resources */,
 				6320740C1A7095B800AA4416 /* holy_word_serenity.png in Resources */,
@@ -948,6 +1004,7 @@
 				632074701A70E93A00AA4416 /* eviscerate.jpg in Resources */,
 				6320741E1A7095B800AA4416 /* purify.png in Resources */,
 				6320741B1A7095B800AA4416 /* prayer_of_healing.png in Resources */,
+				63A37EF91A75ABE30036C9D0 /* 7.wav in Resources */,
 				632074711A70E93A00AA4416 /* feral_druid.png in Resources */,
 				632074271A7095B800AA4416 /* weakened_soul.png in Resources */,
 				632074181A7095B800AA4416 /* power_word_barrier.png in Resources */,
@@ -976,8 +1033,10 @@
 				632074071A7095B800AA4416 /* heal.png in Resources */,
 				6320746B1A70E93A00AA4416 /* brewmaster.png in Resources */,
 				632074091A7095B800AA4416 /* holy_nova.png in Resources */,
+				63A37EF61A75ABE30036C9D0 /* 4.wav in Resources */,
 				632074231A7095B800AA4416 /* shaman.png in Resources */,
 				6320746C1A70E93A00AA4416 /* clarity_of_will.jpg in Resources */,
+				63A37EF41A75ABE30036C9D0 /* 2.wav in Resources */,
 				632074221A7095B800AA4416 /* rogue.png in Resources */,
 				632074831A70E93A00AA4416 /* protection_warrior.jpg in Resources */,
 				6320740B1A7095B800AA4416 /* holy_word_sanctuary.png in Resources */,
@@ -988,12 +1047,15 @@
 				6320741C1A7095B800AA4416 /* prayer_of_mending.png in Resources */,
 				632074751A70E93A00AA4416 /* frost_deathknight.png in Resources */,
 				6320746F1A70E93A00AA4416 /* echo_of_the_elements.png in Resources */,
+				63A37ED01A75A1A80036C9D0 /* UR_Algalon_BHole01.wav in Resources */,
 				632074881A70E93A00AA4416 /* spirit_link_totem.png in Resources */,
+				63A37EF71A75ABE30036C9D0 /* 5.wav in Resources */,
 				6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */,
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
 				632073F91A7095B800AA4416 /* divine_hymn.png in Resources */,
 				6320740A1A7095B800AA4416 /* holy_word_chastise.png in Resources */,
 				632074201A7095B800AA4416 /* rapture.png in Resources */,
+				63A37EF31A75ABE30036C9D0 /* 1.wav in Resources */,
 				632073F21A7095B800AA4416 /* chakra_red.png in Resources */,
 				632074861A70E93A00AA4416 /* resto_druid.jpg in Resources */,
 				6320747C1A70E93A00AA4416 /* lightning_bolt.png in Resources */,
@@ -1007,6 +1069,7 @@
 				632073F81A7095B800AA4416 /* divine_aegis.png in Resources */,
 				6320748B1A70E93A00AA4416 /* stone_bulwark.png in Resources */,
 				632074891A70E93A00AA4416 /* starfall.png in Resources */,
+				63A37EFB1A75ABE30036C9D0 /* 9.wav in Resources */,
 				632074051A7095B800AA4416 /* hand_of_sacrifice.png in Resources */,
 				632074641A70E93A00AA4416 /* arcane.png in Resources */,
 				632074141A7095B800AA4416 /* pain_suppression.png in Resources */,
@@ -1024,9 +1087,11 @@
 				632074011A7095B800AA4416 /* halo.png in Resources */,
 				632074631A70E93A00AA4416 /* ancestral_awakening.png in Resources */,
 				632074721A70E93A00AA4416 /* fire.jpg in Resources */,
+				63A37EF81A75ABE30036C9D0 /* 6.wav in Resources */,
 				6320740D1A7095B800AA4416 /* hunter.png in Resources */,
 				632074761A70E93A00AA4416 /* frost_mage.jpg in Resources */,
 				634F48E61A7441AE008761C6 /* bladestorm.jpg in Resources */,
+				63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */,
 				6320748C1A70E93A00AA4416 /* stormstrike.png in Resources */,
 				632073F01A7095B800AA4416 /* chakra_green.png in Resources */,
 				632074021A7095B800AA4416 /* hand_of_freedom.png in Resources */,
@@ -1041,6 +1106,7 @@
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
 				632074661A70E93A00AA4416 /* backstab.jpg in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
+				63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */,
 				632073F41A7095B800AA4416 /* cleanse.png in Resources */,
 				632074841A70E93A00AA4416 /* rain_of_fire.png in Resources */,
 				6320747F1A70E93A00AA4416 /* marksmanship.png in Resources */,

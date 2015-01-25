@@ -12,9 +12,13 @@
 
 @interface SoundManager : NSObject
 
+@property NSObject *audioPlayer;
+
 + (void)playNoteSound;
 + (void)playDangerSound;
 + (void)playCatastrophicSound;
 + (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
+
++ (void)playCountdownWithStartIndex:(NSNumber *)startIndex;
 
 @end

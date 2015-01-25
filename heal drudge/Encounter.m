@@ -10,6 +10,8 @@
 
 #import "EventModifier.h"
 
+#import "SoundManager.h"//XXX
+
 @implementation Encounter
 
 - (void)start
@@ -30,6 +32,8 @@
         [self updateEncounter];
     });
     dispatch_resume(_encounterTimer);
+    
+    [SoundManager playCountdownWithStartIndex:@5];
 }
 
 - (void)updateEncounter
