@@ -30,12 +30,17 @@
     return YES;
 }
 
-- (void)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( handler )
+        handler(NO);
+    return NO;
 }
 
-- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( handler )
+        handler(NO);
     return NO;
 }
 

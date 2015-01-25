@@ -27,15 +27,4 @@
     return self;
 }
 
-- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
-{
-    return YES;
-}
-
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target
-{
-    // if source has glyph of weakened soul
-    // ...
-}
-
 @end

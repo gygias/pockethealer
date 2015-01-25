@@ -32,12 +32,15 @@
     return YES;
 }
 
-- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    // borrowed time doesn't seem to be consumed in WoD
+    //if ( handler )
+    //    handler(YES);
     return [self _applyHasteBuff:modifiers];
 }
 
-- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
     return [self _applyHasteBuff:modifiers];
 }

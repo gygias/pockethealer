@@ -18,8 +18,7 @@
         self.image = [ImageFactory imageNamed:@"hunger_for_blood"];
         self.tooltip = @"With blinding speed, Kargath rushes random targets every 2 sec. for 10 sec, doing 35,714 Physical damage to anyone within 7 yards.";
         //self.triggersGCD = YES;
-        //self.cooldown = @30; // "roughly every 30 seconds" -icyveins
-        self.cooldown = @30;
+        self.cooldown = @30; // "roughly every 30 seconds" -icyveins
         self.isPeriodic = YES;
         self.period = 1;
         self.periodicDuration = 10;

@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, EffectType) {
     BeneficialOrDetrimentalEffect
 };
 
+typedef void(^EffectEventHandler)(BOOL);
+
 @interface Effect : NSObject
 
 @property EffectSchool school;
@@ -47,7 +49,7 @@ typedef NS_ENUM(NSInteger, EffectType) {
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
-- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers;
-- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers;
+- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 
 @end

@@ -110,7 +110,15 @@
         addedModifiers = YES;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
-        if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers] )
+        if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
+            // this is fucking hideous
+            if ( consumesEffect )
+            {
+                dispatch_async(dispatch_get_current_queue(), ^{
+                    [self removeStatusEffect:obj];
+                });
+            }
+        }] )
             addedModifiers = YES;
     }];
     
@@ -125,11 +133,24 @@
     Entity *target = asSource ? otherEntity : self;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
-        if ( [obj handleSpell:spell source:source target:target modifier:modifiers] )
+        if ( [obj handleSpell:spell source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
+            // this is fucking hideous
+            if ( consumesEffect )
+            {
+                dispatch_async(dispatch_get_current_queue(), ^{
+                    [self removeStatusEffect:obj];
+                });
+            }
+        }] )
             addedModifiers = YES;
     }];
     
     return addedModifiers;
+}
+
+- (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers
+{
+    return NO;
 }
 
 - (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source
@@ -177,6 +198,10 @@
 {
     NSLog(@"%@ has died",self);
     self.isDead = YES;
+    
+    Effect *aStatusEffect = nil;
+    while ( ( aStatusEffect = [self.statusEffects lastObject] ) )
+        [self removeStatusEffect:aStatusEffect];
 }
 
 - (void)beginEncounter:(Encounter *)encounter

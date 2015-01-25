@@ -11,6 +11,7 @@
 #import "Entity.h"
 #import "HDClass.h"
 #import "Effect.h"
+#import "UIColor+Extensions.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -290,11 +291,51 @@
                                            STATUS_EFFECT_HEIGHT);
             [effect.image drawInRect:effectRect blendMode:kCGBlendModeNormal alpha:1.0];
             
+            if ( effect.duration )
+            {
+                double percentage = [[NSDate date] timeIntervalSinceDate:effect.startDate] / effect.duration;
+                [self _drawCooldownClockInRect:effectRect withPercentage:percentage];
+            }
+            
             if ( --maxVisibleStatusEffects == 0 )
                 *stop = YES;
         }
     }];
 }
 
+- (void)_drawCooldownClockInRect:(CGRect)rect withPercentage:(double)percentage
+{
+    //CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    double cooldownInDegress = percentage * 360.0;
+    double theta = ( cooldownInDegress + 90 );
+    if ( theta > 360 )
+        theta -= 360;
+    double thetaRadians = theta * ( M_PI / 180 );
+    CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
+    //NSLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
+    
+    CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
+    CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
+    CGContextAddLineToPoint(context, rect.origin.x + ( rect.size.width / 2 ), rect.origin.y);
+    CGPoint midPoint = CGPointMake(rect.origin.x + ( rect.size.width / 2 ), rect.origin.y + ( rect.size.height / 2 ));
+    CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
+    
+    CGPoint mysteryPoint = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
+    CGContextAddLineToPoint(context, mysteryPoint.x, mysteryPoint.y); // the mystery point
+    double rotatedByDegress = ( 360 - cooldownInDegress );
+    if ( rotatedByDegress <= 90 )
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
+    if ( rotatedByDegress <= 180 )
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
+    if ( rotatedByDegress <= 270 )
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
+    //if ( theta >= 180 && theta <= 90 )
+    //    CGContextAddLineToPoint(context, spellRect.origin.x, spellRect.origin.y);
+    //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
+    //CGContextAddRect(context, rectangle);
+    CGContextFillPath(context);
+}
 
 @end

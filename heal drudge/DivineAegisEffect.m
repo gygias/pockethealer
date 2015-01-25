@@ -30,10 +30,4 @@
     return YES;
 }
 
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target
-{
-    // if source has glyph of weakened soul
-    // ...
-}
-
 @end

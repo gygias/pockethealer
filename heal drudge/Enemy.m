@@ -28,6 +28,7 @@
         [self _initializeAbilities];
         self.stamina = @1;
         self.currentHealth = self.health;
+        self.currentResources = @100;
         self.hdClass = [HDClass enemyClass];
         self.isEnemy = YES;
     }
