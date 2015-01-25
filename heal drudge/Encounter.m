@@ -76,11 +76,9 @@
     dispatch_async(_encounterQueue, ^{
         
         NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [target handleTargetOfSpell:ability withSource:source modifiers:modifiers] )
+        if ( [source handleSpell:ability asSource:YES otherEntity:target modifiers:modifiers] )
         {
-        }
-        if ( [source handleSourceOfSpell:ability withTarget:target modifiers:modifiers] )
-        {
+            NSLog(@"%@->%@ modified %@",source,target,ability);
         }
         
         [self _doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
@@ -113,13 +111,9 @@
         NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel-tick":@"is casting",spell.name,target);
         
         NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [target handleTargetOfSpell:spell withSource:source modifiers:modifiers] )
+        if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
         {
-            // extract scalars yada yada
-        }
-        if ( [source handleSourceOfSpell:spell withTarget:target modifiers:modifiers] )
-        {
-            // extract scalars yada yada
+            NSLog(@"%@->%@ modified %@",source,target,spell);
         }
         
         if ( spell.spellType != BeneficialSpell && target.isEnemy )
@@ -142,7 +136,7 @@
             });
         }
         
-        [spell hitWithSource:source target:target periodicTick:periodicTick];
+        [spell handleHitWithSource:source target:target modifiers:modifiers];
         
         if ( target.currentHealth.integerValue <= 0 )
         {

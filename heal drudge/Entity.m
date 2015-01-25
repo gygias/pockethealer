@@ -96,21 +96,14 @@
     return okay;
 }
 
-- (BOOL)handleSourceOfSpellStart:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers
-{
-    return [self _handleSpellStart:spell source:self target:target modifiers:modifiers];
-}
-
-- (BOOL)handleTargetOfSpellStart:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers
-{
-    return [self _handleSpellStart:spell source:source target:self modifiers:modifiers];
-}
-
-- (BOOL)_handleSpellStart:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers
 {
     __block BOOL addedModifiers = NO;
     
-    [spell handleStartWithSource:source target:target modifiers:modifiers];
+    Entity *source = asSource ? self : otherEntity;
+    Entity *target = asSource ? otherEntity : self;
+    if ( [spell handleStartWithSource:source target:target modifiers:modifiers] )
+        addedModifiers = YES;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers] )
@@ -120,19 +113,12 @@
     return addedModifiers;
 }
 
-- (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers
-{
-    return [self _handleSpell:spell source:self target:target modifiers:modifiers];
-}
-
-- (BOOL)handleTargetOfSpell:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers
-{
-    return [self _handleSpell:spell source:source target:self modifiers:modifiers];
-}
-
-- (BOOL)_handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers
 {
     __block BOOL addedModifiers = NO;
+    
+    Entity *source = asSource ? self : otherEntity;
+    Entity *target = asSource ? otherEntity : self;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj handleSpell:spell source:source target:target modifier:modifiers] )

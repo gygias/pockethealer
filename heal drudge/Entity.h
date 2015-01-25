@@ -43,12 +43,10 @@
 - (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
 
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
-- (BOOL)handleSourceOfSpellStart:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers;
-- (BOOL)handleTargetOfSpellStart:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers;
+- (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
-- (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers;
-- (BOOL)handleTargetOfSpell:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers;
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)target modifiers:(NSMutableArray *)modifiers;
 
 // now takes source as a reminder that it's a required property in this
 // ios style of +new, set all the properties..

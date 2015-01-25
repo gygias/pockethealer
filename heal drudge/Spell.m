@@ -27,11 +27,20 @@
     return YES;
 }
 
-- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    return NO;
+}
+
+- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
 {
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{
+}
+
+- (void)handleEndWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
 {
 }
 

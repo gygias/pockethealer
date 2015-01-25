@@ -40,10 +40,8 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
-{
-    [super hitWithSource:source target:target periodicTick:periodicTick];
-    
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{    
     PrayerOfMendingEffect *pom = [PrayerOfMendingEffect new];
     [target addStatusEffect:pom source:source];
 }

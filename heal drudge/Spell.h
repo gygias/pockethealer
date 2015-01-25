@@ -40,8 +40,11 @@ typedef NS_ENUM(NSInteger, SpellType) {
 // state
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
-- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
+- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)handleEndWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells

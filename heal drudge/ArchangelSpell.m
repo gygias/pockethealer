@@ -60,10 +60,8 @@
     return YES;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
-{
-    [super hitWithSource:source target:target periodicTick:periodicTick];
-    
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{    
     EvangelismEffect *evangelism = [self _evangelismForEntity:source];
     ArchangelEffect *effect = [ArchangelEffect new];
     [effect addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];

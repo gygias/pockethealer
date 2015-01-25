@@ -44,10 +44,7 @@
         NSLog(@"%@ started %@ %@",self,spell.isChanneled?@"channeling":@"casting",spell);
         
         NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [self handleSourceOfSpellStart:spell withTarget:target modifiers:modifiers] )
-        {
-        }
-        if ( [target handleTargetOfSpellStart:spell withSource:self modifiers:modifiers] )
+        if ( [self handleSpellStart:spell asSource:YES otherEntity:target modifiers:modifiers] )
         {
         }
         

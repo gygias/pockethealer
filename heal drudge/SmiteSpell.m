@@ -36,10 +36,8 @@
     return self;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
-{
-    [super hitWithSource:source target:target periodicTick:periodicTick];
-    
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{    
     EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
     if ( ! currentEvangelism )
     {

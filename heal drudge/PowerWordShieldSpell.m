@@ -37,10 +37,8 @@
     return self;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
-{
-    [super hitWithSource:source target:target periodicTick:periodicTick];
-    
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{    
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
     [source addStatusEffect:bt source:source];

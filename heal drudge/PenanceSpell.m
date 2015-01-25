@@ -37,16 +37,9 @@
     return self;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
-{
-    [super hitWithSource:source target:target periodicTick:periodicTick];
-}
-
 // one stack per cast, so this should be done on the 'start (of channel)' event
-- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
 {
-    [super handleStartWithSource:source target:target modifiers:modifiers];
-    
     if ( target.isEnemy )
     {
         EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
@@ -58,6 +51,8 @@
         else
             [currentEvangelism addStack];
     }
+    
+    return YES;
 }
 
 - (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
