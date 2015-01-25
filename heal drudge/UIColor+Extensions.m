@@ -15,4 +15,11 @@
     return [UIColor colorWithRed:1 green: 0.6 blue:0.8 alpha:1];
 }
 
++ (UIColor *)cooldownClockColor
+{
+    UIColor *grayColor = [UIColor grayColor];
+    UIColor *cooldownClockColor = [grayColor colorWithAlphaComponent:0.5];
+    return cooldownClockColor;
+}
+
 @end

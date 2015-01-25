@@ -103,7 +103,21 @@
         NSLog(@"%@ has cast %@ on %@!",source,spell.name,target);
         [self _doDamage:spell source:source target:target periodic:periodicTick];
         [self _doHealing:spell source:source target:target periodic:periodicTick];
-        spell.nextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
+        
+        if ( spell.cooldown.doubleValue )
+        {
+            NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
+            spell.nextCooldownDate = thisNextCooldownDate;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if ( spell.nextCooldownDate == thisNextCooldownDate )
+                {
+                    NSLog(@"%@'s %@ has cooled down",source,spell);
+                    spell.nextCooldownDate = nil;
+                }
+                else
+                    NSLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
+            });
+        }
         
         [spell hitWithSource:source target:target];
         

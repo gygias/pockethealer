@@ -10,6 +10,7 @@
 
 #import "Spell.h"
 #import "Player.h"
+#import "UIColor+Extensions.h"
 
 #define SPELL_HEIGHT 32
 #define SPELL_WIDTH SPELL_HEIGHT
@@ -54,8 +55,8 @@
         BOOL canStartCastingSpell = [spellTarget validateSpell:spell withSource:self.player message:&message];
         
         UIImage *spellImage = spell.image;
-        if ( ! canStartCastingSpell )
-            spellImage = [ImageFactory questionMark];
+        //if ( ! canStartCastingSpell )
+        //   spellImage = [ImageFactory questionMark];
         
         NSInteger row = idx / SPELLS_PER_ROW;
         NSInteger column = idx % SPELLS_PER_ROW;
@@ -63,6 +64,24 @@
                                       rect.origin.y + ( SPELL_HEIGHT * row ), SPELL_WIDTH, SPELL_HEIGHT);
         //NSLog(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
         [spellImage drawInRect:spellRect];
+        
+        // cooldown clock
+        if ( spell.nextCooldownDate )
+        {
+            double cooldownPercentage = -[[NSDate date] timeIntervalSinceDate:spell.nextCooldownDate] / spell.cooldown.doubleValue;
+            CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
+            //[spellImage retainCount];
+            //UIBezierPath
+            //NSLog(@"%@: %f",spell,cooldownPercentage);
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
+            //CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
+            //CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
+            CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
+            CGContextAddRect(context, rectangle);
+            CGContextFillPath(context);
+        }
         
         idx++;
     }

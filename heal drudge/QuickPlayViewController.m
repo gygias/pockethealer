@@ -73,7 +73,11 @@
         // determine target
         BOOL doCast = NO;
         Entity *target = nil;
-        if ( spell.targeted )
+        if ( spell.nextCooldownDate )
+        {
+            NSLog(@"%@ can't cast %@ because it is on cooldown",encounter.player,spell);
+        }
+        else if ( spell.targeted )
         {
             if ( ! encounter.player.target )
             {
