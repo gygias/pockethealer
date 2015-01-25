@@ -39,8 +39,7 @@
 - (void)handleDeathFromAbility:(Ability *)ability;
 
 // returns whether or not a spell should be allowed to cast or begin casting on this entity
-- (BOOL)validateSourceOfSpell:(Spell *)spell target:(Entity *)target message:(NSString **)messagePtr;
-- (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr;
 
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
 - (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;

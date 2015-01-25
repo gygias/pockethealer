@@ -53,7 +53,7 @@
             spellTarget = self.player;
         else if ( ! spell.targeted )
             spellTarget = self.player;
-        BOOL canStartCastingSpell = [spellTarget validateTargetOfSpell:spell withSource:self.player message:&message];
+        BOOL canStartCastingSpell = [self.player validateSpell:spell asSource:YES otherEntity:spellTarget message:&message];
         
         UIImage *spellImage = spell.image;
         //if ( ! canStartCastingSpell )

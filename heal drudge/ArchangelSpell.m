@@ -21,7 +21,7 @@
         self.image = [ImageFactory imageNamed:@"archangel"];
         self.tooltip = @"Makes you wig out and be really sweet.";
         self.triggersGCD = YES;
-        self.cooldown = @0;
+        self.cooldown = @30;
         self.spellType = BeneficialSpell;
         self.castableRange = @0;
         self.hitRange = @0;

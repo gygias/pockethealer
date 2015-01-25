@@ -30,33 +30,30 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateSourceOfSpell:(Spell *)spell target:(Entity *)target message:(NSString **)messagePtr
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr
 {
+    Entity *source = asSource ? self : otherEntity;
+    Entity *target = asSource ? otherEntity : self;
+    
     if ( spell.nextCooldownDate )
     {
         if ( messagePtr )
             *messagePtr = @"Not ready yet";
         return NO;
     }
-    if ( self.currentResources.integerValue < spell.manaCost.integerValue )
+    else if ( source.currentResources.integerValue < spell.manaCost.integerValue )
     {
         if ( messagePtr )
             *messagePtr = @"Not enough mana";
         return NO;
     }
-    else if ( self.isDead )
+    else if ( source.isDead )
     {
         if ( messagePtr )
             *messagePtr = @"You are dead";
         return NO;
     }
-    
-    return YES;
-}
-
-- (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
-{
-    if ( self.isDead && ! spell.canBeCastOnDeadEntities )
+    else if ( target.isDead && ! spell.canBeCastOnDeadEntities )
     {
         if ( messagePtr )
             *messagePtr = @"Target is dead";
@@ -64,7 +61,7 @@
     }
     else if ( spell.spellType == DetrimentalSpell )
     {
-        if ( [NSStringFromClass([self class]) isEqualToString:@"Player"] ) // XXX
+        if ( target.isPlayer )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";
@@ -73,14 +70,14 @@
     }
     else if ( spell.spellType == BeneficialSpell )
     {
-        if ( self.isEnemy )
+        if ( target.isEnemy )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";
             return NO;
         }
     }
-    
+        
     if ( ! [spell validateWithSource:source target:self message:messagePtr] )
         return NO;
     
@@ -93,6 +90,7 @@
             *stop = YES;
         }
     }];
+    
     return okay;
 }
 
