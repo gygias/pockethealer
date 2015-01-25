@@ -55,7 +55,7 @@
     }
     else
     {
-        if ( [NSStringFromClass([self class]) isEqualToString:@"Enemy"] )
+        if ( [self.hdClass isEqual:[HDClass enemyClass]] )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";
@@ -78,11 +78,34 @@
     return okay;
 }
 
-- (void)addStatusEffect:(Effect *)statusEffect
+- (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    return [self _handleSpell:spell source:self target:target modifiers:modifiers];
+}
+
+- (BOOL)handleTargetOfSpell:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers
+{
+    return [self _handleSpell:spell source:source target:self modifiers:modifiers];
+}
+
+- (BOOL)_handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    __block BOOL addedModifiers = NO;
+    
+    [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
+        if ( [obj handleSpell:spell source:source target:target modifier:modifiers] )
+            addedModifiers = YES;
+    }];
+    
+    return addedModifiers;
+}
+
+- (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source
 {
     if ( ! _statusEffects )
         _statusEffects = [NSMutableArray new];
     statusEffect.startDate = [NSDate date];
+    statusEffect.source = source;
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
     NSLog(@"%@ is affected by %@",self,statusEffect);
     

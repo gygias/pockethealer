@@ -7,7 +7,9 @@
 //
 
 #import "PowerWordShieldSpell.h"
+#import "PowerWordShieldEffect.h"
 #import "WeakenedSoulEffect.h"
+#import "BorrowedTimeEffect.h"
 #import "Entity.h"
 
 @implementation PowerWordShieldSpell
@@ -21,7 +23,7 @@
         self.tooltip = @"Shields a friendly target";
         self.triggersGCD = YES;
         self.targeted = YES;
-        self.cooldown = @6;
+        self.cooldown = [caster.hdClass isEqual:[HDClass discPriest]] ? @0 : @6;
         self.isBeneficial = YES;
         self.castableRange = @40;
         self.hitRange = @0;
@@ -40,12 +42,16 @@
     [super hitWithSource:source target:target];
     
     // borrowed time
+    BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
+    [target addStatusEffect:bt source:source];
     
     // weakened soul
     WeakenedSoulEffect *weakenedSoul = [WeakenedSoulEffect new];
-    weakenedSoul.source = source;
+    [target addStatusEffect:weakenedSoul source:source];
     
-    [target addStatusEffect:weakenedSoul];
+    // power word shield
+    PowerWordShieldEffect *pws = [PowerWordShieldEffect new];
+    [target addStatusEffect:pws source:source];
 }
 
 - (NSArray *)hdClasses

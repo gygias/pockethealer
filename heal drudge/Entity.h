@@ -36,9 +36,16 @@
 // being dealt a killing blow can trigger spirit of redemption
 - (void)handleDeathFromAbility:(Ability *)ability;
 
+// returns whether or not a spell should be allowed to cast or begin casting on this entity
 - (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
 
-- (void)addStatusEffect:(Effect *)statusEffect;
+// called when a spell is in the process of being cast, to accumulate modifications from effects, etc.
+- (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (BOOL)handleTargetOfSpell:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers;
+
+// now takes source as a reminder that it's a required property in this
+// ios style of +new, set all the properties..
+- (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source;
 - (void)removeStatusEffect:(Effect *)effect;
 - (void)removeStatusEffectNamed:(NSString *)statusEffectName;
 

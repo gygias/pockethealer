@@ -63,6 +63,8 @@
              @"FlashHealSpell",
              @"ArchangelSpell",
              @"DivineStarSpell",
+             @"PrayerOfMendingSpell",
+             @"PrayerOfHealingSpell",
              
              @"HealingTideTotemSpell"
              ];

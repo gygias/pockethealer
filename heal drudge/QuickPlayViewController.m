@@ -60,6 +60,7 @@
     self.enemyFrameView.enemyTouchedHandler = enemyTouchedBlock;
     
     self.raidFramesView.raid = raid;
+    self.raidFramesView.player = aHealer;
     self.raidFramesView.targetedPlayerBlock = ^(Entity *target){
         encounter.player.target = target;
         self.playerAndTargetView.target = target;

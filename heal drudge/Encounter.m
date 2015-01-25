@@ -8,6 +8,8 @@
 
 #import "Encounter.h"
 
+#import "EventModifier.h"
+
 @implementation Encounter
 
 - (void)start
@@ -73,7 +75,15 @@
     
     dispatch_async(_encounterQueue, ^{
         
-        [self _doDamage:ability source:source target:target periodic:periodicTick];
+        NSMutableArray *modifiers = [NSMutableArray new];
+        if ( [target handleTargetOfSpell:ability withSource:source modifiers:modifiers] )
+        {
+        }
+        if ( [source handleSourceOfSpell:ability withTarget:target modifiers:modifiers] )
+        {
+        }
+        
+        [self _doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
         
         if ( target.currentHealth.integerValue <= 0 )
         {
@@ -101,8 +111,19 @@
     dispatch_async(_encounterQueue, ^{
     
         NSLog(@"%@ has cast %@ on %@!",source,spell.name,target);
-        [self _doDamage:spell source:source target:target periodic:periodicTick];
-        [self _doHealing:spell source:source target:target periodic:periodicTick];
+        
+        NSMutableArray *modifiers = [NSMutableArray new];
+        if ( [target handleTargetOfSpell:spell withSource:source modifiers:modifiers] )
+        {
+            // extract scalars yada yada
+        }
+        if ( [source handleSourceOfSpell:spell withTarget:target modifiers:modifiers] )
+        {
+            // extract scalars yada yada
+        }
+        
+        [self _doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+        [self _doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         
         if ( spell.cooldown.doubleValue )
         {
@@ -148,9 +169,18 @@
     });
 }
 
-- (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target periodic:(BOOL)periodic
+- (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
-    NSNumber *theDamage = periodic ? spell.periodicDamage : spell.damage;
+    __block NSNumber *theDamage = periodic ? spell.periodicDamage : spell.damage;
+    
+    [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"considering %@ for damage of %@",obj,spell);
+        if ( obj.damageIncrease )
+            theDamage = @( theDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
+        else if (obj.damageIncreasePercentage )
+            theDamage = @( theDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
+    }];
+    
     NSInteger newAbsorb = target.currentAbsorb.doubleValue - theDamage.doubleValue;
     if ( newAbsorb < 0 )
         newAbsorb = 0;
@@ -168,11 +198,20 @@
     NSLog(@"%@ took %ld damage (%ld absorbed)",target,effectiveDamage,amountAbsorbed);
 }
 
-- (void)_doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target periodic:(BOOL)periodic
+- (void)_doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
-    NSNumber *healingValue = periodic ? spell.periodicHeal : spell.healing;
+    __block NSNumber *healingValue = periodic ? spell.periodicHeal : spell.healing;
+    
     if ( healingValue.doubleValue > 0 )
     {
+        [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"considering %@ for healing of %@",obj,spell);
+            if ( obj.healingIncrease )
+                healingValue = @( healingValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
+            else if ( obj.healingIncreasePercentage )
+                healingValue = @( healingValue.doubleValue * ( 1 + obj.healingIncreasePercentage.doubleValue ) );
+        }];
+        
         NSInteger newHealth = target.currentHealth.doubleValue + healingValue.doubleValue;
         if ( newHealth > ((Player *)target).health.integerValue )
             newHealth = ((Player *)target).health.integerValue;
@@ -182,9 +221,18 @@
         NSLog(@"%@ was healed for %@",target,healingValue);
     }
     
-    NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
+    __block NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
+    
     if ( absorbValue.doubleValue > 0 )
     {
+        [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"considering %@ for absorb of %@",obj,spell);
+            if ( obj.healingIncrease )
+                absorbValue = @( absorbValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
+            else if ( obj.healingIncreasePercentage )
+                absorbValue = @( absorbValue.doubleValue * ( 1 + obj.healingIncreasePercentage.doubleValue ) );
+        }];
+        
         NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
         //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
         //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;

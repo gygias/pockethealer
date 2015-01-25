@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "Raid.h"
 
+@class Entity;
+
 typedef void(^TargetedPlayerBlock)(Player *);
 
 @interface RaidFramesView : UIView
 
 @property (nonatomic,copy) TargetedPlayerBlock targetedPlayerBlock;
 
+@property Entity *player; // currently only for passing it to RaidFrame
 @property (strong,retain) Raid *raid;
 @property NSUInteger selectedFrame;
 

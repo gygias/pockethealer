@@ -50,17 +50,23 @@
 - (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message
 {
     EvangelismEffect *evangelism = [self _evangelismForEntity:source];
-    //NSLog(@"%@ has%@ evangelism stacks",source,evangelism?@"":@" no");
-    return evangelism != nil;
+    
+    if ( ! evangelism )
+    {
+        if ( message )
+            *message = @"Must have Evangelism stacks to cast Archangel";
+        return NO;
+    }
+    return YES;
 }
 
 - (void)hitWithSource:(Entity *)source target:(Entity *)target
 {
     EvangelismEffect *evangelism = [self _evangelismForEntity:source];
     ArchangelEffect *effect = [ArchangelEffect new];
-    [effect addStacks:evangelism.currentStacks.unsignedIntegerValue];
+    [effect addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
     
-    [source addStatusEffect:effect];
+    [source addStatusEffect:effect source:source];
     [source removeStatusEffect:evangelism];
 }
 

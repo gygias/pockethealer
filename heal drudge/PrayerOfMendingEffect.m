@@ -1,24 +1,25 @@
 //
-//  WeakenedSoulEffect.m
+//  PrayerOfMendingEffect.m
 //  heal drudge
 //
-//  Created by david on 1/23/15.
+//  Created by david on 1/24/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "WeakenedSoulEffect.h"
+#import "PrayerOfMendingEffect.h"
 
-#import "PowerWordShieldSpell.h"
+#import "ImageFactory.h"
 
-@implementation WeakenedSoulEffect
+@implementation PrayerOfMendingEffect
 
 - (id)init
 {
     if ( self = [super init] )
     {
-        self.name = @"Weakened Soul";
-        self.duration = 15;
-        self.image = [ImageFactory imageNamed:@"weakened_soul"];
+        self.name = @"Prayer of Mending";
+        self.duration = 30;
+        self.currentStacks = @5;
+        self.image = [ImageFactory imageNamed:@"prayer_of_mending"];
         self.drawsInFrame = YES;
         self.isBeneficial = YES;
     }
@@ -28,13 +29,6 @@
 
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
 {
-    if ( [spell isKindOfClass:[PowerWordShieldSpell class]] )
-    {
-        if ( message )
-            *message = @"You can't do that right now";
-        return NO;
-    }
-    
     return YES;
 }
 

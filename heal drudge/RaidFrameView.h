@@ -14,6 +14,7 @@
 
 + (CGSize)desiredSize;
 
+@property (strong,retain) Entity *player;
 @property (strong,retain) Entity *entity;
 @property BOOL selected;
 

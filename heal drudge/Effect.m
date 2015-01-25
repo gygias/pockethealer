@@ -15,6 +15,7 @@
     if ( self = [super init] )
     {
         self.maxStacks = @1;
+        self.currentStacks = @1;
     }
     return self;
 }
@@ -29,11 +30,17 @@
     return YES;
 }
 
+- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+{
+    return NO;
+}
+
 - (void)addStack
 {
     if ( self.currentStacks.integerValue < self.maxStacks.integerValue )
         self.currentStacks = @(self.currentStacks.integerValue + 1);
     self.startDate = [NSDate date];
+    NSLog(@"%@ has gained a stack -> %@",self,self.currentStacks);
 }
 
 - (void)removeStack
@@ -52,7 +59,11 @@
 {
     return @[ @"WeakenedSoulEffect",
               @"ArchangelEffect",
-              @"EvangelismEffect"
+              @"EvangelismEffect",
+              @"PrayerOfMendingEffect",
+              @"DivineAegisEffect",
+              @"PowerWordShieldEffect",
+              @"BorrowedTimeEffect"
               ];
 }
 

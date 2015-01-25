@@ -10,6 +10,7 @@
 
 #import "Entity.h"
 #import "HDClass.h"
+#import "Effect.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -272,9 +273,27 @@
     CGContextFillRect(context, rectangle);
 }
 
+#define STATUS_EFFECT_ORIGIN_OFFSET_X [RaidFrameView desiredSize].width * .5
+#define STATUS_EFFECT_ORIGIN_OFFSET_Y [RaidFrameView desiredSize].height * .75
+#define STATUS_EFFECT_WIDTH 7
+#define STATUS_EFFECT_HEIGHT STATUS_EFFECT_WIDTH
+
 - (void)_drawStatusEffectsInRect:(CGRect)rect
 {
-    
+    __block NSInteger maxVisibleStatusEffects = 3;
+    [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
+        if ( effect.drawsInFrame && ( effect.source == self.player ) )
+        {
+            CGRect effectRect = CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + maxVisibleStatusEffects * STATUS_EFFECT_WIDTH,
+                                           rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,
+                                           STATUS_EFFECT_WIDTH,
+                                           STATUS_EFFECT_HEIGHT);
+            [effect.image drawInRect:effectRect blendMode:kCGBlendModeNormal alpha:1.0];
+            
+            if ( --maxVisibleStatusEffects == 0 )
+                *stop = YES;
+        }
+    }];
 }
 
 

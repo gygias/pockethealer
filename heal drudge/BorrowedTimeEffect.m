@@ -1,26 +1,26 @@
 //
-//  WeakenedSoulEffect.m
+//  BorrowedTimeEffect.m
 //  heal drudge
 //
-//  Created by david on 1/23/15.
+//  Created by david on 1/24/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "WeakenedSoulEffect.h"
+#import "BorrowedTimeEffect.h"
 
-#import "PowerWordShieldSpell.h"
+#import "ImageFactory.h"
 
-@implementation WeakenedSoulEffect
+@implementation BorrowedTimeEffect
 
 - (id)init
 {
     if ( self = [super init] )
     {
-        self.name = @"Weakened Soul";
-        self.duration = 15;
-        self.image = [ImageFactory imageNamed:@"weakened_soul"];
-        self.drawsInFrame = YES;
+        self.name = @"Borrowed Time";
+        self.duration = 6;
+        self.image = [ImageFactory imageNamed:@"borrowed_time"];
         self.isBeneficial = YES;
+        //self.drawsInFrame = YES; i can't remember
     }
     
     return self;
@@ -28,13 +28,6 @@
 
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
 {
-    if ( [spell isKindOfClass:[PowerWordShieldSpell class]] )
-    {
-        if ( message )
-            *message = @"You can't do that right now";
-        return NO;
-    }
-    
     return YES;
 }
 

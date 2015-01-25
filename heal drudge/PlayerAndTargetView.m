@@ -36,6 +36,7 @@
         CGRect playerRect = CGRectMake( rect.origin.x, rect.origin.y, frameSize.width, frameSize.height );
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:playerRect];
         aFrame.entity = self.player;
+        aFrame.player = self.player;
         [aFrame drawRect:playerRect];
     }
     
@@ -45,6 +46,7 @@
         CGRect targetRect = CGRectMake( rect.origin.x + 2 * frameSize.width, rect.origin.y, frameSize.width, frameSize.height );
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
         aFrame.entity = self.target;
+        aFrame.player = self.player;
         [aFrame drawRect:targetRect];
     }
 }
