@@ -29,6 +29,8 @@
 @property NSNumber *currentResources;
 @property NSArray *statusEffects;
 @property BOOL isDead;
+@property BOOL isPlayer;
+@property BOOL isEnemy;
 @property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
 
@@ -37,6 +39,7 @@
 - (void)handleDeathFromAbility:(Ability *)ability;
 
 // returns whether or not a spell should be allowed to cast or begin casting on this entity
+- (BOOL)validateSourceOfSpell:(Spell *)spell target:(Entity *)target message:(NSString **)messagePtr;
 - (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
 
 // called when a spell begins casting, to accumulate modifiers from effects, etc.

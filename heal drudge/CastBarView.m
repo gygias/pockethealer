@@ -37,6 +37,7 @@
         return;
     
     double percentCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] / self.effectiveCastTime.doubleValue;
+    percentCast = self.castingSpell.isChanneled ? ( 1 - percentCast ) : percentCast;
     
     CGRect rectangle = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
     CGContextAddRect(context, rectangle);
@@ -50,10 +51,10 @@
                                      [UIColor whiteColor].CGColor);
     CGContextStrokePath(context);
     
-    [self.castingSpell.name drawInRect:rect withAttributes:nil];
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+    [self.castingSpell.name drawInRect:rect withAttributes:attributes];
     
     NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",self.effectiveCastTime.doubleValue - [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate]];
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
     CGFloat rightMargin = remainingTimeSize.width + 5;
     CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y, rightMargin, rect.size.height);

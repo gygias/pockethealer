@@ -38,9 +38,9 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target
+- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
 {
-    [super hitWithSource:source target:target];
+    [super hitWithSource:source target:target periodicTick:periodicTick];
     
     NSLog(@"i should heal the party too");
     

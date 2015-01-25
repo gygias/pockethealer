@@ -19,6 +19,15 @@
 
 @synthesize castingSpell = _castingSpell;
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        self.isPlayer = YES;
+    }
+    return self;
+}
+
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter
 {
     __block NSNumber *effectiveCastTime = nil;
@@ -30,9 +39,9 @@
         _castingSpell.lastCastStartDate = nil;
     }
     
-    if ( spell.castTime.doubleValue > 0 )
+    if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
     {
-        NSLog(@"%@ started casting %@",self,spell);
+        NSLog(@"%@ started %@ %@",self,spell.isChanneled?@"channeling":@"casting",spell);
         
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [self handleSourceOfSpellStart:spell withTarget:target modifiers:modifiers] )
@@ -63,18 +72,37 @@
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveCastTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            // blah
-            if ( thisCastStartDate != self.castingSpell.lastCastStartDate )
-            {
-                NSLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
-                return;
-            }
-            [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO];
-            _castingSpell = nil;
-            NSLog(@"%@ finished casting %@",self,spell);
-            
-        });
+        if ( spell.isChanneled )
+        {
+            NSTimeInterval timeBetweenTicks = effectiveCastTime.doubleValue / spell.channelTicks.doubleValue;
+            __block NSInteger ticksRemaining = spell.channelTicks.unsignedIntegerValue;
+            dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+            dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
+            dispatch_source_set_event_handler(timer, ^{
+                NSLog(@"%@ is channel-ticking",spell);
+                [encounter handleSpell:spell source:self target:target periodicTick:YES];
+                if ( --ticksRemaining <= 0 )
+                {
+                    NSLog(@"%@ has finished channeling",spell);
+                    dispatch_source_cancel(timer);
+                }
+            });
+            dispatch_resume(timer);
+        }
+        else
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveCastTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                // blah
+                if ( thisCastStartDate != self.castingSpell.lastCastStartDate )
+                {
+                    NSLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
+                    return;
+                }
+                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO];
+                _castingSpell = nil;
+                NSLog(@"%@ finished casting %@",self,spell);
+            });
+        }
     }
     else
     {

@@ -30,15 +30,33 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
+- (BOOL)validateSourceOfSpell:(Spell *)spell target:(Entity *)target message:(NSString **)messagePtr
 {
-    if ( source.currentResources.integerValue < spell.manaCost.integerValue )
+    if ( spell.nextCooldownDate )
+    {
+        if ( messagePtr )
+            *messagePtr = @"Not ready yet";
+        return NO;
+    }
+    if ( self.currentResources.integerValue < spell.manaCost.integerValue )
     {
         if ( messagePtr )
             *messagePtr = @"Not enough mana";
         return NO;
     }
-    else if ( self.isDead && ! spell.canBeCastOnDeadEntities )
+    else if ( self.isDead )
+    {
+        if ( messagePtr )
+            *messagePtr = @"You are dead";
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
+{
+    if ( self.isDead && ! spell.canBeCastOnDeadEntities )
     {
         if ( messagePtr )
             *messagePtr = @"Target is dead";
@@ -55,7 +73,7 @@
     }
     else if ( spell.spellType == BeneficialSpell )
     {
-        if ( [self.hdClass isEqual:[HDClass enemyClass]] )
+        if ( self.isEnemy )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";
@@ -91,6 +109,8 @@
 - (BOOL)_handleSpellStart:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
 {
     __block BOOL addedModifiers = NO;
+    
+    [spell handleStartWithSource:source target:target modifiers:modifiers];
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers] )

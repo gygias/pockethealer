@@ -29,6 +29,7 @@
         self.stamina = @1;
         self.currentHealth = self.health;
         self.hdClass = [HDClass enemyClass];
+        self.isEnemy = YES;
     }
     return self;
 }

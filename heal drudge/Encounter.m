@@ -110,7 +110,7 @@
     
     dispatch_async(_encounterQueue, ^{
     
-        NSLog(@"%@ has cast %@ on %@!",source,spell.name,target);
+        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel-tick":@"is casting",spell.name,target);
         
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [target handleTargetOfSpell:spell withSource:source modifiers:modifiers] )
@@ -122,8 +122,10 @@
             // extract scalars yada yada
         }
         
-        [self _doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
-        [self _doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+        if ( spell.spellType != BeneficialSpell && target.isEnemy )
+            [self _doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+        if ( spell.spellType != DetrimentalSpell && target.isPlayer )
+            [self _doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         
         if ( spell.cooldown.doubleValue )
         {
@@ -140,7 +142,7 @@
             });
         }
         
-        [spell hitWithSource:source target:target];
+        [spell hitWithSource:source target:target periodicTick:periodicTick];
         
         if ( target.currentHealth.integerValue <= 0 )
         {
@@ -162,7 +164,10 @@
             }
         }
         
-        source.currentResources = @(source.currentResources.integerValue - spell.manaCost.integerValue);
+        NSInteger effectiveCost = spell.manaCost.integerValue;
+        if ( spell.isChanneled )
+            effectiveCost = effectiveCost / spell.channelTicks.integerValue;
+        source.currentResources = @(source.currentResources.integerValue - effectiveCost);
         
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);

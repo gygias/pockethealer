@@ -37,9 +37,9 @@
     return self;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target
+- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
 {
-    [super hitWithSource:source target:target];
+    [super hitWithSource:source target:target periodicTick:periodicTick];
     
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];

@@ -77,11 +77,9 @@
         // determine target
         BOOL doCast = NO;
         Entity *target = nil;
-        if ( spell.nextCooldownDate )
-        {
-            NSLog(@"%@ can't cast %@ because it is on cooldown",encounter.player,spell);
-        }
-        else if ( spell.targeted )
+        
+        // determine target, shouldn't be doing validation at this level
+        if ( spell.targeted )
         {
             if ( encounter.player.target )
             {
@@ -107,7 +105,10 @@
         if ( doCast )
         {
             NSString *message = nil;
-            doCast = [target validateTargetOfSpell:spell withSource:encounter.player message:&message];
+            
+            doCast = [encounter.player validateSourceOfSpell:spell target:target message:&message];
+            if ( doCast )
+                doCast = [target validateTargetOfSpell:spell withSource:encounter.player message:&message];
             if ( doCast )
             {
                 NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target inEncounter:encounter];

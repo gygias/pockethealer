@@ -8,6 +8,8 @@
 
 #import "PenanceSpell.h"
 
+#import "EvangelismEffect.h"
+
 @implementation PenanceSpell
 
 - (id)initWithCaster:(Entity *)caster
@@ -24,20 +26,50 @@
         self.castableRange = @40;
         self.hitRange = @0;
         
-        self.castTime = @0;
+        self.castTime = @2;
         self.isChanneled = YES;
-        self.channelTime = @2;
+        self.channelTicks = @3;
         self.manaCost = @(0.0144 * caster.baseMana.doubleValue);//@(0.012 * caster.baseMana.floatValue);, that makes a player with 160000 static mana have 192000 "base mana"
-        self.damage = @3777;
-        self.healing = @10698;
+        self.periodicDamage = @3777;
+        self.periodicHeal = @10698;
         //self.absorb = @(( ( ( [caster.spellPower floatValue] * 5 ) + 2 ) * 1 ));
     }
     return self;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target
+- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
 {
-    [super hitWithSource:source target:target];
+    [super hitWithSource:source target:target periodicTick:periodicTick];
+}
+
+// one stack per cast, so this should be done on the 'start (of channel)' event
+- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{
+    [super handleStartWithSource:source target:target modifiers:modifiers];
+    
+    if ( target.isEnemy )
+    {
+        EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
+        if ( ! currentEvangelism )
+        {
+            currentEvangelism = [EvangelismEffect new];
+            [source addStatusEffect:currentEvangelism source:source];
+        }
+        else
+            [currentEvangelism addStack];
+    }
+}
+
+- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[EvangelismEffect class]] )
+        {
+            return (EvangelismEffect *)effect;
+        }
+    }
+    return nil;
 }
 
 - (NSArray *)hdClasses

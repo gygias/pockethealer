@@ -27,7 +27,11 @@
     return YES;
 }
 
-- (void)hitWithSource:(Entity *)source target:(Entity *)target
+- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{
+}
+
+- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
 {
 }
 

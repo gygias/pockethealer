@@ -40,7 +40,8 @@ typedef NS_ENUM(NSInteger, SpellType) {
 // state
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
-- (void)hitWithSource:(Entity *)source target:(Entity *)target;
+- (void)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)hitWithSource:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells
@@ -65,7 +66,7 @@ typedef NS_ENUM(NSInteger, SpellType) {
 @property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
 
 @property BOOL isChanneled;
-@property NSNumber *channelTime;
+@property NSNumber *channelTicks;
 
 @property BOOL isPeriodic;
 @property NSTimeInterval period;
