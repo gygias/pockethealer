@@ -17,7 +17,7 @@
         self.name = @"Evangelism";
         self.duration = 20;
         self.maxStacks = @5;
-        self.isBeneficial = YES;
+        self.effectType = BeneficialEffect;
     }
     
     return self;

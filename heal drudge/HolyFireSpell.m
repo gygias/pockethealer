@@ -23,7 +23,8 @@
         self.targeted = YES;
         self.cooldown = @10;
         self.castableRange = @30;
-        self.castTime = 0;
+        self.castTime = @0;
+        self.spellType = DetrimentalSpell;
         
         self.manaCost = @( 0.01 * caster.baseMana.floatValue );
         

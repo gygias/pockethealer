@@ -90,7 +90,7 @@
             }
             else
             {
-                if ( spell.isBeneficial )
+                if ( spell.spellType != DetrimentalSpell )
                 {
                     NSLog(@"auto-self casting %@",spell);
                     target = encounter.player;
@@ -110,8 +110,9 @@
             doCast = [target validateTargetOfSpell:spell withSource:encounter.player message:&message];
             if ( doCast )
             {
-                [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
+                NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
                 self.castBarView.castingSpell = spell;
+                self.castBarView.effectiveCastTime = effectiveCastTime;
             }
             else
                 NSLog(@"%@'s %@ failed: %@",encounter.player,spell,message);

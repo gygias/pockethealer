@@ -39,7 +39,11 @@
 // returns whether or not a spell should be allowed to cast or begin casting on this entity
 - (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr;
 
-// called when a spell is in the process of being cast, to accumulate modifications from effects, etc.
+// called when a spell begins casting, to accumulate modifiers from effects, etc.
+- (BOOL)handleSourceOfSpellStart:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (BOOL)handleTargetOfSpellStart:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers;
+
+// called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
 - (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers;
 - (BOOL)handleTargetOfSpell:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers;
 

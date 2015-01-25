@@ -44,7 +44,7 @@
             *messagePtr = @"Target is dead";
         return NO;
     }
-    else if ( ! spell.isBeneficial )
+    else if ( spell.spellType == DetrimentalSpell )
     {
         if ( [NSStringFromClass([self class]) isEqualToString:@"Player"] ) // XXX
         {
@@ -53,7 +53,7 @@
             return NO;
         }
     }
-    else
+    else if ( spell.spellType == BeneficialSpell )
     {
         if ( [self.hdClass isEqual:[HDClass enemyClass]] )
         {
@@ -76,6 +76,28 @@
         }
     }];
     return okay;
+}
+
+- (BOOL)handleSourceOfSpellStart:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    return [self _handleSpellStart:spell source:self target:target modifiers:modifiers];
+}
+
+- (BOOL)handleTargetOfSpellStart:(Spell *)spell withSource:(Entity *)source modifiers:(NSMutableArray *)modifiers
+{
+    return [self _handleSpellStart:spell source:source target:self modifiers:modifiers];
+}
+
+- (BOOL)_handleSpellStart:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    __block BOOL addedModifiers = NO;
+    
+    [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
+        if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers] )
+            addedModifiers = YES;
+    }];
+    
+    return addedModifiers;
 }
 
 - (BOOL)handleSourceOfSpell:(Spell *)spell withTarget:(Entity *)target modifiers:(NSMutableArray *)modifiers

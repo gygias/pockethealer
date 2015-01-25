@@ -22,11 +22,11 @@
         self.triggersGCD = YES;
         self.targeted = YES;
         self.cooldown = @10;
-        self.isBeneficial = YES;
+        self.spellType = BeneficialSpell;
         self.castableRange = @40;
         self.hitRange = @0;
         
-        self.castTime = 1.5;
+        self.castTime = @1.5;
         self.manaCost = @( 0.024 * caster.baseMana.floatValue );
         self.damage = @0;
         self.healing = @( [caster.spellPower floatValue] * 0.442787 );

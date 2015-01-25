@@ -30,6 +30,11 @@
     return YES;
 }
 
+- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+{
+    return NO;
+}
+
 - (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
 {
     return NO;

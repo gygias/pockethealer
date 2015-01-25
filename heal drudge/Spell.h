@@ -23,6 +23,12 @@ typedef NS_ENUM(NSInteger, DamageType) {
     PhysicalDamage  = 5
 };
 
+typedef NS_ENUM(NSInteger, SpellType) {
+    BeneficialSpell = 0,
+    DetrimentalSpell = 1,
+    BeneficialOrDeterimentalSpell
+};
+
 @interface Spell : NSObject
 
 // initialized with caster, but not target, so that base stats can be displayed based
@@ -51,11 +57,12 @@ typedef NS_ENUM(NSInteger, DamageType) {
 // instead of having damage(0) healing(+) denote beneficial,
 // in order to model spells like holy nova which damage enemies and
 // heal allies, this denotes which side of player/enemy the spell falls on
-@property BOOL isBeneficial;
+@property SpellType spellType;
 // range required to begin casting
 @property NSNumber *castableRange;
 // range of spell at the point of impact, 0 for N/A
 @property NSNumber *hitRange;
+@property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
 
 @property BOOL isChanneled;
 @property NSNumber *channelTime;
@@ -78,7 +85,7 @@ typedef NS_ENUM(NSInteger, DamageType) {
 
 // semi-transient (properties affected by player stats only)
 @property NSNumber *cooldown;
-@property double castTime;
+@property NSNumber *castTime;
 @property NSNumber *manaCost;
 @property NSNumber *damage;
 @property DamageType damageType;

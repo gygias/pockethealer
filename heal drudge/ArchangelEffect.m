@@ -18,7 +18,7 @@
         self.duration = 18;
         self.maxStacks = @5;
         self.stacksAreInvisible = YES;
-        self.isBeneficial = YES;
+        self.effectType = BeneficialEffect;
     }
     
     return self;

@@ -20,7 +20,7 @@
         self.duration = 15;
         self.image = [ImageFactory imageNamed:@"weakened_soul"];
         self.drawsInFrame = YES;
-        self.isBeneficial = YES;
+        self.effectType = DetrimentalEffect;
     }
     
     return self;

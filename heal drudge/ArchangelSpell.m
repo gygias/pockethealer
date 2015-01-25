@@ -22,11 +22,11 @@
         self.tooltip = @"Makes you wig out and be really sweet.";
         self.triggersGCD = YES;
         self.cooldown = @0;
-        self.isBeneficial = YES;
+        self.spellType = BeneficialSpell;
         self.castableRange = @0;
         self.hitRange = @0;
         
-        self.castTime = 0.0;
+        self.castTime = @0.0;
         self.manaCost = @0;
         self.damage = @0;
         self.healing = @0;

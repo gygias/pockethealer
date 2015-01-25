@@ -19,11 +19,11 @@
         self.tooltip = @"Throws a ninja star of holiness.";
         self.triggersGCD = YES;
         self.cooldown = @15;
-        self.isBeneficial = YES;
+        self.spellType = BeneficialSpell;
         self.castableRange = @0;
         self.hitRange = @0;
         
-        self.castTime = 0;
+        self.castTime = @0;
         self.manaCost = @( 0.02 * caster.baseMana.floatValue );
         self.damage = @0;
         self.healing = @( [caster.spellPower floatValue] * .566695 );

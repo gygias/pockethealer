@@ -12,7 +12,7 @@
 @class Spell;
 @class Entity;
 
-typedef NS_ENUM(NSInteger, EffectType) {
+typedef NS_ENUM(NSInteger, EffectSchool) {
     StandardEffect      = 0,
     MagicEffect         = 1,
     CurseEffect         = 2,
@@ -20,9 +20,16 @@ typedef NS_ENUM(NSInteger, EffectType) {
     DiseaseEffect       = 4
 };
 
+typedef NS_ENUM(NSInteger, EffectType) {
+    BeneficialEffect = 0,
+    DetrimentalEffect = 1,
+    BeneficialOrDetrimentalEffect
+};
+
 @interface Effect : NSObject
 
-@property EffectType type;
+@property EffectSchool school;
+@property EffectType effectType;
 @property NSString *name;
 @property NSString *tooltip;
 @property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
@@ -40,6 +47,7 @@ typedef NS_ENUM(NSInteger, EffectType) {
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
+- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers;
 - (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers;
 
 @end

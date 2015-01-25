@@ -26,16 +26,17 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     // fill bar
-    if ( [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] >= self.castingSpell.castTime )
+    if ( [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] >= self.effectiveCastTime.doubleValue )
     {
         self.castingSpell = nil;
+        self.effectiveCastTime = nil;
         return;
     }
     
-    if ( self.castingSpell.castTime <= 0 )
+    if ( self.effectiveCastTime.doubleValue <= 0 )
         return;
     
-    double percentCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] / self.castingSpell.castTime;
+    double percentCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] / self.effectiveCastTime.doubleValue;
     
     CGRect rectangle = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
     CGContextAddRect(context, rectangle);
@@ -50,6 +51,13 @@
     CGContextStrokePath(context);
     
     [self.castingSpell.name drawInRect:rect withAttributes:nil];
+    
+    NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",self.effectiveCastTime.doubleValue - [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate]];
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+    CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
+    CGFloat rightMargin = remainingTimeSize.width + 5;
+    CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y, rightMargin, rect.size.height);
+    [remainingTime drawInRect:remainingTimeRect withAttributes:attributes];
 }
 
 

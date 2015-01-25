@@ -20,5 +20,7 @@
 + (NSNumber *)attackPowerBonusFromAgility:(NSNumber *)agility andStrength:(NSNumber *)strength;
 + (NSNumber *)critBonusFromAgility:(NSNumber *)agility;
 + (NSNumber *)maxPowerForClass:(HDClass *)hdClass;
++ (NSNumber *)castTimeWithBaseCastTime:(NSNumber *)baseCastTime entity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
++ (NSNumber *)globalCooldownWithEntity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
 
 @end

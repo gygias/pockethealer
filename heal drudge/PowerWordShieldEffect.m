@@ -20,7 +20,7 @@
         self.duration = 15;
         self.image = [ImageFactory imageNamed:@"power_word_shield"];
         self.drawsInFrame = YES;
-        self.isBeneficial = YES;
+        self.effectType = BeneficialEffect;
     }
     
     return self;

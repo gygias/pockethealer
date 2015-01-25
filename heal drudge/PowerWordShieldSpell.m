@@ -24,11 +24,11 @@
         self.triggersGCD = YES;
         self.targeted = YES;
         self.cooldown = [caster.hdClass isEqual:[HDClass discPriest]] ? @0 : @6;
-        self.isBeneficial = YES;
+        self.spellType = BeneficialSpell;
         self.castableRange = @40;
         self.hitRange = @0;
         
-        self.castTime = 0;
+        self.castTime = @0;
         self.manaCost = @(0.024 * caster.baseMana.floatValue);
         self.damage = @0;
         self.healing = @0;
@@ -43,7 +43,7 @@
     
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
-    [target addStatusEffect:bt source:source];
+    [source addStatusEffect:bt source:source];
     
     // weakened soul
     WeakenedSoulEffect *weakenedSoul = [WeakenedSoulEffect new];

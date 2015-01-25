@@ -133,4 +133,40 @@
     return @100; // XXX prot/ret pally, etc
 }
 
++ (NSNumber *)castTimeWithBaseCastTime:(NSNumber *)baseCastTime entity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage
+{
+    // iliss 671, 679 haste
+    // heal 2.33 sec cast
+    // naked 2.5 sec cast
+    // 2.5 - 2.33 / 679 =  0.00025036818851
+    //
+    // flash heal 1.39 sec cast
+    // naked 1.5 sec cast
+    // 1.5 - 1.39 / 679 =  0.00016200294551
+    //
+    // penance 1.86 sec tick
+    // naked 2 sec
+    // 2 - 1.86 / 679 =    0.00020618556701
+    
+    // there seems to be some kind of curve to this relationship
+    // average = 0.00020618556701 secs per haste
+    double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
+    double reduction = ( buffRating * 0.00020618556701 );
+    NSLog(@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    return @( reduction > baseCastTime.doubleValue ? 0 : baseCastTime.doubleValue - reduction );
+}
+
++ (NSNumber *)globalCooldownWithEntity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage
+{
+    // iliss 671 679 haste
+    // 1.5 - 1.394 / 679 =  0.00015611192931
+    // 951 with borrowed time (in fact 1.4 * hasteRating :)
+    // 1.5 - 1.356 / 951 =  0.00015141955836
+    // average = 0.00015376574384
+    double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
+    double reduction = ( buffRating * 0.00015376574384 );
+    NSLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    return @( reduction > 1.5 ? 0 : 1.5 - reduction );
+}
+
 @end

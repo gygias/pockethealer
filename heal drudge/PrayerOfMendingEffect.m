@@ -21,7 +21,7 @@
         self.currentStacks = @5;
         self.image = [ImageFactory imageNamed:@"prayer_of_mending"];
         self.drawsInFrame = YES;
-        self.isBeneficial = YES;
+        self.effectType = BeneficialEffect;
     }
     
     return self;

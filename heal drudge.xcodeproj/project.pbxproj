@@ -178,6 +178,8 @@
 		63564D6A1A5724B80025ACDE /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D691A5724B80025ACDE /* Player.m */; };
 		63564D6C1A57260F0025ACDE /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63564D6B1A57260F0025ACDE /* Names.plist */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
+		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
+		6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645E1A74D61100D281B7 /* HolyNovaSpell.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -427,6 +429,10 @@
 		63564D6B1A57260F0025ACDE /* Names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Names.plist; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
 		636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemLevelAndStatsConverter.m; sourceTree = "<group>"; };
+		6378645A1A74D22700D281B7 /* PenanceSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PenanceSpell.h; sourceTree = "<group>"; };
+		6378645B1A74D22700D281B7 /* PenanceSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PenanceSpell.m; sourceTree = "<group>"; };
+		6378645D1A74D61100D281B7 /* HolyNovaSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolyNovaSpell.h; sourceTree = "<group>"; };
+		6378645E1A74D61100D281B7 /* HolyNovaSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyNovaSpell.m; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -685,6 +691,10 @@
 			children = (
 				634F49051A748A65008761C6 /* BorrowedTimeEffect.h */,
 				634F49061A748A65008761C6 /* BorrowedTimeEffect.m */,
+				6378645D1A74D61100D281B7 /* HolyNovaSpell.h */,
+				6378645E1A74D61100D281B7 /* HolyNovaSpell.m */,
+				6378645A1A74D22700D281B7 /* PenanceSpell.h */,
+				6378645B1A74D22700D281B7 /* PenanceSpell.m */,
 				6320749F1A718E0700AA4416 /* PowerWordShieldSpell.h */,
 				632074A01A718E0700AA4416 /* PowerWordShieldSpell.m */,
 				634F49021A7489E9008761C6 /* PowerWordShieldEffect.h */,
@@ -1051,6 +1061,7 @@
 			files = (
 				634F48DE1A734B89008761C6 /* Effect.m in Sources */,
 				632074BF1A71A5CA00AA4416 /* Entity.m in Sources */,
+				6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */,
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
@@ -1084,6 +1095,7 @@
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,
+				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
 				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,
 				632074B91A71A25600AA4416 /* FlashHealSpell.m in Sources */,

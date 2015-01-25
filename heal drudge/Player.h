@@ -17,7 +17,7 @@
 
 @interface Player : Entity
 
-- (void)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
+- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
 
 @property (readonly) Spell *castingSpell;
 

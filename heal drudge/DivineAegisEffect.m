@@ -19,7 +19,7 @@
         self.name = @"Divine Aegis";
         self.duration = 15;
         self.image = [ImageFactory imageNamed:@"divine_aegis"];
-        self.isBeneficial = YES;
+        self.effectType = BeneficialEffect;
     }
     
     return self;

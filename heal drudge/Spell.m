@@ -65,6 +65,7 @@
              @"DivineStarSpell",
              @"PrayerOfMendingSpell",
              @"PrayerOfHealingSpell",
+             @"PenanceSpell",
              
              @"HealingTideTotemSpell"
              ];

@@ -13,5 +13,6 @@
 @interface CastBarView : UIView
 
 @property Spell *castingSpell;
+@property NSNumber *effectiveCastTime;
 
 @end

@@ -14,6 +14,9 @@
 @property NSNumber *damageIncrease;
 @property NSNumber *healingIncreasePercentage;
 @property NSNumber *healingIncrease;
+@property NSNumber *hasteIncreasePercentage;
+@property BOOL      instantCast;
+@property NSNumber *powerCostDecreasePercentage;
 @property NSObject *source; // this isn't really necessary but helpful for debugging
 
 @end
