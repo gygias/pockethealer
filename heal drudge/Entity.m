@@ -10,6 +10,7 @@
 
 #import "Effect.h"
 #import "Spell.h"
+#import "ItemLevelAndStatsConverter.h"
 
 @implementation Entity
 
@@ -29,9 +30,21 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
+- (BOOL)validateTargetOfSpell:(Spell *)spell withSource:(Entity *)source message:(NSString **)messagePtr
 {
-    if ( ! spell.isBeneficial )
+    if ( source.currentResources.integerValue < spell.manaCost.integerValue )
+    {
+        if ( messagePtr )
+            *messagePtr = @"Not enough mana";
+        return NO;
+    }
+    else if ( self.isDead && ! spell.canBeCastOnDeadEntities )
+    {
+        if ( messagePtr )
+            *messagePtr = @"Target is dead";
+        return NO;
+    }
+    else if ( ! spell.isBeneficial )
     {
         if ( [NSStringFromClass([self class]) isEqualToString:@"Player"] ) // XXX
         {
@@ -50,13 +63,13 @@
         }
     }
     
-    if ( ! [spell validateWithSource:source target:self.target message:messagePtr] )
+    if ( ! [spell validateWithSource:source target:self message:messagePtr] )
         return NO;
     
     __block BOOL okay = YES;
     [_statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         
-        if ( ! [obj validateSpell:spell source:self target:self.target message:messagePtr] )
+        if ( ! [obj validateSpell:spell source:source target:self message:messagePtr] )
         {
             okay = NO;
             *stop = YES;
@@ -113,6 +126,8 @@
 
 - (void)beginEncounter:(Encounter *)encounter
 {
+    self.currentHealth = self.health;
+    self.currentResources = self.power;
     //NSLog(@"i, %@, should begin encounter",self);
 }
 
@@ -127,6 +142,57 @@
 {
     //NSLog(@"i, %@, should end encounter",self);
     self.stopped = YES;
+}
+
+// character
+
+
+@synthesize image; // no fucking idea XXX
+
++ (NSArray *)primaryStatKeys
+{
+    return @[ @"intellect", @"strength", @"agility" ];
+}
+
++ (NSArray *)secondaryStatKeys
+{
+    return @[ @"critRating", @"hasteRating", @"masteryRating" ];
+}
+
++ (NSArray *)tertiaryStatKeys
+{
+    return @[ @"versatilityRating", @"multistrikeRating", @"leechRating" ];
+}
+
+- (NSNumber *)health
+{
+    return [ItemLevelAndStatsConverter healthFromStamina:self.stamina];
+}
+
+- (NSNumber *)baseMana
+{
+    return self.power;
+}
+
+- (NSNumber *)spellPower
+{
+    return [ItemLevelAndStatsConverter spellPowerFromIntellect:self.intellect];
+}
+
+- (NSNumber *)attackPower
+{
+    return [ItemLevelAndStatsConverter attackPowerBonusFromAgility:self.agility andStrength:self.strength];
+}
+
+- (NSNumber *)primaryStat
+{
+    return [self valueForKey:self.hdClass.primaryStatKey];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ (%@)",self.name,self.hdClass];
+    //return [NSString stringWithFormat:@"%@ (%@)\n\t%@ health %@ power %@ int %@ agil %@ str %@ crit %@ haste %@ mastery",self.name,self.hdClass,self.health,self.power,self.intellect,self.agility,self.strength,self.critRating,self.hasteRating,self.masteryRating];
 }
 
 @end

@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Character.h"
+
+#import "Player.h"
 
 @interface State : NSObject
 
-@property Character *character;
+@property Player *player;
 
 // setup
 @property BOOL saveGuildToo;

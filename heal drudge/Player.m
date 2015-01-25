@@ -17,15 +17,7 @@
 
 @implementation Player
 
-@synthesize character = _character,
-            castingSpell = _castingSpell;
-
-- (void)setCharacter:(Character *)character
-{
-    self.currentHealth = character.health;
-    self.currentResources = character.power;
-    _character = character;
-}
+@synthesize castingSpell = _castingSpell;
 
 - (void)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter
 {
@@ -66,8 +58,7 @@
 
 - (NSString *)description
 {
-    NSString *desc = [self.character description];
-    return [NSString stringWithFormat:@"%@ [%@,%@]",desc,self.currentHealth,self.currentResources];
+    return [NSString stringWithFormat:@"%@ [%@,%@]",self.name,self.currentHealth,self.currentResources];
 }
 
 @end

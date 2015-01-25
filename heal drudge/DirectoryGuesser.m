@@ -29,7 +29,7 @@ NSMutableDictionary *sGiantFuckingDictionary = nil;
     return YES;
 }
 
-+ (BOOL)guessWhereToPutCharacter:(Character *)character
++ (BOOL)guessWhereToPutCharacter:(Entity *)character
 {
     if ( ! character.isComplete )
         NSLog(@"i can't store incomplete characters ya idjit");

@@ -53,18 +53,21 @@
     BOOL (^enemyTouchedBlock)(Enemy *);
     enemyTouchedBlock = ^(Enemy *enemy){
         encounter.player.target = enemy;
-        NSLog(@"%@ has targeted %@",encounter.player,enemy);
+        self.playerAndTargetView.target = enemy;
+        NSLog(@"player targeted enemy %@",enemy);
         return YES;
     };
     self.enemyFrameView.enemyTouchedHandler = enemyTouchedBlock;
     
     self.raidFramesView.raid = raid;
     self.raidFramesView.targetedPlayerBlock = ^(Entity *target){
-        NSLog(@"player targeted %@",target);
         encounter.player.target = target;
+        self.playerAndTargetView.target = target;
+        NSLog(@"player targeted %@",target);
     };
     //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_forceDraw:) userInfo:nil repeats:YES];
 
+    self.playerAndTargetView.player = aHealer;
     
     self.spellBarView.player = aHealer;
     BOOL (^castBlock)(Spell *);
@@ -79,43 +82,18 @@
         }
         else if ( spell.targeted )
         {
-            if ( ! encounter.player.target )
+            if ( encounter.player.target )
             {
-                // TODO auto self target setting?
-                if ( spell.isBeneficial )
-                {
-                    NSLog(@"auto-self casting %@",spell);
-                    target = encounter.player;
-                    doCast = YES;
-                }
+                target = encounter.player.target;
+                doCast = YES;
             }
             else
             {
                 if ( spell.isBeneficial )
                 {
-                    if ( [encounter.player.target isKindOfClass:[Enemy class]] )
-                    {
-                        NSLog(@"can't cast beneficial spell at enemy target");
-                    }
-                    else
-                    {
-                        NSLog(@"player is casting %@ on %@",spell,encounter.player.target);
-                        target = encounter.player.target;
-                        doCast = YES;
-                    }
-                }
-                else
-                {
-                    if ( [encounter.player.target isKindOfClass:[Player class]] )
-                    {
-                        NSLog(@"can't cast hostile spell on friendly");
-                    }
-                    else
-                    {
-                        NSLog(@"player is casting %@ on %@",spell,encounter.player.target);
-                        target = encounter.player.target;
-                        doCast = YES;
-                    }
+                    NSLog(@"auto-self casting %@",spell);
+                    target = encounter.player;
+                    doCast = YES;
                 }
             }
         }
@@ -128,12 +106,14 @@
         if ( doCast )
         {
             NSString *message = nil;
-            doCast = [target validateSpell:spell withSource:encounter.player message:&message];
+            doCast = [target validateTargetOfSpell:spell withSource:encounter.player message:&message];
             if ( doCast )
             {
                 [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
                 self.castBarView.castingSpell = spell;
             }
+            else
+                NSLog(@"%@'s %@ failed: %@",encounter.player,spell,message);
         }
         
         return doCast;
@@ -159,6 +139,7 @@
         [self.spellBarView setNeedsDisplay];
         [self.castBarView setNeedsDisplay];
         [self.enemyFrameView setNeedsDisplay];
+        [self.playerAndTargetView setNeedsDisplay];
     });
 }
 

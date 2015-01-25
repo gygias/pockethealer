@@ -14,6 +14,7 @@ extern const NSString *TankRole;
 
 typedef enum
 {
+    HDENEMYCLASS = 0,
     HDCLASSMIN = 1,
     HDWARRIOR = 1,
     HDPALADIN = 2,
@@ -93,7 +94,9 @@ typedef enum
     HDBLOODDK,
     HDFROSTDK,
     
-    HDSPECMAX
+    HDSPECMAX,
+    
+    HDENEMYSPEC
 } HDSPECID;
 
 @interface HDClass : NSObject
@@ -110,6 +113,7 @@ typedef enum
 + (id)classWithID:(HDCLASSID)classID spec:(HDSPECID)specID;
 + (HDClass *)classWithAPICharacterDictionary:(NSDictionary *)apiDict apiSpecName:(NSString *)apiSpecName;
 + (HDClass *)randomClass;
++ (HDClass *)enemyClass;
 
 + (BOOL)isHealerClass:(HDClass *)hdClass;
 - (BOOL)isHealerClass;

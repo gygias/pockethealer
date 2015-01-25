@@ -10,7 +10,7 @@
 
 @implementation DivineStarSpell
 
-- (id)initWithCaster:(Character *)caster
+- (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {

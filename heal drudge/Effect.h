@@ -34,5 +34,6 @@ typedef NS_ENUM(NSInteger, EffectType) {
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;
 - (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
+- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
 
 @end

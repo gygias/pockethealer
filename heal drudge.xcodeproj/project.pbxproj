@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
-		632073931A70538F00AA4416 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073921A70538F00AA4416 /* Character.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
 		632073991A707AF900AA4416 /* Guild.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073981A707AF900AA4416 /* Guild.m */; };
 		6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6320739B1A708E2600AA4416 /* LoadCharacterOptionsViewController.m */; };
@@ -166,6 +165,7 @@
 		634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EB1A7443F3008761C6 /* ArchangelEffect.m */; };
 		634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48EE1A744472008761C6 /* EvangelismEffect.m */; };
 		634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48F11A744AEA008761C6 /* EnemyFrameView.m */; };
+		634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48F41A746B86008761C6 /* PlayerAndTargetView.m */; };
 		63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D601A570C8C0025ACDE /* RaidFrameView.m */; };
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
@@ -204,8 +204,6 @@
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
 		631435FA1A72E94100BDD708 /* Attack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attack.m; sourceTree = "<group>"; };
-		632073911A70538F00AA4416 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
-		632073921A70538F00AA4416 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Character.m; sourceTree = "<group>"; };
 		632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadFromArmoryViewController.h; sourceTree = "<group>"; };
 		632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadFromArmoryViewController.m; sourceTree = "<group>"; };
 		632073971A707AF900AA4416 /* Guild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guild.h; sourceTree = "<group>"; };
@@ -397,6 +395,8 @@
 		634F48EE1A744472008761C6 /* EvangelismEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EvangelismEffect.m; sourceTree = "<group>"; };
 		634F48F01A744AEA008761C6 /* EnemyFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnemyFrameView.h; sourceTree = "<group>"; };
 		634F48F11A744AEA008761C6 /* EnemyFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnemyFrameView.m; sourceTree = "<group>"; };
+		634F48F31A746B86008761C6 /* PlayerAndTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerAndTargetView.h; sourceTree = "<group>"; };
+		634F48F41A746B86008761C6 /* PlayerAndTargetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerAndTargetView.m; sourceTree = "<group>"; };
 		63564D5F1A570C8C0025ACDE /* RaidFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFrameView.h; sourceTree = "<group>"; };
 		63564D601A570C8C0025ACDE /* RaidFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaidFrameView.m; sourceTree = "<group>"; };
 		63564D621A57233A0025ACDE /* RaidFramesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaidFramesView.h; sourceTree = "<group>"; };
@@ -487,6 +487,8 @@
 				6328FB581A73178B00DF6B50 /* SpellBarViewController.xib */,
 				634F48F01A744AEA008761C6 /* EnemyFrameView.h */,
 				634F48F11A744AEA008761C6 /* EnemyFrameView.m */,
+				634F48F31A746B86008761C6 /* PlayerAndTargetView.h */,
+				634F48F41A746B86008761C6 /* PlayerAndTargetView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -721,8 +723,6 @@
 				632074BE1A71A5CA00AA4416 /* Entity.m */,
 				63564D681A5724B80025ACDE /* Player.h */,
 				63564D691A5724B80025ACDE /* Player.m */,
-				632073911A70538F00AA4416 /* Character.h */,
-				632073921A70538F00AA4416 /* Character.m */,
 				632074C01A71A65B00AA4416 /* Enemy.h */,
 				632074C11A71A65B00AA4416 /* Enemy.m */,
 				632074A61A7194D200AA4416 /* Abilities */,
@@ -1026,11 +1026,11 @@
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
 				632074BC1A71A4E400AA4416 /* Encounter.m in Sources */,
 				632074B31A719DCC00AA4416 /* SmiteSpell.m in Sources */,
+				634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */,
 				63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
 				63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */,
 				63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */,
-				632073931A70538F00AA4416 /* Character.m in Sources */,
 				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,

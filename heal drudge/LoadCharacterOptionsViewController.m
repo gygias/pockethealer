@@ -8,8 +8,10 @@
 
 #import "LoadCharacterOptionsViewController.h"
 
-#import "Character.h"
+#import "Entity.h"
+#import "Guild.h"
 #import "ImageFactory.h"
+#import "WoWRealm.h"
 
 @interface LoadCharacterOptionsViewController ()
 
@@ -21,37 +23,37 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if ( self.state.character.image )
-        self.thumbnailView.image = self.state.character.image;
+    if ( self.state.player.image )
+        self.thumbnailView.image = self.state.player.image;
     else
         self.thumbnailView.image = nil;
     
-    if ( self.state.character.name )
-        self.nameLabel.text = [NSString stringWithFormat:@"%@-%@",self.state.character.titleAndName,self.state.character.realm.name?self.state.character.realm.name:@"???"];
+    if ( self.state.player.name )
+        self.nameLabel.text = [NSString stringWithFormat:@"%@-%@",self.state.player.titleAndName,self.state.player.realm.name?self.state.player.realm.name:@"???"];
     else
         self.nameLabel.text = @"???";
     
-    if ( self.state.character.specName )
-        self.specLabel.text = [NSString stringWithFormat:@"%@ %@ / %@",self.state.character.level?self.state.character.level:@"???",
-                               self.state.character.specName,
-                               self.state.character.offspecName?self.state.character.offspecName:@"???"];
+    if ( self.state.player.specName )
+        self.specLabel.text = [NSString stringWithFormat:@"%@ %@ / %@",self.state.player.level?self.state.player.level:@"???",
+                               self.state.player.specName,
+                               self.state.player.offspecName?self.state.player.offspecName:@"???"];
     else
         self.specLabel.text = @"???";
     
-    if ( self.state.character.guild )
-        self.guildLabel.text = self.state.character.guild.name;
+    if ( self.state.player.guild )
+        self.guildLabel.text = self.state.player.guild.name;
     else
         self.guildLabel.text = @"???";
     
-    if ( self.state.character.averageItemLevel )
-        self.ilvlLabel.text = [NSString stringWithFormat:@"%@ ilvl (%@ equipped)",self.state.character.averageItemLevel,
-                               self.state.character.averageItemLevelEquipped?self.state.character.averageItemLevelEquipped:@"???"];
+    if ( self.state.player.averageItemLevel )
+        self.ilvlLabel.text = [NSString stringWithFormat:@"%@ ilvl (%@ equipped)",self.state.player.averageItemLevel,
+                               self.state.player.averageItemLevelEquipped?self.state.player.averageItemLevelEquipped:@"???"];
     else
         self.ilvlLabel.text = @"???";
     
-    self.specView.image = [ImageFactory imageForSpec:self.state.character.hdClass];
+    self.specView.image = [ImageFactory imageForSpec:self.state.player.hdClass];
     
-    self.guildTooSwitch.enabled = self.state.character.guild;
+    self.guildTooSwitch.enabled = self.state.player.guild;
 }
 
 - (IBAction)ilvlSliderDidSomething:(id)sender

@@ -8,7 +8,8 @@
 
 #import "RaidFrameView.h"
 
-#import "Player.h"
+#import "Entity.h"
+#import "HDClass.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -62,7 +63,7 @@
     // Drawing code
     
     //NSLog(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-    double snapshottedHealthPercentage = self.player.currentHealth.doubleValue / self.player.character.health.doubleValue;//(CGFloat)( arc4random() % 100 ) / 100 ;
+    double snapshottedHealthPercentage = self.entity.currentHealth.doubleValue / self.entity.health.doubleValue;//(CGFloat)( arc4random() % 100 ) / 100 ;
     //if ( snapshottedHealthPercentage < 1.0 )
     //    NSLog(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
     [self _drawBackgroundInRect:rect];
@@ -123,7 +124,7 @@
 
 - (void)_drawHealthInRect:(CGRect)rect withHealth:(double)health
 {
-    if ( self.player.isDead )
+    if ( self.entity.isDead )
         return;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -135,17 +136,17 @@
     
     //NSLog(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
     CGContextSetStrokeColorWithColor(context,
-                                     self.player.character.hdClass.classColor.CGColor);
+                                     self.entity.hdClass.classColor.CGColor);
     
     CGContextStrokePath(context);
     CGContextSetFillColorWithColor(context,
-                                   self.player.character.hdClass.classColor.CGColor);
+                                   self.entity.hdClass.classColor.CGColor);
     CGContextFillRect(context, rectangle);
 }
 
 - (void)_drawIncomingHealsInRect:(CGRect)rect withHealth:(double)health
 {
-    if ( self.player.isDead )
+    if ( self.entity.isDead )
         return;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -175,13 +176,13 @@
 
 - (void)_drawAbsorbsInRect:(CGRect)rect withHealth:(double)health
 {
-    if ( self.player.isDead )
+    if ( self.entity.isDead )
         return;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGFloat originX = rect.origin.x + RAID_FRAME_HEALTH_INSET + ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
-    CGFloat absorbs = self.player.currentAbsorb.doubleValue / self.player.character.health.doubleValue;//( (CGFloat)( arc4random() % 50 ) / 100 );
+    CGFloat absorbs = self.entity.currentAbsorb.doubleValue / self.entity.health.doubleValue;//( (CGFloat)( arc4random() % 50 ) / 100 );
     //NSLog(@"absorbs: %f origin: %f",absorbs,originX);
     
     // optimize for <= incoming heals?
@@ -223,14 +224,31 @@
     //CGContextRef context = UIGraphicsGetCurrentContext();
     CGPoint namePoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, ( rect.size.height / 2 ) + rect.origin.y);
     NSMutableDictionary *attributes = [NSMutableDictionary new];
-    if ( self.player.isDead )
+    if ( self.entity.isDead )
         attributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    [self.player.character.name drawAtPoint:namePoint withAttributes:attributes];
+    
+    BOOL truncated = NO;
+    NSString *textToDraw = self.entity.name;
+    CGSize stringSize = [textToDraw sizeWithAttributes:attributes];
+    while ( stringSize.width > rect.size.width && [textToDraw length] > 0 )
+    {
+        // TODO because these are instantiated for each draw, this is extra inefficient
+        textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
+        stringSize = [textToDraw sizeWithAttributes:attributes];
+        truncated = YES;
+    }
+    if ( truncated )
+    {
+        textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
+        textToDraw = [textToDraw stringByAppendingString:@"…"];
+    }
+    
+    [textToDraw drawAtPoint:namePoint withAttributes:attributes];
 }
 
 - (void)_drawResourceBarInRect:(CGRect)rect
 {
-    double resourcePercentage = self.player.currentResources.doubleValue / self.player.character.power.doubleValue;
+    double resourcePercentage = self.entity.currentResources.doubleValue / self.entity.power.doubleValue;
     
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -246,11 +264,11 @@
     CGContextAddRect(context, rectangle);
     
     CGContextSetStrokeColorWithColor(context,
-                                     self.player.character.hdClass.resourceColor.CGColor);
+                                     self.entity.hdClass.resourceColor.CGColor);
     
     CGContextStrokePath(context);
     CGContextSetFillColorWithColor(context,
-                                   self.player.character.hdClass.resourceColor.CGColor);
+                                   self.entity.hdClass.resourceColor.CGColor);
     CGContextFillRect(context, rectangle);
 }
 

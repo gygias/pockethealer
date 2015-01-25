@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class Character,HDClass;
+@class Entity,HDClass;
 
 @interface ItemLevelAndStatsConverter : NSObject
 
-+ (void)assignStatsToCharacter:(Character *)character basedOnAverageEquippedItemLevel:(NSNumber *)ilvl;
++ (void)assignStatsToEntity:(Entity *)entity basedOnAverageEquippedItemLevel:(NSNumber *)ilvl;
 
 + (NSNumber *)spellPowerFromIntellect:(NSNumber *)intellect;
 + (NSNumber *)healthFromStamina:(NSNumber *)stamina;

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WoWRealm.h"
-#import "Character.h"
+#import "Entity.h"
 
 @interface WoWAPIRequest : NSURLConnection
 
@@ -32,10 +32,10 @@
 //+ (NSArray *)characterNamesFromGuildListResponse:(id)response;
 + (NSUInteger)averageItemLevelFromCharacterItemsResponse:(id)response;
 
-+ (Character *)characterWithAPICharacterDict:(NSDictionary *)apiCharacterDict fetchingImage:(BOOL)fetchImage;
 // "members" of a guild list request have a layer of upper indirection including the guild rank, as opposed
 // to dictionaries returned from individual character queries
-+ (Character *)characterWithAPIGuildMemberDict:(NSDictionary *)apiGuildMemberDict fetchingImage:(BOOL)fetchImage;
++ (Entity *)entityWithAPIGuildMemberDict:(NSDictionary *)apiGuildMemberDict fetchingImage:(BOOL)fetchImage;
++ (Entity *)entityWithAPICharacterDict:(NSDictionary *)apiCharacterDict fetchingImage:(BOOL)fetchImage;
 
 + (const NSString *)roleFromAPIRoleString:(NSString *)apiRoleString;
 

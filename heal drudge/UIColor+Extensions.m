@@ -17,9 +17,14 @@
 
 + (UIColor *)cooldownClockColor
 {
-    UIColor *grayColor = [UIColor grayColor];
-    UIColor *cooldownClockColor = [grayColor colorWithAlphaComponent:0.5];
+    UIColor *blackColor = [UIColor blackColor];
+    UIColor *cooldownClockColor = [blackColor colorWithAlphaComponent:0.5];
     return cooldownClockColor;
+}
+
++ (UIColor *)disabledSpellColor
+{
+    return [self cooldownClockColor];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "LoadingFromArmoryViewController.h"
 
 #import "WoWAPIRequest.h"
+#import "Guild.h"
 
 @interface LoadingFromArmoryViewController ()
 
@@ -36,9 +37,9 @@
     if ( self.state.saveGuildToo )
     {
         WoWAPIRequest *guildListRequest = [WoWAPIRequest new];
-        guildListRequest.realm = self.state.character.realm;
+        guildListRequest.realm = self.state.player.realm;
         guildListRequest.isGuildMemberListRequest = YES;
-        guildListRequest.guildName = self.state.character.guild.name;
+        guildListRequest.guildName = self.state.player.guild.name;
         
         [guildListRequest sendRequestWithCompletionHandler:^(BOOL success, id result) {
             if ( ! success )
@@ -64,7 +65,7 @@
             
             for ( NSDictionary *guildieAPIDict in resultDict[@"members"] )
             {
-                Character *tempCharacter = [WoWAPIRequest characterWithAPIGuildMemberDict:guildieAPIDict fetchingImage:NO];
+                Entity *tempCharacter = [WoWAPIRequest entityWithAPIGuildMemberDict:guildieAPIDict fetchingImage:NO];
                 WoWAPIRequest *guildieInfoRequest = [WoWAPIRequest new];
                 guildieInfoRequest.realm = tempCharacter.realm;
                 guildieInfoRequest.isCharacterInfoRequest = YES;

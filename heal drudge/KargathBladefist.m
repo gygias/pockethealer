@@ -14,8 +14,7 @@
 {
     if ( self = [super init] )
     {
-        self.health = @100000;
-        self.currentHealth = self.health;
+        self.stamina = @(1000000 / 60);
     }    
     return self;
 }

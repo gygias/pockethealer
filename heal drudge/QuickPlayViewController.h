@@ -12,12 +12,14 @@
 #import "RaidFramesView.h"
 #import "SpellBarView.h"
 #import "CastBarView.h"
+#import "PlayerAndTargetView.h"
 
 @interface QuickPlayViewController : BaseViewController
 
 @property IBOutlet EnemyFrameView *enemyFrameView;
 @property IBOutlet RaidFramesView *raidFramesView;
-@property IBOutlet SpellBarView *spellBarView;
 @property IBOutlet CastBarView *castBarView;
+@property IBOutlet PlayerAndTargetView *playerAndTargetView;
+@property IBOutlet SpellBarView *spellBarView;
 
 @end

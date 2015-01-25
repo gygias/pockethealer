@@ -25,17 +25,14 @@
     for ( ; idx < randomSize; idx++ )
     {
         Player *aPlayer = [Player new];
-        Character *aCharacter = [Character new];
-        aCharacter.name = names[idx];
-        aCharacter.averageItemLevelEquipped = @630;
-        aCharacter.hdClass = [HDClass randomClass];
+        aPlayer.name = names[idx];
+        aPlayer.averageItemLevelEquipped = @630;
+        aPlayer.hdClass = [HDClass randomClass];
         
-        [ItemLevelAndStatsConverter assignStatsToCharacter:aCharacter
+        [ItemLevelAndStatsConverter assignStatsToEntity:aPlayer
                            basedOnAverageEquippedItemLevel:@630];
         
-        aPlayer.character = aCharacter;
-        
-        NSLog(@"added %@ (%@)",aPlayer,aCharacter);
+        NSLog(@"added %@",aPlayer);
         
         // cheap ass randomize
         if ( idx == 0 )
@@ -55,21 +52,18 @@
 {
     Raid *raid = [self randomRaid];
     
-    Character *gygiasChar = [Character new];
-    gygiasChar.name = @"Gygias";
-    gygiasChar.averageItemLevelEquipped = @630;
-    gygiasChar.hdClass = [HDClass discPriest];
-    
-    [ItemLevelAndStatsConverter assignStatsToCharacter:gygiasChar
-                       basedOnAverageEquippedItemLevel:@630];
-    
     Player *gygias = [Player new];
-    gygias.character = gygiasChar;
+    gygias.name = @"Gygias";
+    gygias.averageItemLevelEquipped = @630;
+    gygias.hdClass = [HDClass discPriest];
+    
+    [ItemLevelAndStatsConverter assignStatsToEntity:gygias
+                    basedOnAverageEquippedItemLevel:@630];
     
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;
     [raidCopy enumerateObjectsUsingBlock:^(Player *obj, NSUInteger idx, BOOL *stop) {
-        if ( [obj.character.name compare:gygias.character.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+        if ( [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
         {
             gygiasIdx = idx;
             *stop = YES;
@@ -134,10 +128,10 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     __block NSMutableArray *filteredPlayers = nil;
     [self.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Player *player = (Player *)obj;
-        if ( [player.character.hdClass hasRole:role] &&
+        if ( [player.hdClass hasRole:role] &&
                 ( ( range == AnyRange )
-                    || ( player.character.hdClass.isRanged && ( range == RangeRange ) )
-                    || ( ! player.character.hdClass.isRanged && ( range == MeleeRange ) )
+                    || ( player.hdClass.isRanged && ( range == RangeRange ) )
+                    || ( ! player.hdClass.isRanged && ( range == MeleeRange ) )
              )
             )
         {

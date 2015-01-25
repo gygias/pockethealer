@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "Entity.h"
-#import "Character.h"
 
 @class Spell;
 
@@ -17,8 +16,6 @@
 #define HD_NAME_MAX 12
 
 @interface Player : Entity
-
-@property (nonatomic/*,setter=setCharacter*/) Character *character;
 
 - (void)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
 

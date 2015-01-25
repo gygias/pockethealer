@@ -8,11 +8,12 @@
 
 #import "ItemLevelAndStatsConverter.h"
 
-#import "Character.h"
+#import "Entity.h"
+#import "HDClass.h"
 
 @implementation ItemLevelAndStatsConverter
 
-+ (void)assignStatsToCharacter:(Character *)character basedOnAverageEquippedItemLevel:(NSNumber *)ilvl
++ (void)assignStatsToEntity:(Entity *)entity basedOnAverageEquippedItemLevel:(NSNumber *)ilvl
 {
     // iliss 4448 (668) -
     //                  p/sta/sec
@@ -44,8 +45,8 @@
         staminaScalar = 6.659;
     else if ( ilvlInt >= 650 )
         staminaScalar = 6.177;
-    character.stamina = @( staminaScalar * ilvl.floatValue );
-    character.power = [self maxPowerForClass:character.hdClass];
+    entity.stamina = @( staminaScalar * ilvl.floatValue );
+    entity.power = [self maxPowerForClass:entity.hdClass];
     
     // primary stat
     // healer
@@ -56,15 +57,15 @@
     float primaryScalar = 5.5;
     if ( ilvlInt <= 650 )
         primaryScalar = 5.0;
-    NSString *myPrimaryStatKey = character.hdClass.primaryStatKey;
-    for ( NSString *primaryStatKey in [Character primaryStatKeys] )
+    NSString *myPrimaryStatKey = entity.hdClass.primaryStatKey;
+    for ( NSString *primaryStatKey in [Entity primaryStatKeys] )
     {
         NSNumber *primaryStat = nil;
         if ( [primaryStatKey isEqual:myPrimaryStatKey] )
             primaryStat = @( primaryScalar * ilvl.floatValue );
         else
             primaryStat = @500; // whatever, it obviously gets a level-based base value
-        [character setValue:primaryStat forKey:primaryStatKey];
+        [entity setValue:primaryStat forKey:primaryStatKey];
     }
     
     // secondary stat
@@ -72,20 +73,20 @@
     //  tak 322m+1307c+855h gin 495m+877c+654h  lir 397m+852c+861h  il 1127m+697c+565h
     //  2484(3.816)         2026(3.088)         2110(3.168)         2389(3.576)
     float secondaryScalar = 3.4;
-    for ( NSString *secondaryStatKey in [Character secondaryStatKeys] )
+    for ( NSString *secondaryStatKey in [Entity secondaryStatKeys] )
     {
         NSNumber *secondaryStatsTotal = @( secondaryScalar * ilvl.floatValue );
         NSNumber *secondaryStatSplitEvenly = @( secondaryStatsTotal.integerValue / 3 );
-        [character setValue:secondaryStatSplitEvenly forKey:secondaryStatKey];
+        [entity setValue:secondaryStatSplitEvenly forKey:secondaryStatKey];
     }
     
     // tertiary
     // whatever for now
     float tertiaryScalar = 0.1;
-    for ( NSString *tertiaryStatKey in [Character tertiaryStatKeys] )
+    for ( NSString *tertiaryStatKey in [Entity tertiaryStatKeys] )
     {
         NSNumber *tertiaryStat = @( tertiaryScalar * ilvl.floatValue );
-        [character setValue:tertiaryStat forKey:tertiaryStatKey];
+        [entity setValue:tertiaryStat forKey:tertiaryStatKey];
     }
     
     // these are to be synthesized?

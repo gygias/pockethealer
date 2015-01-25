@@ -9,6 +9,7 @@
 #import "LoadFromArmoryViewController.h"
 
 #import "WoWAPIRequest.h"
+#import "Guild.h"
 #import "ImageFactory.h"
 
 @interface LoadFromArmoryViewController ()
@@ -127,35 +128,35 @@
 //            NSDictionary *aAPICharacterGuildDict = [[response objectForKey:@"members"] objectAtIndex:randomIndex]; // XXX
 //            NSDictionary *aAPICharacterDict = aAPICharacterGuildDict[@"character"]; // also includes a 'rank' number
 //            NSLog(@"%@",aAPICharacterDict);
-            Character *character = [WoWAPIRequest characterWithAPICharacterDict:response
-                                                                  fetchingImage:YES];
+            Entity *entity =     [WoWAPIRequest entityWithAPICharacterDict:response
+                                                                fetchingImage:YES];
 //            character.guildName = guildName;
-            if ( character.image )
-                self.thumbnailView.image = character.image;
+            if ( entity.image )
+                self.thumbnailView.image = entity.image;
             else
                 self.thumbnailView.image = nil;
             
-            if ( character.name )
-                self.nameLabel.text = [NSString stringWithFormat:@"%@-%@",character.titleAndName,character.realm.name?character.realm.name:@"???"];
+            if ( entity.name )
+                self.nameLabel.text = [NSString stringWithFormat:@"%@-%@",entity.titleAndName,entity.realm.name?entity.realm.name:@"???"];
             else
                 self.nameLabel.text = @"???";
             
-            if ( character.specName )
-                self.specLabel.text = [NSString stringWithFormat:@"%@ %@ / %@",character.level?character.level:@"???",character.specName,character.offspecName?character.offspecName:@"???"];
+            if ( entity.specName )
+                self.specLabel.text = [NSString stringWithFormat:@"%@ %@ / %@",entity.level?entity.level:@"???",entity.specName,entity.offspecName?entity.offspecName:@"???"];
             else
                 self.specLabel.text = @"???";
             
-            if ( character.guild )
-                self.guildLabel.text = character.guild.name;
+            if ( entity.guild )
+                self.guildLabel.text = entity.guild.name;
             else
                 self.guildLabel.text = @"???";
             
-            if ( character.averageItemLevel )
-                self.ilvlLabel.text = [NSString stringWithFormat:@"%@ ilvl (%@ equipped)",character.averageItemLevel,character.averageItemLevelEquipped?character.averageItemLevelEquipped:@"???"];
+            if ( entity.averageItemLevel )
+                self.ilvlLabel.text = [NSString stringWithFormat:@"%@ ilvl (%@ equipped)",entity.averageItemLevel,entity.averageItemLevelEquipped?entity.averageItemLevelEquipped:@"???"];
             else
                 self.ilvlLabel.text = @"???";
             
-            self.specView.image = [ImageFactory imageForSpec:character.hdClass];
+            self.specView.image = [ImageFactory imageForSpec:entity.hdClass];
             
             //            NSArray *realmsArray = [WoWAPIRequest realmsFromRealmStatusResponse:response country:realmCountry];
             //            NSLog(@"%@",realmsArray);
@@ -171,7 +172,7 @@
             [self.loadButton setEnabled:NO];
             [self.continueButton setEnabled:YES];
             
-            self.state.character = character;
+            self.state.player = entity;
         }];
     }
 }

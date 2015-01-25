@@ -20,6 +20,11 @@ const NSString *TankRole = @"TANK";
 
 @synthesize classID = _classID, specID = _specID;
 
++ (HDClass *)enemyClass
+{
+    return [HDClass classWithID:HDENEMYCLASS spec:HDENEMYSPEC];
+}
+
 + (HDClass *)randomClass
 {
     HDCLASSID someClassID = arc4random() % HDCLASSMAX;
@@ -215,6 +220,8 @@ const NSString *WoWAPIClassKey = @"class";
             break;
         case HDCLASSMAX:
             break;
+        default:
+            break;
     }
     
     return [HDClass classWithID:classID spec:specID];
@@ -256,6 +263,11 @@ const NSString *WoWAPIClassKey = @"class";
             break;
         case HDDEATHKNIGHT:
             return [UIColor redColor];
+            break;
+        case HDENEMYCLASS:
+            return [UIColor redColor];
+            break;
+        default:
             break;
     }
     
@@ -301,6 +313,8 @@ const NSString *WoWAPIClassKey = @"class";
         case HDDEATHKNIGHT:
             return [UIColor cyanColor];
             break;
+        default:
+            break;
     }
     
     return [UIColor blackColor];
@@ -325,6 +339,8 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDSHADOWPRIEST:
                     specString = @"shadow";
                     break;
+                default:
+                    break;
             }
             break;
         case HDPALADIN:
@@ -339,6 +355,8 @@ const NSString *WoWAPIClassKey = @"class";
                     break;
                 case HDRETPALADIN:
                     specString = @"retribution";
+                    break;
+                default:
                     break;
             }
             break;
@@ -355,6 +373,8 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDELESHAMAN:
                     specString = @"elemental";
                     break;
+                default:
+                    break;
             }
             break;
         case HDDRUID:
@@ -369,6 +389,8 @@ const NSString *WoWAPIClassKey = @"class";
                     break;
                 case HDFERALDRUID:
                     specString = @"feral";
+                    break;
+                default:
                     break;
             }
             break;
@@ -385,6 +407,8 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDWINDWALKERMONK:
                     specString = @"windwalker";
                     break;
+                default:
+                    break;
             }
             break;
         case HDHUNTER:
@@ -399,6 +423,8 @@ const NSString *WoWAPIClassKey = @"class";
                     break;
                 case HDMARKSMANHUNTER:
                     specString = @"marksman";
+                    break;
+                default:
                     break;
             }
             break;
@@ -415,6 +441,8 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDARCANEMAGE:
                     specString = @"arcane";
                     break;
+                default:
+                    break;
             }
             break;
         case HDWARRIOR:
@@ -429,6 +457,8 @@ const NSString *WoWAPIClassKey = @"class";
                     break;
                 case HDARMSWARRIOR:
                     specString = @"arms";
+                    break;
+                default:
                     break;
             }
             break;
@@ -445,6 +475,8 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDDEMONOLOGYWARLOCK:
                     specString = @"demonology";
                     break;
+                default:
+                    break;
             }
             break;
         case HDROGUE:
@@ -459,6 +491,8 @@ const NSString *WoWAPIClassKey = @"class";
                     break;
                 case HDASSASSINATIONROGUE:
                     specString = @"assassination";
+                    break;
+                default:
                     break;
             }
             break;
@@ -475,7 +509,14 @@ const NSString *WoWAPIClassKey = @"class";
                 case HDFROSTDK:
                     specString = @"frost";
                     break;
+                default:
+                    break;
             }
+            break;
+        case HDENEMYCLASS:
+            classString = @"enemy class";
+            break;
+        default:
             break;
     }
     
@@ -558,7 +599,7 @@ const NSString *WoWAPIClassKey = @"class";
 
 - (BOOL)hasRole:(const NSString *)role
 {
-    return [[self role] isEqualToString:role];
+    return [[self role] isEqualToString:(NSString *)role];
 }
 
 - (NSString *)primaryStatKey
@@ -606,7 +647,7 @@ const NSString *WoWAPIClassKey = @"class";
         case HDDEATHKNIGHT:
             return @"strength";
             break;
-        case HDCLASSMAX:
+        default:
             break;
     }
     

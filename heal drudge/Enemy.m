@@ -26,8 +26,9 @@
     if ( self = [super init] )
     {
         [self _initializeAbilities];
-        self.health = @1;
+        self.stamina = @1;
         self.currentHealth = self.health;
+        self.hdClass = [HDClass enemyClass];
     }
     return self;
 }
@@ -54,6 +55,8 @@
 
 - (void)beginEncounter:(Encounter *)encounter
 {
+    [super beginEncounter:encounter];
+    
     [_abilities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Ability *ability = (Ability *)obj;
         //NSLog(@"%@: %@",ability,ability.nextFireDate);

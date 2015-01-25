@@ -141,6 +141,8 @@
             }
         }
         
+        source.currentResources = @(source.currentResources.integerValue - spell.manaCost.integerValue);
+        
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);
     });
@@ -172,8 +174,8 @@
     if ( healingValue.doubleValue > 0 )
     {
         NSInteger newHealth = target.currentHealth.doubleValue + healingValue.doubleValue;
-        if ( newHealth > ((Player *)target).character.health.integerValue )
-            newHealth = ((Player *)target).character.health.integerValue;
+        if ( newHealth > ((Player *)target).health.integerValue )
+            newHealth = ((Player *)target).health.integerValue;
         
         target.currentHealth = @(newHealth);
         

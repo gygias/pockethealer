@@ -33,7 +33,7 @@
         //NSLog(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
         CGRect thisRect = CGRectMake( idxParty * frameSize.width, partyPosition * frameSize.height, frameSize.width, frameSize.height );
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:thisRect];
-        aFrame.player = thisPlayer;
+        aFrame.entity = thisPlayer;
         if ( idx == self.selectedFrame )
             aFrame.selected = YES;
         [aFrame drawRect:thisRect];

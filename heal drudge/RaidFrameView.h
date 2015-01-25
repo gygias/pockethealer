@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HDClass.h"
-#import "Player.h"
+
+@class Entity;
 
 @interface RaidFrameView : UIView
 
 + (CGSize)desiredSize;
 
-@property (strong,retain) Player *player;
+@property (strong,retain) Entity *entity;
 @property BOOL selected;
 
 @end

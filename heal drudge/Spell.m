@@ -9,9 +9,11 @@
 #import "Spell.h"
 #import "SpellPriv.h"
 
+#import "Player.h"
+
 @implementation Spell
 
-- (id)initWithCaster:(Character *)caster
+- (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super init] )
     {
@@ -29,18 +31,18 @@
 {
 }
 
-+ (NSArray *)castableSpellNamesForCharacter:(Character *)character
++ (NSArray *)castableSpellNamesForCharacter:(Player *)player
 {
     NSMutableArray *castableSpells = [NSMutableArray new];
     for ( NSString *spellName in [self _spellNames] )
     {
         Class spellClass = NSClassFromString(spellName);
-        Spell *spell = [[spellClass alloc] initWithCaster:character];
+        Spell *spell = [[spellClass alloc] initWithCaster:player];
         if ( spell )
         {
-            if ( [[spell hdClasses] containsObject:character.hdClass] )
+            if ( [[spell hdClasses] containsObject:player.hdClass] )
             {
-                NSLog(@"%@s can cast %@",character.hdClass,spell);
+                NSLog(@"%@s can cast %@",player.hdClass,spell);
                 [castableSpells addObject:spell];
             }
         }

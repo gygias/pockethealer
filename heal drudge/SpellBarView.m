@@ -36,7 +36,7 @@
 
 - (void)setPlayer:(Player *)player
 {
-    self.spells = [[Spell castableSpellNamesForCharacter:player.character] mutableCopy];
+    self.spells = [[Spell castableSpellNamesForCharacter:player] mutableCopy];
     _player = player;
 }
 
@@ -44,15 +44,14 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    NSUInteger idx = 0;
-    for ( Spell *spell in self.spells )
-    {
+    [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+        
         NSString *message = nil;
         
         Entity *spellTarget = self.player.target;
         if ( ! spellTarget )
             spellTarget = self.player;
-        BOOL canStartCastingSpell = [spellTarget validateSpell:spell withSource:self.player message:&message];
+        BOOL canStartCastingSpell = [spellTarget validateTargetOfSpell:spell withSource:self.player message:&message];
         
         UIImage *spellImage = spell.image;
         //if ( ! canStartCastingSpell )
@@ -70,9 +69,6 @@
         {
             double cooldownPercentage = -[[NSDate date] timeIntervalSinceDate:spell.nextCooldownDate] / spell.cooldown.doubleValue;
             CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
-            //[spellImage retainCount];
-            //UIBezierPath
-            //NSLog(@"%@: %f",spell,cooldownPercentage);
             CGContextRef context = UIGraphicsGetCurrentContext();
             
             CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
@@ -83,8 +79,19 @@
             CGContextFillPath(context);
         }
         
+        // disabled mask
+        else if ( ! canStartCastingSpell )
+        {
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
+            CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
+            CGContextAddRect(context, rectangle);
+            CGContextFillPath(context);            
+        }
+        
         idx++;
-    }
+    }];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

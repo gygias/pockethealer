@@ -8,11 +8,12 @@
 
 #import "SmiteSpell.h"
 
+#import "Player.h"
 #import "EvangelismEffect.h"
 
 @implementation SmiteSpell
 
-- (id)initWithCaster:(Character *)caster
+- (id)initWithCaster:(Player *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
@@ -21,7 +22,7 @@
         self.tooltip = @"Smite an enemy.";
         self.triggersGCD = YES;
         self.targeted = YES;
-        self.cooldown = @10;
+        self.cooldown = @0;
         self.castableRange = @30;
         self.castTime = 1.5;
         

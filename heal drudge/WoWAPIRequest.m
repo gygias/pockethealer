@@ -8,6 +8,7 @@
 
 #import "WoWAPIRequest.h"
 #import "HDClass.h"
+#import "Guild.h"
 
 #define kURLBase "http://%@.battle.net/api/wow"
 #define kRealmStatusSuffix "%@/realm/status"
@@ -1077,33 +1078,33 @@ const NSString *WoWAPIParryRatingKey = @"parryRating";
 const NSString *WoWAPIDodgeRatingKey = @"dodgeRating";
 const NSString *WoWAPIBlockRatingKey = @"blockRating";
 
-+ (Character *)characterWithAPIGuildMemberDict:(NSDictionary *)apiGuildMemberDict fetchingImage:(BOOL)fetchImage
++ (Entity *)entityWithAPIGuildMemberDict:(NSDictionary *)apiGuildMemberDict fetchingImage:(BOOL)fetchImage
 {
     NSDictionary *apiCharacterDict = apiGuildMemberDict[@"character"];
-    Character *character = [self _characterWithAPICharacterDict:apiCharacterDict fromGuildListRequest:YES fetchingImage:fetchImage];
-    character.guildRank = apiGuildMemberDict[@"rank"];
-    return character;
+    Entity *entity = [self _entityWithAPICharacterDict:apiCharacterDict fromGuildListRequest:YES fetchingImage:fetchImage];
+    entity.guildRank = apiGuildMemberDict[@"rank"];
+    return entity;
 }
 
-+ (Character *)characterWithAPICharacterDict:(NSDictionary *)apiCharacterDict fetchingImage:(BOOL)fetchImage
++ (Entity *)entityWithAPICharacterDict:(NSDictionary *)apiCharacterDict fetchingImage:(BOOL)fetchImage
 {
-    return [self _characterWithAPICharacterDict:apiCharacterDict fromGuildListRequest:NO fetchingImage:fetchImage];
+    return [self _entityWithAPICharacterDict:apiCharacterDict fromGuildListRequest:NO fetchingImage:fetchImage];
 }
 
-+ (Character *)_characterWithAPICharacterDict:(NSDictionary *)apiCharacterDict fromGuildListRequest:(BOOL)fromGuildListRequest fetchingImage:(BOOL)fetchImage
++ (Entity *)_entityWithAPICharacterDict:(NSDictionary *)apiCharacterDict fromGuildListRequest:(BOOL)fromGuildListRequest fetchingImage:(BOOL)fetchImage
 {
-    Character *character = [Character new];
-    character.isComplete = ! fromGuildListRequest;
-    character.name = apiCharacterDict[@"name"];
-    character.realm = [WoWRealm realmWithString:apiCharacterDict[@"realm"]];
-    character.level = apiCharacterDict[@"level"];
-    character.race = apiCharacterDict[@"race"];
-    character.gender = apiCharacterDict[@"gender"];
-    character.achievementPoints = apiCharacterDict[@"achievementPoints"];
-    character.honorableKills = apiCharacterDict[@"totalHonorableKills"];
+    Entity *entity = [Entity new];
+    entity.isComplete = ! fromGuildListRequest;
+    entity.name = apiCharacterDict[@"name"];
+    entity.realm = [WoWRealm realmWithString:apiCharacterDict[@"realm"]];
+    entity.level = apiCharacterDict[@"level"];
+    entity.race = apiCharacterDict[@"race"];
+    entity.gender = apiCharacterDict[@"gender"];
+    entity.achievementPoints = apiCharacterDict[@"achievementPoints"];
+    entity.honorableKills = apiCharacterDict[@"totalHonorableKills"];
     NSDictionary *apiItemsDict = apiCharacterDict[@"items"];
-    character.averageItemLevel = apiItemsDict[@"averageItemLevel"];
-    character.averageItemLevelEquipped = apiItemsDict[@"averageItemLevelEquipped"];
+    entity.averageItemLevel = apiItemsDict[@"averageItemLevel"];
+    entity.averageItemLevelEquipped = apiItemsDict[@"averageItemLevelEquipped"];
     NSArray *apiTalentsArray = apiCharacterDict[@"talents"];
     
     NSNumber *dummyNumber = @999;
@@ -1124,41 +1125,41 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
     
     if ( winningMainSpecDict )
     {
-        NSLog(@"%@'s appears to be main %@ OS %@",character.name,winningMainSpecDict[@"name"],runnerUpOffSpecDict[@"name"]);
-        character.specName = winningMainSpecDict[@"name"];
-        character.role = [WoWAPIRequest roleFromAPIRoleString:winningMainSpecDict[@"role"]];
+        NSLog(@"%@'s appears to be main %@ OS %@",entity.name,winningMainSpecDict[@"name"],runnerUpOffSpecDict[@"name"]);
+        entity.specName = winningMainSpecDict[@"name"];
+        entity.role = [WoWAPIRequest roleFromAPIRoleString:winningMainSpecDict[@"role"]];
     }
-    character.offspecName = runnerUpOffSpecDict[@"name"];
+    entity.offspecName = runnerUpOffSpecDict[@"name"];
     
-    character.hdClass = [HDClass classWithAPICharacterDictionary:apiCharacterDict apiSpecName:character.specName];
+    entity.hdClass = [HDClass classWithAPICharacterDictionary:apiCharacterDict apiSpecName:entity.specName];
     
     // this is a dictionary for a character request, string name for a guild list
     id apiGuildValue = apiCharacterDict[@"guild"];
     if ( fromGuildListRequest )
     {
         NSString *guildRealm = apiCharacterDict[@"guildRealm"];
-        character.guild = [Guild guildWithAPIName:apiGuildValue apiRealm:guildRealm];
+        entity.guild = [Guild guildWithAPIName:apiGuildValue apiRealm:guildRealm];
     }
     else
-        character.guild = [Guild guildWithAPIDictionary:apiGuildValue];
+        entity.guild = [Guild guildWithAPIDictionary:apiGuildValue];
     
     NSDictionary *apiStatsDict = apiCharacterDict[@"stats"];
     
-    character.stamina = apiStatsDict[WoWAPIStaminaKey];
-    character.power = apiStatsDict[WoWAPIPowerKey];
-    character.agility = apiStatsDict[WoWAPIAgilityKey];
-    character.strength = apiStatsDict[WoWAPIStrengthKey];
-    character.intellect = apiStatsDict[WoWAPIIntellectKey];
-    character.critRating = apiStatsDict[WoWAPICritRatingKey];
-    character.hasteRating = apiStatsDict[WoWAPIHasteRatingKey];
-    character.masteryRating = apiStatsDict[WoWAPIMasteryRatingKey];
-    character.versatilityRating = apiStatsDict[WoWAPIVersatilityRatingKey];
-    character.multistrikeRating = apiStatsDict[WoWAPIMultistrikeRatingKey];
-    character.leechRating = apiStatsDict[WoWAPILeechRatingKey];
-    character.armor = apiStatsDict[WoWAPIArmorRatingKey];
-    character.parryRating = apiStatsDict[WoWAPIParryRatingKey];
-    character.dodgeRating = apiStatsDict[WoWAPIDodgeRatingKey];
-    character.blockRating = apiStatsDict[WoWAPIBlockRatingKey];
+    entity.stamina = apiStatsDict[WoWAPIStaminaKey];
+    entity.power = apiStatsDict[WoWAPIPowerKey];
+    entity.agility = apiStatsDict[WoWAPIAgilityKey];
+    entity.strength = apiStatsDict[WoWAPIStrengthKey];
+    entity.intellect = apiStatsDict[WoWAPIIntellectKey];
+    entity.critRating = apiStatsDict[WoWAPICritRatingKey];
+    entity.hasteRating = apiStatsDict[WoWAPIHasteRatingKey];
+    entity.masteryRating = apiStatsDict[WoWAPIMasteryRatingKey];
+    entity.versatilityRating = apiStatsDict[WoWAPIVersatilityRatingKey];
+    entity.multistrikeRating = apiStatsDict[WoWAPIMultistrikeRatingKey];
+    entity.leechRating = apiStatsDict[WoWAPILeechRatingKey];
+    entity.armor = apiStatsDict[WoWAPIArmorRatingKey];
+    entity.parryRating = apiStatsDict[WoWAPIParryRatingKey];
+    entity.dodgeRating = apiStatsDict[WoWAPIDodgeRatingKey];
+    entity.blockRating = apiStatsDict[WoWAPIBlockRatingKey];
     
     NSArray *apiTitlesArray = apiCharacterDict[@"titles"];
     for ( NSDictionary *apiTitleDict in apiTitlesArray )
@@ -1166,30 +1167,30 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
         if ( [apiTitleDict[@"selected"] boolValue] )
         {
             NSString *objcFormat = [apiTitleDict[@"name"] stringByReplacingOccurrencesOfString:@"%s" withString:@"%@"];
-            character.titleAndName = [NSString stringWithFormat:objcFormat,character.name];
+            entity.titleAndName = [NSString stringWithFormat:objcFormat,entity.name];
         }        
     }
-    if ( ! character.titleAndName )
-        character.titleAndName = character.name;
+    if ( ! entity.titleAndName )
+        entity.titleAndName = entity.name;
  
     if ( fetchImage )
     {
         WoWAPIRequest *fetchRequest = [WoWAPIRequest new];
-        fetchRequest.realm = character.realm;
+        fetchRequest.realm = entity.realm;
         fetchRequest.isCharacterThumbnailRequest = YES;
         fetchRequest.characterThumbnailURLSuffix = apiCharacterDict[@"thumbnail"];
  
         [fetchRequest sendRequestWithCompletionHandler:^(BOOL success, id response) {
             if ( ! success )
-                NSLog(@"failed to fetch thumbnail image for '%@'",character);
+                NSLog(@"failed to fetch thumbnail image for '%@'",entity);
             else if ( ! [response isKindOfClass:[UIImage class]] )
-                NSLog(@"thumbnail image data for '%@' is not an image",character);
+                NSLog(@"thumbnail image data for '%@' is not an image",entity);
             else
-                character.image = response;
+                entity.image = response;
         }];
     }
  
-    return character;
+    return entity;
 }
 
 const NSString *WoWAPIHealerRoleKey = @"HEALING";

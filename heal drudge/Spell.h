@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "Character.h"
 #import "Entity.h"
 #import "ImageFactory.h"
 
 @class Entity;
+@class Player;
 
 typedef NS_ENUM(NSInteger, DamageType) {
     HolyDamage      = 0,
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, DamageType) {
 
 // initialized with caster, but not target, so that base stats can be displayed based
 // on character stats
-- (id)initWithCaster:(Character *)caster;
+- (id)initWithCaster:(Entity *)caster;
 
 - (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message;
 
@@ -38,9 +38,9 @@ typedef NS_ENUM(NSInteger, DamageType) {
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells
-+ (NSArray *)castableSpellNamesForCharacter:(Character *)character;
++ (NSArray *)castableSpellNamesForCharacter:(Player *)character;
 
-@property Character *caster;
+@property Entity *caster;
 
 // static properties
 @property NSString *name;
@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger, DamageType) {
 @property NSTimeInterval periodicDuration;
 @property BOOL periodicEffectChangesTargets;
 
-@property BOOL canBeCastOnDeadPlayers;
+@property BOOL canBeCastOnDeadEntities;
 
 // this should be default
 //@property BOOL affectsMainTarget;

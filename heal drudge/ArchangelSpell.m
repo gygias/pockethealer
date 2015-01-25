@@ -10,11 +10,10 @@
 
 #import "ArchangelEffect.h"
 #import "EvangelismEffect.h"
-#import "Entity.h"
 
 @implementation ArchangelSpell
 
-- (id)initWithCaster:(Character *)caster
+- (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
