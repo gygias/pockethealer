@@ -195,6 +195,8 @@
 		63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F42D1A52481400B9AE46 /* HDClass.m */; };
 		63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4331A524A1A00B9AE46 /* Spell.m */; };
 		63C5F4371A524E8100B9AE46 /* QuickPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */; };
+		63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91BF11A751D8F00505EAE /* BerserkerRush.m */; };
+		63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63F91BF31A751DCA00505EAE /* berserker_rush.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -461,6 +463,9 @@
 		63C5F4331A524A1A00B9AE46 /* Spell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spell.m; sourceTree = "<group>"; };
 		63C5F4351A524E8100B9AE46 /* QuickPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPlayViewController.h; sourceTree = "<group>"; };
 		63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPlayViewController.m; sourceTree = "<group>"; };
+		63F91BF01A751D8F00505EAE /* BerserkerRush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BerserkerRush.h; sourceTree = "<group>"; };
+		63F91BF11A751D8F00505EAE /* BerserkerRush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BerserkerRush.m; sourceTree = "<group>"; };
+		63F91BF31A751DCA00505EAE /* berserker_rush.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = berserker_rush.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -518,6 +523,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63F91BF31A751DCA00505EAE /* berserker_rush.jpg */,
 				634F48E21A7441AE008761C6 /* bladestorm.jpg */,
 				634F48E31A7441AE008761C6 /* hunger_for_blood.jpg */,
 				634F48E41A7441AE008761C6 /* melee_attack.gif */,
@@ -682,6 +688,8 @@
 				632074AF1A71960400AA4416 /* Impale.m */,
 				634F49081A748CB8008761C6 /* OpenWoundsEffect.h */,
 				634F49091A748CB8008761C6 /* OpenWoundsEffect.m */,
+				63F91BF01A751D8F00505EAE /* BerserkerRush.h */,
+				63F91BF11A751D8F00505EAE /* BerserkerRush.m */,
 			);
 			name = Kargath;
 			sourceTree = "<group>";
@@ -885,6 +893,7 @@
 				TargetAttributes = {
 					63C5F3FC1A5243E900B9AE46 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = B7CLPV6KGB;
 					};
 					63C5F4151A5243EA00B9AE46 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -975,6 +984,7 @@
 				632074741A70E93A00AA4416 /* freedom_wolf.png in Resources */,
 				632074681A70E93A00AA4416 /* bestial_wrath.jpg in Resources */,
 				632074931A70E93A00AA4416 /* water_shield.png in Resources */,
+				63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */,
 				6320741C1A7095B800AA4416 /* prayer_of_mending.png in Resources */,
 				632074751A70E93A00AA4416 /* frost_deathknight.png in Resources */,
 				6320746F1A70E93A00AA4416 /* echo_of_the_elements.png in Resources */,
@@ -1080,6 +1090,7 @@
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
 				632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */,
+				63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */,
 				6328FB521A72F98900DF6B50 /* SoundManager.m in Sources */,
 				632074B01A71960400AA4416 /* Impale.m in Sources */,
 				634F49041A7489E9008761C6 /* PowerWordShieldEffect.m in Sources */,
@@ -1243,9 +1254,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "heal drudge/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1253,9 +1267,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "heal drudge/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

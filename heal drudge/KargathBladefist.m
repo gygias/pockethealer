@@ -26,7 +26,7 @@
 
 - (NSArray *)abilityNames
 {
-    return @[@"Attack",@"BladeDance",@"Impale"];
+    return @[@"Attack",@"BladeDance",@"Impale",@"BerserkerRush"];
 }
 
 @end

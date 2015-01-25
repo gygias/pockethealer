@@ -24,7 +24,7 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
 {
     // TODO does 'beneficial' imply healing is defined? does it matter?
     EventModifier *mod = [EventModifier new];

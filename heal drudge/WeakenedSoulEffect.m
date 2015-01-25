@@ -26,9 +26,9 @@
     return self;
 }
 
-- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
+- (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString **)message
 {
-    if ( [spell isKindOfClass:[PowerWordShieldSpell class]] )
+    if ( ! asEffectOfSource && [spell isKindOfClass:[PowerWordShieldSpell class]] )
     {
         if ( message )
             *message = @"You can't do that right now";

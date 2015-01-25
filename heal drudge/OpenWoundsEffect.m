@@ -28,11 +28,6 @@
     return self;
 }
 
-- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
-{
-    return YES;
-}
-
 - (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
 {
     BOOL addedModifiers = NO;

@@ -48,8 +48,8 @@ typedef void(^EffectEventHandler)(BOOL);
 - (void)addStack;
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;
-- (BOOL)validateSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target message:(NSString **)message;
-- (BOOL)handleSpellStarted:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
-- (BOOL)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+- (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target message:(NSString **)message;
+- (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 
 @end

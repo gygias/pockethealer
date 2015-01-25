@@ -78,7 +78,15 @@
     __block BOOL okay = YES;
     [_statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
         
-        if ( ! [obj validateSpell:spell source:source target:self message:messagePtr] )
+        if ( ! [obj validateSpell:spell asEffectOfSource:asSource source:source target:target message:messagePtr] )
+        {
+            okay = NO;
+            *stop = YES;
+        }
+    }];
+    
+    [target.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
+        if ( ! [obj validateSpell:spell asEffectOfSource:!asSource source:source target:target message:messagePtr] )
         {
             okay = NO;
             *stop = YES;
@@ -110,7 +118,7 @@
         addedModifiers = YES;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
-        if ( [obj handleSpellStarted:spell source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
+        if ( [obj handleSpellStarted:spell asSource:asSource source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
             // this is fucking hideous
             if ( consumesEffect )
             {
@@ -133,7 +141,7 @@
     Entity *target = asSource ? otherEntity : self;
     
     [self.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
-        if ( [obj handleSpell:spell source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
+        if ( [obj handleSpell:spell asSource:asSource source:source target:target modifier:modifiers handler:^(BOOL consumesEffect) {
             // this is fucking hideous
             if ( consumesEffect )
             {

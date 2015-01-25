@@ -19,7 +19,7 @@
 
 + (void)playDangerSound
 {
-    [self say:@"beware"];
+    [self say:@"bee wear"];
 }
 
 + (void)playCatastrophicSound;
@@ -47,10 +47,13 @@
 
 + (void)say:(NSString *)text
 {
-    AVSpeechSynthesizer *synthesizer = [[AVSpeechSynthesizer alloc] init];
-    AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
-    [utterance setRate:1.1f];
-    [synthesizer speakUtterance:utterance];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        AVSpeechSynthesizer *synthesizer = [[AVSpeechSynthesizer alloc] init];
+        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:text];
+        utterance.voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"en-US"];
+        [utterance setRate:AVSpeechUtteranceMinimumSpeechRate];
+        [synthesizer speakUtterance:utterance];
+    });
 }
 
 @end

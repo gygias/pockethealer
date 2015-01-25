@@ -465,7 +465,7 @@
                                 <rect key="frame" x="22" y="173" width="280" height="200"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
-                                <rect key="frame" x="22" y="478" width="280" height="87"/>
+                                <rect key="frame" x="22" y="478" width="280" height="114"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
                                 <rect key="frame" x="22" y="96" width="216" height="48"/>

@@ -12,7 +12,7 @@
 #import "Player.h"
 #import "UIColor+Extensions.h"
 
-#define SPELL_HEIGHT 32
+#define SPELL_HEIGHT 50
 #define SPELL_WIDTH SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
 
