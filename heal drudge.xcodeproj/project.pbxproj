@@ -195,6 +195,8 @@
 		63A37EFA1A75ABE30036C9D0 /* 8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF01A75ABE30036C9D0 /* 8.wav */; };
 		63A37EFB1A75ABE30036C9D0 /* 9.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF11A75ABE30036C9D0 /* 9.wav */; };
 		63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF21A75ABE30036C9D0 /* 10.wav */; };
+		63A37EFF1A75B9340036C9D0 /* belltollnightelf.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */; };
+		63A37F001A75B9340036C9D0 /* PVPFlagTaken.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -465,6 +467,8 @@
 		63A37EF01A75ABE30036C9D0 /* 8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 8.wav; path = Corsica/8.wav; sourceTree = "<group>"; };
 		63A37EF11A75ABE30036C9D0 /* 9.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 9.wav; path = Corsica/9.wav; sourceTree = "<group>"; };
 		63A37EF21A75ABE30036C9D0 /* 10.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 10.wav; path = Corsica/10.wav; sourceTree = "<group>"; };
+		63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = belltollnightelf.wav; sourceTree = "<group>"; };
+		63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = PVPFlagTaken.wav; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -774,6 +778,8 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */,
+				63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */,
 				63A37ED31A75ABC90036C9D0 /* Corsica */,
 				63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */,
 				63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */,
@@ -1046,6 +1052,7 @@
 				63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */,
 				6320741C1A7095B800AA4416 /* prayer_of_mending.png in Resources */,
 				632074751A70E93A00AA4416 /* frost_deathknight.png in Resources */,
+				63A37EFF1A75B9340036C9D0 /* belltollnightelf.wav in Resources */,
 				6320746F1A70E93A00AA4416 /* echo_of_the_elements.png in Resources */,
 				63A37ED01A75A1A80036C9D0 /* UR_Algalon_BHole01.wav in Resources */,
 				632074881A70E93A00AA4416 /* spirit_link_totem.png in Resources */,
@@ -1094,6 +1101,7 @@
 				63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */,
 				6320748C1A70E93A00AA4416 /* stormstrike.png in Resources */,
 				632073F01A7095B800AA4416 /* chakra_green.png in Resources */,
+				63A37F001A75B9340036C9D0 /* PVPFlagTaken.wav in Resources */,
 				632074021A7095B800AA4416 /* hand_of_freedom.png in Resources */,
 				632073FB1A7095B800AA4416 /* divine_protection.png in Resources */,
 				634F48D81A732D6F008761C6 /* divine_star.png in Resources */,

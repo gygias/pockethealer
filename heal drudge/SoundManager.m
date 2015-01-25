@@ -24,7 +24,7 @@ static SoundManager *sSoundManager;
 
 + (void)playNoteSound
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"UR_Algalon_BHole01" ofType:@"wav"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"belltollnightelf" ofType:@"wav"];
     [self playFileWithPath:path];
     //[self say:@"ding"];
 }
@@ -102,7 +102,7 @@ static SoundManager *sSoundManager;
     //NSUInteger currentIndex = startIndex.unsignedIntegerValue;
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"index"] = startIndex;
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_lol:) userInfo:dictionary repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_lol:) userInfo:dictionary repeats:YES];
 //    dispatch_queue_t globalQueue = dispatch_get_global_queue(0, 0);
 //    dispatch_async(globalQueue, ^{
 //        __block NSUInteger currentIndex = startIndex.unsignedIntegerValue;
