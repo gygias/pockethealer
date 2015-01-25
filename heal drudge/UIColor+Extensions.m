@@ -18,13 +18,15 @@
 + (UIColor *)cooldownClockColor
 {
     UIColor *blackColor = [UIColor blackColor];
-    UIColor *cooldownClockColor = [blackColor colorWithAlphaComponent:0.5];
+    UIColor *cooldownClockColor = [blackColor colorWithAlphaComponent:0.75];
     return cooldownClockColor;
 }
 
 + (UIColor *)disabledSpellColor
 {
-    return [self cooldownClockColor];
+    UIColor *blackColor = [UIColor blackColor];
+    UIColor *cooldownClockColor = [blackColor colorWithAlphaComponent:0.5];
+    return cooldownClockColor;
 }
 
 @end

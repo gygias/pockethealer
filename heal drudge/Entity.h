@@ -45,7 +45,7 @@
 - (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
 
 // now takes source as a reminder that it's a required property in this
 // ios style of +new, set all the properties..
@@ -112,6 +112,9 @@
 @property NSString *specName;
 @property NSString *offspecName;
 @property const NSString *role;
+
+@property NSDate *nextGlobalCooldownDate;
+@property NSTimeInterval currentGlobalCooldownDuration;
 
 @end
 

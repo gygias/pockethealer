@@ -106,7 +106,7 @@
         {
             NSString *message = nil;
             
-            doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message];
+            doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
             if ( doCast )
             {
                 NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target inEncounter:encounter];

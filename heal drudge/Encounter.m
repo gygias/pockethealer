@@ -100,7 +100,7 @@
     });
 }
 
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
+- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick
 {
     // while implementing cast bar, encounter isn't started
     if ( ! _encounterQueue )
@@ -108,7 +108,7 @@
     
     dispatch_async(_encounterQueue, ^{
     
-        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel-tick":@"is casting",spell.name,target);
+        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@"is casting",spell.name,target);
         
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
@@ -121,7 +121,7 @@
         if ( spell.spellType != DetrimentalSpell && target.isPlayer )
             [self _doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         
-        if ( spell.cooldown.doubleValue )
+        if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
         {
             NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
             spell.nextCooldownDate = thisNextCooldownDate;

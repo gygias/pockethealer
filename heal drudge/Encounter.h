@@ -31,7 +31,7 @@ typedef void(^EncounterUpdatedBlock)(Encounter *);
 
 // called by entities when the a timed spell goes off
 - (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
-- (void)handleSpell:(Spell *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
+- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick;
 
 @end
 

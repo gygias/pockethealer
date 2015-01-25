@@ -30,18 +30,12 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
 {
     Entity *source = asSource ? self : otherEntity;
     Entity *target = asSource ? otherEntity : self;
     
-    if ( spell.nextCooldownDate )
-    {
-        if ( messagePtr )
-            *messagePtr = @"Not ready yet";
-        return NO;
-    }
-    else if ( source.currentResources.integerValue < spell.manaCost.integerValue )
+    if ( source.currentResources.integerValue < spell.manaCost.integerValue )
     {
         if ( messagePtr )
             *messagePtr = @"Not enough mana";
@@ -90,6 +84,18 @@
             *stop = YES;
         }
     }];
+    
+    if ( okay )
+    {
+        if ( spell.nextCooldownDate || self.nextGlobalCooldownDate )
+        {
+            if ( messagePtr )
+                *messagePtr = @"Not ready yet";
+            if ( invalidDueToCooldown )
+                *invalidDueToCooldown = YES;
+            return NO;
+        }
+    }
     
     return okay;
 }

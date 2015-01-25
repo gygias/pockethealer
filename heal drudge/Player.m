@@ -66,6 +66,14 @@
         if ( hasteBuff )
             NSLog(@"%@'s haste is buffed by %@",self,hasteBuff);
         
+        NSTimeInterval effectiveGCD = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
+        self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
+        self.currentGlobalCooldownDuration = effectiveGCD;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.nextGlobalCooldownDate = nil;
+            self.currentGlobalCooldownDuration = 0;
+        });
+        
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
         
@@ -73,11 +81,13 @@
         {
             NSTimeInterval timeBetweenTicks = effectiveCastTime.doubleValue / spell.channelTicks.doubleValue;
             __block NSInteger ticksRemaining = spell.channelTicks.unsignedIntegerValue;
+            __block BOOL firstTick = YES;
             dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
             dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
                 NSLog(@"%@ is channel-ticking",spell);
-                [encounter handleSpell:spell source:self target:target periodicTick:YES];
+                [encounter handleSpell:spell source:self target:target periodicTick:YES isFirstTick:firstTick];
+                firstTick = NO;
                 if ( --ticksRemaining <= 0 )
                 {
                     NSLog(@"%@ has finished channeling",spell);
@@ -95,7 +105,7 @@
                     NSLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
                     return;
                 }
-                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO];
+                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO isFirstTick:NO];
                 _castingSpell = nil;
                 NSLog(@"%@ finished casting %@",self,spell);
             });
@@ -104,7 +114,7 @@
     else
     {
         NSLog(@"%@ cast %@ (instant)",self,spell);
-        [encounter handleSpell:spell source:self target:target periodicTick:NO];
+        [encounter handleSpell:spell source:self target:target periodicTick:NO isFirstTick:NO];
     }
     
     return effectiveCastTime;

@@ -53,7 +53,8 @@
             spellTarget = self.player;
         else if ( ! spell.targeted )
             spellTarget = self.player;
-        BOOL canStartCastingSpell = [self.player validateSpell:spell asSource:YES otherEntity:spellTarget message:&message];
+        BOOL invalidDueToCooldown = NO;
+        BOOL canStartCastingSpell = [self.player validateSpell:spell asSource:YES otherEntity:spellTarget message:&message invalidDueToCooldown:&invalidDueToCooldown];
         
         UIImage *spellImage = spell.image;
         //if ( ! canStartCastingSpell )
@@ -65,35 +66,67 @@
                                       rect.origin.y + ( SPELL_HEIGHT * row ), SPELL_WIDTH, SPELL_HEIGHT);
         //NSLog(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
         [spellImage drawInRect:spellRect];
+                
+        // disabled mask
+        if ( ! canStartCastingSpell && ! invalidDueToCooldown )
+        {
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            CGContextSetFillColorWithColor(context,[UIColor disabledSpellColor].CGColor);
+            CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
+            CGContextAddRect(context, rectangle);
+            CGContextFillPath(context);
+        }
         
         // cooldown clock
         if ( spell.nextCooldownDate )
         {
             double cooldownPercentage = -[[NSDate date] timeIntervalSinceDate:spell.nextCooldownDate] / spell.cooldown.doubleValue;
-            CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            
-            CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
-            //CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
-            //CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
-            CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
-            CGContextAddRect(context, rectangle);
-            CGContextFillPath(context);
+            [self _drawCooldownClockInRect:spellRect withPercentage:cooldownPercentage];
         }
-        
-        // disabled mask
-        else if ( ! canStartCastingSpell )
+        else if ( self.player.nextGlobalCooldownDate && self.player.currentGlobalCooldownDuration > 0 )
         {
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            
-            CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
-            CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
-            CGContextAddRect(context, rectangle);
-            CGContextFillPath(context);            
+            double gcdPercentage = -[[NSDate date] timeIntervalSinceDate:self.player.nextGlobalCooldownDate] / self.player.currentGlobalCooldownDuration;
+            [self _drawCooldownClockInRect:spellRect withPercentage:gcdPercentage];
         }
         
         idx++;
     }];
+}
+
+- (void)_drawCooldownClockInRect:(CGRect)rect withPercentage:(double)percentage
+{
+    //CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    double cooldownInDegress = percentage * 360.0;
+    double theta = ( cooldownInDegress + 90 );
+    if ( theta > 360 )
+        theta -= 360;
+    double thetaRadians = theta * ( M_PI / 180 );
+    CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
+    //NSLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
+    
+    CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
+    CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
+    CGContextAddLineToPoint(context, rect.origin.x + ( rect.size.width / 2 ), rect.origin.y);
+    CGPoint midPoint = CGPointMake(rect.origin.x + ( rect.size.width / 2 ), rect.origin.y + ( rect.size.height / 2 ));
+    CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
+    
+    CGPoint mysteryPoint = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
+    CGContextAddLineToPoint(context, mysteryPoint.x, mysteryPoint.y); // the mystery point
+    double rotatedByDegress = ( 360 - cooldownInDegress );
+    if ( rotatedByDegress <= 90 )
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
+    if ( rotatedByDegress <= 180 )
+        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
+    if ( rotatedByDegress <= 270 )
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
+    //if ( theta >= 180 && theta <= 90 )
+    //    CGContextAddLineToPoint(context, spellRect.origin.x, spellRect.origin.y);
+    //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
+    //CGContextAddRect(context, rectangle);
+    CGContextFillPath(context);
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
