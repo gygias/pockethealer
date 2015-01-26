@@ -46,6 +46,8 @@
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 - (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 
+//- (NSNumber *)handleIncomingDamage:(NSNumber *)damage;
+
 // now takes source as a reminder that it's a required property in this
 // ios style of +new, set all the properties..
 - (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source;

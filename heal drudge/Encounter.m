@@ -85,7 +85,11 @@
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:ability asSource:YES otherEntity:target modifiers:modifiers] )
         {
-            NSLog(@"%@->%@ modified %@",source,target,ability);
+            NSLog(@"%@ modified %@",source,ability);
+        }
+        if ( [target handleSpell:ability asSource:NO otherEntity:source modifiers:modifiers] )
+        {
+            NSLog(@"%@ modified %@",target,ability);
         }
         
         [self _doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
@@ -180,31 +184,46 @@
 
 - (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
-    __block NSNumber *theDamage = periodic ? spell.periodicDamage : spell.damage;
+    __block NSNumber *rawDamage = periodic ? spell.periodicDamage : spell.damage;
     
+    // deliberately applying all damage increases before decreases, TODO no idea if this is right
+    __block EventModifier *greatestDamageTakenDecreaseModifier = nil;
     [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
         NSLog(@"considering %@ for damage of %@",obj,spell);
         if ( obj.damageIncrease )
-            theDamage = @( theDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
+            rawDamage = @( rawDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
         else if (obj.damageIncreasePercentage )
-            theDamage = @( theDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
+            rawDamage = @( rawDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
+        if ( obj.damageTakenDecreasePercentage )
+        {
+            if ( ! greatestDamageTakenDecreaseModifier ||
+                [greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage compare:obj.damageTakenDecreasePercentage] == NSOrderedAscending )
+                greatestDamageTakenDecreaseModifier = obj;
+        }
     }];
     
-    NSInteger newAbsorb = target.currentAbsorb.doubleValue - theDamage.doubleValue;
+    NSNumber *effectiveDamage = rawDamage;
+    if ( greatestDamageTakenDecreaseModifier )
+    {
+        effectiveDamage = @( effectiveDamage.doubleValue * ( 1 - greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage.doubleValue ) );
+        NSLog(@"applying %@ to %@, %@ -> %@",greatestDamageTakenDecreaseModifier,spell,rawDamage,effectiveDamage);
+    }
+    
+    NSInteger newAbsorb = target.currentAbsorb.doubleValue - effectiveDamage.doubleValue;
     if ( newAbsorb < 0 )
         newAbsorb = 0;
     
     NSInteger amountAbsorbed = target.currentAbsorb.doubleValue - newAbsorb;
-    NSInteger effectiveDamage = ( theDamage.doubleValue - amountAbsorbed );
+    NSInteger effectiveDamageMinusAbsorbs = ( effectiveDamage.doubleValue - amountAbsorbed );
     
-    NSInteger newHealth = target.currentHealth.doubleValue - effectiveDamage;
+    NSInteger newHealth = target.currentHealth.doubleValue - effectiveDamageMinusAbsorbs;
     if ( newHealth < 0 )
         newHealth = 0;
     
     target.currentAbsorb = @(newAbsorb);
     target.currentHealth = @(newHealth);
     
-    NSLog(@"%@ took %ld damage (%ld absorbed)",target,effectiveDamage,amountAbsorbed);
+    NSLog(@"%@ took %@ damage (%ld absorbed)",target,effectiveDamage,amountAbsorbed);
 }
 
 - (void)_doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic

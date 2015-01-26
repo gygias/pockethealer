@@ -23,6 +23,8 @@
         descriptionString = [NSString stringWithFormat:@"%@(increase healing by %0.2f%%)",descriptionString?@" & ":@"",self.healingIncreasePercentage.doubleValue];
     if ( self.hasteIncreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(increase haste by %0.2f%%)",descriptionString?@" & ":@"",self.hasteIncreasePercentage.doubleValue];
+    if ( self.damageTakenDecreasePercentage )
+        descriptionString = [NSString stringWithFormat:@"%@(decrease damage taken by %0.2f%%)",descriptionString?@" & ":@"",self.damageTakenDecreasePercentage.doubleValue];
     return descriptionString;
 }
 
