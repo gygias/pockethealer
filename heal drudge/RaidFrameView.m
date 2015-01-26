@@ -255,8 +255,8 @@
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGFloat height = rect.size.height / 6;
-    CGFloat originY = ( rect.origin.y + RAID_FRAME_HEALTH_INSET ) + ( rect.size.height - height );
+    CGFloat height = rect.size.height / 7;
+    CGFloat originY = ( rect.origin.y + RAID_FRAME_HEALTH_INSET ) + ( rect.size.height - height - RAID_FRAME_BORDER_INSET - RAID_FRAME_HEALTH_INSET - 1 );
     CGFloat width = ( rect.size.width - ( RAID_FRAME_HEALTH_INSET * 2 ) ) * resourcePercentage;
     
     CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET,

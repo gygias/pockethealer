@@ -13,6 +13,7 @@
 
 @interface SoundManager : NSObject
 
+@property (nonatomic,retain) dispatch_queue_t soundQueue;
 @property NSMutableArray *audioPlayers;
 
 + (void)playNoteSound;

@@ -86,6 +86,7 @@ const NSString *SpellLevelHigh = @"high";
              @"PrayerOfMendingSpell",
              @"PrayerOfHealingSpell",
              @"PenanceSpell",
+             @"PainSuppressionSpell",
              
              @"HealingTideTotemSpell"
              ];

@@ -214,6 +214,8 @@
 		63A37F211A75D5C40036C9D0 /* holy_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F1D1A75D5C40036C9D0 /* holy_cast.wav */; };
 		63A37F241A75D6650036C9D0 /* nature_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F221A75D6650036C9D0 /* nature_cast.wav */; };
 		63A37F251A75D6650036C9D0 /* prayer_of_mending_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */; };
+		63A37F281A75E3BF0036C9D0 /* PainSuppressionSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */; };
+		63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -505,6 +507,10 @@
 		63A37F1D1A75D5C40036C9D0 /* holy_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = holy_cast.wav; sourceTree = "<group>"; };
 		63A37F221A75D6650036C9D0 /* nature_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nature_cast.wav; sourceTree = "<group>"; };
 		63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = prayer_of_mending_hit.wav; sourceTree = "<group>"; };
+		63A37F261A75E3BF0036C9D0 /* PainSuppressionSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PainSuppressionSpell.h; sourceTree = "<group>"; };
+		63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PainSuppressionSpell.m; sourceTree = "<group>"; };
+		63A37F291A75E3CE0036C9D0 /* PainSuppressionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PainSuppressionEffect.h; sourceTree = "<group>"; };
+		63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PainSuppressionEffect.m; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -802,6 +808,10 @@
 				634F48FD1A7480FB008761C6 /* PrayerOfMendingEffect.m */,
 				634F48FF1A74810A008761C6 /* DivineAegisEffect.h */,
 				634F49001A74810A008761C6 /* DivineAegisEffect.m */,
+				63A37F261A75E3BF0036C9D0 /* PainSuppressionSpell.h */,
+				63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */,
+				63A37F291A75E3CE0036C9D0 /* PainSuppressionEffect.h */,
+				63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */,
 			);
 			name = Priest;
 			sourceTree = "<group>";
@@ -1224,6 +1234,7 @@
 				634F48DE1A734B89008761C6 /* Effect.m in Sources */,
 				632074BF1A71A5CA00AA4416 /* Entity.m in Sources */,
 				6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */,
+				63A37F281A75E3BF0036C9D0 /* PainSuppressionSpell.m in Sources */,
 				63A37F061A75BFA60036C9D0 /* AlertText.m in Sources */,
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
@@ -1260,6 +1271,7 @@
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,
+				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
 				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,

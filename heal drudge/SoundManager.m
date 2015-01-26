@@ -19,6 +19,7 @@ static SoundManager *sSoundManager;
     if ( [self class] == [SoundManager class] )
     {
         sSoundManager = [SoundManager new];
+        sSoundManager.soundQueue = dispatch_queue_create("SoundQueue", 0);
     }
 }
 
@@ -61,7 +62,7 @@ static SoundManager *sSoundManager;
     if ( ! path )
         return;
     
-    dispatch_async(dispatch_get_global_queue(0,0), ^{
+    dispatch_async(sSoundManager.soundQueue, ^{
         NSError *error = nil;
         if ( path )
         {

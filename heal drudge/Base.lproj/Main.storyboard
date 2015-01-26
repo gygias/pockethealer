@@ -472,16 +472,16 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
                                 <rect key="frame" x="22" y="173" width="280" height="200"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
-                                <rect key="frame" x="22" y="478" width="280" height="114"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
-                                <rect key="frame" x="16" y="410" width="300" height="60"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-RV-5T3" customClass="CastBarView">
                                 <rect key="frame" x="22" y="381" width="280" height="21"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
+                                <rect key="frame" x="16" y="410" width="300" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
+                                <rect key="frame" x="22" y="458" width="280" height="134"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

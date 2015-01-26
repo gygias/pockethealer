@@ -12,7 +12,7 @@
 #import "Player.h"
 #import "UIColor+Extensions.h"
 
-#define SPELL_HEIGHT 50
+#define SPELL_HEIGHT 45
 #define SPELL_WIDTH SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
 
@@ -24,15 +24,6 @@
 @implementation SpellBarView
 
 @synthesize player = _player;
-
-- (id)initWithFrame:(CGRect)frame
-{
-    if ( self = [super initWithFrame:frame] )
-    {
-        NSLog(@"%@ loaded!",self);        
-    }
-    return self;
-}
 
 - (void)setPlayer:(Player *)player
 {
