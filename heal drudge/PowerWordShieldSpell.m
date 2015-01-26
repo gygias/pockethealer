@@ -35,6 +35,8 @@
         self.absorb = @(( ( ( [caster.spellPower floatValue] * 5 ) + 2 ) * 1 ));
         
         self.school = HolySchool;
+        
+        self.hitSoundName = @"power_word_shield_hit";
     }
     return self;
 }

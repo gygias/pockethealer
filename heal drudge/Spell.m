@@ -23,6 +23,7 @@ const NSString *SpellLevelHigh = @"high";
     {
         self.caster = caster;
         self.level = @"low";
+        self.hitSoundName = @"heal_hit";
     }
     return self;
 }

@@ -33,6 +33,8 @@
         self.absorb = @0;
         
         self.school = HolySchool;
+        self.castSoundName = @"nature_cast";
+        self.hitSoundName = @"prayer_of_mending_hit";
     }
     return self;
 }

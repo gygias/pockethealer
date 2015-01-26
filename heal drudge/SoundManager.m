@@ -48,6 +48,12 @@ static SoundManager *sSoundManager;
     [self playFileWithPath:path duration:0];
 }
 
++ (void)playSpellHit:(NSString *)hitSoundName
+{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:hitSoundName ofType:@"wav"];
+    [self playFileWithPath:filePath duration:0];
+}
+
 + (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration
 {
     NSLog(@"%@ is trying to play %@",self,path);

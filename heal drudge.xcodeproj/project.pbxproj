@@ -207,6 +207,13 @@
 		63A37F151A75CAB80036C9D0 /* precast_holy_high.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */; };
 		63A37F161A75CAB80036C9D0 /* precast_holy_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */; };
 		63A37F171A75CAB80036C9D0 /* precast_holy_medium.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */; };
+		63A37F191A75D4590036C9D0 /* power_word_shield_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F181A75D4590036C9D0 /* power_word_shield_hit.wav */; };
+		63A37F1E1A75D5C40036C9D0 /* divine_light_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F1A1A75D5C40036C9D0 /* divine_light_hit.wav */; };
+		63A37F1F1A75D5C40036C9D0 /* flash_heal.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F1B1A75D5C40036C9D0 /* flash_heal.wav */; };
+		63A37F201A75D5C40036C9D0 /* heal_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F1C1A75D5C40036C9D0 /* heal_hit.wav */; };
+		63A37F211A75D5C40036C9D0 /* holy_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F1D1A75D5C40036C9D0 /* holy_cast.wav */; };
+		63A37F241A75D6650036C9D0 /* nature_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F221A75D6650036C9D0 /* nature_cast.wav */; };
+		63A37F251A75D6650036C9D0 /* prayer_of_mending_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -491,6 +498,13 @@
 		63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_high.wav; sourceTree = "<group>"; };
 		63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_low.wav; sourceTree = "<group>"; };
 		63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_medium.wav; sourceTree = "<group>"; };
+		63A37F181A75D4590036C9D0 /* power_word_shield_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = power_word_shield_hit.wav; sourceTree = "<group>"; };
+		63A37F1A1A75D5C40036C9D0 /* divine_light_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = divine_light_hit.wav; sourceTree = "<group>"; };
+		63A37F1B1A75D5C40036C9D0 /* flash_heal.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = flash_heal.wav; sourceTree = "<group>"; };
+		63A37F1C1A75D5C40036C9D0 /* heal_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = heal_hit.wav; sourceTree = "<group>"; };
+		63A37F1D1A75D5C40036C9D0 /* holy_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = holy_cast.wav; sourceTree = "<group>"; };
+		63A37F221A75D6650036C9D0 /* nature_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nature_cast.wav; sourceTree = "<group>"; };
+		63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = prayer_of_mending_hit.wav; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -834,6 +848,13 @@
 		63A37F071A75C6890036C9D0 /* spell */ = {
 			isa = PBXGroup;
 			children = (
+				63A37F221A75D6650036C9D0 /* nature_cast.wav */,
+				63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */,
+				63A37F1A1A75D5C40036C9D0 /* divine_light_hit.wav */,
+				63A37F1B1A75D5C40036C9D0 /* flash_heal.wav */,
+				63A37F1C1A75D5C40036C9D0 /* heal_hit.wav */,
+				63A37F1D1A75D5C40036C9D0 /* holy_cast.wav */,
+				63A37F181A75D4590036C9D0 /* power_word_shield_hit.wav */,
 				63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */,
 				63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */,
 				63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */,
@@ -1048,6 +1069,7 @@
 				6320748E1A70E93A00AA4416 /* totem_cooldown_refund.png in Resources */,
 				632074061A7095B800AA4416 /* hand_of_salvation.png in Resources */,
 				6320740C1A7095B800AA4416 /* holy_word_serenity.png in Resources */,
+				63A37F251A75D6650036C9D0 /* prayer_of_mending_hit.wav in Resources */,
 				632074111A7095B800AA4416 /* lightwell.png in Resources */,
 				632074701A70E93A00AA4416 /* eviscerate.jpg in Resources */,
 				6320741E1A7095B800AA4416 /* purify.png in Resources */,
@@ -1057,9 +1079,11 @@
 				632074271A7095B800AA4416 /* weakened_soul.png in Resources */,
 				632074181A7095B800AA4416 /* power_word_barrier.png in Resources */,
 				6320741D1A7095B800AA4416 /* priest.png in Resources */,
+				63A37F1E1A75D5C40036C9D0 /* divine_light_hit.wav in Resources */,
 				632073EA1A7095B800AA4416 /* avenging_wrath.png in Resources */,
 				632074081A7095B800AA4416 /* holy_fire.png in Resources */,
 				632073E91A7095B800AA4416 /* archangel.png in Resources */,
+				63A37F201A75D5C40036C9D0 /* heal_hit.wav in Resources */,
 				632074771A70E93A00AA4416 /* fury.jpg in Resources */,
 				632074901A70E93A00AA4416 /* tranquil_mind_totem.png in Resources */,
 				632074851A70E93A00AA4416 /* repulsion_totem.png in Resources */,
@@ -1107,6 +1131,7 @@
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
 				632073F91A7095B800AA4416 /* divine_hymn.png in Resources */,
 				6320740A1A7095B800AA4416 /* holy_word_chastise.png in Resources */,
+				63A37F1F1A75D5C40036C9D0 /* flash_heal.wav in Resources */,
 				632074201A7095B800AA4416 /* rapture.png in Resources */,
 				63A37EF31A75ABE30036C9D0 /* 1.wav in Resources */,
 				632073F21A7095B800AA4416 /* chakra_red.png in Resources */,
@@ -1131,6 +1156,7 @@
 				6320748D1A70E93A00AA4416 /* survival.jpg in Resources */,
 				632073FC1A7095B800AA4416 /* divine_shield.png in Resources */,
 				632074951A70E93A00AA4416 /* windwalker.png in Resources */,
+				63A37F211A75D5C40036C9D0 /* holy_cast.wav in Resources */,
 				6320747B1A70E93A00AA4416 /* lifebloom.png in Resources */,
 				632074241A7095B800AA4416 /* smite.png in Resources */,
 				632074171A7095B800AA4416 /* power_infusion.png in Resources */,
@@ -1142,10 +1168,12 @@
 				632074921A70E93A00AA4416 /* unholy.png in Resources */,
 				632074011A7095B800AA4416 /* halo.png in Resources */,
 				632074631A70E93A00AA4416 /* ancestral_awakening.png in Resources */,
+				63A37F191A75D4590036C9D0 /* power_word_shield_hit.wav in Resources */,
 				632074721A70E93A00AA4416 /* fire.jpg in Resources */,
 				63A37EF81A75ABE30036C9D0 /* 6.wav in Resources */,
 				6320740D1A7095B800AA4416 /* hunter.png in Resources */,
 				632074761A70E93A00AA4416 /* frost_mage.jpg in Resources */,
+				63A37F241A75D6650036C9D0 /* nature_cast.wav in Resources */,
 				634F48E61A7441AE008761C6 /* bladestorm.jpg in Resources */,
 				63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */,
 				6320748C1A70E93A00AA4416 /* stormstrike.png in Resources */,

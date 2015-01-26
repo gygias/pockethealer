@@ -123,6 +123,9 @@
             NSLog(@"%@->%@ modified %@",source,target,spell);
         }
         
+        [SoundManager playSpellHit:spell.castSoundName];
+        [SoundManager playSpellHit:spell.hitSoundName];
+        
         if ( spell.spellType != BeneficialSpell && target.isEnemy )
             [self _doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         if ( spell.spellType != DetrimentalSpell && target.isPlayer )

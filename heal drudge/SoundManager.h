@@ -21,6 +21,7 @@
 + (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
 + (void)playSpellFizzle:(SpellSchool)school;
 + (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration;
++ (void)playSpellHit:(NSString *)hitSoundName;
 
 + (void)playCountdownWithStartIndex:(NSNumber *)startIndex;
 

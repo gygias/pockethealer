@@ -85,6 +85,11 @@ typedef NS_ENUM(NSInteger, SpellType) {
 
 @property BOOL canBeCastOnDeadEntities;
 
+// sound emitted by caster
+@property NSString *castSoundName;
+// sound emitted by target
+@property NSString *hitSoundName;
+
 // this should be default
 //@property BOOL affectsMainTarget;
 @property BOOL affectsRandomMelee;
