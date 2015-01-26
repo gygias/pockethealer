@@ -23,6 +23,7 @@
 + (void)playSpellFizzle:(SpellSchool)school;
 + (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration;
 + (void)playSpellHit:(NSString *)hitSoundName;
++ (void)playDeathSound;
 
 + (void)playCountdownWithStartIndex:(NSNumber *)startIndex;
 

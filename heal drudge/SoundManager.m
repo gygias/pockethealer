@@ -209,9 +209,14 @@ static SoundManager *sSoundManager;
 //    });
 }
 
++ (void)playDeathSound
+{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"abandon_quest" ofType:@"wav"];
+    [self playFileWithPath:filePath];
+}
+
 + (void)_nsTimerCountdown:(id)nsTimer
 {
-    NSLog(@"_nsTimerCountdown");
     NSMutableDictionary *userInfo = [(NSTimer *)nsTimer userInfo];
     NSNumber *currentIndex = userInfo[@"index"];
     if ( currentIndex.integerValue == 0 )

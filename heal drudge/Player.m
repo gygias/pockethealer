@@ -125,6 +125,12 @@
     return effectiveCastTime;
 }
 
+- (void)handleDeathFromAbility:(Ability *)ability
+{
+    [SoundManager playDeathSound];
+    [super handleDeathFromAbility:ability];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ [%@,%@]",self.name,self.currentHealth,self.currentResources];

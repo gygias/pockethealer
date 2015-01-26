@@ -92,6 +92,9 @@
 
 - (IBAction)pressedLoad:(id)sender
 {
+    for ( id view in [self.view subviews] )
+        [view resignFirstResponder];
+    
     [self.loadButton setEnabled:NO];
     
     WoWRealm *realm = [WoWRealm realmWithString:self.realmField.text];
@@ -180,6 +183,12 @@
 - (IBAction)pressedContinue:(id)sender
 {
     NSLog(@"continue...");
+}
+
+- (IBAction)resignTheGoddamnedKeyboard:(id)sender
+{
+    NSLog(@"%@ resignTheGoddamnedKeyboard: %@",self,sender);
+    [sender resignFirstResponder];
 }
 
 @end

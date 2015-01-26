@@ -36,6 +36,11 @@
     [SoundManager playCountdownWithStartIndex:@5];
 }
 
+- (void)end
+{
+    [self endEncounter];
+}
+
 - (void)updateEncounter
 {
     [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

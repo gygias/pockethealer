@@ -30,6 +30,7 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
 - (void)start;
+- (void)end;
 
 // called by entities when the a timed spell goes off
 - (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;

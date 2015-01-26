@@ -13,6 +13,9 @@
 
 @interface QuickPlayViewController ()
 
+// only necessary for leaving view / ending encounter
+@property Encounter *encounter;
+
 @end
 
 @implementation QuickPlayViewController
@@ -137,6 +140,8 @@
     [self _forceDraw:self];
     
     [encounter start];
+    
+    self.encounter = encounter;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -158,14 +163,13 @@
     });
 }
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    [self.encounter end];
 }
-*/
 
 @end

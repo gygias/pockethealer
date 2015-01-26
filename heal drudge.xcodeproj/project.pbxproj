@@ -216,6 +216,8 @@
 		63A37F251A75D6650036C9D0 /* prayer_of_mending_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F231A75D6650036C9D0 /* prayer_of_mending_hit.wav */; };
 		63A37F281A75E3BF0036C9D0 /* PainSuppressionSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */; };
 		63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */; };
+		63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F2C1A75EEB20036C9D0 /* abandon_quest.wav */; };
+		63A37F2F1A75EED20036C9D0 /* recuperate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F2E1A75EED20036C9D0 /* recuperate.jpg */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -511,6 +513,8 @@
 		63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PainSuppressionSpell.m; sourceTree = "<group>"; };
 		63A37F291A75E3CE0036C9D0 /* PainSuppressionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PainSuppressionEffect.h; sourceTree = "<group>"; };
 		63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PainSuppressionEffect.m; sourceTree = "<group>"; };
+		63A37F2C1A75EEB20036C9D0 /* abandon_quest.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = abandon_quest.wav; sourceTree = "<group>"; };
+		63A37F2E1A75EED20036C9D0 /* recuperate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = recuperate.jpg; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -598,6 +602,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63A37F2E1A75EED20036C9D0 /* recuperate.jpg */,
 				63F91BF31A751DCA00505EAE /* berserker_rush.jpg */,
 				634F48E21A7441AE008761C6 /* bladestorm.jpg */,
 				634F48E31A7441AE008761C6 /* hunger_for_blood.jpg */,
@@ -828,12 +833,13 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
-				63A37F071A75C6890036C9D0 /* spell */,
-				63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */,
-				63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */,
-				63A37ED31A75ABC90036C9D0 /* Corsica */,
 				63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */,
 				63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */,
+				63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */,
+				63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */,
+				63A37F2C1A75EEB20036C9D0 /* abandon_quest.wav */,
+				63A37F071A75C6890036C9D0 /* spell */,
+				63A37ED31A75ABC90036C9D0 /* Corsica */,
 			);
 			name = sounds;
 			sourceTree = "<group>";
@@ -1177,6 +1183,7 @@
 				63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */,
 				632074921A70E93A00AA4416 /* unholy.png in Resources */,
 				632074011A7095B800AA4416 /* halo.png in Resources */,
+				63A37F2F1A75EED20036C9D0 /* recuperate.jpg in Resources */,
 				632074631A70E93A00AA4416 /* ancestral_awakening.png in Resources */,
 				63A37F191A75D4590036C9D0 /* power_word_shield_hit.wav in Resources */,
 				632074721A70E93A00AA4416 /* fire.jpg in Resources */,
@@ -1201,6 +1208,7 @@
 				632073F11A7095B800AA4416 /* chakra_neutral.png in Resources */,
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
 				632074661A70E93A00AA4416 /* backstab.jpg in Resources */,
+				63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
 				63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */,
 				632073F41A7095B800AA4416 /* cleanse.png in Resources */,
