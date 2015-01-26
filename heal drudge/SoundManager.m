@@ -85,9 +85,6 @@ static SoundManager *sSoundManager;
                 {
                     NSLog(@"playing %@",path);
                     
-                    if ( [path rangeOfString:@"1.wav"].location != NSNotFound )
-                        NSLog(@"WEF:");
-                    
                     if ( duration > 0 )
                     {
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
