@@ -13,7 +13,7 @@
 
 @interface SoundManager : NSObject
 
-@property NSObject *audioPlayer;
+@property NSMutableArray *audioPlayers;
 
 + (void)playNoteSound;
 + (void)playDangerSound;

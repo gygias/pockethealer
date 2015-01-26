@@ -50,29 +50,43 @@ static SoundManager *sSoundManager;
 
 + (void)playSpellHit:(NSString *)hitSoundName
 {
+    // TODO if this gets called with nil, "1.wav" plays. (???)
     NSString *filePath = [[NSBundle mainBundle] pathForResource:hitSoundName ofType:@"wav"];
-    [self playFileWithPath:filePath duration:0];
+    if ( filePath )
+        [self playFileWithPath:filePath duration:0];
 }
 
 + (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration
 {
-    NSLog(@"%@ is trying to play %@",self,path);
-    dispatch_async(dispatch_get_main_queue(), ^{
+    if ( ! path )
+        return;
+    
+    dispatch_async(dispatch_get_global_queue(0,0), ^{
         NSError *error = nil;
         if ( path )
         {
             NSURL * url = [NSURL fileURLWithPath:path];
             AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url
                                                                         error:&error] ;
-            // http://stackoverflow.com/questions/14951535/how-to-play-wav-file
-            // When audioPlayer gets out of scope it gets deallocated and then sound playing will be stopped. Add a property to the class and it will remain for the duration of the object life-time. –  Jens Schwarzer Sep 25 '13
-            sSoundManager.audioPlayer = sound;
-            if (! sound) {
-                NSLog(@"Sound named '%@' had error %@", path, [error localizedDescription]);
-            } else {
+            
+            if ( sound )
+            {
+                // http://stackoverflow.com/questions/14951535/how-to-play-wav-file
+                // When audioPlayer gets out of scope it gets deallocated and then sound playing will be stopped. Add a property to the class and it will remain for the duration of the object life-time. –  Jens Schwarzer Sep 25 '13
+                if ( ! sSoundManager.audioPlayers )
+                    sSoundManager.audioPlayers = [NSMutableArray new];
+                [sSoundManager.audioPlayers addObject:sound];
+                NSTimeInterval effectiveDuration = duration ? duration : sound.duration;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveDuration * 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [sSoundManager.audioPlayers removeObject:sound];
+                });
+                
                 if ( [sound play] )
                 {
                     NSLog(@"playing %@",path);
+                    
+                    if ( [path rangeOfString:@"1.wav"].location != NSNotFound )
+                        NSLog(@"WEF:");
                     
                     if ( duration > 0 )
                     {
@@ -84,6 +98,8 @@ static SoundManager *sSoundManager;
                 else
                     NSLog(@"failed playing %@",path);
             }
+            else
+                NSLog(@"failed to initialize sound from %@",url);
         }
     });
 }
@@ -172,7 +188,7 @@ static SoundManager *sSoundManager;
     //NSUInteger currentIndex = startIndex.unsignedIntegerValue;
     NSMutableDictionary *dictionary = [NSMutableDictionary new];
     dictionary[@"index"] = startIndex;
-    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(_lol:) userInfo:dictionary repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(_nsTimerCountdown:) userInfo:dictionary repeats:YES];
 //    dispatch_queue_t globalQueue = dispatch_get_global_queue(0, 0);
 //    dispatch_async(globalQueue, ^{
 //        __block NSUInteger currentIndex = startIndex.unsignedIntegerValue;
@@ -195,12 +211,16 @@ static SoundManager *sSoundManager;
 //    });
 }
 
-+ (void)_lol:(id)lol
++ (void)_nsTimerCountdown:(id)nsTimer
 {
-    NSMutableDictionary *userInfo = [(NSTimer *)lol userInfo];
+    NSLog(@"_nsTimerCountdown");
+    NSMutableDictionary *userInfo = [(NSTimer *)nsTimer userInfo];
     NSNumber *currentIndex = userInfo[@"index"];
-    if ( currentIndex.integerValue == 1 )
-        [(NSTimer *)lol invalidate];
+    if ( currentIndex.integerValue == 0 )
+    {
+        [(NSTimer *)nsTimer invalidate];
+        return;
+    }
     else
         userInfo[@"index"] = @( currentIndex.integerValue - 1 );
     NSString *fileName = [NSString stringWithFormat:@"%@",currentIndex];
