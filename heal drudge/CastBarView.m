@@ -9,15 +9,9 @@
 #import "CastBarView.h"
 
 #import "Spell.h"
+#import "Entity.h"
 
 @implementation CastBarView
-
-//@synthesize castingSpell = _castingSpell;
-//
-//- (void)setCastingSpell:(Spell *)castingSpell
-//{
-//    
-//}
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -59,6 +53,27 @@
     CGFloat rightMargin = remainingTimeSize.width + 5;
     CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y, rightMargin, rect.size.height);
     [remainingTime drawInRect:remainingTimeRect withAttributes:attributes];
+    
+    [self _drawGCDThingInRect:rect];
+}
+
+#define GCD_TICK_SIZE 3
+- (void)_drawGCDThingInRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    NSDate *nextGCD = self.castingEntity.nextGlobalCooldownDate;
+    if ( nextGCD )
+    {
+        double ratio = -[[NSDate date] timeIntervalSinceDate:nextGCD] / self.castingEntity.currentGlobalCooldownDuration;
+        double invertedRatio = ( 1 - ratio );
+        //if ( self.castingSpell.isChanneled )
+        //    ratio = ( 1 - ratio );
+        CGRect gcdNubRect = CGRectMake(rect.origin.x + ( invertedRatio * rect.size.width ), rect.origin.y + rect.size.height - GCD_TICK_SIZE, GCD_TICK_SIZE, GCD_TICK_SIZE);
+        CGContextAddRect(context, gcdNubRect);
+        CGContextSetFillColorWithColor(context,
+                                       [UIColor whiteColor].CGColor);
+        CGContextFillPath(context);
+    }
 }
 
 

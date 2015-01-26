@@ -126,6 +126,7 @@
             {
                 NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
                 self.castBarView.castingSpell = spell;
+                self.castBarView.castingEntity = encounter.player;
                 self.castBarView.effectiveCastTime = effectiveCastTime;
             }
             else

@@ -169,15 +169,15 @@
         else
             orderedPlayers = @[ raid.meleePlayers, raid.rangePlayers ];
         
+        NSMutableArray *combinedPlayers = [NSMutableArray new];
         for ( NSArray *anOrderedPlayers in orderedPlayers )
         {
-            Entity *aRandomTarget = [self _randomLivingPlayerFrom:anOrderedPlayers];
-            if ( aRandomTarget )
-            {
-                [targets addObject:aRandomTarget];
-                break;
-            }
+            [combinedPlayers addObjectsFromArray:anOrderedPlayers];
         }
+        
+        Entity *aRandomTarget = [self _randomLivingPlayerFrom:combinedPlayers];
+        if ( aRandomTarget )
+            [targets addObject:aRandomTarget];
     }
     else // default to main target
     {
@@ -233,16 +233,19 @@
 - (Entity *)_randomLivingPlayerFrom:(NSArray *)players
 {
     __block Entity *randomLivingPlayer = nil;
+    
+    // TODO this is racey
+    NSMutableArray *livingPlayers = [NSMutableArray new];
     [players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         //NSLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
         if ( ! obj.isDead )
-        {
-            randomLivingPlayer = obj;
-            *stop = YES;
-        }
+            [livingPlayers addObject:obj];
     }];
     
-    return randomLivingPlayer;
+    if ( [livingPlayers count] == 0 )
+        return randomLivingPlayer;
+    
+    return [livingPlayers objectAtIndex:arc4random() % [livingPlayers count]];
 }
 
 @end

@@ -54,6 +54,7 @@
 - (void)removeStatusEffect:(Effect *)effect;
 - (void)removeStatusEffectNamed:(NSString *)statusEffectName;
 
+- (void)prepareForEncounter:(Encounter *)encounter;
 - (void)beginEncounter:(Encounter *)encounter;
 - (void)updateEncounter:(Encounter *)encounter;
 - (void)endEncounter:(Encounter *)encounter;

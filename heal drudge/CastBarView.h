@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class Spell;
+@class Entity;
 
 @interface CastBarView : UIView
 
+@property Entity *castingEntity; // TODO i think this makes castingSpell redundant but was added to draw gcd thing
 @property Spell *castingSpell;
 @property NSNumber *effectiveCastTime;
 

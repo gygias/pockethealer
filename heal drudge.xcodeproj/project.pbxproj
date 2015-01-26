@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63027AAB1A7605CE0068E68A /* dps_role.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AA81A7605CE0068E68A /* dps_role.png */; };
+		63027AAC1A7605CE0068E68A /* healer_role.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AA91A7605CE0068E68A /* healer_role.png */; };
+		63027AAD1A7605CE0068E68A /* tank_role.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AAA1A7605CE0068E68A /* tank_role.png */; };
+		63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -245,6 +249,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63027AA81A7605CE0068E68A /* dps_role.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dps_role.png; sourceTree = "<group>"; };
+		63027AA91A7605CE0068E68A /* healer_role.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = healer_role.png; sourceTree = "<group>"; };
+		63027AAA1A7605CE0068E68A /* tank_role.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank_role.png; sourceTree = "<group>"; };
+		63027AAE1A7614890068E68A /* PowerWordBarrierSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerWordBarrierSpell.h; sourceTree = "<group>"; };
+		63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerWordBarrierSpell.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -602,6 +611,9 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63027AA81A7605CE0068E68A /* dps_role.png */,
+				63027AA91A7605CE0068E68A /* healer_role.png */,
+				63027AAA1A7605CE0068E68A /* tank_role.png */,
 				63A37F2E1A75EED20036C9D0 /* recuperate.jpg */,
 				63F91BF31A751DCA00505EAE /* berserker_rush.jpg */,
 				634F48E21A7441AE008761C6 /* bladestorm.jpg */,
@@ -817,6 +829,8 @@
 				63A37F271A75E3BF0036C9D0 /* PainSuppressionSpell.m */,
 				63A37F291A75E3CE0036C9D0 /* PainSuppressionEffect.h */,
 				63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */,
+				63027AAE1A7614890068E68A /* PowerWordBarrierSpell.h */,
+				63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */,
 			);
 			name = Priest;
 			sourceTree = "<group>";
@@ -1116,6 +1130,7 @@
 				63A37F111A75C6930036C9D0 /* spell_fizzle_shadow.wav in Resources */,
 				632074001A7095B800AA4416 /* guardian_spirit.png in Resources */,
 				6320740E1A7095B800AA4416 /* inner_will.png in Resources */,
+				63027AAD1A7605CE0068E68A /* tank_role.png in Resources */,
 				634F48E71A7441AE008761C6 /* hunger_for_blood.jpg in Resources */,
 				63A37F171A75CAB80036C9D0 /* precast_holy_medium.wav in Resources */,
 				632074811A70E93A00AA4416 /* moonfire.jpg in Resources */,
@@ -1132,6 +1147,7 @@
 				632074831A70E93A00AA4416 /* protection_warrior.jpg in Resources */,
 				6320740B1A7095B800AA4416 /* holy_word_sanctuary.png in Resources */,
 				632074741A70E93A00AA4416 /* freedom_wolf.png in Resources */,
+				63027AAC1A7605CE0068E68A /* healer_role.png in Resources */,
 				632074681A70E93A00AA4416 /* bestial_wrath.jpg in Resources */,
 				632074931A70E93A00AA4416 /* water_shield.png in Resources */,
 				63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */,
@@ -1219,6 +1235,7 @@
 				6320747A1A70E93A00AA4416 /* lavalash.png in Resources */,
 				63C5F4111A5243E900B9AE46 /* LaunchScreen.xib in Resources */,
 				6320741F1A7095B800AA4416 /* question_mark.png in Resources */,
+				63027AAB1A7605CE0068E68A /* dps_role.png in Resources */,
 				632074621A70E93A00AA4416 /* affliction.jpg in Resources */,
 				6320747E1A70E93A00AA4416 /* living_bomb.png in Resources */,
 				63C5F40E1A5243E900B9AE46 /* Images.xcassets in Resources */,
@@ -1290,6 +1307,7 @@
 				636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */,
 				632074A11A718E0700AA4416 /* PowerWordShieldSpell.m in Sources */,
 				6328FB551A73156E00DF6B50 /* UIColor+Extensions.m in Sources */,
+				63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */,
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,

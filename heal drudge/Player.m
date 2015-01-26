@@ -42,33 +42,25 @@
         [SoundManager playSpellFizzle:spell.school];
     }
     
-    if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
+    NSLog(@"%@ started %@ %@",self,spell.isChanneled?@"channeling":@"casting",spell);
+    
+    NSMutableArray *modifiers = [NSMutableArray new];
+    if ( [self handleSpellStart:spell asSource:YES otherEntity:target modifiers:modifiers] )
     {
-        NSLog(@"%@ started %@ %@",self,spell.isChanneled?@"channeling":@"casting",spell);
-        
-        NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [self handleSpellStart:spell asSource:YES otherEntity:target modifiers:modifiers] )
+    }
+    
+    __block NSNumber *hasteBuff = nil;
+    [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"considering %@ for %@",obj,spell);
+        if ( obj.hasteIncreasePercentage )
         {
+            if ( ! hasteBuff || [obj.hasteIncreasePercentage compare:hasteBuff] == NSOrderedDescending )
+                hasteBuff = obj.hasteIncreasePercentage; // oh yeah, we're not using haste at all yet
         }
-        
-        _castingSpell = spell;
-        NSDate *thisCastStartDate = [NSDate date];
-        self.castingSpell.lastCastStartDate = thisCastStartDate;
-        
-        __block NSNumber *hasteBuff = nil;
-        
-        [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-            NSLog(@"considering %@ for %@",obj,spell);
-            if ( obj.hasteIncreasePercentage )
-            {
-                if ( ! hasteBuff || [obj.hasteIncreasePercentage compare:hasteBuff] == NSOrderedDescending )
-                    hasteBuff = obj.hasteIncreasePercentage; // oh yeah, we're not using haste at all yet
-            }
-        }];
-        
-        if ( hasteBuff )
-            NSLog(@"%@'s haste is buffed by %@",self,hasteBuff);
-        
+    }];
+    
+    if ( spell.triggersGCD )
+    {
         NSTimeInterval effectiveGCD = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
         self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
         self.currentGlobalCooldownDuration = effectiveGCD;
@@ -76,6 +68,16 @@
             self.nextGlobalCooldownDate = nil;
             self.currentGlobalCooldownDuration = 0;
         });
+    }
+    
+    if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
+    {
+        _castingSpell = spell;
+        NSDate *thisCastStartDate = [NSDate date];
+        self.castingSpell.lastCastStartDate = thisCastStartDate;
+        
+        if ( hasteBuff )
+            NSLog(@"%@'s haste is buffed by %@",self,hasteBuff);
         
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
@@ -91,6 +93,7 @@
             dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
                 NSLog(@"%@ is channel-ticking",spell);
+                
                 [encounter handleSpell:spell source:self target:target periodicTick:YES isFirstTick:firstTick];
                 firstTick = NO;
                 if ( --ticksRemaining <= 0 )

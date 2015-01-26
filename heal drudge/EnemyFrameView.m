@@ -14,18 +14,27 @@
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
+
+#define ENEMY_FRAME_BORDER_INSET 1
+
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
     NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     [self.enemy.name drawInRect:rect withAttributes:attributes];
     
-    double healthPercentage = self.enemy.currentHealth.doubleValue / self.enemy.health.doubleValue;
-    
     CGSize nameSize = [self.enemy.name sizeWithAttributes:nil];
-    CGRect healthRect = CGRectMake(rect.origin.x, rect.origin.y + nameSize.height, rect.size.width * healthPercentage, rect.size.height - nameSize.height);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGRect borderRect = CGRectMake(rect.origin.x + ENEMY_FRAME_BORDER_INSET, rect.origin.y + nameSize.height + ENEMY_FRAME_BORDER_INSET, rect.size.width - ENEMY_FRAME_BORDER_INSET, rect.size.height - nameSize.height - ENEMY_FRAME_BORDER_INSET);
+//    CGContextAddRect(context, borderRect);
+//    CGContextSetStrokeColorWithColor(context,
+//                                     [UIColor grayColor].CGColor);
+//    CGContextFillPath(context);
+    
+    double healthPercentage = self.enemy.currentHealth.doubleValue / self.enemy.health.doubleValue;
+    CGRect healthRect = CGRectMake(rect.origin.x, rect.origin.y + nameSize.height, rect.size.width * healthPercentage, rect.size.height - nameSize.height);
+    
     CGContextAddRect(context, healthRect);
     CGContextSetFillColorWithColor(context,
                                      [UIColor redColor].CGColor);

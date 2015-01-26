@@ -15,25 +15,37 @@
 @implementation Encounter
 
 - (void)start
-{
+{    
     [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(Entity *)obj beginEncounter:self];
+        [(Entity *)obj prepareForEncounter:self];
     }];
     
     [self.raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(Entity *)obj beginEncounter:self];
+        [(Entity *)obj prepareForEncounter:self];
     }];
     
-    // begin update timer
-    _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
-    _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
-    dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
-    dispatch_source_set_event_handler(_encounterTimer, ^{
-        [self updateEncounter];
-    });
-    dispatch_resume(_encounterTimer);
+    NSInteger delay = 5;
+    [SoundManager playCountdownWithStartIndex:@(delay)];
     
-    [SoundManager playCountdownWithStartIndex:@5];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [(Entity *)obj beginEncounter:self];
+        }];
+        
+        [self.raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [(Entity *)obj beginEncounter:self];
+        }];
+        
+        // begin update timer
+        _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
+        _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
+        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
+        dispatch_source_set_event_handler(_encounterTimer, ^{
+            [self updateEncounter];
+        });
+        dispatch_resume(_encounterTimer);
+    });
 }
 
 - (void)end

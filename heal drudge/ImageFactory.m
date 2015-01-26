@@ -136,4 +136,15 @@
     return [self questionMark];
 }
 
++ (UIImage *)imageForRole:(const NSString *)roleString
+{
+    if ( [roleString isEqualToString:(NSString *)HealerRole] )
+        return [self imageNamed:@"healer_role"];
+    else if ( [roleString isEqualToString:(NSString *)TankRole] )
+        return [self imageNamed:@"tank_role"];
+    else if ( [roleString isEqualToString:(NSString *)DPSRole] )
+        return [self imageNamed:@"dps_role"];
+    return [self questionMark];
+}
+
 @end

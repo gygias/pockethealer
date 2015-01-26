@@ -12,6 +12,7 @@
 #import "HDClass.h"
 #import "Effect.h"
 #import "UIColor+Extensions.h"
+#import "ImageFactory.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -28,7 +29,7 @@
 
 #define RAID_FRAME_BORDER_INSET 1
 #define RAID_FRAME_HEALTH_INSET ( RAID_FRAME_BORDER_INSET + 1 )
-#define RAID_FRAME_NAME_INSET_X 5
+#define RAID_FRAME_NAME_INSET_X ( ROLE_ICON_ORIGIN_X + ROLE_ICON_SIZE + 3 )
 
 + (CGSize)desiredSize
 {
@@ -74,6 +75,7 @@
     // do incoming heals overlap absorbs?
     [self _drawAbsorbsInRect:rect withHealth:snapshottedHealthPercentage];
     [self _drawIncomingHealsInRect:rect withHealth:snapshottedHealthPercentage];
+    [self _drawRoleIconInRect:rect];
     [self _drawTextInRect:rect];
     [self _drawResourceBarInRect:rect];
     [self _drawStatusEffectsInRect:rect];
@@ -221,28 +223,60 @@
     }    
 }
 
+#define ROLE_ICON_ORIGIN_X 3
+#define ROLE_ICON_ORIGIN_Y ROLE_ICON_ORIGIN_X
+#define ROLE_ICON_SIZE 10
+#define ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO (-2)
+
+- (void)_drawRoleIconInRect:(CGRect)rect
+{
+    UIImage *roleImage = [ImageFactory imageForRole:self.entity.hdClass.role];
+    CGRect imageRect = CGRectMake(rect.origin.x + ROLE_ICON_ORIGIN_X, rect.origin.y + ROLE_ICON_ORIGIN_Y, ROLE_ICON_SIZE, ROLE_ICON_SIZE);
+    [roleImage drawInRect:imageRect];
+}
+
 - (void)_drawTextInRect:(CGRect)rect
 {
     //CGContextRef context = UIGraphicsGetCurrentContext();
-    CGPoint namePoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, ( rect.size.height / 2 ) + rect.origin.y);
-    NSMutableDictionary *attributes = [NSMutableDictionary new];
-    if ( self.entity.isDead )
-        attributes[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    CGPoint namePoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO);
+    NSShadow *shadow = [NSShadow new];
+    shadow.shadowColor = [UIColor blackColor];
+    shadow.shadowBlurRadius = 5;
+    shadow.shadowOffset = CGSizeMake(1.5, 1.5);
+    NSMutableDictionary *attributes =
+        [NSMutableDictionary dictionaryWithObjectsAndKeys:
+            [UIColor whiteColor], NSForegroundColorAttributeName,
+            shadow, NSShadowAttributeName,
+         nil];
+    
     
     BOOL truncated = NO;
     NSString *textToDraw = self.entity.name;
     CGSize stringSize = [textToDraw sizeWithAttributes:attributes];
+    stringSize.width += 20;
     while ( stringSize.width > rect.size.width && [textToDraw length] > 0 )
     {
         // TODO because these are instantiated for each draw, this is extra inefficient
         textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
         stringSize = [textToDraw sizeWithAttributes:attributes];
+        stringSize.width += 20;
         truncated = YES;
     }
     if ( truncated )
     {
         textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
         textToDraw = [textToDraw stringByAppendingString:@"…"];
+        
+        // TODO all around here
+        stringSize = [textToDraw sizeWithAttributes:attributes];
+        while ( stringSize.width > rect.size.width && [textToDraw length] > 1 )
+        {
+            // TODO because these are instantiated for each draw, this is extra inefficient
+            textToDraw = [textToDraw stringByReplacingCharactersInRange:NSMakeRange([textToDraw length] - 2, 1) withString:@""];
+            stringSize = [textToDraw sizeWithAttributes:attributes];
+            stringSize.width += 20;
+            truncated = YES;
+        }
     }
     
     [textToDraw drawAtPoint:namePoint withAttributes:attributes];

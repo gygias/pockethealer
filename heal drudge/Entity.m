@@ -212,10 +212,14 @@
         [self removeStatusEffect:aStatusEffect];
 }
 
-- (void)beginEncounter:(Encounter *)encounter
+- (void)prepareForEncounter:(Encounter *)encounter
 {
     self.currentHealth = self.health;
     self.currentResources = self.power;
+}
+
+- (void)beginEncounter:(Encounter *)encounter
+{
     //NSLog(@"i, %@, should begin encounter",self);
 }
 

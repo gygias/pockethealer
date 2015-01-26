@@ -15,5 +15,6 @@
 + (UIImage *)imageNamed:(NSString *)vagueName;
 + (UIImage *)imageForClass:(HDClass *)hdClass;
 + (UIImage *)imageForSpec:(HDClass *)hdClass;
++ (UIImage *)imageForRole:(const NSString *)roleString;
 
 @end
