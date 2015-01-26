@@ -83,7 +83,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 <connections>
-                                    <action selector="resignTheGoddamnedKeyboard:" destination="RMg-zi-FX2" eventType="editingDidEnd" id="f8K-7Z-Un4"/>
                                     <outlet property="delegate" destination="RMg-zi-FX2" id="lVE-Uj-EnA"/>
                                 </connections>
                             </textField>
@@ -92,7 +91,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
-                                    <action selector="resignTheGoddamnedKeyboard:" destination="RMg-zi-FX2" eventType="editingDidEnd" id="q0i-cq-dGy"/>
                                     <outlet property="delegate" destination="RMg-zi-FX2" id="mor-U2-F4X"/>
                                 </connections>
                             </textField>

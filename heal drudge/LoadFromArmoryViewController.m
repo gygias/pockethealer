@@ -185,10 +185,4 @@
     NSLog(@"continue...");
 }
 
-- (IBAction)resignTheGoddamnedKeyboard:(id)sender
-{
-    NSLog(@"%@ resignTheGoddamnedKeyboard: %@",self,sender);
-    [sender resignFirstResponder];
-}
-
 @end
