@@ -33,6 +33,8 @@
         self.periodicDamage = @3777;
         self.periodicHeal = @10698;
         //self.absorb = @(( ( ( [caster.spellPower floatValue] * 5 ) + 2 ) * 1 ));
+        
+        self.school = HolySchool;
     }
     return self;
 }

@@ -11,6 +11,7 @@
 #import "Spell.h"
 #import "Encounter.h"
 #import "Effect.h"
+#import "SoundManager.h"
 
 #define HD_NAME_MIN 3
 #define HD_NAME_MAX 12
@@ -37,6 +38,8 @@
         NSLog(@"%@ cancelled casting %@",self,self.castingSpell);
         _castingSpell = nil;
         _castingSpell.lastCastStartDate = nil;
+        
+        [SoundManager playSpellFizzle:spell.school];
     }
     
     if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
@@ -76,6 +79,8 @@
         
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
+        
+        [SoundManager playSpellSound:spell.school level:spell.level duration:effectiveCastTime.doubleValue];
         
         if ( spell.isChanneled )
         {

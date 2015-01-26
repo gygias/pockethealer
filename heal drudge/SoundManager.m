@@ -45,6 +45,11 @@ static SoundManager *sSoundManager;
 
 + (void)playFileWithPath:(NSString *)path
 {
+    [self playFileWithPath:path duration:0];
+}
+
++ (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration
+{
     NSLog(@"%@ is trying to play %@",self,path);
     dispatch_async(dispatch_get_main_queue(), ^{
         NSError *error = nil;
@@ -60,7 +65,16 @@ static SoundManager *sSoundManager;
                 NSLog(@"Sound named '%@' had error %@", path, [error localizedDescription]);
             } else {
                 if ( [sound play] )
+                {
                     NSLog(@"playing %@",path);
+                    
+                    if ( duration > 0 )
+                    {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [sound stop];
+                        });
+                    }
+                }
                 else
                     NSLog(@"failed playing %@",path);
             }
@@ -83,6 +97,56 @@ static SoundManager *sSoundManager;
             break;
         default:
             break;
+    }
+}
+
++ (void)playSpellFizzle:(SpellSchool)school
+{
+    NSString *fileName = nil;
+    switch(school)
+    {
+        case FireSchool:
+            fileName = @"spell_fizzle_fire";
+            break;
+        case FrostSchool:
+            fileName = @"spell_fizzle_frost";
+            break;
+        case NatureSchool:
+            fileName = @"spell_fizzle_nature";
+            break;
+        case ShadowSchool:
+            fileName = @"spell_fizzle_shadow";
+            break;
+        case HolySchool:
+            fileName = @"spell_fizzle_holy";
+            break;
+        default:
+            break;
+    }
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+    if ( fileName )
+        [self playFileWithPath:filePath];
+}
+
++ (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration
+{
+    NSString *fileNameBase = nil;
+    switch(school)
+    {
+        case HolySchool:
+            fileNameBase = @"precast_holy";
+            break;
+        default:
+            break;
+            
+    }
+    
+    if ( fileNameBase && level )
+    {
+        NSString *fileName = [NSString stringWithFormat:@"%@_%@",fileNameBase,level];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+        [self playFileWithPath:filePath duration:duration];
     }
 }
 

@@ -79,6 +79,9 @@
     
     dispatch_async(_encounterQueue, ^{
         
+        if ( self.enemyAbilityHandler )
+            self.enemyAbilityHandler(source,ability);
+        
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:ability asSource:YES otherEntity:target modifiers:modifiers] )
         {

@@ -11,6 +11,10 @@
 
 #import "Player.h"
 
+const NSString *SpellLevelLow = @"low";
+const NSString *SpellLevelMedium = @"medium";
+const NSString *SpellLevelHigh = @"high";
+
 @implementation Spell
 
 - (id)initWithCaster:(Entity *)caster
@@ -18,6 +22,7 @@
     if ( self = [super init] )
     {
         self.caster = caster;
+        self.level = @"low";
     }
     return self;
 }

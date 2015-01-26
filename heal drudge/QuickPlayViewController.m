@@ -9,6 +9,7 @@
 #import "QuickPlayViewController.h"
 
 #import "Encounter.h"
+#import "AlertText.h"
 
 @interface QuickPlayViewController ()
 
@@ -46,6 +47,13 @@
     encounter.encounterUpdatedHandler = ^(Encounter *encounter){
         [self _forceDraw:self];
     };
+    encounter.enemyAbilityHandler = ^(Enemy *enemy, Ability *ability){
+        AlertText *alertText = [AlertText new];
+        alertText.text = ability.name;
+        alertText.startDate = [NSDate date];
+        alertText.duration = 2;
+        [self.alertTextView addAlertText:alertText];
+    };
     encounter.player = aHealer;
     encounter.raid = raid;
     encounter.enemies = @[ enemy ];
@@ -69,6 +77,10 @@
     //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_forceDraw:) userInfo:nil repeats:YES];
 
     self.playerAndTargetView.player = aHealer;
+    self.playerAndTargetView.entityTouchedHandler = ^(Entity *entity){
+        encounter.player.target = entity;
+        self.playerAndTargetView.target = entity;
+    };
     
     self.spellBarView.player = aHealer;
     BOOL (^castBlock)(Spell *);

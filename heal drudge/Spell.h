@@ -14,13 +14,17 @@
 @class Entity;
 @class Player;
 
-typedef NS_ENUM(NSInteger, DamageType) {
-    HolyDamage      = 0,
-    ShadowDamage    = 1,
-    NatureDamage    = 2,
-    FireDamage      = 3,
-    FrostDamage     = 4,
-    PhysicalDamage  = 5
+extern const NSString *SpellLevelLow;
+extern const NSString *SpellLevelMedium;
+extern const NSString *SpellLevelHigh;
+
+typedef NS_ENUM(NSInteger, SpellSchool) {
+    PhysicalSchool  = 0,
+    HolySchool,
+    ShadowSchool,
+    NatureSchool,
+    FireSchool,
+    FrostSchool
 };
 
 typedef NS_ENUM(NSInteger, SpellType) {
@@ -74,7 +78,6 @@ typedef NS_ENUM(NSInteger, SpellType) {
 @property BOOL isPeriodic;
 @property NSTimeInterval period;
 @property NSNumber *periodicDamage;
-@property DamageType periodicDamageType;
 @property NSNumber *periodicHeal;
 @property NSNumber *periodicAbsorb;
 @property NSTimeInterval periodicDuration;
@@ -92,7 +95,8 @@ typedef NS_ENUM(NSInteger, SpellType) {
 @property NSNumber *castTime;
 @property NSNumber *manaCost;
 @property NSNumber *damage;
-@property DamageType damageType;
+@property SpellSchool school;
+@property NSString *level;
 @property NSNumber *healing;
 @property NSNumber *absorb;
 

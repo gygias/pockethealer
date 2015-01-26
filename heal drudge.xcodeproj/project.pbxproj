@@ -197,6 +197,16 @@
 		63A37EFC1A75ABE30036C9D0 /* 10.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EF21A75ABE30036C9D0 /* 10.wav */; };
 		63A37EFF1A75B9340036C9D0 /* belltollnightelf.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */; };
 		63A37F001A75B9340036C9D0 /* PVPFlagTaken.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */; };
+		63A37F031A75BE230036C9D0 /* AlertTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F021A75BE230036C9D0 /* AlertTextView.m */; };
+		63A37F061A75BFA60036C9D0 /* AlertText.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F051A75BFA60036C9D0 /* AlertText.m */; };
+		63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F081A75C6930036C9D0 /* spell_fizzle_fire.wav */; };
+		63A37F0E1A75C6930036C9D0 /* spell_fizzle_frost.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F091A75C6930036C9D0 /* spell_fizzle_frost.wav */; };
+		63A37F0F1A75C6930036C9D0 /* spell_fizzle_holy.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F0A1A75C6930036C9D0 /* spell_fizzle_holy.wav */; };
+		63A37F101A75C6930036C9D0 /* spell_fizzle_nature.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F0B1A75C6930036C9D0 /* spell_fizzle_nature.wav */; };
+		63A37F111A75C6930036C9D0 /* spell_fizzle_shadow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F0C1A75C6930036C9D0 /* spell_fizzle_shadow.wav */; };
+		63A37F151A75CAB80036C9D0 /* precast_holy_high.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */; };
+		63A37F161A75CAB80036C9D0 /* precast_holy_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */; };
+		63A37F171A75CAB80036C9D0 /* precast_holy_medium.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
 		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
@@ -469,6 +479,18 @@
 		63A37EF21A75ABE30036C9D0 /* 10.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 10.wav; path = Corsica/10.wav; sourceTree = "<group>"; };
 		63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = belltollnightelf.wav; sourceTree = "<group>"; };
 		63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = PVPFlagTaken.wav; sourceTree = "<group>"; };
+		63A37F011A75BE230036C9D0 /* AlertTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertTextView.h; sourceTree = "<group>"; };
+		63A37F021A75BE230036C9D0 /* AlertTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertTextView.m; sourceTree = "<group>"; };
+		63A37F041A75BFA60036C9D0 /* AlertText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertText.h; sourceTree = "<group>"; };
+		63A37F051A75BFA60036C9D0 /* AlertText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertText.m; sourceTree = "<group>"; };
+		63A37F081A75C6930036C9D0 /* spell_fizzle_fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_fizzle_fire.wav; sourceTree = "<group>"; };
+		63A37F091A75C6930036C9D0 /* spell_fizzle_frost.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_fizzle_frost.wav; sourceTree = "<group>"; };
+		63A37F0A1A75C6930036C9D0 /* spell_fizzle_holy.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_fizzle_holy.wav; sourceTree = "<group>"; };
+		63A37F0B1A75C6930036C9D0 /* spell_fizzle_nature.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_fizzle_nature.wav; sourceTree = "<group>"; };
+		63A37F0C1A75C6930036C9D0 /* spell_fizzle_shadow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_fizzle_shadow.wav; sourceTree = "<group>"; };
+		63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_high.wav; sourceTree = "<group>"; };
+		63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_low.wav; sourceTree = "<group>"; };
+		63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_holy_medium.wav; sourceTree = "<group>"; };
 		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -545,6 +567,10 @@
 				634F48F11A744AEA008761C6 /* EnemyFrameView.m */,
 				634F48F31A746B86008761C6 /* PlayerAndTargetView.h */,
 				634F48F41A746B86008761C6 /* PlayerAndTargetView.m */,
+				63A37F011A75BE230036C9D0 /* AlertTextView.h */,
+				63A37F021A75BE230036C9D0 /* AlertTextView.m */,
+				63A37F041A75BFA60036C9D0 /* AlertText.h */,
+				63A37F051A75BFA60036C9D0 /* AlertText.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -778,6 +804,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63A37F071A75C6890036C9D0 /* spell */,
 				63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */,
 				63A37EFE1A75B9340036C9D0 /* PVPFlagTaken.wav */,
 				63A37ED31A75ABC90036C9D0 /* Corsica */,
@@ -802,6 +829,21 @@
 				63A37EF21A75ABE30036C9D0 /* 10.wav */,
 			);
 			name = Corsica;
+			sourceTree = "<group>";
+		};
+		63A37F071A75C6890036C9D0 /* spell */ = {
+			isa = PBXGroup;
+			children = (
+				63A37F121A75CAB80036C9D0 /* precast_holy_high.wav */,
+				63A37F131A75CAB80036C9D0 /* precast_holy_low.wav */,
+				63A37F141A75CAB80036C9D0 /* precast_holy_medium.wav */,
+				63A37F081A75C6930036C9D0 /* spell_fizzle_fire.wav */,
+				63A37F091A75C6930036C9D0 /* spell_fizzle_frost.wav */,
+				63A37F0A1A75C6930036C9D0 /* spell_fizzle_holy.wav */,
+				63A37F0B1A75C6930036C9D0 /* spell_fizzle_nature.wav */,
+				63A37F0C1A75C6930036C9D0 /* spell_fizzle_shadow.wav */,
+			);
+			name = spell;
 			sourceTree = "<group>";
 		};
 		63C5F3F41A5243E900B9AE46 = {
@@ -1024,15 +1066,18 @@
 				632074261A7095B800AA4416 /* warrior.png in Resources */,
 				632073F51A7095B800AA4416 /* deathknight.png in Resources */,
 				632074791A70E93A00AA4416 /* heroism.png in Resources */,
+				63A37F151A75CAB80036C9D0 /* precast_holy_high.wav in Resources */,
 				632074191A7095B800AA4416 /* power_word_fortitude.png in Resources */,
 				632073FE1A7095B800AA4416 /* flash_heal.png in Resources */,
 				632074651A70E93A00AA4416 /* arms.png in Resources */,
 				632073F71A7095B800AA4416 /* devotion_aura.png in Resources */,
 				632074151A7095B800AA4416 /* paladin.png in Resources */,
 				6320747D1A70E93A00AA4416 /* lightning_shield.jpg in Resources */,
+				63A37F111A75C6930036C9D0 /* spell_fizzle_shadow.wav in Resources */,
 				632074001A7095B800AA4416 /* guardian_spirit.png in Resources */,
 				6320740E1A7095B800AA4416 /* inner_will.png in Resources */,
 				634F48E71A7441AE008761C6 /* hunger_for_blood.jpg in Resources */,
+				63A37F171A75CAB80036C9D0 /* precast_holy_medium.wav in Resources */,
 				632074811A70E93A00AA4416 /* moonfire.jpg in Resources */,
 				632074161A7095B800AA4416 /* penance.png in Resources */,
 				632074821A70E93A00AA4416 /* multi_totem_activation.png in Resources */,
@@ -1057,6 +1102,7 @@
 				63A37ED01A75A1A80036C9D0 /* UR_Algalon_BHole01.wav in Resources */,
 				632074881A70E93A00AA4416 /* spirit_link_totem.png in Resources */,
 				63A37EF71A75ABE30036C9D0 /* 5.wav in Resources */,
+				63A37F0E1A75C6930036C9D0 /* spell_fizzle_frost.wav in Resources */,
 				6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */,
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
 				632073F91A7095B800AA4416 /* divine_hymn.png in Resources */,
@@ -1068,6 +1114,7 @@
 				6320747C1A70E93A00AA4416 /* lightning_bolt.png in Resources */,
 				632074781A70E93A00AA4416 /* healing_tide.png in Resources */,
 				632073EC1A7095B800AA4416 /* borrowed_time.png in Resources */,
+				63A37F161A75CAB80036C9D0 /* precast_holy_low.wav in Resources */,
 				634F48E81A7441AE008761C6 /* melee_attack.gif in Resources */,
 				6320746E1A70E93A00AA4416 /* demonology.jpg in Resources */,
 				632074251A7095B800AA4416 /* warlock.png in Resources */,
@@ -1088,8 +1135,10 @@
 				632074241A7095B800AA4416 /* smite.png in Resources */,
 				632074171A7095B800AA4416 /* power_infusion.png in Resources */,
 				632074801A70E93A00AA4416 /* mistweaver.png in Resources */,
+				63A37F101A75C6930036C9D0 /* spell_fizzle_nature.wav in Resources */,
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				632074131A7095B800AA4416 /* monk.png in Resources */,
+				63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */,
 				632074921A70E93A00AA4416 /* unholy.png in Resources */,
 				632074011A7095B800AA4416 /* halo.png in Resources */,
 				632074631A70E93A00AA4416 /* ancestral_awakening.png in Resources */,
@@ -1110,6 +1159,7 @@
 				632074871A70E93A00AA4416 /* resto_shaman.jpg in Resources */,
 				632073EE1A7095B800AA4416 /* chakra.png in Resources */,
 				632074031A7095B800AA4416 /* hand_of_protection.png in Resources */,
+				63A37F0F1A75C6930036C9D0 /* spell_fizzle_holy.wav in Resources */,
 				632073F11A7095B800AA4416 /* chakra_neutral.png in Resources */,
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
 				632074661A70E93A00AA4416 /* backstab.jpg in Resources */,
@@ -1146,6 +1196,7 @@
 				634F48DE1A734B89008761C6 /* Effect.m in Sources */,
 				632074BF1A71A5CA00AA4416 /* Entity.m in Sources */,
 				6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */,
+				63A37F061A75BFA60036C9D0 /* AlertText.m in Sources */,
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
@@ -1177,6 +1228,7 @@
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				634F48FE1A7480FB008761C6 /* PrayerOfMendingEffect.m in Sources */,
 				6320742A1A70D2EC00AA4416 /* LoadingFromArmoryViewController.m in Sources */,
+				63A37F031A75BE230036C9D0 /* AlertTextView.m in Sources */,
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,

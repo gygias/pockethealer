@@ -30,6 +30,8 @@
         self.hitRange = @12;
         self.maxHitTargets = @5;
         //self.absorb = @(( ( ( [caster.spellPower floatValue] * 5 ) + 2 ) * 1 ));
+        
+        self.school = HolySchool;
     }
     return self;
 }

@@ -31,6 +31,8 @@
         self.damage = @0;
         self.healing = @0;
         self.absorb = @0;
+        
+        self.school = HolySchool;
     }
     return self;
 }

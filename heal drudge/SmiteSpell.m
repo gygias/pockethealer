@@ -31,7 +31,8 @@
         
         // hit
         self.damage = @( 0.92448 * caster.spellPower.floatValue );
-        self.damageType = HolyDamage;
+        
+        self.school = HolySchool;
     }
     return self;
 }

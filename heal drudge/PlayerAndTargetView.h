@@ -10,7 +10,14 @@
 
 @class Entity;
 
+typedef void(^EntityTouchedBlock)(Entity *);
+
 @interface PlayerAndTargetView : UIView
+{
+    CGRect _lastDrawnRect;
+}
+
+@property (nonatomic,copy) EntityTouchedBlock entityTouchedHandler;
 
 @property Entity *player;
 @property Entity *target;

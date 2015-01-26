@@ -29,6 +29,8 @@
         self.damage = @0;
         self.healing = @( [caster.spellPower floatValue] * 3.32657 );
         self.absorb = @0;
+        
+        self.school = HolySchool;
     }
     return self;
 }

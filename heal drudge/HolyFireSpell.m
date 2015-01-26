@@ -30,14 +30,14 @@
         
         // hit
         self.damage = @( 1.3761 * caster.spellPower.floatValue );
-        self.damageType = HolyDamage;
         
         // periodic
         self.isPeriodic = YES;
         self.period = 1;
         self.periodicDuration = 9;
         self.periodicDamage = @( 0.03315 * caster.spellPower.floatValue );
-        self.periodicDamageType = HolyDamage;
+        
+        self.school = HolySchool;
     }
     return self;
 }

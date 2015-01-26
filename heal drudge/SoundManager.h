@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "Ability.h"
+#import "Spell.h"
 
 @interface SoundManager : NSObject
 
@@ -18,6 +19,8 @@
 + (void)playDangerSound;
 + (void)playCatastrophicSound;
 + (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
++ (void)playSpellFizzle:(SpellSchool)school;
++ (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration;
 
 + (void)playCountdownWithStartIndex:(NSNumber *)startIndex;
 

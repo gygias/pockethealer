@@ -28,12 +28,12 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-    CGSize frameSize = [RaidFrameView desiredSize];
+    _lastDrawnRect = rect;
     
     // player
     if ( self.player )
     {
-        CGRect playerRect = CGRectMake( rect.origin.x, rect.origin.y, frameSize.width, frameSize.height );
+        CGRect playerRect = [self _playerRectWithRect:rect];
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:playerRect];
         aFrame.entity = self.player;
         aFrame.player = self.player;
@@ -43,11 +43,52 @@
     // target
     if ( self.target )
     {
-        CGRect targetRect = CGRectMake( rect.origin.x + 2 * frameSize.width, rect.origin.y, frameSize.width, frameSize.height );
+        CGRect targetRect = [self _enemyRectWithRect:rect];
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
         aFrame.entity = self.target;
         aFrame.player = self.player;
         [aFrame drawRect:targetRect];
+    }
+}
+
+- (CGRect)_playerRectWithRect:(CGRect)rect
+{
+    CGSize frameSize = [RaidFrameView desiredSize];
+    return CGRectMake( rect.origin.x, rect.origin.y, frameSize.width, frameSize.height );
+}
+
+- (CGRect)_enemyRectWithRect:(CGRect)rect
+{
+    CGSize frameSize = [RaidFrameView desiredSize];
+    return CGRectMake( rect.origin.x + 2 * frameSize.width, rect.origin.y, frameSize.width, frameSize.height );
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    //[self setNeedsDisplay];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSSet *myTouches = [event touchesForView:self];
+    UITouch *theTouch = [myTouches anyObject]; // XXX
+    
+    Entity *theTouchedEntity = nil;
+    if ( CGRectContainsPoint([self _playerRectWithRect:_lastDrawnRect],[theTouch locationInView:self]) )
+        theTouchedEntity = self.player;
+    else if ( CGRectContainsPoint([self _enemyRectWithRect:_lastDrawnRect], [theTouch locationInView:self]) )
+        theTouchedEntity = self.target;
+    if ( theTouchedEntity )
+    {
+        NSLog(@"you touched %@",theTouchedEntity);
+        
+        if ( self.entityTouchedHandler )
+            self.entityTouchedHandler(theTouchedEntity);
     }
 }
 

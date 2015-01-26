@@ -14,6 +14,7 @@
 #import "Ability.h"
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
+typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 
 @interface Encounter : NSObject
 {
@@ -26,6 +27,7 @@ typedef void(^EncounterUpdatedBlock)(Encounter *);
 @property NSArray *enemies;
 @property NSDate *startDate;
 @property (nonatomic,copy) EncounterUpdatedBlock encounterUpdatedHandler;
+@property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
 - (void)start;
 
