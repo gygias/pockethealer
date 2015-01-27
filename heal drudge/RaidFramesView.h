@@ -12,7 +12,7 @@
 @class Entity;
 @class Encounter;
 
-typedef void(^TargetedPlayerBlock)(Player *);
+typedef void(^TargetedPlayerBlock)(Entity *);
 
 @interface RaidFramesView : UIView
 

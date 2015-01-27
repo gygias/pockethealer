@@ -8,7 +8,7 @@
 
 #import "RaidFramesView.h"
 #import "RaidFrameView.h"
-#import "Player.h"
+#import "Entity.h"
 #import "Encounter.h"
 
 @implementation RaidFramesView

@@ -8,13 +8,16 @@
 
 #import "CreateHealerViewController.h"
 
-#import "Player.h"
+#import "Entity.h"
 
 #define NUM_SECONDARIES 3
 
 @interface CreateHealerViewController ()
 
 @end
+
+#define HD_NAME_MIN 3
+#define HD_NAME_MAX 12
 
 @implementation CreateHealerViewController
 

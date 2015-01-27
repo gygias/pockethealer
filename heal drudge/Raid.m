@@ -7,7 +7,7 @@
 //
 
 #import "Raid.h"
-#import "Player.h"
+#import "Entity.h"
 #import "HDClass.h"
 
 #import "ItemLevelAndStatsConverter.h"
@@ -21,10 +21,13 @@
     
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
+     // XXX
+    randomSize = 1;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
     {
-        Player *aPlayer = [Player new];
+        Entity *aPlayer = [Entity new];
+        aPlayer.isPlayer = YES;
         aPlayer.name = names[idx];
         aPlayer.averageItemLevelEquipped = @630;
         aPlayer.hdClass = [HDClass randomClass];
@@ -48,11 +51,12 @@
     return aRaid;
 }
 
-+ (Raid *)randomRaidWithGygiasTheDiscPriest:(Player **)outGygias
++ (Raid *)randomRaidWithGygiasTheDiscPriest:(Entity **)outGygias
 {
     Raid *raid = [self randomRaid];
     
-    Player *gygias = [Player new];
+    Entity *gygias = [Entity new];
+    gygias.isPlayer = YES;
     gygias.name = @"Gygias";
     gygias.averageItemLevelEquipped = @630;
     gygias.hdClass = [HDClass discPriest];
@@ -62,7 +66,7 @@
     
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;
-    [raidCopy enumerateObjectsUsingBlock:^(Player *obj, NSUInteger idx, BOOL *stop) {
+    [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
         {
             gygiasIdx = idx;
@@ -126,8 +130,7 @@ typedef NS_ENUM(NSInteger, EntityRange) {
 - (NSArray *)_playersWithRole:(const NSString *)role range:(EntityRange)range
 {
     __block NSMutableArray *filteredPlayers = nil;
-    [self.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        Player *player = (Player *)obj;
+    [self.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
         if ( [player.hdClass hasRole:role] &&
                 ( ( range == AnyRange )
                     || ( player.hdClass.isRanged && ( range == RangeRange ) )

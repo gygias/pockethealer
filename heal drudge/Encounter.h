@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Player.h"
+#import "Entity.h"
 #import "Enemy.h"
 #import "Raid.h"
 #import "Ability.h"
@@ -22,7 +22,7 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
     dispatch_source_t _encounterTimer;
 }
 
-@property Player *player;
+@property Entity *player;
 @property Raid *raid;
 @property NSArray *enemies;
 @property NSDate *startDate;

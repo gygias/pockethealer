@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Player.h"
+#import "Entity.h"
 
-@interface Healer : Player
+@interface Healer : Entity
 
 @end

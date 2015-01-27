@@ -8,7 +8,7 @@
 
 #import "GenericHealingSpell.h"
 
-#import "Player.h"
+#import "Entity.h"
 
 @implementation GenericHealingSpell
 

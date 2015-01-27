@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class Player;
+@class Entity;
 
 @interface Raid : NSObject
 
 + (Raid *)randomRaid;
-+ (Raid *)randomRaidWithGygiasTheDiscPriest:(Player **)outGygias;
++ (Raid *)randomRaidWithGygiasTheDiscPriest:(Entity **)outGygias;
 
 @property (strong,retain) NSArray *players;
 @property (nonatomic,readonly) NSArray *tankPlayers;

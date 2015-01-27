@@ -181,7 +181,6 @@
 		63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D601A570C8C0025ACDE /* RaidFrameView.m */; };
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
-		63564D6A1A5724B80025ACDE /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D691A5724B80025ACDE /* Player.m */; };
 		63564D6C1A57260F0025ACDE /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63564D6B1A57260F0025ACDE /* Names.plist */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
@@ -476,8 +475,6 @@
 		63564D631A57233A0025ACDE /* RaidFramesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaidFramesView.m; sourceTree = "<group>"; };
 		63564D651A5724AA0025ACDE /* Raid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raid.h; sourceTree = "<group>"; };
 		63564D661A5724AA0025ACDE /* Raid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raid.m; sourceTree = "<group>"; };
-		63564D681A5724B80025ACDE /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		63564D691A5724B80025ACDE /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		63564D6B1A57260F0025ACDE /* Names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Names.plist; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
 		636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemLevelAndStatsConverter.m; sourceTree = "<group>"; };
@@ -934,8 +931,6 @@
 				632074BB1A71A4E400AA4416 /* Encounter.m */,
 				632074BD1A71A5CA00AA4416 /* Entity.h */,
 				632074BE1A71A5CA00AA4416 /* Entity.m */,
-				63564D681A5724B80025ACDE /* Player.h */,
-				63564D691A5724B80025ACDE /* Player.m */,
 				632074C01A71A65B00AA4416 /* Enemy.h */,
 				632074C11A71A65B00AA4416 /* Enemy.m */,
 				632074A61A7194D200AA4416 /* Abilities */,
@@ -1296,7 +1291,6 @@
 				634F49041A7489E9008761C6 /* PowerWordShieldEffect.m in Sources */,
 				63C5F4031A5243E900B9AE46 /* main.m in Sources */,
 				639E1DB91A702E290062E803 /* WoWRealm.m in Sources */,
-				63564D6A1A5724B80025ACDE /* Player.m in Sources */,
 				63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */,
 				634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */,
 				632073991A707AF900AA4416 /* Guild.m in Sources */,

@@ -49,12 +49,17 @@ static SoundManager *sSoundManager;
     [self playFileWithPath:path duration:0];
 }
 
-+ (void)playSpellHit:(NSString *)hitSoundName
++ (void)playSpellHit:(NSString *)hitSoundName volume:(float)volume
 {
     // TODO if this gets called with nil, "1.wav" plays. (???)
     NSString *filePath = [[NSBundle mainBundle] pathForResource:hitSoundName ofType:@"wav"];
     if ( filePath )
-        [self playFileWithPath:filePath duration:0];
+        [self playFileWithPath:filePath volume:volume];
+}
+
++ (void)playFileWithPath:(NSString *)path volume:(float)volume
+{
+    [self playFileWithPath:path volume:volume duration:0 handler:NULL];
 }
 
 + (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration
@@ -63,6 +68,11 @@ static SoundManager *sSoundManager;
 }
 
 + (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
+{
+    [self playFileWithPath:path volume:HIGH_VOLUME duration:duration handler:handler];
+}
+
++ (void)playFileWithPath:(NSString *)path volume:(float)volume duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
 {
     if ( ! path )
         return;
@@ -73,7 +83,8 @@ static SoundManager *sSoundManager;
         {
             NSURL * url = [NSURL fileURLWithPath:path];
             AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url
-                                                                        error:&error] ;
+                                                                        error:&error];
+            sound.volume = volume;
             
             if ( sound )
             {
@@ -89,7 +100,7 @@ static SoundManager *sSoundManager;
                 
                 if ( [sound play] )
                 {
-                    NSLog(@"playing %@",path);
+                    //NSLog(@"playing %@",path);
                     
                     if ( handler )
                         handler(sound);
@@ -128,7 +139,7 @@ static SoundManager *sSoundManager;
     }
 }
 
-+ (void)playSpellFizzle:(SpellSchool)school
++ (void)playSpellFizzle:(SpellSchool)school volume:(float)volume
 {
     NSString *fileName = nil;
     switch(school)
@@ -154,10 +165,10 @@ static SoundManager *sSoundManager;
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
     if ( fileName )
-        [self playFileWithPath:filePath];
+        [self playFileWithPath:filePath volume:volume];
 }
 
-+ (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
++ (void)playSpellSound:(SpellSchool)school level:(NSString *)level volume:(float)volume duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
 {
     NSString *fileNameBase = nil;
     switch(school)
@@ -174,7 +185,7 @@ static SoundManager *sSoundManager;
     {
         NSString *fileName = [NSString stringWithFormat:@"%@_%@",fileNameBase,level];
         NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
-        [self playFileWithPath:filePath duration:duration handler:handler];
+        [self playFileWithPath:filePath volume:volume duration:duration handler:handler];
     }
 }
 

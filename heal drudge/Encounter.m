@@ -146,7 +146,7 @@
     
     dispatch_async(_encounterQueue, ^{
     
-        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@"is casting",spell.name,target);
+        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
         
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
@@ -154,8 +154,10 @@
             NSLog(@"%@->%@ modified %@",source,target,spell);
         }
         
-        [SoundManager playSpellHit:spell.castSoundName];
-        [SoundManager playSpellHit:spell.hitSoundName];
+        float volume = source.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
+        [SoundManager playSpellHit:spell.castSoundName volume:volume];
+        volume = target.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
+        [SoundManager playSpellHit:spell.hitSoundName volume:volume];
         
         if ( spell.spellType != BeneficialSpell && target.isEnemy )
             [self doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
@@ -301,8 +303,8 @@
         }];
         
         NSInteger newHealth = target.currentHealth.doubleValue + healingValue.doubleValue;
-        if ( newHealth > ((Player *)target).health.integerValue )
-            newHealth = ((Player *)target).health.integerValue;
+        if ( newHealth > target.health.integerValue )
+            newHealth = target.health.integerValue;
         
         target.currentHealth = @(newHealth);
         

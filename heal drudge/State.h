@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Player.h"
+#import "Entity.h"
 
 @interface State : NSObject
 
-@property Player *player;
+@property Entity *player;
 
 // setup
 @property BOOL saveGuildToo;

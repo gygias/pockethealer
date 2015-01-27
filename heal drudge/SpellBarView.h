@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Spell;
-@class Player;
+@class Entity;
 
 typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 
@@ -17,7 +17,7 @@ typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 
 @property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;
 
-@property (nonatomic,retain) Player *player;
+@property (nonatomic,retain) Entity *player;
 @property (nonatomic,retain) NSArray *spells;
 
 @end

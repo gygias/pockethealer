@@ -9,7 +9,7 @@
 #import "SpellBarView.h"
 
 #import "Spell.h"
-#import "Player.h"
+#import "Entity.h"
 #import "UIColor+Extensions.h"
 
 #define SPELL_HEIGHT 45
@@ -25,7 +25,7 @@
 
 @synthesize player = _player;
 
-- (void)setPlayer:(Player *)player
+- (void)setPlayer:(Entity *)player
 {
     self.spells = [[Spell castableSpellNamesForCharacter:player] mutableCopy];
     _player = player;

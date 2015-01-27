@@ -24,10 +24,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    Player *gygias = nil;
+    Entity *gygias = nil;
     Raid *raid = [Raid randomRaidWithGygiasTheDiscPriest:&gygias];
     
-    /*__block*/ Player *aHealer = gygias;
+    /*__block*/ Entity *aHealer = gygias;
     aHealer.isPlayingPlayer = YES;
     /*[raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Player *player = (Player *)obj;
