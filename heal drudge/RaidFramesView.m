@@ -9,6 +9,7 @@
 #import "RaidFramesView.h"
 #import "RaidFrameView.h"
 #import "Player.h"
+#import "Encounter.h"
 
 @implementation RaidFramesView
 
@@ -33,6 +34,13 @@
         //NSLog(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
         CGRect thisRect = CGRectMake( idxParty * frameSize.width, partyPosition * frameSize.height, frameSize.width, frameSize.height );
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:thisRect];
+        
+        aFrame.encounter = self.encounter;
+        BOOL (^entityIsTargetedBlock)(Entity *);
+        entityIsTargetedBlock = ^(Entity *entity) {
+            return [self.encounter entityIsTargeted:entity];
+        };
+        
         aFrame.entity = thisPlayer;
         aFrame.player = self.player;
         if ( idx == self.selectedFrame )

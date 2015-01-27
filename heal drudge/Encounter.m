@@ -199,6 +199,31 @@
     });
 }
 
+- (BOOL)entityIsTargeted:(Entity *)entity
+{
+    __block BOOL isTargeted = NO;
+    [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
+        if ( enemy.target == entity )
+        {
+            isTargeted = YES;
+            *stop = YES;
+        }
+    }];
+    
+    if ( isTargeted )
+        return isTargeted;
+    
+//    [self.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+//        if ( player.target == entity )
+//        {
+//            isTargeted = YES;
+//            *stop = YES;
+//        }
+//    }];
+    
+    return isTargeted;
+}
+
 - (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
     __block NSNumber *rawDamage = periodic ? spell.periodicDamage : spell.damage;

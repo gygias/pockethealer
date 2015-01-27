@@ -10,6 +10,7 @@
 #import "Raid.h"
 
 @class Entity;
+@class Encounter;
 
 typedef void(^TargetedPlayerBlock)(Player *);
 
@@ -20,5 +21,6 @@ typedef void(^TargetedPlayerBlock)(Player *);
 @property Entity *player; // currently only for passing it to RaidFrame
 @property (strong,retain) Raid *raid;
 @property NSUInteger selectedFrame;
+@property Encounter *encounter; // this is only necessary for ferrying encounter to RaidFrameView for isTargeted block
 
 @end

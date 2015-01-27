@@ -13,6 +13,7 @@
 #import "Effect.h"
 #import "UIColor+Extensions.h"
 #import "ImageFactory.h"
+#import "Encounter.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -114,8 +115,10 @@
      CGContextAddRect(context, rectangle);
      */
     
-    CGContextSetStrokeColorWithColor(context,
-                                     self.selected ? [UIColor whiteColor].CGColor : [UIColor blueColor].CGColor);
+    UIColor *borderColor = [self.encounter entityIsTargeted:self.entity] ? [UIColor redColor] :
+                            ( self.selected ? [UIColor whiteColor] : [UIColor blueColor] );
+    
+    CGContextSetStrokeColorWithColor(context,borderColor.CGColor);
     CGContextMoveToPoint(context, rect.origin.x + RAID_FRAME_BORDER_INSET, rect.origin.y + RAID_FRAME_BORDER_INSET);
     CGContextAddLineToPoint(context, rect.origin.x + rect.size.width - RAID_FRAME_BORDER_INSET, rect.origin.y + RAID_FRAME_BORDER_INSET);
     CGContextAddLineToPoint(context, rect.origin.x + rect.size.width - RAID_FRAME_BORDER_INSET, rect.origin.y + rect.size.height - RAID_FRAME_BORDER_INSET);

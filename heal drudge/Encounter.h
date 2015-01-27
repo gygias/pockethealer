@@ -36,5 +36,7 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 - (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
 - (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick;
 
+- (BOOL)entityIsTargeted:(Entity *)entity;
+
 @end
 
