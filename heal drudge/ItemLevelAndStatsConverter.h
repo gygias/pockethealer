@@ -23,4 +23,6 @@
 + (NSNumber *)castTimeWithBaseCastTime:(NSNumber *)baseCastTime entity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
 + (NSNumber *)globalCooldownWithEntity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
 
++ (NSNumber *)automaticHealValueWithEntity:(Entity *)entity;
+
 @end

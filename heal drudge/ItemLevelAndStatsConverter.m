@@ -169,4 +169,9 @@
     return @( reduction > 1.5 ? 0 : 1.5 - reduction );
 }
 
++ (NSNumber *)automaticHealValueWithEntity:(Entity *)entity
+{
+    return @( [entity.spellPower floatValue] * 3.3264 );
+}
+
 @end

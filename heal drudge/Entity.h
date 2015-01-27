@@ -31,11 +31,15 @@
 @property NSArray *statusEffects;
 @property BOOL isDead;
 @property BOOL isPlayer;
+@property BOOL isPlayingPlayer;
 @property BOOL isEnemy;
 @property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
 
 @property NSMutableArray *emittingSounds;
+
+@property dispatch_source_t automaticAbilitySource;
+@property NSDate *lastAutomaticAbilityDate;
 
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption
@@ -116,7 +120,6 @@
 // XXX
 @property NSString *specName;
 @property NSString *offspecName;
-@property const NSString *role;
 
 @property NSDate *nextGlobalCooldownDate;
 @property NSTimeInterval currentGlobalCooldownDuration;

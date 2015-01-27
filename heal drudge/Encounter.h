@@ -29,12 +29,17 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 @property (nonatomic,copy) EncounterUpdatedBlock encounterUpdatedHandler;
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
+@property (nonatomic,readonly) dispatch_queue_t encounterQueue;
+
 - (void)start;
 - (void)end;
 
 // called by entities when the a timed spell goes off
 - (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource;
 - (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick;
+
+- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic;
+- (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic;
 
 - (BOOL)entityIsTargetedByEntity:(Entity *)entity;
 

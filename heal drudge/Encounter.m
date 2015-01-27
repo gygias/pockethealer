@@ -14,6 +14,8 @@
 
 @implementation Encounter
 
+@synthesize encounterQueue = _encounterQueue;
+
 - (void)start
 {    
     [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -29,6 +31,8 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
+        _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
+        
         [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [(Entity *)obj beginEncounter:self];
         }];
@@ -38,7 +42,6 @@
         }];
         
         // begin update timer
-        _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
         _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
         dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(_encounterTimer, ^{
@@ -109,7 +112,7 @@
             NSLog(@"%@ modified %@",target,ability);
         }
         
-        [self _doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
+        [self doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
         
         if ( target.currentHealth.integerValue <= 0 )
         {
@@ -155,9 +158,9 @@
         [SoundManager playSpellHit:spell.hitSoundName];
         
         if ( spell.spellType != BeneficialSpell && target.isEnemy )
-            [self _doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+            [self doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         if ( spell.spellType != DetrimentalSpell && target.isPlayer )
-            [self _doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+            [self doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
         
         if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
         {
@@ -239,7 +242,7 @@
     return isTargeted;
 }
 
-- (void)_doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
+- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
     __block NSNumber *rawDamage = periodic ? spell.periodicDamage : spell.damage;
     
@@ -283,7 +286,7 @@
     NSLog(@"%@ took %@ damage (%ld absorbed)",target,effectiveDamage,amountAbsorbed);
 }
 
-- (void)_doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
+- (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
     __block NSNumber *healingValue = periodic ? spell.periodicHeal : spell.healing;
     

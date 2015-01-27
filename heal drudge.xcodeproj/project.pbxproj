@@ -11,6 +11,8 @@
 		63027AAC1A7605CE0068E68A /* healer_role.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AA91A7605CE0068E68A /* healer_role.png */; };
 		63027AAD1A7605CE0068E68A /* tank_role.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AAA1A7605CE0068E68A /* tank_role.png */; };
 		63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */; };
+		63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AB21A7849EA0068E68A /* GenericHealingSpell.m */; };
+		63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AB51A7849F60068E68A /* GenericDamageSpell.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -254,6 +256,10 @@
 		63027AAA1A7605CE0068E68A /* tank_role.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank_role.png; sourceTree = "<group>"; };
 		63027AAE1A7614890068E68A /* PowerWordBarrierSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerWordBarrierSpell.h; sourceTree = "<group>"; };
 		63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerWordBarrierSpell.m; sourceTree = "<group>"; };
+		63027AB11A7849EA0068E68A /* GenericHealingSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericHealingSpell.h; sourceTree = "<group>"; };
+		63027AB21A7849EA0068E68A /* GenericHealingSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericHealingSpell.m; sourceTree = "<group>"; };
+		63027AB41A7849F60068E68A /* GenericDamageSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericDamageSpell.h; sourceTree = "<group>"; };
+		63027AB51A7849F60068E68A /* GenericDamageSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericDamageSpell.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -744,6 +750,10 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
+				63027AB11A7849EA0068E68A /* GenericHealingSpell.h */,
+				63027AB21A7849EA0068E68A /* GenericHealingSpell.m */,
+				63027AB41A7849F60068E68A /* GenericDamageSpell.h */,
+				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
 				634F490B1A748E1D008761C6 /* EventModifier.h */,
 				634F490C1A748E1D008761C6 /* EventModifier.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
@@ -1268,6 +1278,7 @@
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
 				632074BC1A71A4E400AA4416 /* Encounter.m in Sources */,
 				632074B31A719DCC00AA4416 /* SmiteSpell.m in Sources */,
+				63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */,
 				634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */,
 				63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
@@ -1313,6 +1324,7 @@
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
 				6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */,
+				63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */,
 				6328FB601A731E7F00DF6B50 /* HealingTideTotemSpell.m in Sources */,
 				634F48F81A7480D8008761C6 /* PrayerOfHealingSpell.m in Sources */,
 				63C5F4371A524E8100B9AE46 /* QuickPlayViewController.m in Sources */,

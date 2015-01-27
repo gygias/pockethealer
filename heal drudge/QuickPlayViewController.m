@@ -28,6 +28,7 @@
     Raid *raid = [Raid randomRaidWithGygiasTheDiscPriest:&gygias];
     
     /*__block*/ Player *aHealer = gygias;
+    aHealer.isPlayingPlayer = YES;
     /*[raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Player *player = (Player *)obj;
         if ( player.character.hdClass.isHealerClass )

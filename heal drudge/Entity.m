@@ -8,9 +8,13 @@
 
 #import "Entity.h"
 
+#import "Encounter.h"
 #import "Effect.h"
 #import "Spell.h"
 #import "ItemLevelAndStatsConverter.h"
+
+#import "GenericDamageSpell.h"
+#import "GenericHealingSpell.h"
 
 @implementation Entity
 
@@ -232,7 +236,72 @@
 
 - (void)beginEncounter:(Encounter *)encounter
 {
-    //NSLog(@"i, %@, should begin encounter",self);
+    NSLog(@"i, %@ (%@), should begin encounter",self,self.isPlayingPlayer?@"playing player":@"automated player");
+    
+    if ( ! self.isPlayingPlayer )
+    {
+        self.automaticAbilitySource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, encounter.encounterQueue);
+        NSNumber *gcd = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil];
+        NSNumber *gcdWithStagger = @( ( arc4random() % (int)gcd.doubleValue * 100000 ) / 100000 + gcd.doubleValue );
+        dispatch_source_set_timer(self.automaticAbilitySource, DISPATCH_TIME_NOW, gcdWithStagger.doubleValue * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
+        dispatch_source_set_event_handler(self.automaticAbilitySource, ^{
+            
+            [self _doAutomaticStuffWithEncounter:encounter];
+            
+        });
+        dispatch_resume(self.automaticAbilitySource);
+    }
+}
+
+- (void)_doAutomaticStuffWithEncounter:(Encounter *)encounter
+{
+    //if ( ! self.lastAutomaticAbilityDate ||
+    //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
+    //NSLog(@"%@ is doing automated stuff",self);
+    {
+        if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
+        {
+            [self _doAutomaticTankingWithEncounter:encounter];
+        }
+        else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
+        {
+            [self _doAutomaticDPSWithEncounter:encounter];
+        }
+        else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
+        {
+            [self _doAutomaticHealingWithEncounter:encounter];
+        }
+        
+        self.lastAutomaticAbilityDate = [NSDate date];
+    }
+}
+
+- (void)_doAutomaticTankingWithEncounter:(Encounter *)encounter
+{
+    
+}
+
+- (void)_doAutomaticDPSWithEncounter:(Encounter *)encounter
+{
+    NSInteger randomEnemy = arc4random() % encounter.enemies.count;
+    Entity *enemy = encounter.enemies[randomEnemy];
+    Spell *spell = [[GenericDamageSpell alloc] initWithCaster:self];
+    [encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
+}
+
+- (void)_doAutomaticHealingWithEncounter:(Encounter *)encounter
+{
+    [encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+        if ( player.currentHealth.doubleValue < player.health.doubleValue )
+        {
+            //NSNumber *averageHealing = [ItemLevelAndStatsConverter automaticHealValueWithEntity:self];
+            Spell *spell = [[GenericHealingSpell alloc] initWithCaster:self];
+            NSLog(@"%@ is healing %@ for %@",self,player,spell.healing);
+            [encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
+            //player.currentHealth = ( player.currentHealth.doubleValue + averageHealing.doubleValue > player.health.doubleValue ) ?
+            //                        ( player.health ) : @( player.currentHealth.doubleValue + averageHealing.doubleValue );
+        }
+    }];
 }
 
 - (void)updateEncounter:(Encounter *)encounter

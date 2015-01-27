@@ -1,0 +1,40 @@
+//
+//  GenericHealingSpell.m
+//  heal drudge
+//
+//  Created by david on 1/27/15.
+//  Copyright (c) 2015 Combobulated Software. All rights reserved.
+//
+
+#import "GenericHealingSpell.h"
+
+#import "Player.h"
+
+@implementation GenericHealingSpell
+
+- (id)initWithCaster:(Entity *)caster
+{
+    if ( self = [super initWithCaster:caster] )
+    {
+        self.name = @"Generic Healing";
+        //self.image = [ImageFactory imageNamed:@"heal"];
+        self.tooltip = @"Generic healing.";
+        self.triggersGCD = YES;
+        self.targeted = YES;
+        self.cooldown = @0;
+        self.spellType = BeneficialSpell;
+        self.castableRange = @40;
+        self.hitRange = @0;
+        
+        self.castTime = @2.5;
+        self.manaCost = @( 0.02 * caster.baseMana.floatValue );
+        self.damage = @0;
+        self.healing = @( [caster.spellPower floatValue] * 3.3264 );
+        self.absorb = @0;
+        
+        self.school = HolySchool;
+    }
+    return self;
+}
+
+@end

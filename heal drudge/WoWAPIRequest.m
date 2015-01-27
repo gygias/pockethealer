@@ -1127,7 +1127,9 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
     {
         NSLog(@"%@'s appears to be main %@ OS %@",entity.name,winningMainSpecDict[@"name"],runnerUpOffSpecDict[@"name"]);
         entity.specName = winningMainSpecDict[@"name"];
-        entity.role = [WoWAPIRequest roleFromAPIRoleString:winningMainSpecDict[@"role"]];
+        
+        // TODO?
+        //entity.hdClass.role = [WoWAPIRequest roleFromAPIRoleString:winningMainSpecDict[@"role"]];
     }
     entity.offspecName = runnerUpOffSpecDict[@"name"];
     
