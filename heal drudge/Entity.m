@@ -19,6 +19,15 @@
             statusEffects = _statusEffects,
             periodicEffectQueue = _periodicEffectQueue;
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        self.emittingSounds = [NSMutableArray new];
+    }
+    return self;
+}
+
 - (dispatch_queue_t)periodicEffectQueue
 {
     if ( ! _periodicEffectQueue )
@@ -202,14 +211,17 @@
         [self removeStatusEffect:object];
 }
 
-- (void)handleDeathFromAbility:(Ability *)ability
+- (void)handleDeathOfEntity:(Entity *)dyingEntity fromAbility:(Ability *)ability
 {
-    NSLog(@"%@ has died",self);
-    self.isDead = YES;
-    
-    Effect *aStatusEffect = nil;
-    while ( ( aStatusEffect = [self.statusEffects lastObject] ) )
-        [self removeStatusEffect:aStatusEffect];
+    if ( dyingEntity == self )
+    {
+        NSLog(@"%@ has died",self);
+        self.isDead = YES;
+        
+        Effect *aStatusEffect = nil;
+        while ( ( aStatusEffect = [self.statusEffects lastObject] ) )
+            [self removeStatusEffect:aStatusEffect];
+    }
 }
 
 - (void)prepareForEncounter:(Encounter *)encounter

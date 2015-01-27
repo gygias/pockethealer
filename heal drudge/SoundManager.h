@@ -16,12 +16,14 @@
 @property (nonatomic,retain) dispatch_queue_t soundQueue;
 @property NSMutableArray *audioPlayers;
 
+typedef void(^StartedPlayingSoundBlock)(id sound);
+
 + (void)playNoteSound;
 + (void)playDangerSound;
 + (void)playCatastrophicSound;
 + (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
 + (void)playSpellFizzle:(SpellSchool)school;
-+ (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration;
++ (void)playSpellSound:(SpellSchool)school level:(NSString *)level duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler;
 + (void)playSpellHit:(NSString *)hitSoundName;
 + (void)playDeathSound;
 

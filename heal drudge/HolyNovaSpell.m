@@ -18,7 +18,6 @@
         self.image = [ImageFactory imageNamed:@"holy_nova"];
         self.tooltip = @"Causes an explosion of holy light around the caster.";
         self.triggersGCD = YES;
-        self.targeted = YES;
         self.cooldown = @0;
         self.spellType = BeneficialOrDeterimentalSpell;
         self.castableRange = @0;

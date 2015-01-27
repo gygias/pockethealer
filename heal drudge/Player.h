@@ -19,6 +19,4 @@
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
 
-@property (readonly) Spell *castingSpell;
-
 @end

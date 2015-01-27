@@ -17,12 +17,13 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
+    Spell *spell = self.castingEntity.castingSpell;
+    if ( ! spell )
+        return;
     
-    // fill bar
-    if ( [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] >= self.effectiveCastTime.doubleValue )
+    if ( [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate] >= self.effectiveCastTime.doubleValue )
     {
-        self.castingSpell = nil;
+        self.castingEntity = nil;
         self.effectiveCastTime = nil;
         return;
     }
@@ -30,8 +31,18 @@
     if ( self.effectiveCastTime.doubleValue <= 0 )
         return;
     
-    double percentCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate] / self.effectiveCastTime.doubleValue;
-    percentCast = self.castingSpell.isChanneled ? ( 1 - percentCast ) : percentCast;
+    if ( self.castingEntity.castingSpell == nil )
+    {
+        self.castingEntity = nil;
+        self.effectiveCastTime = nil;
+    }
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // fill bar
+    
+    double percentCast = [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate] / self.effectiveCastTime.doubleValue;
+    percentCast = spell.isChanneled ? ( 1 - percentCast ) : percentCast;
     
     CGRect rectangle = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
     CGContextAddRect(context, rectangle);
@@ -46,9 +57,9 @@
     CGContextStrokePath(context);
     
     NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
-    [self.castingSpell.name drawInRect:rect withAttributes:attributes];
+    [spell.name drawInRect:rect withAttributes:attributes];
     
-    NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",self.effectiveCastTime.doubleValue - [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate]];
+    NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",self.effectiveCastTime.doubleValue - [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate]];
     CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
     CGFloat rightMargin = remainingTimeSize.width + 5;
     CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y, rightMargin, rect.size.height);

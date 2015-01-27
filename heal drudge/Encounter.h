@@ -33,10 +33,10 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 - (void)end;
 
 // called by entities when the a timed spell goes off
-- (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick;
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick;
+- (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource;
+- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick;
 
-- (BOOL)entityIsTargeted:(Entity *)entity;
+- (BOOL)entityIsTargetedByEntity:(Entity *)entity;
 
 @end
 

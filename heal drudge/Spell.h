@@ -55,6 +55,7 @@ typedef NS_ENUM(NSInteger, SpellType) {
 + (NSArray *)castableSpellNamesForCharacter:(Player *)character;
 
 @property Entity *caster;
+@property Entity *target;
 
 // static properties
 @property NSString *name;

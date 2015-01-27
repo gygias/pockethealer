@@ -88,7 +88,7 @@
         self.encounterUpdatedHandler(self);
 }
 
-- (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick
+- (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource
 {
     // while implementing cast bar, encounter isn't started
     if ( ! _encounterQueue )
@@ -113,7 +113,14 @@
         
         if ( target.currentHealth.integerValue <= 0 )
         {
-            [target handleDeathFromAbility:ability];
+            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:target fromAbility:ability];
+            }];
+            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:target fromAbility:ability];
+            }];
+            if ( periodicTickSource )
+                dispatch_source_cancel(periodicTickSource);
             
             // source has to choose a new target
             if ( ! [(Enemy *)source targetNextThreatWithEncounter:self] )
@@ -128,7 +135,7 @@
     });
 }
 
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick
+- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick
 {
     // while implementing cast bar, encounter isn't started
     if ( ! _encounterQueue )
@@ -171,7 +178,15 @@
         
         if ( target.currentHealth.integerValue <= 0 )
         {
-            [target handleDeathFromAbility:nil];
+            if ( periodicTickSource )
+                dispatch_source_cancel(periodicTickSource);
+            
+            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:target fromAbility:spell];
+            }];
+            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:target fromAbility:spell];
+            }];
             
             __block BOOL someEnemyIsAlive = NO;
             [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
@@ -199,7 +214,7 @@
     });
 }
 
-- (BOOL)entityIsTargeted:(Entity *)entity
+- (BOOL)entityIsTargetedByEntity:(Entity *)entity
 {
     __block BOOL isTargeted = NO;
     [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {

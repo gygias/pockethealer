@@ -18,7 +18,6 @@
         self.image = [ImageFactory imageNamed:@"power_word_barrier"];
         self.tooltip = @"Puts a bubble on it";
         self.triggersGCD = YES;
-        self.targeted = YES;
 #warning TODO
         // self.targetingCircle = YES;
         self.cooldown = @( 3 * 60 );

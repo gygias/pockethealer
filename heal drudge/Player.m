@@ -18,8 +18,6 @@
 
 @implementation Player
 
-@synthesize castingSpell = _castingSpell;
-
 - (id)init
 {
     if ( self = [super init] )
@@ -36,13 +34,13 @@
     if ( self.castingSpell )
     {
         NSLog(@"%@ cancelled casting %@",self,self.castingSpell);
-        _castingSpell = nil;
-        _castingSpell.lastCastStartDate = nil;
+        self.castingSpell = nil;
+        self.castingSpell.lastCastStartDate = nil;
         
         [SoundManager playSpellFizzle:spell.school];
     }
     
-    NSLog(@"%@ started %@ %@",self,spell.isChanneled?@"channeling":@"casting",spell);
+    NSLog(@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
     NSMutableArray *modifiers = [NSMutableArray new];
     if ( [self handleSpellStart:spell asSource:YES otherEntity:target modifiers:modifiers] )
@@ -72,7 +70,8 @@
     
     if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
     {
-        _castingSpell = spell;
+        self.castingSpell = spell;
+        self.castingSpell.target = target;
         NSDate *thisCastStartDate = [NSDate date];
         self.castingSpell.lastCastStartDate = thisCastStartDate;
         
@@ -82,7 +81,10 @@
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
         
-        [SoundManager playSpellSound:spell.school level:spell.level duration:effectiveCastTime.doubleValue];
+        [SoundManager playSpellSound:spell.school level:spell.level duration:effectiveCastTime.doubleValue handler:^(id sound){
+            NSLog(@"%@ started emitting %@",self,sound);
+            [self.emittingSounds addObject:sound];
+        }];
         
         if ( spell.isChanneled )
         {
@@ -94,7 +96,7 @@
             dispatch_source_set_event_handler(timer, ^{
                 NSLog(@"%@ is channel-ticking",spell);
                 
-                [encounter handleSpell:spell source:self target:target periodicTick:YES isFirstTick:firstTick];
+                [encounter handleSpell:spell source:self target:target periodicTick:YES periodicTickSource:timer isFirstTick:firstTick];
                 firstTick = NO;
                 if ( --ticksRemaining <= 0 )
                 {
@@ -113,8 +115,8 @@
                     NSLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
                     return;
                 }
-                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO isFirstTick:NO];
-                _castingSpell = nil;
+                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+                self.castingSpell = nil;
                 NSLog(@"%@ finished casting %@",self,spell);
             });
         }
@@ -122,16 +124,41 @@
     else
     {
         NSLog(@"%@ cast %@ (instant)",self,spell);
-        [encounter handleSpell:spell source:self target:target periodicTick:NO isFirstTick:NO];
+        [encounter handleSpell:spell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
     }
     
     return effectiveCastTime;
 }
 
-- (void)handleDeathFromAbility:(Ability *)ability
+- (void)handleDeathOfEntity:(Entity *)dyingEntity fromAbility:(Ability *)ability
 {
-    [SoundManager playDeathSound];
-    [super handleDeathFromAbility:ability];
+    if ( dyingEntity == self )
+    {
+        [SoundManager playDeathSound];
+        self.castingSpell = nil;
+        
+        // TODO this is not right, SoundManager should probably manage emitted sounds-per-entity
+        [self.emittingSounds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"stopping %@",obj);
+            [obj stop];
+        }];
+        [self.emittingSounds removeAllObjects];
+    }
+    else if ( self.castingSpell && dyingEntity == self.castingSpell.target )
+    {
+        NSLog(@"%@ aborting %@ because %@ died",self,self.castingSpell,dyingEntity);
+        
+        // TODO this is not right, SoundManager should probably manage emitted sounds-per-entity
+        [self.emittingSounds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"stopping %@",obj);
+            [obj stop];
+        }];
+        [self.emittingSounds removeAllObjects];
+        
+        [SoundManager playSpellFizzle:self.castingSpell.school];
+        self.castingSpell = nil;
+    }
+    [super handleDeathOfEntity:dyingEntity fromAbility:ability];
 }
 
 - (NSString *)description

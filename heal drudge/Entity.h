@@ -27,6 +27,7 @@
 @property NSNumber *currentHealth;
 @property NSNumber *currentAbsorb; // this should be an array of effects, not a single value
 @property NSNumber *currentResources;
+@property Spell *castingSpell;
 @property NSArray *statusEffects;
 @property BOOL isDead;
 @property BOOL isPlayer;
@@ -34,9 +35,11 @@
 @property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
 
+@property NSMutableArray *emittingSounds;
+
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption
-- (void)handleDeathFromAbility:(Ability *)ability;
+- (void)handleDeathOfEntity:(Entity *)dyingEntity fromAbility:(Ability *)ability;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;

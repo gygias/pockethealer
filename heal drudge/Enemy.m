@@ -140,7 +140,7 @@
                 tickTargets = @[target];
             [tickTargets enumerateObjectsUsingBlock:^(Entity *tickTarget, NSUInteger idx, BOOL *stop) {
                 NSLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
-                [encounter handleAbility:ability source:self target:tickTarget periodicTick:YES];
+                [encounter handleAbility:ability source:self target:tickTarget periodicTick:YES periodicTickSource:timer];
             }];
         });
         dispatch_resume(timer);
@@ -153,7 +153,7 @@
         });
     }
     else
-        [encounter handleAbility:ability source:self target:target periodicTick:NO];
+        [encounter handleAbility:ability source:self target:target periodicTick:NO periodicTickSource:NULL];
 }
 
 // this needs some work to handle multiple targets

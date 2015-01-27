@@ -38,7 +38,7 @@
         aFrame.encounter = self.encounter;
         BOOL (^entityIsTargetedBlock)(Entity *);
         entityIsTargetedBlock = ^(Entity *entity) {
-            return [self.encounter entityIsTargeted:entity];
+            return [self.encounter entityIsTargetedByEntity:entity];
         };
         
         aFrame.entity = thisPlayer;

@@ -115,7 +115,7 @@
      CGContextAddRect(context, rectangle);
      */
     
-    UIColor *borderColor = [self.encounter entityIsTargeted:self.entity] ? [UIColor redColor] :
+    UIColor *borderColor = [self.encounter entityIsTargetedByEntity:self.entity] ? [UIColor redColor] :
                             ( self.selected ? [UIColor whiteColor] : [UIColor blueColor] );
     
     CGContextSetStrokeColorWithColor(context,borderColor.CGColor);
