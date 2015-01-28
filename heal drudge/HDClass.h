@@ -113,6 +113,9 @@ typedef enum
 + (id)classWithID:(HDCLASSID)classID spec:(HDSPECID)specID;
 + (HDClass *)classWithAPICharacterDictionary:(NSDictionary *)apiDict apiSpecName:(NSString *)apiSpecName;
 + (HDClass *)randomClass;
++ (HDClass *)randomTankClass;
++ (HDClass *)randomHealerClass;
++ (HDClass *)randomDPSClass;
 + (HDClass *)enemyClass;
 
 + (BOOL)isHealerClass:(HDClass *)hdClass;
@@ -123,6 +126,7 @@ typedef enum
 - (BOOL)isCasterDPS;
 - (BOOL)isMeleeDPS;
 - (BOOL)isTank;
+- (BOOL)isDPS;
 - (const NSString *)role;
 - (BOOL)hasRole:(const NSString *)role;
 

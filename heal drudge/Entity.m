@@ -320,7 +320,7 @@
 {
     NSInteger randomEnemy = arc4random() % encounter.enemies.count;
     Entity *enemy = encounter.enemies[randomEnemy];
-    Spell *spell = [[GenericDamageSpell alloc] initWithCaster:self];
+    Spell *spell = [[GenericPhysicalAttackSpell alloc] initWithCaster:self];
     self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;

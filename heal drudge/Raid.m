@@ -16,13 +16,19 @@
 
 + (Raid *)randomRaid
 {
+    return [self randomRaidWithTanks:2 healerRatio:0.2];
+}
+
++ (Raid *)randomRaidWithTanks:(NSUInteger)tanks healerRatio:(float)healerRatio
+{
     NSString *namesPath = [[NSBundle mainBundle] pathForResource:@"Names" ofType:@"plist"];
     NSArray *names = [NSArray arrayWithContentsOfFile:namesPath];
     
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
-     // XXX
+    // XXX
     randomSize = 5;
+    NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
     {
@@ -31,6 +37,13 @@
         aPlayer.name = names[idx];
         aPlayer.averageItemLevelEquipped = @630;
         aPlayer.hdClass = [HDClass randomClass];
+        
+        if ( idx < tanks )
+            aPlayer.hdClass = [HDClass randomTankClass];
+        else if ( ( idx >= tanks ) && ( idx - tanks < nHealers ) )
+            aPlayer.hdClass = [HDClass randomHealerClass];
+        else
+            aPlayer.hdClass = [HDClass randomDPSClass];
         
         [ItemLevelAndStatsConverter assignStatsToEntity:aPlayer
                            basedOnAverageEquippedItemLevel:@630];
@@ -51,6 +64,11 @@
     return aRaid;
 }
 
++ (Raid *)randomRaidWithStandardDistribution
+{
+    return [self randomRaidWithTanks:2 healerRatio:.2];
+}
+
 + (Raid *)randomRaidWithGygiasTheDiscPriest:(Entity **)outGygias
 {
     Raid *raid = [self randomRaid];
@@ -66,21 +84,25 @@
     
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;
+    __block NSInteger someHealerIdx = -1;
     [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
         {
             gygiasIdx = idx;
             *stop = YES;
         }
+        else if ( obj.hdClass.isHealerClass )
+            someHealerIdx = idx;
     }];
     
-    if ( gygiasIdx >= 0 )
+    if ( gygiasIdx >= 0 || someHealerIdx > 0 )
     {
-        NSLog(@"removing %@",[raidCopy objectAtIndex:gygiasIdx]);
-        [raidCopy removeObjectAtIndex:gygiasIdx];
+        NSInteger removeIndex = gygiasIdx > 0 ? gygiasIdx : someHealerIdx;
+        NSLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
+        [raidCopy removeObjectAtIndex:removeIndex];
     }
-    else
-        gygiasIdx = 0;
+    
+    gygiasIdx = raidCopy.count;
     
     NSLog(@"adding %@",gygias);
     [raidCopy insertObject:gygias atIndex:gygiasIdx];

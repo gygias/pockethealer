@@ -14,6 +14,7 @@
 @interface Raid : NSObject
 
 + (Raid *)randomRaid;
++ (Raid *)randomRaidWithStandardDistribution; // 2 tanks, 1 healer per 5 players
 + (Raid *)randomRaidWithGygiasTheDiscPriest:(Entity **)outGygias;
 
 @property (strong,retain) NSArray *players;

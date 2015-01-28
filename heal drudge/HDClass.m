@@ -56,6 +56,36 @@ const NSString *TankRole = @"TANK";
     return [HDClass classWithID:someClassID spec:someSpecID];
 }
 
++ (HDClass *)randomTankClass
+{
+    HDClass *randomClass = nil;
+    do
+    {
+        randomClass = [HDClass randomClass];
+    } while ( ! randomClass.isTank );
+    return randomClass;
+}
+
++ (HDClass *)randomHealerClass
+{
+    HDClass *randomClass = nil;
+    do
+    {
+        randomClass = [HDClass randomClass];
+    } while ( ! randomClass.isHealerClass );
+    return randomClass;
+}
+
++ (HDClass *)randomDPSClass
+{
+    HDClass *randomClass = nil;
+    do
+    {
+        randomClass = [HDClass randomClass];
+    } while ( ! randomClass.isDPS );
+    return randomClass;
+}
+
 - (id)_initWithID:(HDCLASSID)classID spec:(HDSPECID)specID
 {
     if ( self = [super init] )
@@ -623,6 +653,11 @@ const NSString *WoWAPIClassKey = @"class";
     }
     
     return NO;
+}
+
+- (BOOL)isDPS
+{
+    return [self isCasterDPS] || [self isMeleeDPS];
 }
 
 - (const NSString *)role
