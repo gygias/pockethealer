@@ -26,6 +26,5 @@
 
 - (IBAction)pressedLoad:(id)sender;
 - (IBAction)pressedContinue:(id)sender;
-- (IBAction)resignTheGoddamnedKeyboard:(id)sender;
 
 @end

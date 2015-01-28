@@ -28,7 +28,7 @@
     CGSize frameSize = [RaidFrameView desiredSize];
     for ( ; idx < self.raid.players.count; idx++ )
     {
-        Player *thisPlayer = self.raid.players[idx];
+        Entity *thisPlayer = self.raid.players[idx];
         NSUInteger idxParty = idx / partySize;
         NSUInteger partyPosition = idx % partySize;
         //NSLog(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);

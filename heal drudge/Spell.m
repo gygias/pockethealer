@@ -9,7 +9,7 @@
 #import "Spell.h"
 #import "SpellPriv.h"
 
-#import "Player.h"
+#import "Entity.h"
 
 const NSString *SpellLevelLow = @"low";
 const NSString *SpellLevelMedium = @"medium";
@@ -51,7 +51,7 @@ const NSString *SpellLevelHigh = @"high";
 {
 }
 
-+ (NSArray *)castableSpellNamesForCharacter:(Player *)player
++ (NSArray *)castableSpellNamesForCharacter:(Entity *)player
 {
     NSMutableArray *castableSpells = [NSMutableArray new];
     for ( NSString *spellName in [self _spellNames] )

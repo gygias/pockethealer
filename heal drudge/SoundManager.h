@@ -11,7 +11,7 @@
 #import "Ability.h"
 #import "Spell.h"
 
-#define LOW_VOLUME ((float)0.25)
+#define LOW_VOLUME ((float)0.1)
 #define MED_VOLUME ((float)0.5)
 #define HIGH_VOLUME ((float)1)
 

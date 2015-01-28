@@ -44,7 +44,7 @@
         NSLog(@"there is no healer in this random raid!");
     }
     
-    Enemy *enemy = [Enemy randomEnemy];
+    Enemy *enemy = [Enemy randomEnemyWithRaid:raid];
     self.enemyFrameView.enemy = enemy;
     
     Encounter *encounter = [Encounter new];

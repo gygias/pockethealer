@@ -15,13 +15,13 @@
 
 @implementation Enemy
 
-+ (Enemy *)randomEnemy
++ (Enemy *)randomEnemyWithRaid:(Raid *)raid
 {
     Class kargathClass = NSClassFromString(@"KargathBladefist"); // how to factory these?
-    return [kargathClass new];
+    return [[kargathClass alloc] initWithRaid:raid];
 }
 
-- (id)init
+- (id)initWithRaid:(Raid *)raid
 {
     if ( self = [super init] )
     {

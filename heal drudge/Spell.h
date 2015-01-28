@@ -12,7 +12,6 @@
 #import "ImageFactory.h"
 
 @class Entity;
-@class Player;
 
 extern const NSString *SpellLevelLow;
 extern const NSString *SpellLevelMedium;
@@ -52,7 +51,7 @@ typedef NS_ENUM(NSInteger, SpellType) {
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells
-+ (NSArray *)castableSpellNamesForCharacter:(Player *)character;
++ (NSArray *)castableSpellNamesForCharacter:(Entity *)character;
 
 @property Entity *caster;
 @property Entity *target;

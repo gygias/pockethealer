@@ -10,9 +10,9 @@
 
 @implementation KargathBladefist
 
-- (id)init
+- (id)initWithRaid:(Raid *)raid
 {
-    if ( self = [super init] )
+    if ( self = [super initWithRaid:raid] )
     {
         self.stamina = @(500000 / 60);
     }    

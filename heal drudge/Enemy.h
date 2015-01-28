@@ -11,13 +11,16 @@
 #import "Entity.h"
 
 @class Encounter;
+@class Raid;
 
 @interface Enemy : Entity
 {
     NSArray *_abilities;
 }
 
-+ (Enemy *)randomEnemy;
+- (id)initWithRaid:(Raid *)raid;
+
++ (Enemy *)randomEnemyWithRaid:(Raid *)raid;
 - (NSArray *)abilityNames;
 - (NSArray *)abilities;
 
