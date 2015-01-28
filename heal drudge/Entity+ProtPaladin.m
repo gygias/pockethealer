@@ -9,6 +9,7 @@
 #import "Entity+ProtPaladin.h"
 
 #import "Entity+AI.h"
+#import "NSCollections+Random.h"
 
 @implementation Entity (ProtPaladin)
 
@@ -32,8 +33,13 @@
         }
     }];
     
+    // TODO
+    Entity *target = self;
+    if ( spellToCast.spellType == DetrimentalSpell )
+        target = [self.encounter.enemies randomObject];
+    
     if ( spellToCast )
-        [self castSpell:spellToCast withTarget:self];
+        [self castSpell:spellToCast withTarget:target];
     else
         NSLog(@"%@ couldn't figure out anything to do on this update",self);
 }

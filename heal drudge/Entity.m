@@ -416,7 +416,7 @@
 
 - (void)beginEncounter:(Encounter *)encounter
 {
-    NSLog(@"i, %@ (%@), should begin encounter",self,self.isPlayingPlayer?@"playing player":@"automated player");
+    //NSLog(@"i, %@ (%@), should begin encounter",self,self.isPlayingPlayer?@"playing player":@"automated player");
     
     if ( ! self.isPlayingPlayer && self.isPlayer )
     {

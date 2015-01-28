@@ -28,6 +28,8 @@
 		63027ADA1A798D590068E68A /* sacred_shield_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027AD91A798D590068E68A /* sacred_shield_hit.wav */; };
 		63027ADC1A798D6C0068E68A /* sacred_shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027ADB1A798D6C0068E68A /* sacred_shield.png */; };
 		63027ADF1A798DCF0068E68A /* SacredShieldAbsorbEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027ADE1A798DCF0068E68A /* SacredShieldAbsorbEffect.m */; };
+		63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */; };
+		63027AE41A799FE90068E68A /* crusader_strike.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027AE31A799FE90068E68A /* crusader_strike.png */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -298,6 +300,9 @@
 		63027ADB1A798D6C0068E68A /* sacred_shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sacred_shield.png; sourceTree = "<group>"; };
 		63027ADD1A798DCF0068E68A /* SacredShieldAbsorbEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SacredShieldAbsorbEffect.h; sourceTree = "<group>"; };
 		63027ADE1A798DCF0068E68A /* SacredShieldAbsorbEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SacredShieldAbsorbEffect.m; sourceTree = "<group>"; };
+		63027AE01A799F450068E68A /* CrusaderStrikeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrusaderStrikeSpell.h; sourceTree = "<group>"; };
+		63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrusaderStrikeSpell.m; sourceTree = "<group>"; };
+		63027AE31A799FE90068E68A /* crusader_strike.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crusader_strike.png; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -626,6 +631,8 @@
 		63027AC91A7985240068E68A /* Paladin */ = {
 			isa = PBXGroup;
 			children = (
+				63027AE01A799F450068E68A /* CrusaderStrikeSpell.h */,
+				63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */,
 				63027ACA1A7985790068E68A /* DivineProtectionSpell.h */,
 				63027ACB1A7985790068E68A /* DivineProtectionSpell.m */,
 				63027ACD1A7986580068E68A /* DivineProtectionEffect.h */,
@@ -681,6 +688,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63027AE31A799FE90068E68A /* crusader_strike.png */,
 				63027ADB1A798D6C0068E68A /* sacred_shield.png */,
 				63027AA81A7605CE0068E68A /* dps_role.png */,
 				63027AA91A7605CE0068E68A /* healer_role.png */,
@@ -1250,6 +1258,7 @@
 				6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */,
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
 				632073F91A7095B800AA4416 /* divine_hymn.png in Resources */,
+				63027AE41A799FE90068E68A /* crusader_strike.png in Resources */,
 				6320740A1A7095B800AA4416 /* holy_word_chastise.png in Resources */,
 				63A37F1F1A75D5C40036C9D0 /* flash_heal.wav in Resources */,
 				632074201A7095B800AA4416 /* rapture.png in Resources */,
@@ -1409,6 +1418,7 @@
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
+				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
 				6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */,
 				63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */,

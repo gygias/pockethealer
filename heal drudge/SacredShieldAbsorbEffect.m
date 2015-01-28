@@ -21,6 +21,8 @@
         self.image = [ImageFactory imageNamed:@"sacred_shield"];
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;
+        
+        self.hitSound = @"power_word_shield_hit";
     }
     
     return self;
