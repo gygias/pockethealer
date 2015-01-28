@@ -18,6 +18,7 @@
 		63027ABD1A786BEA0068E68A /* GenericPhysicalAttackSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */; };
 		63027ABF1A786ED00068E68A /* physical_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027ABE1A786ED00068E68A /* physical_hit.wav */; };
 		63027AC11A786FE90068E68A /* precast_shadow_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027AC01A786FE90068E68A /* precast_shadow_low.wav */; };
+		63027AC41A788D7B0068E68A /* PriestSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AC31A788D7B0068E68A /* PriestSpell.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -270,6 +271,8 @@
 		63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericPhysicalAttackSpell.m; sourceTree = "<group>"; };
 		63027ABE1A786ED00068E68A /* physical_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = physical_hit.wav; sourceTree = "<group>"; };
 		63027AC01A786FE90068E68A /* precast_shadow_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_shadow_low.wav; sourceTree = "<group>"; };
+		63027AC21A788D7B0068E68A /* PriestSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriestSpell.h; sourceTree = "<group>"; };
+		63027AC31A788D7B0068E68A /* PriestSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriestSpell.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -758,19 +761,19 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
+				634F48DC1A734B89008761C6 /* Effect.h */,
+				634F48DD1A734B89008761C6 /* Effect.m */,
+				63C5F4321A524A1A00B9AE46 /* Spell.h */,
+				63C5F4331A524A1A00B9AE46 /* Spell.m */,
+				632074A21A7193F200AA4416 /* SpellPriv.h */,
+				634F490B1A748E1D008761C6 /* EventModifier.h */,
+				634F490C1A748E1D008761C6 /* EventModifier.m */,
 				63027AB11A7849EA0068E68A /* GenericHealingSpell.h */,
 				63027AB21A7849EA0068E68A /* GenericHealingSpell.m */,
 				63027AB41A7849F60068E68A /* GenericDamageSpell.h */,
 				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
 				63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */,
 				63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */,
-				634F490B1A748E1D008761C6 /* EventModifier.h */,
-				634F490C1A748E1D008761C6 /* EventModifier.m */,
-				634F48DC1A734B89008761C6 /* Effect.h */,
-				634F48DD1A734B89008761C6 /* Effect.m */,
-				63C5F4321A524A1A00B9AE46 /* Spell.h */,
-				63C5F4331A524A1A00B9AE46 /* Spell.m */,
-				632074A21A7193F200AA4416 /* SpellPriv.h */,
 				6328FB651A732B5B00DF6B50 /* Shaman */,
 				6328FB641A732B5700DF6B50 /* Priest */,
 			);
@@ -809,6 +812,8 @@
 		6328FB641A732B5700DF6B50 /* Priest */ = {
 			isa = PBXGroup;
 			children = (
+				63027AC21A788D7B0068E68A /* PriestSpell.h */,
+				63027AC31A788D7B0068E68A /* PriestSpell.m */,
 				634F49051A748A65008761C6 /* BorrowedTimeEffect.h */,
 				634F49061A748A65008761C6 /* BorrowedTimeEffect.m */,
 				6378645D1A74D61100D281B7 /* HolyNovaSpell.h */,
@@ -1325,6 +1330,7 @@
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
+				63027AC41A788D7B0068E68A /* PriestSpell.m in Sources */,
 				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,
 				632074B91A71A25600AA4416 /* FlashHealSpell.m in Sources */,
 				63027ABD1A786BEA0068E68A /* GenericPhysicalAttackSpell.m in Sources */,

@@ -20,4 +20,7 @@
 @property NSNumber *powerCostDecreasePercentage;
 @property NSObject *source; // this isn't really necessary but helpful for debugging
 
+@property NSNumber *absorbedDamage;
+@property NSNumber *healOnDamage;
+
 @end

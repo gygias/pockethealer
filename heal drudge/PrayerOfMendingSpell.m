@@ -47,6 +47,7 @@
 - (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
 {    
     PrayerOfMendingEffect *pom = [PrayerOfMendingEffect new];
+    pom.healingOnDamage = self.healing;
     [target addStatusEffect:pom source:source];
 }
 

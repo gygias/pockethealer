@@ -27,6 +27,8 @@
         //self.hitRange = @7;
         self.damage = @15000;
         
+        self.spellType = DetrimentalSpell;
+        
         //self.affectsMainTarget = YES;
     }
     return self;

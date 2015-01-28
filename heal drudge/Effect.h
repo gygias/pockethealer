@@ -45,6 +45,10 @@ typedef void(^EffectEventHandler)(BOOL);
 @property BOOL isBeneficial;
 @property BOOL isEmphasized; // e.g. boss's main big debuff on players
 
+@property NSNumber *healingOnDamage;
+@property BOOL healingOnDamageIsOneShot;
+@property NSNumber *absorb;
+
 - (void)addStack;
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;

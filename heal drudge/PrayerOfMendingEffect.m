@@ -22,6 +22,7 @@
         self.image = [ImageFactory imageNamed:@"prayer_of_mending"];
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;
+        self.healingOnDamageIsOneShot = YES;
     }
     
     return self;

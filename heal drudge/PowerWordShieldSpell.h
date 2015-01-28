@@ -6,10 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "PriestSpell.h"
 
-#import "SpellPriv.h"
-
-@interface PowerWordShieldSpell : Spell
+@interface PowerWordShieldSpell : PriestSpell
 
 @end

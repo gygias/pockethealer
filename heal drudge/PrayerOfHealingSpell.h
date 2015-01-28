@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Spell.h"
+#import "PriestSpell.h"
 
-@interface PrayerOfHealingSpell : Spell
+@interface PrayerOfHealingSpell : PriestSpell
 
 @end

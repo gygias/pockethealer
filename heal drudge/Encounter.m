@@ -97,53 +97,6 @@
         self.encounterUpdatedHandler(self);
 }
 
-- (void)handleAbility:(Ability *)ability source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource
-{
-    // while implementing cast bar, encounter isn't started
-    if ( ! _encounterQueue )
-        return;
-    
-    dispatch_async(_encounterQueue, ^{
-        
-        if ( self.enemyAbilityHandler )
-            self.enemyAbilityHandler(source,ability);
-        
-        NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [source handleSpell:ability asSource:YES otherEntity:target modifiers:modifiers] )
-        {
-            NSLog(@"%@ modified %@",source,ability);
-        }
-        if ( [target handleSpell:ability asSource:NO otherEntity:source modifiers:modifiers] )
-        {
-            NSLog(@"%@ modified %@",target,ability);
-        }
-        
-        [self doDamage:ability source:source target:target modifiers:modifiers periodic:periodicTick];
-        
-        if ( target.currentHealth.integerValue <= 0 )
-        {
-            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromAbility:ability];
-            }];
-            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromAbility:ability];
-            }];
-            if ( periodicTickSource )
-                dispatch_source_cancel(periodicTickSource);
-            
-            // source has to choose a new target
-            if ( ! [(Enemy *)source targetNextThreatWithEncounter:self] )
-            {
-                NSLog(@"the encounter is over because there are no targets for %@",source);
-                [self endEncounter];
-            }
-        }
-        
-        if ( self.encounterUpdatedHandler )
-            self.encounterUpdatedHandler(self);
-    });
-}
-
 - (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick
 {
     // while implementing cast bar, encounter isn't started
@@ -154,16 +107,24 @@
     
         NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
         
+        if ( source.isEnemy && self.enemyAbilityHandler )
+            self.enemyAbilityHandler((Enemy *)source,(Ability *)spell);
+        
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
         {
             NSLog(@"%@->%@ modified %@",source,target,spell);
         }
+        if ( [target handleSpell:spell asSource:NO otherEntity:source modifiers:modifiers] )
+        {
+            NSLog(@"%@->%@ modified %@",source,target,spell);
+        }
         
         float volume = source.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
-        [SoundManager playSpellHit:spell.castSoundName volume:volume];
-        volume = target.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
-        [SoundManager playSpellHit:spell.hitSoundName volume:volume];
+        if ( spell.castSoundName )
+            [SoundManager playSpellHit:spell.castSoundName volume:volume];
+        if ( spell.hitSoundName )
+            [SoundManager playSpellHit:spell.hitSoundName volume:volume];
         
         NSMutableArray *allTargets = [NSMutableArray new];
         if ( spell.isSmart )
@@ -182,9 +143,16 @@
             [allTargets addObject:target];
         
         [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
-            if ( spell.spellType != BeneficialSpell )
+            if ( spell.spellType == BeneficialOrDeterimentalSpell )
+            {
+                if ( target.isPlayer )
+                    [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+                else
+                    [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];                    
+            }
+            else if ( spell.spellType == DetrimentalSpell )
                 [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
-            if ( spell.spellType != DetrimentalSpell )
+            if ( spell.spellType == BeneficialSpell )
                 [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
         }];
         
@@ -211,25 +179,34 @@
                 dispatch_source_cancel(periodicTickSource);
             
             [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromAbility:spell];
+                [obj handleDeathOfEntity:target fromSpell:spell];
             }];
             [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromAbility:spell];
+                [obj handleDeathOfEntity:target fromSpell:spell];
             }];
             
-            __block BOOL someEnemyIsAlive = NO;
-            [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
-                if ( ! obj.isDead )
-                {
-                    someEnemyIsAlive = YES;
-                    *stop = YES;
-                }
-            }];
-            if ( ! someEnemyIsAlive )
+            // source has to choose a new target
+            if ( source.isEnemy && ! [(Enemy *)source targetNextThreatWithEncounter:self] )
             {
-                NSLog(@"the encounter is over because all enemies are dead");
+                NSLog(@"the encounter is over because there are no targets for %@",source);
                 [self endEncounter];
-                return;
+            }
+            else // TODO is there some ability by which players could kill themselves as the last one alive?
+            {
+                __block BOOL someEnemyIsAlive = NO;
+                [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
+                    if ( ! obj.isDead )
+                    {
+                        someEnemyIsAlive = YES;
+                        *stop = YES;
+                    }
+                }];
+                if ( ! someEnemyIsAlive )
+                {
+                    NSLog(@"the encounter is over because all enemies are dead");
+                    [self endEncounter];
+                    return;
+                }
             }
         }
         
@@ -293,6 +270,7 @@
         }
     }];
     
+    // apply damage taken increases
     NSNumber *effectiveDamage = rawDamage;
     if ( greatestDamageTakenDecreaseModifier )
     {
@@ -300,21 +278,13 @@
         NSLog(@"applying %@ to %@, %@ -> %@",greatestDamageTakenDecreaseModifier,spell,rawDamage,effectiveDamage);
     }
     
-    NSInteger newAbsorb = target.currentAbsorb.doubleValue - effectiveDamage.doubleValue;
-    if ( newAbsorb < 0 )
-        newAbsorb = 0;
-    
-    NSInteger amountAbsorbed = target.currentAbsorb.doubleValue - newAbsorb;
-    NSInteger effectiveDamageMinusAbsorbs = ( effectiveDamage.doubleValue - amountAbsorbed );
-    
-    NSInteger newHealth = target.currentHealth.doubleValue - effectiveDamageMinusAbsorbs;
-    if ( newHealth < 0 )
-        newHealth = 0;
-    
-    target.currentAbsorb = @(newAbsorb);
-    target.currentHealth = @(newHealth);
-    
-    NSLog(@"%@ took %@ damage (%ld absorbed)",target,effectiveDamage,amountAbsorbed);
+    [target handleIncomingDamage:effectiveDamage];
+//    NSInteger newAbsorb = target.currentAbsorb.doubleValue - effectiveDamage.doubleValue;
+//    if ( newAbsorb < 0 )
+//        newAbsorb = 0;
+//    
+//    NSInteger amountAbsorbed = target.currentAbsorb.doubleValue - newAbsorb;
+//    NSInteger effectiveDamageMinusAbsorbs = ( effectiveDamage.doubleValue - amountAbsorbed );
 }
 
 - (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
@@ -352,11 +322,11 @@
                 absorbValue = @( absorbValue.doubleValue * ( 1 + obj.healingIncreasePercentage.doubleValue ) );
         }];
         
-        NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
-        //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
-        //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;
-        
-        target.currentAbsorb = @(newAbsorb);
+//        NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
+//        //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
+//        //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;
+//        
+//        target.currentAbsorb = @(newAbsorb);
         
         NSLog(@"%@ received a %@ absorb",target,absorbValue);
     }

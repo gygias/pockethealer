@@ -53,6 +53,7 @@
     
     // power word shield
     PowerWordShieldEffect *pws = [PowerWordShieldEffect new];
+    pws.absorb = self.absorb;
     [target addStatusEffect:pws source:source];
 }
 

@@ -171,6 +171,88 @@
     return addedModifiers;
 }
 
+- (void)handleIncomingDamage:(NSNumber *)incomingDamage
+{
+    __block NSNumber *netDamage = incomingDamage;
+    __block NSNumber *totalAbsorbed = @0;
+    
+    NSMutableIndexSet *consumedEffects = [NSMutableIndexSet new];
+    [self.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
+        
+        if ( [netDamage compare:@0] == NSOrderedSame )
+        {
+            *stop = YES;
+            return;
+        }
+        
+        if ( effect.absorb )
+        {
+            if ( netDamage.doubleValue >= effect.absorb.doubleValue )
+            {
+                NSLog(@"%@ damage will consumed %@'s %@",netDamage,self,effect);
+                [consumedEffects addIndex:idx];
+                totalAbsorbed = @( totalAbsorbed.doubleValue + effect.absorb.doubleValue );
+                netDamage = @( netDamage.doubleValue - effect.absorb.doubleValue );
+            }
+            else
+            {
+                NSNumber *thisAbsorbRemaining = @( effect.absorb.doubleValue - netDamage.doubleValue );
+                NSLog(@"%@'s %@ has %@ absorb remaining after %@ damage",self,effect,thisAbsorbRemaining,netDamage);
+                effect.absorb = thisAbsorbRemaining;
+                totalAbsorbed = @( totalAbsorbed.doubleValue + netDamage.doubleValue );
+                netDamage = @0;
+            }
+        }
+        else if ( effect.healingOnDamage )
+        {
+            if ( netDamage.doubleValue >= effect.healingOnDamage.doubleValue )
+            {
+                NSLog(@"%@ damage will consume %@'s %@",netDamage,self,effect);
+                netDamage = @( netDamage.doubleValue - effect.healingOnDamage.doubleValue );
+                [consumedEffects addIndex:idx];
+            }
+            else
+            {
+                if ( effect.healingOnDamageIsOneShot )
+                {
+                    NSLog(@"%@ damage will consume %@'s ONE-SHOT %@",netDamage,self,effect);
+                    [consumedEffects addIndex:idx];
+                }
+                else
+                    effect.healingOnDamage = @( effect.healingOnDamage.doubleValue - netDamage.doubleValue );
+                netDamage = @0;
+            }
+        }
+    }];
+    
+    [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
+        Effect *effect = self.statusEffects[idx];
+        NSLog(@"removing %@",effect);
+        [self removeStatusEffect:effect];
+    }];
+    
+    NSInteger newHealth = self.currentHealth.doubleValue - netDamage.doubleValue;
+    if ( newHealth < 0 )
+        newHealth = 0;
+    
+    self.currentHealth = @(newHealth);
+    
+    NSLog(@"%@ took %@ net damage from %@ (%@ absorbed)",self,netDamage,incomingDamage,totalAbsorbed);
+}
+
+- (NSNumber *)currentAbsorb
+{
+    __block NSNumber *totalAbsorb = @0;
+    
+    [self.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
+        
+        if ( effect.absorb )
+            totalAbsorb = @( totalAbsorb.doubleValue + effect.absorb.doubleValue );
+    }];
+    
+    return totalAbsorb;
+}
+
 - (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers
 {
     return NO;
@@ -217,7 +299,7 @@
         [self removeStatusEffect:object];
 }
 
-- (void)handleDeathOfEntity:(Entity *)dyingEntity fromAbility:(Ability *)ability
+- (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell
 {
     if ( dyingEntity == self )
     {
@@ -370,6 +452,13 @@
 {
     //NSLog(@"i, %@, should end encounter",self);
     self.stopped = YES;
+    if ( self.automaticAbilitySource )
+    {
+        dispatch_source_cancel( self.automaticAbilitySource );
+        self.automaticAbilitySource = NULL;
+    }
+    
+    self.castingSpell = nil;
 }
 
 // character

@@ -10,4 +10,6 @@
 
 @interface DivineAegisEffect : Effect
 
++ (NSNumber *)absorbWithExistingAbsorb:(NSNumber *)existingAbsorb healing:(NSNumber *)healing masteryRating:(NSNumber *)masteryRating sourceMaxHealth:(NSNumber *)sourceMaxHealth;
+
 @end

@@ -123,6 +123,7 @@
     
     if ( ability.isPeriodic )
     {
+        __block BOOL isFirstTick = YES;
         dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.periodicEffectQueue);
         dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, ability.period * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(timer, ^{
@@ -140,8 +141,10 @@
                 tickTargets = @[target];
             [tickTargets enumerateObjectsUsingBlock:^(Entity *tickTarget, NSUInteger idx, BOOL *stop) {
                 NSLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
-                [encounter handleAbility:ability source:self target:tickTarget periodicTick:YES periodicTickSource:timer];
+                [encounter handleSpell:ability source:self target:tickTarget periodicTick:YES periodicTickSource:timer isFirstTick:isFirstTick];
             }];
+            
+            isFirstTick = NO;
         });
         dispatch_resume(timer);
         
@@ -153,7 +156,7 @@
         });
     }
     else
-        [encounter handleAbility:ability source:self target:target periodicTick:NO periodicTickSource:NULL];
+        [encounter handleSpell:ability source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
 }
 
 // this needs some work to handle multiple targets

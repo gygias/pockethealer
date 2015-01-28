@@ -25,7 +25,7 @@
 @property Entity *target;
 @property HDClass *hdClass;
 @property NSNumber *currentHealth;
-@property NSNumber *currentAbsorb; // this should be an array of effects, not a single value
+@property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
 @property Spell *castingSpell;
 @property NSArray *statusEffects;
@@ -43,7 +43,7 @@
 
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption
-- (void)handleDeathOfEntity:(Entity *)dyingEntity fromAbility:(Ability *)ability;
+- (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
@@ -53,6 +53,7 @@
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
 - (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
+- (void)handleIncomingDamage:(NSNumber *)incomingDamage;
 - (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 
 //- (NSNumber *)handleIncomingDamage:(NSNumber *)damage;

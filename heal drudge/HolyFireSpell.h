@@ -6,10 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "PriestSpell.h"
 
-#import "Spell.h"
-
-@interface HolyFireSpell : Spell
+@interface HolyFireSpell : PriestSpell
 
 @end
