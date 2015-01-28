@@ -82,6 +82,9 @@
         [entity setValue:secondaryStatSplitEvenly forKey:secondaryStatKey];
     }
     
+    // taken from iliss with no spirit gear on
+    entity.spirit = @787;
+    
     // tertiary
     // whatever for now
     float tertiaryScalar = 0.1;
@@ -130,7 +133,7 @@
 
 + (NSNumber *)maxPowerForClass:(HDClass *)hdClass
 {
-    if ( hdClass.isHealerClass )
+    if ( hdClass.isHealerClass || hdClass.isCasterDPS )
         return @160000;
     return @100; // XXX prot/ret pally, etc
 }
@@ -169,6 +172,51 @@
     double reduction = ( buffRating * 0.00015376574384 );
     NSLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > 1.5 ? 0 : 1.5 - reduction );
+}
+
+#define RAGE_PER_SECOND 20.0
+#define ENERGY_PER_SECOND 20.0
+#define FOCUS_PER_SECOND 20.0
+#define RUNIC_POWER_PER_SECOND 20.0
+#define CASTER_MANA_PER_SECOND 500.0
+
++ (NSNumber *)resourceGenerationWithEntity:(Entity *)entity timeInterval:(NSTimeInterval)timeInterval
+{
+    if ( entity.hdClass.isHealerClass )
+    {
+        // iliss 671
+        // 80k mana in 69.73 seconds with 1170 spirit
+        // 40k mana in 41.18 seconds with 787 spirit (base)
+        // 80k / 69.73 = 1147.28 mpsecond
+        // 40k / 41.18 = 971.34 mpsecond
+        // (1147.28 - 971.34) / (1170 - 787) =
+        //  175.94 / 383 = 0.45937336814621 mana per second per spirit
+        return @( 0.45937 * entity.spirit.doubleValue * timeInterval );
+    }
+    else if ( entity.hdClass.isCasterDPS )
+    {
+        return @( CASTER_MANA_PER_SECOND * timeInterval );
+    }
+    
+    switch( entity.hdClass.classID )
+    {
+        case HDWARRIOR:
+            return @( RAGE_PER_SECOND * timeInterval );
+        case HDHUNTER:
+            return @( FOCUS_PER_SECOND * timeInterval );
+        case HDDEATHKNIGHT:
+            return @( RUNIC_POWER_PER_SECOND * timeInterval );
+        case HDPALADIN: // prot or ret per above
+            return @( CASTER_MANA_PER_SECOND * timeInterval );
+        case HDDRUID: // feral per above
+        case HDMONK: // brewmaster or windwalker per above
+        case HDROGUE:
+            return @( ENERGY_PER_SECOND * timeInterval );
+        default:
+            break;
+    }
+    
+    return @0;
 }
 
 + (NSNumber *)automaticHealValueWithEntity:(Entity *)entity

@@ -168,6 +168,14 @@
             addedModifiers = YES;
     }];
     
+    if ( asSource )
+    {
+        NSInteger effectiveCost = spell.manaCost.integerValue;
+        if ( spell.isChanneled )
+            effectiveCost = effectiveCost / spell.channelTicks.integerValue;
+        self.currentResources = @(source.currentResources.integerValue - effectiveCost);
+    }
+    
     return addedModifiers;
 }
 
@@ -398,6 +406,20 @@
         });
         dispatch_resume(self.automaticAbilitySource);
     }
+    
+    self.lastResourceGenerationDate = [NSDate date];
+    self.resourceGenerationSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, encounter.encounterQueue);
+    dispatch_source_set_timer(self.resourceGenerationSource, DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC, 0.2 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(self.resourceGenerationSource, ^{
+        NSNumber *regeneratedResources = [ItemLevelAndStatsConverter resourceGenerationWithEntity:self timeInterval:[[NSDate date] timeIntervalSinceDate:self.lastResourceGenerationDate]];
+        double newResources = self.currentResources.doubleValue + regeneratedResources.doubleValue;
+        if ( newResources > self.power.doubleValue )
+            self.currentResources = self.power;
+        else
+            self.currentResources = @( newResources );
+        self.lastResourceGenerationDate = [NSDate date];
+    });
+    dispatch_resume(self.resourceGenerationSource);
 }
 
 - (void)_doAutomaticStuff
@@ -425,13 +447,7 @@
 
 - (void)_doAutomaticTanking
 {
-    NSInteger randomEnemy = arc4random() % self.encounter.enemies.count;
-    Entity *enemy = self.encounter.enemies[randomEnemy];
-    Spell *spell = [[GenericPhysicalAttackSpell alloc] initWithCaster:self];
-    self.target = enemy;
-    //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
-    //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
-    [self castSpell:spell withTarget:enemy];
+    [self _doAutomaticDPS];
 }
 
 - (void)_doAutomaticDPS
@@ -443,6 +459,19 @@
     self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
+    // TODO, should be enumerating possible spells based on priorities and finding the best one
+    // TODO, GCD?
+    NSString *message = nil;
+    if ( ! [self validateSpell:spell asSource:YES otherEntity:enemy message:&message invalidDueToCooldown:NULL] )
+    {
+        NSLog(@"%@ automatic spell cast failed: %@",self,message);
+        return;
+    }
+    else if ( ! [enemy validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
+    {
+        NSLog(@"%@ automatic spell cast failed: %@",self,message);
+        return;
+    }
     [self castSpell:spell withTarget:enemy];
 }
 
@@ -459,6 +488,19 @@
             NSLog(@"%@ is healing %@ for %@",self,player,spell.healing);
             self.target = player;
             //[encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
+            
+            NSString *message = nil;
+            if ( ! [self validateSpell:spell asSource:YES otherEntity:player message:&message invalidDueToCooldown:NULL] )
+            {
+                NSLog(@"%@ automatic spell cast failed: %@",self,message);
+                return;
+            }
+            if ( ! [player validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
+            {
+                NSLog(@"%@ automatic spell cast failed: %@",self,message);
+                return;
+            }
+            
             [self castSpell:spell withTarget:player];
             //player.currentHealth = ( player.currentHealth.doubleValue + averageHealing.doubleValue > player.health.doubleValue ) ?
             //                        ( player.health ) : @( player.currentHealth.doubleValue + averageHealing.doubleValue );

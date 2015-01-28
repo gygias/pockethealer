@@ -26,7 +26,7 @@
         self.hitSoundName = @"physical_hit";
         //self.castSoundName = @"cast_shadow";
         
-        self.manaCost = @( 0.015 * caster.baseMana.floatValue );
+        self.manaCost = @( caster.power.doubleValue * .4 );
         
         // hit
         if ( caster.hdClass.isMeleeDPS || caster.hdClass.isTank )

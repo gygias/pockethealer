@@ -39,6 +39,9 @@
 
 @property NSMutableArray *emittingSounds;
 
+@property dispatch_source_t resourceGenerationSource;
+@property NSDate *lastResourceGenerationDate;
+
 @property dispatch_source_t automaticAbilitySource;
 @property NSDate *lastAutomaticAbilityDate;
 
@@ -109,6 +112,7 @@
 @property NSNumber *agility;
 @property NSNumber *intellect;
 // secondary
+@property NSNumber *spirit;
 @property NSNumber *critRating;
 @property NSNumber *hasteRating;
 @property NSNumber *masteryRating;

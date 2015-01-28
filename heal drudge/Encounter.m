@@ -230,11 +230,6 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             }
         }
         
-        NSInteger effectiveCost = spell.manaCost.integerValue;
-        if ( spell.isChanneled )
-            effectiveCost = effectiveCost / spell.channelTicks.integerValue;
-        source.currentResources = @(source.currentResources.integerValue - effectiveCost);
-        
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);
     });

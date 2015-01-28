@@ -22,6 +22,7 @@
 + (NSNumber *)maxPowerForClass:(HDClass *)hdClass;
 + (NSNumber *)castTimeWithBaseCastTime:(NSNumber *)baseCastTime entity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
 + (NSNumber *)globalCooldownWithEntity:(Entity *)entity hasteBuffPercentage:(NSNumber *)hasteBuffPercentage;
++ (NSNumber *)resourceGenerationWithEntity:(Entity *)entity timeInterval:(NSTimeInterval)timeInterval;
 
 + (NSNumber *)automaticHealValueWithEntity:(Entity *)entity;
 

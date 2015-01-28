@@ -234,6 +234,10 @@
 - (void)_drawRoleIconInRect:(CGRect)rect
 {
     UIImage *roleImage = [ImageFactory imageForRole:self.entity.hdClass.role];
+    
+    if ( ! roleImage && ! self.entity.isEnemy )
+        NSLog(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
+        //[NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
     CGRect imageRect = CGRectMake(rect.origin.x + ROLE_ICON_ORIGIN_X, rect.origin.y + ROLE_ICON_ORIGIN_Y, ROLE_ICON_SIZE, ROLE_ICON_SIZE);
     [roleImage drawInRect:imageRect];
 }

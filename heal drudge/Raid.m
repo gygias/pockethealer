@@ -27,7 +27,7 @@
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
     // XXX
-    randomSize = 5;
+    //randomSize = 5;
     NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
@@ -95,9 +95,9 @@
             someHealerIdx = idx;
     }];
     
-    if ( gygiasIdx >= 0 || someHealerIdx > 0 )
+    if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
     {
-        NSInteger removeIndex = gygiasIdx > 0 ? gygiasIdx : someHealerIdx;
+        NSInteger removeIndex = gygiasIdx >= 0 ? gygiasIdx : someHealerIdx;
         NSLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
         [raidCopy removeObjectAtIndex:removeIndex];
     }
@@ -107,7 +107,7 @@
     NSLog(@"adding %@",gygias);
     [raidCopy insertObject:gygias atIndex:gygiasIdx];
     if ( raid.players.count >= 20 )
-        [raidCopy removeObjectAtIndex: ( gygiasIdx + 1 % raid.players.count )];
+        [raidCopy removeObjectAtIndex: ( ( gygiasIdx >= 0 ? gygiasIdx : someHealerIdx )+ 1 % raid.players.count )];
     raid.players = raidCopy;
     
     NSLog(@"%@",raid.players);

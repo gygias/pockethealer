@@ -8,13 +8,15 @@
 
 #import "KargathBladefist.h"
 
+#import "Raid.h"
+
 @implementation KargathBladefist
 
 - (id)initWithRaid:(Raid *)raid
 {
     if ( self = [super initWithRaid:raid] )
     {
-        self.stamina = @(500000 / 60);
+        self.stamina = @(500000 / 60 * ( raid.players.count / 5 ));
     }    
     return self;
 }
