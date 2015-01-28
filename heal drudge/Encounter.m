@@ -171,7 +171,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                 }
                 else if ( spell.spellType == DetrimentalSpell )
                     [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
-                if ( spell.spellType == BeneficialSpell )
+                else // ( spell.spellType == BeneficialSpell )
                     [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
                 
                 [spell handleHitWithSource:source target:aTarget modifiers:modifiers];

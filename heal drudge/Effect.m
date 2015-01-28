@@ -9,6 +9,7 @@
 #import "Effect.h"
 
 #import "Encounter.h"
+#import "SoundManager.h"
 
 @implementation Effect
 
@@ -44,6 +45,14 @@
     if ( handler )
         handler(NO);
     return NO;
+}
+
+- (BOOL)handleAdditionWithOwner:(Entity *)owner
+{
+    BOOL hitIsPlayingPlayer = owner.encounter.player == owner;
+    if ( self.hitSound )
+        [SoundManager playSpellHit:self.hitSound volume:( hitIsPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME )];
+    return YES;
 }
 
 - (void)handleConsumptionWithOwner:(Entity *)owner

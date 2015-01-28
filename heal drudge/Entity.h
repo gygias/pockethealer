@@ -29,7 +29,7 @@
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
 @property Spell *castingSpell;
-@property NSArray *statusEffects;
+@property (readonly) NSArray *statusEffects;
 @property BOOL isDead;
 @property BOOL isPlayer;
 @property BOOL isPlayingPlayer;

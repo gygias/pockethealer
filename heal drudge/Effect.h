@@ -45,6 +45,7 @@ typedef void(^EffectEventHandler)(BOOL);
 @property BOOL drawsInFrame;
 @property BOOL isBeneficial;
 @property BOOL isEmphasized; // e.g. boss's main big debuff on players
+@property NSString *hitSound;
 
 @property NSNumber *healingOnDamage;
 @property BOOL healingOnDamageIsOneShot;
@@ -57,6 +58,7 @@ typedef void(^EffectEventHandler)(BOOL);
 - (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 
+- (BOOL)handleAdditionWithOwner:(Entity *)owner;
 - (void)handleConsumptionWithOwner:(Entity *)owner;
 - (void)handleRemovalWithOwner:(Entity *)owner;
 

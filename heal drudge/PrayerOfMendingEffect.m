@@ -22,8 +22,10 @@
     {
         self.name = @"Prayer of Mending";
         self.duration = 30;
+        self.maxStacks = @5;
         self.currentStacks = @5;
         self.image = [ImageFactory imageNamed:@"prayer_of_mending"];
+        self.hitSound = @"prayer_of_mending_hit";
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;
         self.healingOnDamageIsOneShot = YES;
@@ -32,20 +34,29 @@
     return self;
 }
 
+- (BOOL)handleAdditionWithOwner:(Entity *)owner
+{
+    if ( ! [super handleAdditionWithOwner:owner] )
+        return NO;
+    
+    [owner.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
+        if ( [obj isKindOfClass:[PrayerOfMendingEffect class]] )
+            [owner consumeStatusEffect:obj absolute:YES];
+    }];
+    
+    return YES;
+}
+
 - (void)handleConsumptionWithOwner:(Entity *)owner
 {
-    Entity *someOtherPlayer = nil;
-    do
-    {
-        someOtherPlayer = [self _randomLivingPlayerFrom:owner.encounter.raid.players];
-    } while ( ! someOtherPlayer.isDead && someOtherPlayer == owner );
-    
-    [someOtherPlayer addStatusEffect:self source:self.source];
+    Entity *someOtherPlayer = [self _randomLivingPlayerFrom:owner.encounter.raid.players excludingPlayer:owner];
+    if ( someOtherPlayer )
+        [someOtherPlayer addStatusEffect:self source:self.source];
     [owner consumeStatusEffect:self absolute:YES];
 }
 
 // TODO buggy and copied from Enemy, centralize
-- (Entity *)_randomLivingPlayerFrom:(NSArray *)players
+- (Entity *)_randomLivingPlayerFrom:(NSArray *)players excludingPlayer:(Entity *)excludingPlayer
 {
     __block Entity *randomLivingPlayer = nil;
     
@@ -53,7 +64,7 @@
     NSMutableArray *livingPlayers = [NSMutableArray new];
     [players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         //NSLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
-        if ( ! obj.isDead )
+        if ( ! obj.isDead && obj != excludingPlayer )
             [livingPlayers addObject:obj];
     }];
     

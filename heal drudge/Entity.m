@@ -262,6 +262,13 @@
 {
     if ( ! _statusEffects )
         _statusEffects = [NSMutableArray new];
+    
+    if ( ! [statusEffect handleAdditionWithOwner:self] )
+    {
+        NSLog(@"%@ says no to addition to %@ from %@",statusEffect,self,source);
+        return;
+    }
+    
     statusEffect.startDate = [NSDate date];
     statusEffect.source = source;
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
