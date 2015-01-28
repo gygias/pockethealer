@@ -28,6 +28,8 @@
 @property NSNumber *currentHealth;
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
+@property NSNumber *currentAuxiliaryResources;
+@property NSNumber *maxAuxiliaryResources;
 @property Spell *castingSpell;
 @property (readonly) NSArray *statusEffects;
 @property BOOL isDead;

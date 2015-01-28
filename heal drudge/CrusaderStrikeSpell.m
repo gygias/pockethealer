@@ -30,9 +30,15 @@
         
         self.school = HolySchool;
         
-        self.hitSoundName = @"physical_hit"; // TODO
+        self.hitSoundName = @"crusader_strike_hit"; // TODO
     }
     return self;
+}
+
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+{
+    source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue + 1 );
+    NSLog(@"%@ has gained an aux resource (%@)",source,source.currentAuxiliaryResources);
 }
 
 - (NSArray *)hdClasses

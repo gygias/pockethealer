@@ -137,7 +137,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             NSLog(@"%@->%@ modified %@",source,target,spell);
         }
         
-        float volume = source.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
+        float volume = source.isPlayingPlayer || source.hdClass.isTank ? HIGH_VOLUME : LOW_VOLUME;
         if ( spell.castSoundName )
             [SoundManager playSpellHit:spell.castSoundName volume:volume];
         if ( spell.hitSoundName )

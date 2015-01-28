@@ -112,6 +112,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSNumber *cooldown;
 @property NSNumber *castTime;
 @property NSNumber *manaCost;
+@property NSNumber *auxiliaryResourceCost;
 @property NSNumber *damage;
 @property SpellSchool school;
 @property NSString *level;

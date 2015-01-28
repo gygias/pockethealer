@@ -25,6 +25,18 @@
             return;
         }
         
+        if ( spell.manaCost.doubleValue > self.currentResources.doubleValue )
+        {
+            NSLog(@"%@ doesn't have enough mana for %@",self,spell);
+            return;
+        }
+        
+        if ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
+        {
+            NSLog(@"%@ doesn't have enough aux resource for %@",self,spell);
+            return;
+        }
+        
         if ( spell.aiSpellPriority | currentPriorities )
         {
             spellToCast = spell;
