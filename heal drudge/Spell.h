@@ -83,6 +83,10 @@ typedef NS_ENUM(NSInteger, SpellType) {
 @property NSTimeInterval periodicDuration;
 @property BOOL periodicEffectChangesTargets;
 
+// multi-target
+@property BOOL affectsPartyOfTarget; // e.g. prayer of healing
+@property BOOL isSmart; // can't think of a 'smart damage' spell off the top of my head, so for now this is probably simply 'smart heal'
+
 @property BOOL canBeCastOnDeadEntities;
 
 // sound emitted by caster

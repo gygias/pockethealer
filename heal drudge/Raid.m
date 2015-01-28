@@ -168,4 +168,28 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     return filteredPlayers;
 }
 
+- (NSArray *)partyForEntity:(Entity *)entity includingEntity:(BOOL)includingEntity
+{
+    NSUInteger idx = [self.players indexOfObject:entity];
+    if ( idx == NSNotFound )
+    {
+        NSLog(@"error: %@ not found in raid",entity);
+        return nil;
+    }
+    
+    NSUInteger partySize = 5;
+    NSUInteger partyNumber = idx / partySize;
+    NSMutableArray *players = [NSMutableArray new];
+    NSUInteger partyIdx = 0;
+    for( ; partyIdx < partySize && partyIdx < self.players.count; partyIdx++ )
+    {
+        Entity *aPartyPlayer = self.players[partyNumber * partySize + partyIdx];
+        if ( ! includingEntity && entity == aPartyPlayer )
+            continue;
+        [players addObject:aPartyPlayer];
+    }
+    
+    return players;
+}
+
 @end

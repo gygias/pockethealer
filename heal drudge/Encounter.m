@@ -165,10 +165,28 @@
         volume = target.isPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME;
         [SoundManager playSpellHit:spell.hitSoundName volume:volume];
         
-        if ( spell.spellType != BeneficialSpell && target.isEnemy )
-            [self doDamage:spell source:source target:target modifiers:modifiers periodic:periodicTick];
-        if ( spell.spellType != DetrimentalSpell && target.isPlayer )
-            [self doHealing:spell source:source target:target modifiers:modifiers periodic:periodicTick];
+        NSMutableArray *allTargets = [NSMutableArray new];
+        if ( spell.isSmart )
+        {
+            NSArray *smartTargets = [self _smartTargetsForSpell:spell source:source target:target];
+            if ( smartTargets )
+                [allTargets addObjectsFromArray:smartTargets];
+        }
+        else if ( spell.affectsPartyOfTarget )
+        {
+            NSArray *partyTargets = [self.raid partyForEntity:target includingEntity:YES];
+            if ( partyTargets )
+                [allTargets addObjectsFromArray:partyTargets];
+        }
+        else
+            [allTargets addObject:target];
+        
+        [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
+            if ( spell.spellType != BeneficialSpell )
+                [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+            if ( spell.spellType != DetrimentalSpell )
+                [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+        }];
         
         if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
         {
@@ -223,6 +241,11 @@
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);
     });
+}
+
+- (NSArray *)_smartTargetsForSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target
+{
+    return @[ target ];
 }
 
 - (BOOL)entityIsTargetedByEntity:(Entity *)entity

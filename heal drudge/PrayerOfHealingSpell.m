@@ -30,6 +30,8 @@
         self.healing = @( [caster.spellPower floatValue] * 2.21664 );
         self.absorb = @0;
         
+        self.affectsPartyOfTarget = YES;
+        
         self.school = HolySchool;
     }
     return self;
