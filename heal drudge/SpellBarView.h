@@ -18,6 +18,5 @@ typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 @property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;
 
 @property (nonatomic,retain) Entity *player;
-@property (nonatomic,retain) NSArray *spells;
 
 @end

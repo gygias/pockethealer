@@ -32,6 +32,15 @@ typedef NS_ENUM(NSInteger, SpellType) {
     BeneficialOrDeterimentalSpell
 };
 
+typedef NS_OPTIONS(NSInteger, AISpellPriority) {
+    NoPriority = 0,
+    FillerPriotity,
+    CastOnCooldownPriority,
+    CastWhenDamageDoneIncreasedPriority, // during hero
+    CastBeforeLargeHitPriority,
+    CastWhenInFearOfDyingPriority
+};
+
 @interface Spell : NSObject
 
 // initialized with caster, but not target, so that base stats can be displayed based
@@ -51,7 +60,7 @@ typedef NS_ENUM(NSInteger, SpellType) {
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells
-+ (NSArray *)castableSpellNamesForCharacter:(Entity *)character;
++ (NSArray *)castableSpellsForCharacter:(Entity *)character;
 
 @property Entity *caster;
 @property Entity *target;
@@ -112,7 +121,11 @@ typedef NS_ENUM(NSInteger, SpellType) {
 // classes which have this spell
 @property NSArray *hdClasses;
 
+// ai
+@property AISpellPriority aiSpellPriority;
+
 // transient
+@property (readonly) BOOL isOnCooldown;
 @property NSDate *nextCooldownDate;
 @property NSDate *lastCastStartDate;
 @property NSDate *lastChannelStartDate;

@@ -14,7 +14,7 @@
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Generic Physical Attack";
+        self.name = @"Attack";
         //self.image = [ImageFactory imageNamed:@"smite"];
         self.tooltip = @"Generic physical attack.";
         self.triggersGCD = YES;

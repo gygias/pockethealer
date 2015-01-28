@@ -47,6 +47,10 @@
     return NO;
 }
 
+- (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick
+{
+}
+
 - (BOOL)handleAdditionWithOwner:(Entity *)owner
 {
     BOOL hitIsPlayingPlayer = owner.encounter.player == owner;

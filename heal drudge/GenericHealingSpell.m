@@ -16,7 +16,7 @@
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Generic Healing";
+        self.name = @"Heal";
         //self.image = [ImageFactory imageNamed:@"heal"];
         self.tooltip = @"Generic healing.";
         self.triggersGCD = YES;

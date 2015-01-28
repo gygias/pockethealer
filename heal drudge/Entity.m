@@ -18,12 +18,16 @@
 #import "GenericPhysicalAttackSpell.h"
 #import "SoundManager.h"
 
+// AI
+#import "Entity+ProtPaladin.h"
+
 @implementation Entity
 
 @synthesize currentHealth = _currentHealth,
             currentResources = _currentResources,
             statusEffects = _statusEffects,
-            periodicEffectQueue = _periodicEffectQueue;
+            periodicEffectQueue = _periodicEffectQueue,
+            hdClass = _hdClass;
 
 - (id)init
 {
@@ -32,6 +36,12 @@
         self.emittingSounds = [NSMutableArray new];
     }
     return self;
+}
+
+- (void)setHdClass:(HDClass *)hdClass
+{
+    _hdClass = hdClass;
+    self.spells = [Spell castableSpellsForCharacter:self];
 }
 
 - (dispatch_queue_t)periodicEffectQueue
@@ -267,10 +277,11 @@
 }
 
 - (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source
-{
+{    
     if ( ! _statusEffects )
         _statusEffects = [NSMutableArray new];
     
+    // TODO this callout should not exist merely to handle an effect which can't have multiple applications to the same target
     if ( ! [statusEffect handleAdditionWithOwner:self] )
     {
         NSLog(@"%@ says no to addition to %@ from %@",statusEffect,self,source);
@@ -282,6 +293,19 @@
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
     NSLog(@"%@ is affected by %@",self,statusEffect);
     
+    if ( statusEffect.periodicTick.doubleValue > 0 )
+    {
+        NSLog(@"%@ will tick every %0.2f seconds",statusEffect,statusEffect.periodicTick.doubleValue);
+        [statusEffect handleTickWithOwner:self isInitialTick:YES];
+        statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
+        dispatch_source_set_timer(statusEffect.periodicTickSource, DISPATCH_TIME_NOW, statusEffect.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
+        dispatch_source_set_event_handler(statusEffect.periodicTickSource, ^{
+            [statusEffect handleTickWithOwner:self isInitialTick:NO];
+        });
+        dispatch_resume(statusEffect.periodicTickSource);
+    }
+    
+    NSLog(@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if ( [_statusEffects containsObject:statusEffect] )
         {
@@ -386,6 +410,7 @@
 {
     self.currentHealth = self.health;
     self.currentResources = self.power;
+    self.lastHealth = self.health;
     self.encounter = encounter;
 }
 
@@ -424,9 +449,21 @@
 
 - (void)_doAutomaticStuff
 {
+    BOOL classSwitchHandled = NO;
+    switch( self.hdClass.specID )
+    {
+        case HDPROTPALADIN:
+            [self doProtPaladinAI];
+            classSwitchHandled = YES;
+            break;
+        default:
+            break;
+    }
+    
     //if ( ! self.lastAutomaticAbilityDate ||
     //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
     //NSLog(@"%@ is doing automated stuff",self);
+    if ( ! classSwitchHandled )
     {
         if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
         {
@@ -440,9 +477,10 @@
         {
             [self _doAutomaticHealing];
         }
-        
-        self.lastAutomaticAbilityDate = [NSDate date];
     }
+    
+    self.lastAutomaticAbilityDate = [NSDate date];
+    self.lastHealth = self.currentHealth;
 }
 
 - (void)_doAutomaticTanking

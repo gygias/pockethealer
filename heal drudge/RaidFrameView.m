@@ -324,7 +324,7 @@
 {
     __block NSInteger maxVisibleStatusEffects = 3;
     [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
-        if ( effect.drawsInFrame && ( effect.source == self.player ) )
+        if ( effect.drawsInFrame || ( effect.source == self.player ) )
         {
             CGRect effectRect = CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + maxVisibleStatusEffects * STATUS_EFFECT_WIDTH,
                                            rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,

@@ -51,7 +51,7 @@ const NSString *SpellLevelHigh = @"high";
 {
 }
 
-+ (NSArray *)castableSpellNamesForCharacter:(Entity *)player
++ (NSArray *)castableSpellsForCharacter:(Entity *)player
 {
     NSMutableArray *castableSpells = [NSMutableArray new];
     for ( NSString *spellName in [self _spellNames] )
@@ -89,8 +89,16 @@ const NSString *SpellLevelHigh = @"high";
              @"PainSuppressionSpell",
              @"PowerWordBarrierSpell",
              
+             @"DivineProtectionSpell",
+             @"SacredShieldSpell",
+             
              @"HealingTideTotemSpell"
              ];
+}
+
+- (BOOL)isOnCooldown
+{
+    return self.nextCooldownDate && [[NSDate date] timeIntervalSinceDate:self.nextCooldownDate] < 0;
 }
 
 @end

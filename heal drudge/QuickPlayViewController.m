@@ -25,7 +25,7 @@
     // Do any additional setup after loading the view.
     
     Entity *gygias = nil;
-    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriest:&gygias];
+    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias];
     
     /*__block*/ Entity *aHealer = gygias;
     aHealer.isPlayingPlayer = YES;

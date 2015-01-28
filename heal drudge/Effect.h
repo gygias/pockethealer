@@ -51,12 +51,22 @@ typedef void(^EffectEventHandler)(BOOL);
 @property BOOL healingOnDamageIsOneShot;
 @property NSNumber *absorb;
 
+// sacred shield...
+@property NSNumber *periodicTick;
+@property BOOL canAffectOneTargetSimultaneously;
+@property dispatch_source_t periodicTickSource;
+
 - (void)addStack;
 - (void)addStacks:(NSUInteger)nStacks;
 - (void)removeStack;
+
+// other spells
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target message:(NSString **)message;
 - (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+
+// our own periodic tick
+- (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick;
 
 - (BOOL)handleAdditionWithOwner:(Entity *)owner;
 - (void)handleConsumptionWithOwner:(Entity *)owner;

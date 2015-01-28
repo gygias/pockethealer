@@ -24,7 +24,7 @@
 // combat state
 @property Encounter *encounter;
 @property Entity *target;
-@property HDClass *hdClass;
+@property (nonatomic) HDClass *hdClass;
 @property NSNumber *currentHealth;
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
@@ -36,6 +36,7 @@
 @property BOOL isEnemy;
 @property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
+@property NSArray *spells;
 
 @property NSMutableArray *emittingSounds;
 
@@ -132,6 +133,8 @@
 
 @property NSDate *nextGlobalCooldownDate;
 @property NSTimeInterval currentGlobalCooldownDuration;
+
+@property NSNumber *lastHealth;
 
 @end
 

@@ -27,7 +27,8 @@
 
 - (void)setPlayer:(Entity *)player
 {
-    self.spells = [[Spell castableSpellNamesForCharacter:player] mutableCopy];
+    // only reason this was overridden
+    //self.spells = [[Spell castableSpellsForCharacter:player] mutableCopy];
     _player = player;
 }
 
@@ -35,7 +36,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+    [self.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
         
         NSString *message = nil;
         
@@ -130,8 +131,8 @@
     NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
     Spell *theSpell = nil;
-    if ( spellIdx < self.spells.count )
-        theSpell = self.spells[spellIdx];
+    if ( spellIdx < self.player.spells.count )
+        theSpell = self.player.spells[spellIdx];
     NSLog(@"you began touching %@ (%lu,%lu)",theSpell,row,column);
     
     [self setNeedsDisplay];
@@ -152,8 +153,8 @@
     NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
     Spell *theSpell = nil;
-    if ( spellIdx < self.spells.count )
-        theSpell = self.spells[spellIdx];
+    if ( spellIdx < self.player.spells.count )
+        theSpell = self.player.spells[spellIdx];
     NSLog(@"you stopped touching %@ (%lu,%lu)",theSpell,row,column);
     
     if ( self.spellCastAttemptHandler )

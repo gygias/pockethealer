@@ -16,7 +16,7 @@
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Generic Damaging Spell";
+        self.name = @"Magic Attack";
         //self.image = [ImageFactory imageNamed:@"smite"];
         self.tooltip = @"Generic damaging spell.";
         self.triggersGCD = YES;

@@ -27,7 +27,7 @@
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
     // XXX
-    //randomSize = 5;
+    randomSize = 5;
     NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
@@ -69,9 +69,9 @@
     return [self randomRaidWithTanks:2 healerRatio:.2];
 }
 
-+ (Raid *)randomRaidWithGygiasTheDiscPriest:(Entity **)outGygias
++ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias
 {
-    Raid *raid = [self randomRaid];
+    Raid *raid = [self randomRaidWithTanks:0 healerRatio:0];
     
     Entity *gygias = [Entity new];
     gygias.isPlayer = YES;
@@ -82,18 +82,38 @@
     [ItemLevelAndStatsConverter assignStatsToEntity:gygias
                     basedOnAverageEquippedItemLevel:gygiasIlvl];
     
+    Entity *slyeri = [Entity new];
+    slyeri.isPlayer = YES;
+    slyeri.name = @"Slyeri";
+    slyeri.hdClass = [HDClass protPaladin];
+    
+    NSNumber *slyIlvl = @670;
+    [ItemLevelAndStatsConverter assignStatsToEntity:slyeri
+                    basedOnAverageEquippedItemLevel:slyIlvl];
+    
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;
+    __block NSInteger slyIdx = -1;
     __block NSInteger someHealerIdx = -1;
     [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
-        {
             gygiasIdx = idx;
-            *stop = YES;
-        }
         else if ( obj.hdClass.isHealerClass )
             someHealerIdx = idx;
+        else if ( [obj.name compare:slyeri.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+            slyIdx = idx;
     }];
+    
+    if ( slyIdx >= 0 )
+    {
+        NSLog(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
+        [raidCopy removeObjectAtIndex:slyIdx];
+    }
+    
+    slyIdx = raidCopy.count;
+    
+    NSLog(@"adding %@",slyeri);
+    [raidCopy insertObject:slyeri atIndex:slyIdx];
     
     if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
     {
@@ -108,6 +128,7 @@
     [raidCopy insertObject:gygias atIndex:gygiasIdx];
     if ( raid.players.count >= 20 )
         [raidCopy removeObjectAtIndex: ( ( gygiasIdx >= 0 ? gygiasIdx : someHealerIdx )+ 1 % raid.players.count )];
+    
     raid.players = raidCopy;
     
     NSLog(@"%@",raid.players);
