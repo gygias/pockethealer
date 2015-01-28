@@ -120,6 +120,9 @@ typedef enum
 - (NSString *)primaryStatKey;
 
 - (BOOL)isRanged;
+- (BOOL)isCasterDPS;
+- (BOOL)isMeleeDPS;
+- (BOOL)isTank;
 - (const NSString *)role;
 - (BOOL)hasRole:(const NSString *)role;
 

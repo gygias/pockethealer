@@ -8,11 +8,11 @@
 
 #import "GenericDamageSpell.h"
 
-#import "Player.h"
+#import "Entity.h"
 
 @implementation GenericDamageSpell
 
-- (id)initWithCaster:(Player *)caster
+- (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
@@ -29,7 +29,10 @@
         self.manaCost = @( 0.015 * caster.baseMana.floatValue );
         
         // hit
-        self.damage = @( 0.92448 * caster.spellPower.floatValue );
+        if ( caster.hdClass.isCasterDPS )
+            self.damage = @( 0.92448 * caster.spellPower.floatValue );
+        else if ( caster.hdClass.isMeleeDPS || caster.hdClass.isTank )
+            self.damage = @( 0.92448 * caster.attackPower.floatValue );
         
         self.school = HolySchool;
     }

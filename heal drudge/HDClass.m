@@ -551,6 +551,80 @@ const NSString *WoWAPIClassKey = @"class";
     }
 }
 
+- (BOOL)isCasterDPS
+{
+    switch (_classID)
+    {
+        case HDWARLOCK:
+        case HDMAGE:
+        case HDHUNTER: // TODO
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    switch (_specID)
+    {
+        case HDSHADOWPRIEST:
+        case HDELESHAMAN:
+        case HDBALANCEDRUID:
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isMeleeDPS
+{
+    switch (_classID)
+    {
+        case HDROGUE:
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    switch (_specID)
+    {
+        case HDENHANCESHAMAN:
+        case HDFURYWARRIOR:
+        case HDARMSWARRIOR:
+        case HDWINDWALKERMONK:
+        case HDRETPALADIN:
+        case HDFERALDRUID:
+        case HDUNHOLYDK:
+        case HDFROSTDK:
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
+- (BOOL)isTank
+{
+    switch (_specID)
+    {
+        case HDPROTPALADIN:
+        case HDPROTWARRIOR:
+        case HDBLOODDK:
+        case HDBREWMASTERMONK:
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return NO;
+}
+
 - (const NSString *)role
 {
     switch (_specID)

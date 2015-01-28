@@ -320,6 +320,7 @@
     NSInteger randomEnemy = arc4random() % encounter.enemies.count;
     Entity *enemy = encounter.enemies[randomEnemy];
     Spell *spell = [[GenericDamageSpell alloc] initWithCaster:self];
+    self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
     [self castSpell:spell withTarget:enemy inEncounter:encounter];
@@ -330,6 +331,7 @@
     NSInteger randomEnemy = arc4random() % encounter.enemies.count;
     Entity *enemy = encounter.enemies[randomEnemy];
     Spell *spell = [[GenericDamageSpell alloc] initWithCaster:self];
+    self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
     [self castSpell:spell withTarget:enemy inEncounter:encounter];
@@ -346,6 +348,7 @@
             //NSNumber *averageHealing = [ItemLevelAndStatsConverter automaticHealValueWithEntity:self];
             Spell *spell = [[GenericHealingSpell alloc] initWithCaster:self];
             NSLog(@"%@ is healing %@ for %@",self,player,spell.healing);
+            self.target = player;
             //[encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
             [self castSpell:spell withTarget:player inEncounter:encounter];
             //player.currentHealth = ( player.currentHealth.doubleValue + averageHealing.doubleValue > player.health.doubleValue ) ?

@@ -26,7 +26,7 @@
         [(Entity *)obj prepareForEncounter:self];
     }];
     
-    NSInteger delay = 5;
+    NSInteger delay = 1;
     [SoundManager playCountdownWithStartIndex:@(delay)];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -81,11 +81,17 @@
         [player endEncounter:self];
     }];
     
-    dispatch_source_cancel(_encounterTimer);
-    //dispatch_release(_encounterTimer);
-    _encounterTimer = NULL;
-    //dispatch_release(_encounterQueue);
-    _encounterQueue = NULL;
+    if ( _encounterTimer )
+    {
+        dispatch_source_cancel(_encounterTimer);
+        //dispatch_release(_encounterTimer);
+        _encounterTimer = NULL;
+    }
+    
+    if ( _encounterQueue )
+    {
+        _encounterQueue = NULL;
+    }
     
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);

@@ -22,7 +22,7 @@
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
      // XXX
-    randomSize = 1;
+    randomSize = 5;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
     {

@@ -13,6 +13,10 @@
 
 @implementation CastBarView
 
+#define CAST_BAR_IMAGE_SQUARE 15
+#define CAST_BAR_LEFT_MARGIN 3
+#define CAST_BAR_TOP_MARGIN 3
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
@@ -44,25 +48,28 @@
     double percentCast = [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate] / self.effectiveCastTime.doubleValue;
     percentCast = spell.isChanneled ? ( 1 - percentCast ) : percentCast;
     
-    CGRect rectangle = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
-    CGContextAddRect(context, rectangle);
+    CGRect barRect = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
+    CGContextAddRect(context, barRect);
     CGContextSetFillColorWithColor(context,
                                      [UIColor grayColor].CGColor);
     CGContextFillPath(context);
     
-    rectangle = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-    CGContextAddRect(context, rectangle);
+    CGRect castRect = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+    CGContextAddRect(context, castRect);
     CGContextSetStrokeColorWithColor(context,
                                      [UIColor whiteColor].CGColor);
     CGContextStrokePath(context);
     
+    CGRect imageRect = CGRectMake(rect.origin.x + CAST_BAR_LEFT_MARGIN,rect.origin.y + CAST_BAR_TOP_MARGIN,CAST_BAR_IMAGE_SQUARE,CAST_BAR_IMAGE_SQUARE);
+    [spell.image drawInRect:imageRect blendMode:kCGBlendModeNormal alpha:0.5];
+    CGRect textRect = CGRectMake(imageRect.origin.x + CAST_BAR_LEFT_MARGIN + CAST_BAR_IMAGE_SQUARE,rect.origin.y + CAST_BAR_TOP_MARGIN,rect.size.width, rect.size.height);
     NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
-    [spell.name drawInRect:rect withAttributes:attributes];
+    [spell.name drawInRect:textRect withAttributes:attributes];
     
     NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",self.effectiveCastTime.doubleValue - [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate]];
     CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
     CGFloat rightMargin = remainingTimeSize.width + 5;
-    CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y, rightMargin, rect.size.height);
+    CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y + CAST_BAR_TOP_MARGIN, rightMargin, rect.size.height);
     [remainingTime drawInRect:remainingTimeRect withAttributes:attributes];
     
     [self _drawGCDThingInRect:rect];
