@@ -13,6 +13,11 @@
 		63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */; };
 		63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AB21A7849EA0068E68A /* GenericHealingSpell.m */; };
 		63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027AB51A7849F60068E68A /* GenericDamageSpell.m */; };
+		63027AB91A7869950068E68A /* cast_shadow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027AB71A7869950068E68A /* cast_shadow.wav */; };
+		63027ABA1A7869950068E68A /* hit_shadow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027AB81A7869950068E68A /* hit_shadow.wav */; };
+		63027ABD1A786BEA0068E68A /* GenericPhysicalAttackSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */; };
+		63027ABF1A786ED00068E68A /* physical_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027ABE1A786ED00068E68A /* physical_hit.wav */; };
+		63027AC11A786FE90068E68A /* precast_shadow_low.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027AC01A786FE90068E68A /* precast_shadow_low.wav */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -259,6 +264,12 @@
 		63027AB21A7849EA0068E68A /* GenericHealingSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericHealingSpell.m; sourceTree = "<group>"; };
 		63027AB41A7849F60068E68A /* GenericDamageSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericDamageSpell.h; sourceTree = "<group>"; };
 		63027AB51A7849F60068E68A /* GenericDamageSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericDamageSpell.m; sourceTree = "<group>"; };
+		63027AB71A7869950068E68A /* cast_shadow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cast_shadow.wav; sourceTree = "<group>"; };
+		63027AB81A7869950068E68A /* hit_shadow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hit_shadow.wav; sourceTree = "<group>"; };
+		63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericPhysicalAttackSpell.h; sourceTree = "<group>"; };
+		63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericPhysicalAttackSpell.m; sourceTree = "<group>"; };
+		63027ABE1A786ED00068E68A /* physical_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = physical_hit.wav; sourceTree = "<group>"; };
+		63027AC01A786FE90068E68A /* precast_shadow_low.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = precast_shadow_low.wav; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -751,6 +762,8 @@
 				63027AB21A7849EA0068E68A /* GenericHealingSpell.m */,
 				63027AB41A7849F60068E68A /* GenericDamageSpell.h */,
 				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
+				63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */,
+				63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */,
 				634F490B1A748E1D008761C6 /* EventModifier.h */,
 				634F490C1A748E1D008761C6 /* EventModifier.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
@@ -854,6 +867,10 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63027AC01A786FE90068E68A /* precast_shadow_low.wav */,
+				63027ABE1A786ED00068E68A /* physical_hit.wav */,
+				63027AB71A7869950068E68A /* cast_shadow.wav */,
+				63027AB81A7869950068E68A /* hit_shadow.wav */,
 				63A37ECD1A75A1A80036C9D0 /* KILJAEDEN02.wav */,
 				63A37ECE1A75A1A80036C9D0 /* UR_Algalon_BHole01.wav */,
 				63A37EFD1A75B9340036C9D0 /* belltollnightelf.wav */,
@@ -1084,6 +1101,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63A37EF51A75ABE30036C9D0 /* 3.wav in Resources */,
+				63027AC11A786FE90068E68A /* precast_shadow_low.wav in Resources */,
 				6320746D1A70E93A00AA4416 /* cleanse_spirit.png in Resources */,
 				6320741A1A7095B800AA4416 /* power_word_shield.png in Resources */,
 				632074211A7095B800AA4416 /* renew.png in Resources */,
@@ -1109,6 +1127,7 @@
 				632074701A70E93A00AA4416 /* eviscerate.jpg in Resources */,
 				6320741E1A7095B800AA4416 /* purify.png in Resources */,
 				6320741B1A7095B800AA4416 /* prayer_of_healing.png in Resources */,
+				63027ABA1A7869950068E68A /* hit_shadow.wav in Resources */,
 				63A37EF91A75ABE30036C9D0 /* 7.wav in Resources */,
 				632074711A70E93A00AA4416 /* feral_druid.png in Resources */,
 				632074271A7095B800AA4416 /* weakened_soul.png in Resources */,
@@ -1128,6 +1147,7 @@
 				63A37F151A75CAB80036C9D0 /* precast_holy_high.wav in Resources */,
 				632074191A7095B800AA4416 /* power_word_fortitude.png in Resources */,
 				632073FE1A7095B800AA4416 /* flash_heal.png in Resources */,
+				63027AB91A7869950068E68A /* cast_shadow.wav in Resources */,
 				632074651A70E93A00AA4416 /* arms.png in Resources */,
 				632073F71A7095B800AA4416 /* devotion_aura.png in Resources */,
 				632074151A7095B800AA4416 /* paladin.png in Resources */,
@@ -1202,6 +1222,7 @@
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				632074131A7095B800AA4416 /* monk.png in Resources */,
 				63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */,
+				63027ABF1A786ED00068E68A /* physical_hit.wav in Resources */,
 				632074921A70E93A00AA4416 /* unholy.png in Resources */,
 				632074011A7095B800AA4416 /* halo.png in Resources */,
 				63A37F2F1A75EED20036C9D0 /* recuperate.jpg in Resources */,
@@ -1306,6 +1327,7 @@
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
 				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,
 				632074B91A71A25600AA4416 /* FlashHealSpell.m in Sources */,
+				63027ABD1A786BEA0068E68A /* GenericPhysicalAttackSpell.m in Sources */,
 				639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */,
 				63C5F4281A52464300B9AE46 /* CreateHealerViewController.m in Sources */,
 				632074C81A71D17600AA4416 /* Ability.m in Sources */,

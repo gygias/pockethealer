@@ -631,6 +631,7 @@ const NSString *WoWAPIClassKey = @"class";
     {
         case HDDISCPRIEST:
         case HDHOLYPRIEST:
+        case HDHOLYPALADIN:
         case HDRESTOSHAMAN:
         case HDRESTODRUID:
         case HDMISTWEAVERMONK:

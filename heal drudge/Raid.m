@@ -58,11 +58,11 @@
     Entity *gygias = [Entity new];
     gygias.isPlayer = YES;
     gygias.name = @"Gygias";
-    gygias.averageItemLevelEquipped = @630;
     gygias.hdClass = [HDClass discPriest];
     
+    NSNumber *gygiasIlvl = @670;
     [ItemLevelAndStatsConverter assignStatsToEntity:gygias
-                    basedOnAverageEquippedItemLevel:@630];
+                    basedOnAverageEquippedItemLevel:gygiasIlvl];
     
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;

@@ -8,12 +8,12 @@
 
 #import "SmiteSpell.h"
 
-#import "Player.h"
+#import "Entity.h"
 #import "EvangelismEffect.h"
 
 @implementation SmiteSpell
 
-- (id)initWithCaster:(Player *)caster
+- (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {

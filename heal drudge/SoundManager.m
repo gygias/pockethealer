@@ -176,6 +176,8 @@ static SoundManager *sSoundManager;
         case HolySchool:
             fileNameBase = @"precast_holy";
             break;
+        case ShadowSchool:
+            fileNameBase = @"precast_shadow";
         default:
             break;
             

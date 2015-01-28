@@ -15,7 +15,7 @@
     if ( self = [super init] )
     {
         self.name = @"Blade Dance";
-        self.image = [ImageFactory imageNamed:@"bladedance"];
+        self.image = [ImageFactory imageNamed:@"bladestorm"];
         self.tooltip = @"With blinding speed, Kargath rushes random targets every 2 sec. for 10 sec, doing 35,714 Physical damage to anyone within 7 yards.";
         //self.triggersGCD = YES;
         //self.cooldown = @15; // XXX

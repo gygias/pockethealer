@@ -15,6 +15,7 @@
 
 #import "GenericDamageSpell.h"
 #import "GenericHealingSpell.h"
+#import "GenericPhysicalAttackSpell.h"
 #import "SoundManager.h"
 
 @implementation Entity
@@ -281,7 +282,7 @@
     {
         self.automaticAbilitySource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, encounter.encounterQueue);
         NSNumber *gcd = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil];
-        NSNumber *gcdWithStagger = @( ( arc4random() % (int)gcd.doubleValue * 100000 ) / 100000 + gcd.doubleValue );
+        NSNumber *gcdWithStagger = @( (double)(( arc4random() % (int)(gcd.doubleValue * 100000) )) / 100000 + gcd.doubleValue );
         dispatch_source_set_timer(self.automaticAbilitySource, DISPATCH_TIME_NOW, gcdWithStagger.doubleValue * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(self.automaticAbilitySource, ^{
             
@@ -330,7 +331,8 @@
 {
     NSInteger randomEnemy = arc4random() % encounter.enemies.count;
     Entity *enemy = encounter.enemies[randomEnemy];
-    Spell *spell = [[GenericDamageSpell alloc] initWithCaster:self];
+    Class spellClass = self.hdClass.isCasterDPS ? [GenericDamageSpell class] : [GenericPhysicalAttackSpell class];
+    Spell *spell = [[spellClass alloc] initWithCaster:self];
     self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
@@ -417,10 +419,8 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ [%@,%@]",self.name,self.currentHealth,self.currentResources];
+    return [NSString stringWithFormat:@"%@ [%@,%@] (%@)",self.name,self.currentHealth,self.currentResources,self.hdClass];
 }
-
-
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter
 {

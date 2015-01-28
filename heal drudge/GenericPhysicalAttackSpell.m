@@ -1,42 +1,38 @@
 //
-//  GenericDamageSpell.m
+//  GenericPhysicalAttackSpell.m
 //  heal drudge
 //
 //  Created by david on 1/27/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "GenericDamageSpell.h"
+#import "GenericPhysicalAttackSpell.h"
 
-#import "Entity.h"
-
-@implementation GenericDamageSpell
+@implementation GenericPhysicalAttackSpell
 
 - (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Generic Damaging Spell";
+        self.name = @"Generic Physical Attack";
         //self.image = [ImageFactory imageNamed:@"smite"];
-        self.tooltip = @"Generic damaging spell.";
+        self.tooltip = @"Generic physical attack.";
         self.triggersGCD = YES;
         self.targeted = YES;
-        self.cooldown = @0;
+        self.cooldown = @5;
         self.castableRange = @30;
-        self.castTime = @1.5;
+        self.castTime = @0;
         self.spellType = DetrimentalSpell;
-        self.hitSoundName = @"hit_shadow";
-        self.castSoundName = @"cast_shadow";
+        self.hitSoundName = @"physical_hit";
+        //self.castSoundName = @"cast_shadow";
         
         self.manaCost = @( 0.015 * caster.baseMana.floatValue );
         
         // hit
-        if ( caster.hdClass.isCasterDPS )
-            self.damage = @( 0.92448 * caster.spellPower.floatValue );
-        else if ( caster.hdClass.isMeleeDPS || caster.hdClass.isTank )
+        if ( caster.hdClass.isMeleeDPS || caster.hdClass.isTank )
             self.damage = @( 0.92448 * caster.attackPower.floatValue );
         
-        self.school = ShadowSchool;
+        self.school = PhysicalSchool;
     }
     return self;
 }

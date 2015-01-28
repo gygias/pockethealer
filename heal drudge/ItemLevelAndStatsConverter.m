@@ -38,6 +38,8 @@
     
     // chloesonderz 3526(636)   tako 4021(651)    iliss 4448(668)
     //              5.544       6.177             6.659
+    entity.averageItemLevelEquipped = ilvl;
+    
     NSInteger ilvlInt = ilvl.integerValue;
     
     float staminaScalar = 5.544; // 630
