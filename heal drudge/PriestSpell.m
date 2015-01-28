@@ -34,7 +34,7 @@
                 da = [DivineAegisEffect new];
                 [target addStatusEffect:da source:source];
             } else
-                NSLog(@"%@'s existing %@ is going from %@ to %@! ",target,da.absorb,da.absorb,effectiveAbsorb);
+                NSLog(@"%@'s existing %@ is going from %@ to %@!",target,da.absorb,da.absorb,effectiveAbsorb);
             da.absorb = effectiveAbsorb;
         }
     }

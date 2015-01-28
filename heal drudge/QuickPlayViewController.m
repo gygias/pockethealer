@@ -126,7 +126,7 @@
             doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
             if ( doCast )
             {
-                NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target inEncounter:encounter];
+                NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target];
                 self.castBarView.castingEntity = encounter.player;
                 self.castBarView.effectiveCastTime = effectiveCastTime;
             }

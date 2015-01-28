@@ -155,6 +155,16 @@
             ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
         });
     }
+    else if ( ability.castTime.doubleValue > 0 )
+    {
+        self.castingSpell = ability;
+        self.castingSpell.target = target;
+        NSDate *thisCastStartDate = [NSDate date];
+        self.castingSpell.lastCastStartDate = thisCastStartDate;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.castTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [encounter handleSpell:ability source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+        });
+    }
     else
         [encounter handleSpell:ability source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
 }

@@ -11,6 +11,7 @@
 
 @class Spell;
 @class Entity;
+@class Encounter;
 
 typedef NS_ENUM(NSInteger, EffectSchool) {
     StandardEffect      = 0,
@@ -55,5 +56,8 @@ typedef void(^EffectEventHandler)(BOOL);
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target message:(NSString **)message;
 - (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+
+- (void)handleConsumptionWithOwner:(Entity *)owner;
+- (void)handleRemovalWithOwner:(Entity *)owner;
 
 @end

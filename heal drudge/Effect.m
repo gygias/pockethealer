@@ -8,6 +8,8 @@
 
 #import "Effect.h"
 
+#import "Encounter.h"
+
 @implementation Effect
 
 - (id)init
@@ -42,6 +44,16 @@
     if ( handler )
         handler(NO);
     return NO;
+}
+
+- (void)handleConsumptionWithOwner:(Entity *)owner
+{
+    
+}
+
+- (void)handleRemovalWithOwner:(Entity *)owner
+{
+    
 }
 
 - (void)addStack

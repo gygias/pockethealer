@@ -21,7 +21,7 @@
         self.duration = 6;
         self.image = [ImageFactory imageNamed:@"borrowed_time"];
         self.effectType = BeneficialEffect;
-        //self.drawsInFrame = YES; i can't remember
+        self.drawsInFrame = YES;
     }
     
     return self;
@@ -45,7 +45,7 @@
     EventModifier *mod = [EventModifier new];
     mod.hasteIncreasePercentage = @0.4;
     [modifiers addObject:mod];
-    return YES;
+    return NO;
     
     // need to handle haste increase / instant cast for cast-time spells,
     // AND a way for modifier to consume this effect IFF the cast actually goes off

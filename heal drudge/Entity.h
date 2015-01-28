@@ -22,6 +22,7 @@
 @interface Entity : ModelBase
 
 // combat state
+@property Encounter *encounter;
 @property Entity *target;
 @property HDClass *hdClass;
 @property NSNumber *currentHealth;
@@ -48,7 +49,7 @@
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
 
-- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
+- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target;
 
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
 - (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
@@ -61,8 +62,9 @@
 // now takes source as a reminder that it's a required property in this
 // ios style of +new, set all the properties..
 - (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source;
-- (void)removeStatusEffect:(Effect *)effect;
-- (void)removeStatusEffectNamed:(NSString *)statusEffectName;
+- (void)consumeStatusEffect:(Effect *)effect absolute:(BOOL)absolute;
+- (void)consumeStatusEffect:(Effect *)effect;
+- (void)consumeStatusEffectNamed:(NSString *)statusEffectName;
 
 - (void)prepareForEncounter:(Encounter *)encounter;
 - (void)beginEncounter:(Encounter *)encounter;

@@ -16,6 +16,23 @@
 
 @synthesize encounterQueue = _encounterQueue;
 
+static Encounter *sYouAreATerribleProgrammer = nil;
+
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        sYouAreATerribleProgrammer = self;
+    }
+    
+    return self;
+}
+
++ (Encounter *)currentEncounter
+{
+    return sYouAreATerribleProgrammer;
+}
+
 - (void)start
 {    
     [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -143,17 +160,22 @@
             [allTargets addObject:target];
         
         [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
-            if ( spell.spellType == BeneficialOrDeterimentalSpell )
+            if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
             {
-                if ( target.isPlayer )
+                if ( spell.spellType == BeneficialOrDeterimentalSpell )
+                {
+                    if ( target.isPlayer )
+                        [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+                    else
+                        [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];                    
+                }
+                else if ( spell.spellType == DetrimentalSpell )
+                    [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+                if ( spell.spellType == BeneficialSpell )
                     [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
-                else
-                    [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];                    
+                
+                [spell handleHitWithSource:source target:aTarget modifiers:modifiers];
             }
-            else if ( spell.spellType == DetrimentalSpell )
-                [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
-            if ( spell.spellType == BeneficialSpell )
-                [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
         }];
         
         if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
@@ -170,8 +192,6 @@
                     NSLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
             });
         }
-        
-        [spell handleHitWithSource:source target:target modifiers:modifiers];
         
         if ( target.currentHealth.integerValue <= 0 )
         {

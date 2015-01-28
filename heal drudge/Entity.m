@@ -138,7 +138,7 @@
             if ( consumesEffect )
             {
                 dispatch_async(dispatch_get_current_queue(), ^{
-                    [self removeStatusEffect:obj];
+                    [self consumeStatusEffect:obj];
                 });
             }
         }] )
@@ -161,7 +161,7 @@
             if ( consumesEffect )
             {
                 dispatch_async(dispatch_get_current_queue(), ^{
-                    [self removeStatusEffect:obj];
+                    [self consumeStatusEffect:obj];
                 });
             }
         }] )
@@ -225,10 +225,10 @@
         }
     }];
     
+    #warning TODO, MAJOR TODO, this access is not safe
     [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
         Effect *effect = self.statusEffects[idx];
-        NSLog(@"removing %@",effect);
-        [self removeStatusEffect:effect];
+        [self consumeStatusEffect:effect];
     }];
     
     NSInteger newHealth = self.currentHealth.doubleValue - netDamage.doubleValue;
@@ -278,13 +278,30 @@
     });
 }
 
-- (void)removeStatusEffect:(Effect *)effect
+- (void)consumeStatusEffect:(Effect *)effect absolute:(BOOL)absolute
 {
+    if ( ! absolute )
+    {
+        if ( effect.currentStacks.integerValue > 1 )
+        {
+            NSLog(@"consumed a stack of %@",effect);
+            effect.currentStacks = @( effect.currentStacks.integerValue - 1 );
+            [effect handleConsumptionWithOwner:self];
+            return;
+        }
+    }
+    
+    [effect handleRemovalWithOwner:self];
     [(NSMutableArray *)_statusEffects removeObject:effect];
     NSLog(@"removed %@'s %@",self,effect);
 }
 
-- (void)removeStatusEffectNamed:(NSString *)statusEffectName
+- (void)consumeStatusEffect:(Effect *)effect
+{
+    [self consumeStatusEffect:effect absolute:NO];
+}
+
+- (void)consumeStatusEffectNamed:(NSString *)statusEffectName
 {
     __block id object = nil;
     [_statusEffects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -296,7 +313,7 @@
     }];
     
     if ( object )
-        [self removeStatusEffect:object];
+        [self consumeStatusEffect:object];
 }
 
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell
@@ -308,7 +325,7 @@
         
         Effect *aStatusEffect = nil;
         while ( ( aStatusEffect = [self.statusEffects lastObject] ) )
-            [self removeStatusEffect:aStatusEffect];
+            [self consumeStatusEffect:aStatusEffect];
         
         self.castingSpell = nil;
         if ( self.automaticAbilitySource )
@@ -354,6 +371,7 @@
 {
     self.currentHealth = self.health;
     self.currentResources = self.power;
+    self.encounter = encounter;
 }
 
 - (void)beginEncounter:(Encounter *)encounter
@@ -368,14 +386,14 @@
         dispatch_source_set_timer(self.automaticAbilitySource, DISPATCH_TIME_NOW, gcdWithStagger.doubleValue * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(self.automaticAbilitySource, ^{
             
-            [self _doAutomaticStuffWithEncounter:encounter];
+            [self _doAutomaticStuff];
             
         });
         dispatch_resume(self.automaticAbilitySource);
     }
 }
 
-- (void)_doAutomaticStuffWithEncounter:(Encounter *)encounter
+- (void)_doAutomaticStuff
 {
     //if ( ! self.lastAutomaticAbilityDate ||
     //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
@@ -383,50 +401,50 @@
     {
         if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
         {
-            [self _doAutomaticTankingWithEncounter:encounter];
+            [self _doAutomaticTanking];
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
         {
-            [self _doAutomaticDPSWithEncounter:encounter];
+            [self _doAutomaticDPS];
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
         {
-            [self _doAutomaticHealingWithEncounter:encounter];
+            [self _doAutomaticHealing];
         }
         
         self.lastAutomaticAbilityDate = [NSDate date];
     }
 }
 
-- (void)_doAutomaticTankingWithEncounter:(Encounter *)encounter
+- (void)_doAutomaticTanking
 {
-    NSInteger randomEnemy = arc4random() % encounter.enemies.count;
-    Entity *enemy = encounter.enemies[randomEnemy];
+    NSInteger randomEnemy = arc4random() % self.encounter.enemies.count;
+    Entity *enemy = self.encounter.enemies[randomEnemy];
     Spell *spell = [[GenericPhysicalAttackSpell alloc] initWithCaster:self];
     self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
-    [self castSpell:spell withTarget:enemy inEncounter:encounter];
+    [self castSpell:spell withTarget:enemy];
 }
 
-- (void)_doAutomaticDPSWithEncounter:(Encounter *)encounter
+- (void)_doAutomaticDPS
 {
-    NSInteger randomEnemy = arc4random() % encounter.enemies.count;
-    Entity *enemy = encounter.enemies[randomEnemy];
+    NSInteger randomEnemy = arc4random() % self.encounter.enemies.count;
+    Entity *enemy = self.encounter.enemies[randomEnemy];
     Class spellClass = self.hdClass.isCasterDPS ? [GenericDamageSpell class] : [GenericPhysicalAttackSpell class];
     Spell *spell = [[spellClass alloc] initWithCaster:self];
     self.target = enemy;
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
-    [self castSpell:spell withTarget:enemy inEncounter:encounter];
+    [self castSpell:spell withTarget:enemy];
 }
 
-- (void)_doAutomaticHealingWithEncounter:(Encounter *)encounter
+- (void)_doAutomaticHealing
 {
     if ( self.castingSpell )
         return;
     
-    [encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+    [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
         if ( player.currentHealth.doubleValue < player.health.doubleValue )
         {
             //NSNumber *averageHealing = [ItemLevelAndStatsConverter automaticHealValueWithEntity:self];
@@ -434,7 +452,7 @@
             NSLog(@"%@ is healing %@ for %@",self,player,spell.healing);
             self.target = player;
             //[encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
-            [self castSpell:spell withTarget:player inEncounter:encounter];
+            [self castSpell:spell withTarget:player];
             //player.currentHealth = ( player.currentHealth.doubleValue + averageHealing.doubleValue > player.health.doubleValue ) ?
             //                        ( player.health ) : @( player.currentHealth.doubleValue + averageHealing.doubleValue );
         }
@@ -511,7 +529,7 @@
     return [NSString stringWithFormat:@"%@ [%@,%@] (%@)",self.name,self.currentHealth,self.currentResources,self.hdClass];
 }
 
-- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter
+- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target
 {
     __block NSNumber *effectiveCastTime = nil;
     
@@ -586,7 +604,7 @@
             dispatch_source_set_event_handler(timer, ^{
                 NSLog(@"%@ is channel-ticking",spell);
                 
-                [encounter handleSpell:spell source:self target:target periodicTick:YES periodicTickSource:timer isFirstTick:firstTick];
+                [self.encounter handleSpell:spell source:self target:target periodicTick:YES periodicTickSource:timer isFirstTick:firstTick];
                 firstTick = NO;
                 if ( --ticksRemaining <= 0 )
                 {
@@ -606,7 +624,7 @@
                     NSLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
                     return;
                 }
-                [encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+                [self.encounter handleSpell:self.castingSpell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
                 self.castingSpell = nil;
                 NSLog(@"%@ finished casting %@",self,spell);
             });
@@ -615,7 +633,7 @@
     else
     {
         NSLog(@"%@ cast %@ (instant)",self,spell);
-        [encounter handleSpell:spell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+        [self.encounter handleSpell:spell source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
     }
     
     return effectiveCastTime;

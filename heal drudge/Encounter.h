@@ -22,6 +22,8 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
     dispatch_source_t _encounterTimer;
 }
 
++ (Encounter *)currentEncounter; // XXXXXXXXXXXXX done lazily to remove five bajillion instances of encounter being passed up and down the object graph to handle events
+
 @property Entity *player;
 @property Raid *raid;
 @property NSArray *enemies;

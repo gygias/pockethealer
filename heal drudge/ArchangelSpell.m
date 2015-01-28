@@ -69,7 +69,7 @@
     [effect addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
     
     [source addStatusEffect:effect source:source];
-    [source removeStatusEffect:evangelism];
+    [source consumeStatusEffect:evangelism absolute:YES];
 }
 
 - (NSArray *)hdClasses

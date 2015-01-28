@@ -32,6 +32,7 @@
         self.canTargetTanks = NO;
         
         self.abilityLevel = NotableAbility;
+        self.spellType = DetrimentalSpell;
     }
     return self;
 }

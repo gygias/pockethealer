@@ -42,10 +42,4 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
-{
-    NSLog(@"i should heal the party too");
-    
-}
-
 @end

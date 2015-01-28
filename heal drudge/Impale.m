@@ -28,6 +28,7 @@
         self.canTargetTanks = YES;
         
         self.abilityLevel = DangerousAbility;
+        self.spellType = DetrimentalSpell;
     }
     return self;
 }
