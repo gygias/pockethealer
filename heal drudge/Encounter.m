@@ -46,7 +46,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     NSInteger delay = 1;
     [SoundManager playCountdownWithStartIndex:@(delay)];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay + 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
         
