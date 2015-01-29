@@ -207,7 +207,7 @@
         case HDDEATHKNIGHT:
             return @( RUNIC_POWER_PER_SECOND * timeInterval );
         case HDPALADIN: // prot or ret per above
-            return @( CASTER_MANA_PER_SECOND * timeInterval );
+            return @( CASTER_MANA_PER_SECOND * timeInterval / 10 );
         case HDDRUID: // feral per above
         case HDMONK: // brewmaster or windwalker per above
         case HDROGUE:

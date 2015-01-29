@@ -95,6 +95,7 @@ const NSString *SpellLevelHigh = @"high";
              @"AvengersShieldSpell",
              @"LayOnHandsSpell",
              @"JudgementSpell",
+             @"ArdentDefenderSpell",
              
              @"HealingTideTotemSpell"
              ];

@@ -198,37 +198,60 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         if ( target.currentHealth.integerValue <= 0 )
         {
-            if ( periodicTickSource )
-                dispatch_source_cancel(periodicTickSource);
-            
-            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromSpell:spell];
-            }];
-            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:target fromSpell:spell];
-            }];
-            
-            // source has to choose a new target
-            if ( source.isEnemy && ! [(Enemy *)source targetNextThreatWithEncounter:self] )
-            {
-                NSLog(@"the encounter is over because there are no targets for %@",source);
-                [self endEncounter];
-            }
-            else // TODO is there some ability by which players could kill themselves as the last one alive?
-            {
-                __block BOOL someEnemyIsAlive = NO;
-                [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
-                    if ( ! obj.isDead )
-                    {
-                        someEnemyIsAlive = YES;
-                        *stop = YES;
-                    }
-                }];
-                if ( ! someEnemyIsAlive )
+            __block EventModifier *cheatDeathModifier = nil;
+            [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
+                if ( obj.cheatDeathAndApplyHealing.doubleValue > 0 )
                 {
-                    NSLog(@"the encounter is over because all enemies are dead");
-                    [self endEncounter];
+                    cheatDeathModifier = obj;
+                    *stop = YES;
                     return;
+                }
+            }];
+            
+            if ( cheatDeathModifier )
+            {
+                NSLog(@"CHEATING DEATH and healing %@ for %@",target,cheatDeathModifier.cheatDeathAndApplyHealing);
+                
+                NSInteger newHealth = target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
+                if ( newHealth > target.health.integerValue )
+                    newHealth = target.health.integerValue;
+                
+                target.currentHealth = @(newHealth);
+            }
+            else
+            {
+                if ( periodicTickSource )
+                    dispatch_source_cancel(periodicTickSource);
+                
+                [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                    [obj handleDeathOfEntity:target fromSpell:spell];
+                }];
+                [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                    [obj handleDeathOfEntity:target fromSpell:spell];
+                }];
+                
+                // source has to choose a new target
+                if ( source.isEnemy && ! [(Enemy *)source targetNextThreatWithEncounter:self] )
+                {
+                    NSLog(@"the encounter is over because there are no targets for %@",source);
+                    [self endEncounter];
+                }
+                else // TODO is there some ability by which players could kill themselves as the last one alive?
+                {
+                    __block BOOL someEnemyIsAlive = NO;
+                    [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
+                        if ( ! obj.isDead )
+                        {
+                            someEnemyIsAlive = YES;
+                            *stop = YES;
+                        }
+                    }];
+                    if ( ! someEnemyIsAlive )
+                    {
+                        NSLog(@"the encounter is over because all enemies are dead");
+                        [self endEncounter];
+                        return;
+                    }
                 }
             }
         }
