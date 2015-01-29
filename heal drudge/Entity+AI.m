@@ -12,12 +12,12 @@
 
 - (AISpellPriority)currentSpellPriorities
 {
-    AISpellPriority priorities = FillerPriotity | CastOnCooldownPriority;
+    AISpellPriority priorities = FillerPriotity;
     double healthDelta = ( self.currentHealth.doubleValue - self.lastHealth.doubleValue ) / self.health.doubleValue;
-    if ( healthDelta > 0.4 )
+    if ( healthDelta > 0.33 )
     {
         NSLog(@"%@: I've taken a lot of damage since my last update, I'm in fear of dying",self);
-        priorities |= CastWhenInFearOfDyingPriority;
+        priorities = CastWhenInFearOfDyingPriority;
     }
     
     // if ( someWayOfKnowing.heroIncomingOrInProgress )

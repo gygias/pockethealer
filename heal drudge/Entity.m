@@ -371,11 +371,6 @@
             [self consumeStatusEffect:aStatusEffect];
         
         self.castingSpell = nil;
-        if ( self.automaticAbilitySource )
-        {
-            dispatch_source_cancel(self.automaticAbilitySource);
-            self.automaticAbilitySource = NULL;
-        }
     }
     
     if ( dyingEntity.isPlayer )
@@ -424,16 +419,11 @@
     
     if ( ! self.isPlayingPlayer && self.isPlayer )
     {
-        self.automaticAbilitySource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, encounter.encounterQueue);
         NSNumber *gcd = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil];
         NSNumber *gcdWithStagger = @( (double)(( arc4random() % (int)(gcd.doubleValue * 100000) )) / 100000 + gcd.doubleValue );
-        dispatch_source_set_timer(self.automaticAbilitySource, DISPATCH_TIME_NOW, gcdWithStagger.doubleValue * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
-        dispatch_source_set_event_handler(self.automaticAbilitySource, ^{
-            
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(gcdWithStagger.doubleValue * NSEC_PER_SEC)), encounter.encounterQueue, ^{
             [self _doAutomaticStuff];
-            
         });
-        dispatch_resume(self.automaticAbilitySource);
     }
     
     self.lastResourceGenerationDate = [NSDate date];
@@ -453,52 +443,64 @@
 
 - (void)_doAutomaticStuff
 {
-    BOOL classSwitchHandled = NO;
-    switch( self.hdClass.specID )
+    BOOL gcdTriggered = NO;
+    do
     {
-        case HDPROTPALADIN:
-            [self doProtPaladinAI];
-            classSwitchHandled = YES;
-            break;
-        default:
-            break;
-    }
+        if ( self.isDead )
+            return;
+        
+        BOOL classSwitchHandled = NO;
+        switch( self.hdClass.specID )
+        {
+            case HDPROTPALADIN:
+                gcdTriggered = [self doProtPaladinAI];
+                classSwitchHandled = YES;
+                break;
+            default:
+                break;
+        }
+        
+        //if ( ! self.lastAutomaticAbilityDate ||
+        //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
+        //NSLog(@"%@ is doing automated stuff",self);
+        if ( ! classSwitchHandled )
+        {
+            if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
+            {
+                gcdTriggered = [self _doAutomaticTanking];
+            }
+            else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
+            {
+                gcdTriggered = [self _doAutomaticDPS];
+            }
+            else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
+            {
+                gcdTriggered = [self _doAutomaticHealing];
+            }
+        }
+    } while ( ! gcdTriggered );
     
-    //if ( ! self.lastAutomaticAbilityDate ||
-    //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
-    //NSLog(@"%@ is doing automated stuff",self);
-    if ( ! classSwitchHandled )
-    {
-        if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
-        {
-            [self _doAutomaticTanking];
-        }
-        else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
-        {
-            [self _doAutomaticDPS];
-        }
-        else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
-        {
-            [self _doAutomaticHealing];
-        }
-    }
-    
-    self.lastAutomaticAbilityDate = [NSDate date];
     self.lastHealth = self.currentHealth;
+    
+    NSNumber *gcd = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(gcd.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+        [self _doAutomaticStuff];
+    });
 }
 
-- (void)_doAutomaticTanking
+- (BOOL)_doAutomaticTanking
 {
-    [self _doAutomaticDPS];
+    return [self _doAutomaticDPS];
 }
 
-- (void)_doAutomaticDPS
+- (BOOL)_doAutomaticDPS
 {
     NSInteger randomEnemy = arc4random() % self.encounter.enemies.count;
     Entity *enemy = self.encounter.enemies[randomEnemy];
     Class spellClass = self.hdClass.isCasterDPS ? [GenericDamageSpell class] : [GenericPhysicalAttackSpell class];
     Spell *spell = [[spellClass alloc] initWithCaster:self];
     self.target = enemy;
+    NSLog(@"%@ is auto dpsing %@ for %@",self,enemy,spell.damage);
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
     // TODO, should be enumerating possible spells based on priorities and finding the best one
@@ -507,21 +509,24 @@
     if ( ! [self validateSpell:spell asSource:YES otherEntity:enemy message:&message invalidDueToCooldown:NULL] )
     {
         NSLog(@"%@ automatic spell cast failed: %@",self,message);
-        return;
+        return YES;
     }
     else if ( ! [enemy validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
     {
         NSLog(@"%@ automatic spell cast failed: %@",self,message);
-        return;
+        return YES;
     }
     [self castSpell:spell withTarget:enemy];
+    
+    return spell.triggersGCD;
 }
 
-- (void)_doAutomaticHealing
+- (BOOL)_doAutomaticHealing
 {
     if ( self.castingSpell )
-        return;
+        return YES;
     
+    __block Spell *spellToCast = nil;
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
         if ( player.currentHealth.doubleValue < player.health.doubleValue )
         {
@@ -543,11 +548,17 @@
                 return;
             }
             
-            [self castSpell:spell withTarget:player];
+            spellToCast = spell;
+            *stop = YES;
             //player.currentHealth = ( player.currentHealth.doubleValue + averageHealing.doubleValue > player.health.doubleValue ) ?
             //                        ( player.health ) : @( player.currentHealth.doubleValue + averageHealing.doubleValue );
         }
     }];
+    
+    if ( spellToCast )
+        [self castSpell:spellToCast withTarget:self.target];
+    
+    return YES;
 }
 
 - (void)updateEncounter:(Encounter *)encounter
@@ -561,12 +572,6 @@
 {
     //NSLog(@"i, %@, should end encounter",self);
     self.stopped = YES;
-    if ( self.automaticAbilitySource )
-    {
-        dispatch_source_cancel( self.automaticAbilitySource );
-        self.automaticAbilitySource = NULL;
-    }
-    
     self.castingSpell = nil;
 }
 

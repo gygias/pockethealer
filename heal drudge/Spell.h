@@ -35,7 +35,6 @@ typedef NS_ENUM(NSInteger, SpellType) {
 typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
     FillerPriotity,
-    CastOnCooldownPriority,
     CastOnIdealAuxResourceAvailablePriority,
     CastWhenDamageDoneIncreasedPriority, // during hero
     CastBeforeLargeHitPriority,

@@ -13,7 +13,7 @@
 
 @implementation Entity (ProtPaladin)
 
-- (void)doProtPaladinAI
+- (BOOL)doProtPaladinAI
 {
     // TODO this is inefficient, why can't Entities carry an array of spells
     AISpellPriority currentPriorities = [self currentSpellPriorities];
@@ -42,7 +42,7 @@
                 return;
             }
             
-            if ( ! ( currentPriorities | CastWhenInFearOfOtherPlayerDyingPriority )
+            if ( ! ( currentPriorities & CastWhenInFearOfOtherPlayerDyingPriority )
                 && spell.auxiliaryResourceIdealCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
                 NSLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
@@ -50,7 +50,7 @@
             }
         }
         
-        if ( spell.aiSpellPriority | currentPriorities )
+        if ( spell.aiSpellPriority & currentPriorities )
         {
             spellToCast = spell;
             *stop = YES;
@@ -66,9 +66,14 @@
         target = [self.encounter.enemies randomObject];
     
     if ( spellToCast )
+    {
         [self castSpell:spellToCast withTarget:target];
+        NSLog(@"%@ will%@ trigger gcd",spellToCast,spellToCast.triggersGCD?@"":@" NOT");
+    }
     else
         NSLog(@"%@ couldn't figure out anything to do on this update",self);
+    
+    return ! spellToCast || spellToCast.triggersGCD;
 }
 
 @end

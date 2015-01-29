@@ -22,6 +22,7 @@
     [self.alertTexts enumerateObjectsUsingBlock:^(AlertText *obj, NSUInteger idx, BOOL *stop) {
         
         UIColor *drawColor = [UIColor redColor];
+#warning TODO i've crashed here sending -[CALayer startDate] to obj.startDate
         drawColor = [drawColor colorWithAlphaComponent:( ( 1 - [[NSDate date] timeIntervalSinceDate:obj.startDate] / obj.duration ) )];
         NSDictionary *attributes = @{ NSForegroundColorAttributeName : drawColor };
         CGSize alertTextSize = [obj.text sizeWithAttributes:attributes];

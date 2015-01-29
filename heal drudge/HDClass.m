@@ -809,4 +809,20 @@ const NSString *WoWAPIClassKey = @"class";
 + (HDClass *)frostMage { return [HDClass classWithID:HDMAGE spec:HDFROSTMAGE]; }
 + (HDClass *)arcaneMage { return [HDClass classWithID:HDMAGE spec:HDARCANEMAGE]; }
 
++ (NSArray *)allClasses
+{
+    return @[ [self discPriest], [self holyPriest], [self shadowPriest],
+              [self holyPaladin], [self protPaladin], [self retPaladin],
+              [self restoShaman], [self eleShaman], [self enhanceShaman],
+              [self restoDruid], [self feralDruid], [self balanceDruid],
+              [self mistweaverMonk], [self windwalkerMonk], [self brewmasterMonk],
+              [self combatRogue], [self subtletyRogue], [self assassinationRogue],
+              [self destroWarlock], [self demoWarlock], [self afflictionWarlock],
+              [self protWarrior], [self armsWarrior], [self furyWarrior],
+              [self bloodDK], [self frostDK], [self unholyDK],
+              [self bmHunter], [self survivalHunter], [self marksHunter],
+              [self fireMage], [self frostMage], [self arcaneMage]
+              ];
+}
+
 @end

@@ -46,8 +46,8 @@
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;
 
-@property dispatch_source_t automaticAbilitySource;
-@property NSDate *lastAutomaticAbilityDate;
+//@property dispatch_source_t automaticAbilitySource;
+//@property NSDate *lastAutomaticAbilityDate;
 
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption

@@ -79,7 +79,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = CastOnCooldownPriority | CastBeforeLargeHitPriority;
+    AISpellPriority defaultPriority = FillerPriotity | CastBeforeLargeHitPriority;
     return defaultPriority;
 }
 

@@ -41,4 +41,9 @@
     return self;
 }
 
+- (NSArray *)hdClasses
+{
+    return [HDClass allClasses];
+}
+
 @end
