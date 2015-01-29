@@ -46,7 +46,8 @@
             aPlayer.hdClass = [HDClass randomDPSClass];
         
         [ItemLevelAndStatsConverter assignStatsToEntity:aPlayer
-                           basedOnAverageEquippedItemLevel:@630];
+                        basedOnAverageEquippedItemLevel:@630];
+        [aPlayer initializeSpells];
         
         NSLog(@"added %@",aPlayer);
         
@@ -81,6 +82,7 @@
     NSNumber *gygiasIlvl = @670;
     [ItemLevelAndStatsConverter assignStatsToEntity:gygias
                     basedOnAverageEquippedItemLevel:gygiasIlvl];
+    [gygias initializeSpells];
     
     Entity *slyeri = [Entity new];
     slyeri.isPlayer = YES;
@@ -90,6 +92,7 @@
     NSNumber *slyIlvl = @670;
     [ItemLevelAndStatsConverter assignStatsToEntity:slyeri
                     basedOnAverageEquippedItemLevel:slyIlvl];
+    [slyeri initializeSpells];
     
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;

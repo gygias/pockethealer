@@ -20,21 +20,34 @@
     
     __block Spell *spellToCast = nil;
     [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+        NSLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
+        
         if ( spell.isOnCooldown )
         {
+            NSLog(@"  %@ is on cooldown",spell);
             return;
         }
         
         if ( spell.manaCost.doubleValue > self.currentResources.doubleValue )
         {
-            NSLog(@"%@ doesn't have enough mana for %@",self,spell);
+            NSLog(@"  %@ doesn't have enough mana for %@",self,spell);
             return;
         }
         
-        if ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
+        if ( spell.auxiliaryResourceCost )
         {
-            NSLog(@"%@ doesn't have enough aux resource for %@",self,spell);
-            return;
+            if ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
+            {
+                NSLog(@"  %@ doesn't have enough aux resource for %@",self,spell);
+                return;
+            }
+            
+            if ( ! ( currentPriorities | CastWhenInFearOfOtherPlayerDyingPriority )
+                && spell.auxiliaryResourceIdealCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
+            {
+                NSLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
+                return;
+            }
         }
         
         if ( spell.aiSpellPriority | currentPriorities )
@@ -43,6 +56,8 @@
             *stop = YES;
             return;
         }
+        else
+            NSLog(@"  %@ is not currently a priority",spell);
     }];
     
     // TODO

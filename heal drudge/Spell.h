@@ -36,8 +36,10 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
     FillerPriotity,
     CastOnCooldownPriority,
+    CastOnIdealAuxResourceAvailablePriority,
     CastWhenDamageDoneIncreasedPriority, // during hero
     CastBeforeLargeHitPriority,
+    CastWhenInFearOfOtherPlayerDyingPriority,
     CastWhenInFearOfDyingPriority
 };
 
@@ -113,6 +115,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSNumber *castTime;
 @property NSNumber *manaCost;
 @property NSNumber *auxiliaryResourceCost;
+@property NSNumber *auxiliaryResourceIdealCost;
 @property NSNumber *damage;
 @property SpellSchool school;
 @property NSString *level;

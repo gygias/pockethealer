@@ -25,6 +25,7 @@
 @property Encounter *encounter;
 @property Entity *target;
 @property (nonatomic) HDClass *hdClass;
+- (void)initializeSpells;
 @property NSNumber *currentHealth;
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;

@@ -41,6 +41,10 @@
 - (void)setHdClass:(HDClass *)hdClass
 {
     _hdClass = hdClass;
+}
+
+- (void)initializeSpells
+{
     self.spells = [Spell castableSpellsForCharacter:self];
 }
 

@@ -21,6 +21,11 @@ const NSString *SpellLevelHigh = @"high";
 {
     if ( self = [super init] )
     {
+        if ( [[self hdClasses] containsObject:caster.hdClass] )
+            NSLog(@"initializing %@'s %@",caster,self);
+        else
+            return nil;
+        
         self.caster = caster;
         self.level = @"low";
         self.hitSoundName = @"heal_hit";
@@ -59,15 +64,7 @@ const NSString *SpellLevelHigh = @"high";
         Class spellClass = NSClassFromString(spellName);
         Spell *spell = [[spellClass alloc] initWithCaster:player];
         if ( spell )
-        {
-            if ( [[spell hdClasses] containsObject:player.hdClass] )
-            {
-                NSLog(@"%@s can cast %@",player.hdClass,spell);
-                [castableSpells addObject:spell];
-            }
-        }
-        else
-            NSLog(@"failed to initialize %@",spellName);
+            [castableSpells addObject:spell];
     }
     
     return castableSpells;
@@ -94,6 +91,7 @@ const NSString *SpellLevelHigh = @"high";
              @"CrusaderStrikeSpell",
              @"GuardianOfAncientKingsSpell",
              @"ShieldOfTheRighteousSpell",
+             @"WordOfGlorySpell",
              
              @"HealingTideTotemSpell"
              ];

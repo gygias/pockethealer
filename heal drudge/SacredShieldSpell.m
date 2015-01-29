@@ -28,7 +28,6 @@
         
         self.castTime = @0;
         self.manaCost = @0;
-        self.auxiliaryResourceCost = @3;
         self.damage = @0;
         self.healing = @0;
         self.absorb = @0;
