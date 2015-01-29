@@ -8,6 +8,7 @@
 
 #import "Encounter.h"
 
+#import "Event.h"
 #import "EventModifier.h"
 
 #import "SoundManager.h"//XXX
@@ -296,16 +297,25 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 
 - (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
 {
-    __block NSNumber *rawDamage = periodic ? spell.periodicDamage : spell.damage;
+    Event *damageEvent = [Event new];
+    damageEvent.spell = spell;
+    damageEvent.netDamage = periodic ? spell.periodicDamage : spell.damage;
     
     // deliberately applying all damage increases before decreases, TODO no idea if this is right
     __block EventModifier *greatestDamageTakenDecreaseModifier = nil;
     [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
         NSLog(@"considering %@ for damage of %@",obj,spell);
         if ( obj.damageIncrease )
-            rawDamage = @( rawDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
+        {
+            damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
+            damageEvent.netAffected = @( damageEvent.netAffected.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
+        }
         else if (obj.damageIncreasePercentage )
-            rawDamage = @( rawDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
+        {
+            NSNumber *previousNetDamage = damageEvent.netDamage;
+            damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
+            damageEvent.netAffected = @( damageEvent.netDamage.doubleValue - previousNetDamage.doubleValue );
+        }
         if ( obj.damageTakenDecreasePercentage )
         {
             if ( ! greatestDamageTakenDecreaseModifier ||
@@ -314,15 +324,16 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         }
     }];
     
-    // apply damage taken increases
-    NSNumber *effectiveDamage = rawDamage;
+    // apply damage taken decrease
     if ( greatestDamageTakenDecreaseModifier )
     {
-        effectiveDamage = @( effectiveDamage.doubleValue * ( 1 - greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage.doubleValue ) );
-        NSLog(@"applying %@ to %@, %@ -> %@",greatestDamageTakenDecreaseModifier,spell,rawDamage,effectiveDamage);
+        NSNumber *previousNetDamage = damageEvent.netDamage;
+        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 - greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage.doubleValue ) );
+        damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
+        NSLog(@"applying %@ to %@ -> %@",greatestDamageTakenDecreaseModifier,spell,damageEvent.netDamage);
     }
     
-    [target handleIncomingDamage:effectiveDamage];
+    [target handleIncomingDamageEvent:damageEvent];
 //    NSInteger newAbsorb = target.currentAbsorb.doubleValue - effectiveDamage.doubleValue;
 //    if ( newAbsorb < 0 )
 //        newAbsorb = 0;

@@ -8,10 +8,11 @@
 
 #import "Entity.h"
 
-#import "Encounter.h"
+@class Event;
 
 @interface Entity (ProtPaladin)
 
 - (BOOL)doProtPaladinAI;
+- (void)handleProtPallyIncomingDamageEvent:(Event *)damageEvent;
 
 @end

@@ -119,10 +119,30 @@
         entity.maxAuxiliaryResources = @6;
         entity.auxResourceName = @"Runes"; // this isn't going to work with 4 types of runes
     }
+    
+    // avoidance
+    // analog   644     2914 armor + 629 bonus 5    986 parry       5% dodge    19.38% block
+    // savin    665     2872 armor + 576 bonus 5    765 parry       5% dodge    22.11% block
+    // slyeri   662     3155 armor + 458 bonus 4    634 parry       5% dodge    35.60% block
+    // prot pally mastery: increases damage reduction of sotr by 7%, adds 7% to bastion, increases block by 10%, increases attack power by 10%
+    // whatever, do this in game, armory seems to be inconsistent
+    // savin 665 3448 - analog 644 3085 = 21 363
+    // 17.28571428571429 armor per ilvl
+    // cloth: iliss 671 729 - kepheus 644 596 = 27 133
+    // 4.92592592592593 armor per ilvl
+    float armorScalar = ( entity.hdClass.isTank ? 17.28571428571429 : 4.92592592592593);
+    entity.armor = @( armorScalar * ilvl.floatValue );
+    // TODO (986 + 765 + 634)/3[795] / (644 + 665 + 662)/3[657]
+    // 1.21004566210046 parry per ilvl
+    float parryScalar = ( entity.hdClass.isTank ? 1.21004566210046 : 0 );
+    entity.parryRating = @( parryScalar * ilvl.floatValue );
+    if ( entity.hdClass.isTank )
+        entity.dodgeChance = @( entity.hdClass.isTank ? .05 : .03 );
+    entity.blockChance = @( entity.hdClass.isTank ? .2 : 0 );
+    
     // these are to be synthesized?
     // attackPower
     // spellPower
-    // defense
 }
 
 + (NSNumber *)spellPowerFromIntellect:(NSNumber *)intellect
@@ -195,7 +215,7 @@
     // average = 0.00015376574384
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00015376574384 );
-    NSLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    //NSLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > 1.5 ? 0 : 1.5 - reduction );
 }
 

@@ -10,6 +10,8 @@
 
 #import "Entity+AI.h"
 #import "NSCollections+Random.h"
+#import "Event.h"
+#import "Encounter.h"
 
 @implementation Entity (ProtPaladin)
 
@@ -85,6 +87,17 @@
         NSLog(@"%@ couldn't figure out anything to do on this update",self);
     
     return ! highestPrioritySpell || highestPrioritySpell.triggersGCD;
+}
+
+- (void)handleProtPallyIncomingDamageEvent:(Event *)damageEvent
+{
+    if ( damageEvent.spell.school == PhysicalSchool )
+    {
+        NSNumber *blockChance = self.blockChance;
+        NSNumber *parryChance = self.parryRating;
+        NSNumber *dodgeRating = self.dodgeChance;
+        NSNumber *armor = self.armor;
+    }
 }
 
 @end

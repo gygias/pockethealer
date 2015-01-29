@@ -1160,8 +1160,9 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
     entity.leechRating = apiStatsDict[WoWAPILeechRatingKey];
     entity.armor = apiStatsDict[WoWAPIArmorRatingKey];
     entity.parryRating = apiStatsDict[WoWAPIParryRatingKey];
-    entity.dodgeRating = apiStatsDict[WoWAPIDodgeRatingKey];
-    entity.blockRating = apiStatsDict[WoWAPIBlockRatingKey];
+#warning TODO
+    //entity.dodgeRating = apiStatsDict[WoWAPIDodgeRatingKey];
+    //entity.blockRating = apiStatsDict[WoWAPIBlockRatingKey];
     
     NSArray *apiTitlesArray = apiCharacterDict[@"titles"];
     for ( NSDictionary *apiTitleDict in apiTitlesArray )

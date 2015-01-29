@@ -83,6 +83,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSNumber *hitRange;
 @property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
 @property NSNumber *grantsAuxResources;
+@property BOOL isEmphasized; // draw glowing
 
 @property BOOL isChanneled;
 @property NSNumber *channelTicks;

@@ -64,6 +64,7 @@
 		63027B311A79F4ED0068E68A /* kargath_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B2E1A79F4ED0068E68A /* kargath_hit.wav */; };
 		63027B331A7ACE270068E68A /* evangelism.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027B321A7ACE270068E68A /* evangelism.png */; };
 		63027B341A7AD1320068E68A /* judgement.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027B1D1A79E77E0068E68A /* judgement.png */; };
+		63027B371A7AF1B40068E68A /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B361A7AF1B40068E68A /* Event.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -383,6 +384,8 @@
 		63027B2D1A79F4ED0068E68A /* kargath_death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kargath_death.wav; sourceTree = "<group>"; };
 		63027B2E1A79F4ED0068E68A /* kargath_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kargath_hit.wav; sourceTree = "<group>"; };
 		63027B321A7ACE270068E68A /* evangelism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evangelism.png; sourceTree = "<group>"; };
+		63027B351A7AF1B40068E68A /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		63027B361A7AF1B40068E68A /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -938,6 +941,8 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
+				63027B351A7AF1B40068E68A /* Event.h */,
+				63027B361A7AF1B40068E68A /* Event.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
 				634F48DD1A734B89008761C6 /* Effect.m */,
 				63C5F4321A524A1A00B9AE46 /* Spell.h */,
@@ -1558,6 +1563,7 @@
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				63027B251A79E8760068E68A /* ArdentDefenderEffect.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
+				63027B371A7AF1B40068E68A /* Event.m in Sources */,
 				63027ACF1A7986580068E68A /* DivineProtectionEffect.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
 				63027AC41A788D7B0068E68A /* PriestSpell.m in Sources */,

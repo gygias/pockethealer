@@ -11,6 +11,7 @@
 #import "Encounter.h"
 #import "Effect.h"
 #import "Spell.h"
+#import "Event.h"
 #import "ItemLevelAndStatsConverter.h"
 
 #import "GenericDamageSpell.h"
@@ -196,76 +197,129 @@
     return addedModifiers;
 }
 
-- (void)handleIncomingDamage:(NSNumber *)incomingDamage
+- (void)handleIncomingDamageEvent:(Event *)damageEvent
 {    
     if ( self.hitSoundName )
         [SoundManager playSpellHit:self.hitSoundName volume:HIGH_VOLUME];
     
-    __block NSNumber *netDamage = incomingDamage;
-    __block NSNumber *totalAbsorbed = @0;
+    BOOL dodged = NO;
+    BOOL blocked = NO;
+    BOOL parried = NO;
+    // apply avoidance
+    NSUInteger dodgeRoll = arc4random() % 100;
+    if ( dodgeRoll <= self.dodgeChance.doubleValue * 100 )
+        dodged = YES;
+    else
+    {
+        NSUInteger blockRoll = arc4random() % 100;
+        if ( blockRoll <= self.blockChance.doubleValue * 100 )
+            blocked = YES;
+        else
+        {
+            // savin    23.08% (765 adds 4.72%)
+            // sly      20.64% (634 adds 3.91%)
+            // analog   20.35% (986 adds 6.09%)
+            NSUInteger parryRoll = arc4random() % 100;
+            double parryChance = .2; // TODO armory numbers inconsistent
+            if ( parryRoll <= parryChance * 100 )
+                parried = YES;
+        }
+    }
     
-    NSMutableIndexSet *consumedEffects = [NSMutableIndexSet new];
-    [self.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
-        
-        if ( [netDamage compare:@0] == NSOrderedSame )
-        {
-            *stop = YES;
-            return;
-        }
-        
-        if ( effect.absorb )
-        {
-            if ( netDamage.doubleValue >= effect.absorb.doubleValue )
+    if ( dodged )
+    {
+        damageEvent.netDodged = damageEvent.netDamage;
+        damageEvent.netDamage = @0;
+    }
+    else if ( blocked )
+    {
+        NSNumber *amountBlocked = @( damageEvent.netDamage.doubleValue * 0.3 );
+        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - amountBlocked.doubleValue ); // TODO
+        damageEvent.netBlocked = @( damageEvent.netBlocked.doubleValue + amountBlocked.doubleValue );
+    }
+    else if ( parried )
+    {
+        damageEvent.netParried = damageEvent.netDamage;
+        damageEvent.netDamage = @0; // TODO
+    }
+    
+    if ( damageEvent.netDamage.doubleValue > 0 )
+    {
+        NSMutableIndexSet *consumedEffects = [NSMutableIndexSet new];
+        [self.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
+            
+            if ( [damageEvent.netDamage compare:@0] == NSOrderedSame )
             {
-                NSLog(@"%@ damage will consumed %@'s %@",netDamage,self,effect);
-                [consumedEffects addIndex:idx];
-                totalAbsorbed = @( totalAbsorbed.doubleValue + effect.absorb.doubleValue );
-                netDamage = @( netDamage.doubleValue - effect.absorb.doubleValue );
+                *stop = YES;
+                return;
             }
-            else
+            
+            if ( effect.absorb )
             {
-                NSNumber *thisAbsorbRemaining = @( effect.absorb.doubleValue - netDamage.doubleValue );
-                NSLog(@"%@'s %@ has %@ absorb remaining after %@ damage",self,effect,thisAbsorbRemaining,netDamage);
-                effect.absorb = thisAbsorbRemaining;
-                totalAbsorbed = @( totalAbsorbed.doubleValue + netDamage.doubleValue );
-                netDamage = @0;
-            }
-        }
-        else if ( effect.healingOnDamage )
-        {
-            if ( netDamage.doubleValue >= effect.healingOnDamage.doubleValue )
-            {
-                NSLog(@"%@ damage will consume %@'s %@",netDamage,self,effect);
-                netDamage = @( netDamage.doubleValue - effect.healingOnDamage.doubleValue );
-                [consumedEffects addIndex:idx];
-            }
-            else
-            {
-                if ( effect.healingOnDamageIsOneShot )
+                if ( damageEvent.netDamage.doubleValue >= effect.absorb.doubleValue )
                 {
-                    NSLog(@"%@ damage will consume %@'s ONE-SHOT %@",netDamage,self,effect);
+                    NSLog(@"%@ damage will consumed %@'s %@",damageEvent.netDamage,self,effect);
+                    [consumedEffects addIndex:idx];
+                    damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + effect.absorb.doubleValue );
+                    damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.absorb.doubleValue );
+                }
+                else
+                {
+                    NSNumber *thisAbsorbRemaining = @( effect.absorb.doubleValue - damageEvent.netDamage.doubleValue );
+                    NSLog(@"%@'s %@ has %@ absorb remaining after %@ damage",self,effect,thisAbsorbRemaining,damageEvent.netDamage);
+                    effect.absorb = thisAbsorbRemaining;
+                    damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + damageEvent.netDamage.doubleValue );
+                    damageEvent.netDamage = @0;
+                }
+            }
+            else if ( effect.healingOnDamage )
+            {
+                if ( damageEvent.netDamage.doubleValue >= effect.healingOnDamage.doubleValue )
+                {
+                    NSLog(@"%@ damage will consume %@'s %@",damageEvent.netDamage,self,effect);
+                    damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.healingOnDamage.doubleValue );
+                    damageEvent.netHealedOnDamage = effect.healingOnDamage;
                     [consumedEffects addIndex:idx];
                 }
                 else
-                    effect.healingOnDamage = @( effect.healingOnDamage.doubleValue - netDamage.doubleValue );
-                netDamage = @0;
+                {
+                    if ( effect.healingOnDamageIsOneShot )
+                    {
+                        NSLog(@"%@ damage will consume %@'s ONE-SHOT %@",damageEvent.netDamage,self,effect);
+                        [consumedEffects addIndex:idx];
+                    }
+                    else
+                        effect.healingOnDamage = @( effect.healingOnDamage.doubleValue - damageEvent.netDamage.doubleValue );
+                    damageEvent.netHealedOnDamage = damageEvent.netDamage;
+                    damageEvent.netDamage = @0;
+                }
             }
-        }
-    }];
+        }];
+        
+        #warning TODO, MAJOR TODO, this access is not safe, have crashed with index out of bounds exception
+        [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
+            Effect *effect = self.statusEffects[idx];
+            [self consumeStatusEffect:effect];
+        }];
+    }
     
-    #warning TODO, MAJOR TODO, this access is not safe, have crashed with index out of bounds exception
-    [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
-        Effect *effect = self.statusEffects[idx];
-        [self consumeStatusEffect:effect];
-    }];
+    switch( self.hdClass.specID )
+    {
+        case HDPROTPALADIN:
+            [self handleProtPallyIncomingDamageEvent:damageEvent];
+    }
     
-    NSInteger newHealth = self.currentHealth.doubleValue - netDamage.doubleValue;
+    NSInteger newHealth = self.currentHealth.doubleValue - damageEvent.netDamage.doubleValue;
     if ( newHealth < 0 )
         newHealth = 0;
     
     self.currentHealth = @(newHealth);
     
-    NSLog(@"%@ took %@ net damage from %@ (%@ absorbed)",self,netDamage,incomingDamage,totalAbsorbed);
+    NSLog(@"%@ took %@ net damage from %@ (%@%@)",self,damageEvent.netDamage,damageEvent.spell.damage,
+          damageEvent.netAbsorbed.doubleValue > 0 ?[NSString stringWithFormat:@"%@ absorbed",damageEvent.netAbsorbed]:@"",
+            dodged?@", dodged":
+                blocked?@", blocked":
+                    parried?@", parried":@"");
 }
 
 - (NSNumber *)currentAbsorb
@@ -490,7 +544,7 @@
     self.lastHealth = self.currentHealth;
     
     NSNumber *nextFireDate = gcdTriggered ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil] : @0;
-    NSLog(@"%@ will act again in %@ seconds",self,nextFireDate);
+    //NSLog(@"%@ will act again in %@ seconds",self,nextFireDate);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(nextFireDate.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         [self _doAutomaticStuff];
     });
@@ -531,6 +585,7 @@
 
 - (BOOL)_doAutomaticHealing
 {
+    return YES;
     if ( self.castingSpell )
         return YES;
     

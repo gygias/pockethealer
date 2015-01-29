@@ -17,6 +17,7 @@
 @class HDClass;
 @class WoWRealm;
 @class Guild;
+@class Event;
 
 // represents a thing in the world, or an 'instance' of a character
 @interface Entity : ModelBase
@@ -63,7 +64,7 @@
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
 - (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
-- (void)handleIncomingDamage:(NSNumber *)incomingDamage;
+- (void)handleIncomingDamageEvent:(Event *)damageEvent;
 - (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
 
 //- (NSNumber *)handleIncomingDamage:(NSNumber *)damage;
@@ -129,8 +130,8 @@
 // avoidance
 @property NSNumber *armor;
 @property NSNumber *parryRating;
-@property NSNumber *dodgeRating;
-@property NSNumber *blockRating;
+@property NSNumber *dodgeChance;
+@property NSNumber *blockChance;
 
 // XXX
 @property NSString *specName;
