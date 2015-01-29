@@ -13,11 +13,22 @@
 - (AISpellPriority)currentSpellPriorities
 {
     AISpellPriority priorities = FillerPriotity;
+    double healthPercentage = self.currentHealth.doubleValue / self.health.doubleValue;
     double healthDelta = ( self.currentHealth.doubleValue - self.lastHealth.doubleValue ) / self.health.doubleValue;
     if ( healthDelta > 0.33 )
     {
         NSLog(@"%@: I've taken a lot of damage since my last update, I'm in fear of dying",self);
-        priorities = CastWhenInFearOfDyingPriority;
+        priorities |= CastWhenInFearOfDyingPriority; // TODO "nervous, chance to mistakenly blow large cd?"
+    }
+    if ( healthPercentage <= 0.33 )
+    {
+        NSLog(@"%@: I'm at %0.0f%% health and am in fear of dying",self,healthPercentage*100);
+        priorities |= CastWhenInFearOfDyingPriority;
+    }
+    if ( healthPercentage < 1.0 )
+    {
+        NSLog(@"%@: I'm at %0.0f%% health so I need healing",self,healthPercentage*100);
+        priorities |= CastWhenSourceNeedsHealingPriority;
     }
     
     // if ( someWayOfKnowing.heroIncomingOrInProgress )

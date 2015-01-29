@@ -15,10 +15,9 @@
 
 - (BOOL)doProtPaladinAI
 {
-    // TODO this is inefficient, why can't Entities carry an array of spells
     AISpellPriority currentPriorities = [self currentSpellPriorities];
     
-    __block Spell *spellToCast = nil;
+    __block Spell *highestPrioritySpell = nil;
     [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
         NSLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
         
@@ -52,8 +51,20 @@
         
         if ( spell.aiSpellPriority & currentPriorities )
         {
-            spellToCast = spell;
-            *stop = YES;
+            if ( spell.aiSpellPriority > highestPrioritySpell.aiSpellPriority )
+            {
+                NSLog(@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
+                highestPrioritySpell = spell;
+            }
+            else
+                NSLog(@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
+            
+//            if ( [NSStringFromClass([spell class]) isEqualToString:@"LayOnHandsSpell"] )
+//            {
+//                NSLog(@"SPELL %08x CURRENT %08x",spell.aiSpellPriority,currentPriorities);
+//                NSLog(@"i'm casting loh...?");
+//            }
+            //*stop = YES;
             return;
         }
         else
@@ -62,18 +73,18 @@
     
     // TODO
     Entity *target = self;
-    if ( spellToCast.spellType == DetrimentalSpell )
+    if ( highestPrioritySpell.spellType == DetrimentalSpell )
         target = [self.encounter.enemies randomObject];
     
-    if ( spellToCast )
+    if ( highestPrioritySpell )
     {
-        [self castSpell:spellToCast withTarget:target];
-        NSLog(@"%@ will%@ trigger gcd",spellToCast,spellToCast.triggersGCD?@"":@" NOT");
+        [self castSpell:highestPrioritySpell withTarget:target];
+        NSLog(@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
     }
     else
         NSLog(@"%@ couldn't figure out anything to do on this update",self);
     
-    return ! spellToCast || spellToCast.triggersGCD;
+    return ! highestPrioritySpell || highestPrioritySpell.triggersGCD;
 }
 
 @end

@@ -16,7 +16,7 @@
 {
     if ( self = [super initWithRaid:raid] )
     {
-        self.stamina = @(500000 / 60 * ( raid.players.count / 5 ));
+        self.stamina = @(500000 / 60 * ( ( raid.players.count < 5 ? 5 : raid.players.count ) / 5 ));
     }    
     return self;
 }

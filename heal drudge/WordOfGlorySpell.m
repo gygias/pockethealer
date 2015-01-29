@@ -8,6 +8,8 @@
 
 #import "WordOfGlorySpell.h"
 
+#import "EventModifier.h"
+
 @implementation WordOfGlorySpell
 
 - (id)initWithCaster:(Entity *)caster
@@ -39,6 +41,23 @@
     return self;
 }
 
+- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+{
+    if ( source.currentAuxiliaryResources.doubleValue < 1 )
+#warning ss
+        [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",source,source.currentAuxiliaryResources];
+    NSNumber *resourcesToConsume = source.currentAuxiliaryResources;
+    if ( source.currentAuxiliaryResources.doubleValue >= 3 )
+        resourcesToConsume = @3;
+    source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
+    NSLog(@"%@ is consuming %@ resources casting %@",source,resourcesToConsume,self);
+    
+    EventModifier *mod = [EventModifier new];
+    mod.healingIncreasePercentage = @( resourcesToConsume.doubleValue * self.healing.doubleValue );
+    [modifiers addObject:mod];
+    return YES;
+}
+
 - (NSArray *)hdClasses
 {
     return @[ [HDClass holyPaladin], [HDClass protPaladin] ];
@@ -46,7 +65,8 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return CastOnIdealAuxResourceAvailablePriority | CastWhenInFearOfDyingPriority;
+    AISpellPriority priority = CastOnIdealAuxResourceAvailablePriority | CastWhenInFearOfDyingPriority | CastWhenSourceNeedsHealingPriority;
+    return priority;
 }
 
 @end

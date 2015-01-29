@@ -34,12 +34,13 @@ typedef NS_ENUM(NSInteger, SpellType) {
 
 typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
-    FillerPriotity,
-    CastOnIdealAuxResourceAvailablePriority,
-    CastWhenDamageDoneIncreasedPriority, // during hero
-    CastBeforeLargeHitPriority,
-    CastWhenInFearOfOtherPlayerDyingPriority,
-    CastWhenInFearOfDyingPriority
+    FillerPriotity                                          = 1 << 1,
+    CastWhenSourceNeedsHealingPriority                      = 1 << 2,
+    CastOnIdealAuxResourceAvailablePriority                 = 1 << 3,
+    CastWhenDamageDoneIncreasedPriority                     = 1 << 4, // during hero
+    CastBeforeLargeHitPriority                              = 1 << 5,
+    CastWhenInFearOfOtherPlayerDyingPriority                = 1 << 6,
+    CastWhenInFearOfDyingPriority                           = 1 << 7
 };
 
 @interface Spell : NSObject
@@ -53,7 +54,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 // state
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
-- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
 - (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
 - (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
 - (void)handleEndWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;

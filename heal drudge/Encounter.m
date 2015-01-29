@@ -120,6 +120,24 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     if ( ! _encounterQueue )
         return;
     
+    // this was moved outside the dispatch_async to fix automated LoH (first spell w/o triggering gcd)
+    // from causing an infinite loop, since the code which would set the next cooldown wouldn't
+    // run until after that code had returned
+    if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
+    {
+        NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
+        spell.nextCooldownDate = thisNextCooldownDate;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ( spell.nextCooldownDate == thisNextCooldownDate )
+            {
+                NSLog(@"%@'s %@ has cooled down",source,spell);
+                spell.nextCooldownDate = nil;
+            }
+            else
+                NSLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
+        });
+    }
+    
     dispatch_async(_encounterQueue, ^{
     
         NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
@@ -177,21 +195,6 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                 [spell handleHitWithSource:source target:aTarget modifiers:modifiers];
             }
         }];
-        
-        if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
-        {
-            NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
-            spell.nextCooldownDate = thisNextCooldownDate;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                if ( spell.nextCooldownDate == thisNextCooldownDate )
-                {
-                    NSLog(@"%@'s %@ has cooled down",source,spell);
-                    spell.nextCooldownDate = nil;
-                }
-                else
-                    NSLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
-            });
-        }
         
         if ( target.currentHealth.integerValue <= 0 )
         {

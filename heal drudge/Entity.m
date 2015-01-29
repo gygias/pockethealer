@@ -247,7 +247,7 @@
         }
     }];
     
-    #warning TODO, MAJOR TODO, this access is not safe
+    #warning TODO, MAJOR TODO, this access is not safe, have crashed with index out of bounds exception
     [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
         Effect *effect = self.statusEffects[idx];
         [self consumeStatusEffect:effect];
@@ -301,7 +301,7 @@
     {
         NSLog(@"%@ will tick every %0.2f seconds",statusEffect,statusEffect.periodicTick.doubleValue);
         [statusEffect handleTickWithOwner:self isInitialTick:YES];
-        statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
+        statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
         dispatch_source_set_timer(statusEffect.periodicTickSource, DISPATCH_TIME_NOW, statusEffect.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(statusEffect.periodicTickSource, ^{
             [statusEffect handleTickWithOwner:self isInitialTick:NO];
@@ -310,7 +310,7 @@
     }
     
     NSLog(@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         if ( [_statusEffects containsObject:statusEffect] )
         {
             NSLog(@"%@ on %@ has timed out",statusEffect,self);
@@ -444,46 +444,45 @@
 - (void)_doAutomaticStuff
 {
     BOOL gcdTriggered = NO;
-    do
+    
+    if ( self.isDead )
+        return;
+    
+    BOOL classSwitchHandled = NO;
+    switch( self.hdClass.specID )
     {
-        if ( self.isDead )
-            return;
-        
-        BOOL classSwitchHandled = NO;
-        switch( self.hdClass.specID )
+        case HDPROTPALADIN:
+            gcdTriggered = [self doProtPaladinAI];
+            classSwitchHandled = YES;
+            break;
+        default:
+            break;
+    }
+    
+    //if ( ! self.lastAutomaticAbilityDate ||
+    //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
+    //NSLog(@"%@ is doing automated stuff",self);
+    if ( ! classSwitchHandled )
+    {
+        if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
         {
-            case HDPROTPALADIN:
-                gcdTriggered = [self doProtPaladinAI];
-                classSwitchHandled = YES;
-                break;
-            default:
-                break;
+            gcdTriggered = [self _doAutomaticTanking];
         }
-        
-        //if ( ! self.lastAutomaticAbilityDate ||
-        //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
-        //NSLog(@"%@ is doing automated stuff",self);
-        if ( ! classSwitchHandled )
+        else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
         {
-            if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
-            {
-                gcdTriggered = [self _doAutomaticTanking];
-            }
-            else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
-            {
-                gcdTriggered = [self _doAutomaticDPS];
-            }
-            else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
-            {
-                gcdTriggered = [self _doAutomaticHealing];
-            }
+            gcdTriggered = [self _doAutomaticDPS];
         }
-    } while ( ! gcdTriggered );
+        else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
+        {
+            gcdTriggered = [self _doAutomaticHealing];
+        }
+    }
     
     self.lastHealth = self.currentHealth;
     
-    NSNumber *gcd = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(gcd.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+    NSNumber *nextFireDate = gcdTriggered ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil] : @0;
+    NSLog(@"%@ will act again in %@ seconds",self,nextFireDate);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(nextFireDate.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         [self _doAutomaticStuff];
     });
 }

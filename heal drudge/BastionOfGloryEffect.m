@@ -8,6 +8,7 @@
 
 #import "BastionOfGloryEffect.h"
 
+#import "WordOfGlorySpell.h"
 #import "ImageFactory.h"
 
 @implementation BastionOfGloryEffect
@@ -28,12 +29,15 @@
 
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
-    // if ( word of glory )
-    //  buff word of glory
-    //EventModifier *mod = [EventModifier new];
-    //mod.damageTakenDecreasePercentage = @0.4; // TODO
-    //[modifiers addObject:mod];
-    //return YES;
+    if ( [spell isKindOfClass:[WordOfGlorySpell class]]
+        && ( target == self.source ) )
+    {
+        EventModifier *mod = [EventModifier new];
+        mod.healingIncreasePercentage = @( self.currentStacks.doubleValue * 0.06 );
+        [modifiers addObject:mod];
+        handler(YES);
+        return YES;
+    }
     return NO;
 }
 

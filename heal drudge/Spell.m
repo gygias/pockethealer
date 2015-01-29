@@ -93,6 +93,8 @@ const NSString *SpellLevelHigh = @"high";
              @"ShieldOfTheRighteousSpell",
              @"WordOfGlorySpell",
              @"AvengersShieldSpell",
+             @"LayOnHandsSpell",
+             @"JudgementSpell",
              
              @"HealingTideTotemSpell"
              ];

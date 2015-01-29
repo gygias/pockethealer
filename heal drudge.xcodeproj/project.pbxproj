@@ -49,6 +49,11 @@
 		63027B0D1A79C4AD0068E68A /* AvengersShieldSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B0C1A79C4AD0068E68A /* AvengersShieldSpell.m */; };
 		63027B0F1A79C59B0068E68A /* avengers_shield.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B0E1A79C59B0068E68A /* avengers_shield.jpg */; };
 		63027B111A79C5AC0068E68A /* avengers_shield_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B101A79C5AC0068E68A /* avengers_shield_hit.wav */; };
+		63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B131A79C68D0068E68A /* LayOnHandsSpell.m */; };
+		63027B161A79C6D70068E68A /* lay_on_hands.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027B151A79C6D70068E68A /* lay_on_hands.png */; };
+		63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B181A79C79A0068E68A /* ForbearanceEffect.m */; };
+		63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B1B1A79E5F00068E68A /* JudgementSpell.m */; };
+		63027B1F1A79E7990068E68A /* judgement_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B1E1A79E7990068E68A /* judgement_hit.wav */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -348,6 +353,15 @@
 		63027B0C1A79C4AD0068E68A /* AvengersShieldSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvengersShieldSpell.m; sourceTree = "<group>"; };
 		63027B0E1A79C59B0068E68A /* avengers_shield.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avengers_shield.jpg; sourceTree = "<group>"; };
 		63027B101A79C5AC0068E68A /* avengers_shield_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = avengers_shield_hit.wav; sourceTree = "<group>"; };
+		63027B121A79C68D0068E68A /* LayOnHandsSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayOnHandsSpell.h; sourceTree = "<group>"; };
+		63027B131A79C68D0068E68A /* LayOnHandsSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayOnHandsSpell.m; sourceTree = "<group>"; };
+		63027B151A79C6D70068E68A /* lay_on_hands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lay_on_hands.png; sourceTree = "<group>"; };
+		63027B171A79C79A0068E68A /* ForbearanceEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForbearanceEffect.h; sourceTree = "<group>"; };
+		63027B181A79C79A0068E68A /* ForbearanceEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForbearanceEffect.m; sourceTree = "<group>"; };
+		63027B1A1A79E5F00068E68A /* JudgementSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JudgementSpell.h; sourceTree = "<group>"; };
+		63027B1B1A79E5F00068E68A /* JudgementSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JudgementSpell.m; sourceTree = "<group>"; };
+		63027B1D1A79E77E0068E68A /* judgement.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = judgement.png; sourceTree = "<group>"; };
+		63027B1E1A79E7990068E68A /* judgement_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = judgement_hit.wav; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -702,6 +716,12 @@
 				63027B031A79ADD00068E68A /* WordOfGlorySpell.m */,
 				63027B0B1A79C4AD0068E68A /* AvengersShieldSpell.h */,
 				63027B0C1A79C4AD0068E68A /* AvengersShieldSpell.m */,
+				63027B121A79C68D0068E68A /* LayOnHandsSpell.h */,
+				63027B131A79C68D0068E68A /* LayOnHandsSpell.m */,
+				63027B171A79C79A0068E68A /* ForbearanceEffect.h */,
+				63027B181A79C79A0068E68A /* ForbearanceEffect.m */,
+				63027B1A1A79E5F00068E68A /* JudgementSpell.h */,
+				63027B1B1A79E5F00068E68A /* JudgementSpell.m */,
 			);
 			name = Paladin;
 			sourceTree = "<group>";
@@ -747,6 +767,8 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63027B1D1A79E77E0068E68A /* judgement.png */,
+				63027B151A79C6D70068E68A /* lay_on_hands.png */,
 				63027B0E1A79C59B0068E68A /* avengers_shield.jpg */,
 				63027B051A79AE640068E68A /* emancipate.png */,
 				63027B061A79AE640068E68A /* word_of_glory.png */,
@@ -1001,6 +1023,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63027B1E1A79E7990068E68A /* judgement_hit.wav */,
 				63027B101A79C5AC0068E68A /* avengers_shield_hit.wav */,
 				63027B091A79B18A0068E68A /* renew_hit.wav */,
 				63027AFE1A79AD350068E68A /* crusader_strike_hit.wav */,
@@ -1254,6 +1277,7 @@
 				632073E81A7095B800AA4416 /* angelic_bulwark.png in Resources */,
 				632073F61A7095B800AA4416 /* desperate_prayer.png in Resources */,
 				632074121A7095B800AA4416 /* mage.png in Resources */,
+				63027B161A79C6D70068E68A /* lay_on_hands.png in Resources */,
 				632073EF1A7095B800AA4416 /* chakra_blue.png in Resources */,
 				632074041A7095B800AA4416 /* hand_of_purity.png in Resources */,
 				632074731A70E93A00AA4416 /* fortifying_waters.png in Resources */,
@@ -1372,6 +1396,7 @@
 				632074171A7095B800AA4416 /* power_infusion.png in Resources */,
 				632074801A70E93A00AA4416 /* mistweaver.png in Resources */,
 				63A37F101A75C6930036C9D0 /* spell_fizzle_nature.wav in Resources */,
+				63027B1F1A79E7990068E68A /* judgement_hit.wav in Resources */,
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				63027AEF1A79A47A0068E68A /* guardian_of_ancient_kings.png in Resources */,
 				632074131A7095B800AA4416 /* monk.png in Resources */,
@@ -1461,6 +1486,7 @@
 				63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */,
 				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
+				63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
 				632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */,
 				63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */,
@@ -1474,6 +1500,7 @@
 				63027ACC1A7985790068E68A /* DivineProtectionSpell.m in Sources */,
 				63027AF61A79A6060068E68A /* ShieldOfTheRighteousEffect.m in Sources */,
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
+				63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,
@@ -1506,6 +1533,7 @@
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
+				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,
 				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
 				6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */,
