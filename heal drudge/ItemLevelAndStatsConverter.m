@@ -94,6 +94,31 @@
         [entity setValue:tertiaryStat forKey:tertiaryStatKey];
     }
     
+    if ( entity.hdClass.classID == HDPALADIN )
+    {
+        entity.maxAuxiliaryResources = @5;
+        entity.auxResourceName = @"Holy Power";
+    }
+    else if ( entity.hdClass.classID == HDMONK )
+    {
+        entity.maxAuxiliaryResources = @5;
+        entity.auxResourceName = @"Chi";
+    }
+    else if ( entity.hdClass.classID == HDROGUE )
+    {
+        entity.maxAuxiliaryResources = @5;
+        entity.auxResourceName = @"Combo Point";
+    }
+    else if ( entity.hdClass.specID == HDDESTROWARLOCK ) // TODO i'm not sure what other specs have
+    {
+        entity.maxAuxiliaryResources = @5;
+        entity.auxResourceName = @"Burning Ember";
+    }
+    else if ( entity.hdClass.classID == HDDEATHKNIGHT )
+    {
+        entity.maxAuxiliaryResources = @6;
+        entity.auxResourceName = @"Runes"; // this isn't going to work with 4 types of runes
+    }
     // these are to be synthesized?
     // attackPower
     // spellPower

@@ -17,7 +17,7 @@
     if ( self = [super initWithCaster:caster] )
     {
         self.name = @"Sacred Shield";
-        self.image = [ImageFactory imageNamed:@"divine_protection"];
+        self.image = [ImageFactory imageNamed:@"sacred_shield"];
         self.tooltip = @"Protects the target with a shield of holy light.";
         self.triggersGCD = YES;
         self.targeted = YES;

@@ -17,6 +17,9 @@
     if ( self = [super initWithRaid:raid] )
     {
         self.stamina = @(500000 / 60 * ( ( raid.players.count < 5 ? 5 : raid.players.count ) / 5 ));
+        self.aggroSoundName = @"kargath_aggro";
+        self.hitSoundName = @"kargath_hit";
+        self.deathSoundName = @"kargath_death";
     }    
     return self;
 }

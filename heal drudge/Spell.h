@@ -82,6 +82,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 // range of spell at the point of impact, 0 for N/A
 @property NSNumber *hitRange;
 @property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
+@property NSNumber *grantsAuxResources;
 
 @property BOOL isChanneled;
 @property NSNumber *channelTicks;

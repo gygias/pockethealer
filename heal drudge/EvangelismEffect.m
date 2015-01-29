@@ -8,6 +8,8 @@
 
 #import "EvangelismEffect.h"
 
+#import "ImageFactory.h"
+
 @implementation EvangelismEffect
 
 - (id)init
@@ -18,6 +20,7 @@
         self.duration = 20;
         self.maxStacks = @5;
         self.effectType = BeneficialEffect;
+        self.image = [ImageFactory imageNamed:@"evangelism"];
     }
     
     return self;

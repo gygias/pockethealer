@@ -70,35 +70,38 @@
             *messagePtr = @"Not enough mana";
         return NO;
     }
-    else if ( source.isDead )
+    if ( source.isDead )
     {
         if ( messagePtr )
             *messagePtr = @"You are dead";
         return NO;
     }
-    else if ( target.isDead && ! spell.canBeCastOnDeadEntities )
+    if ( target.isDead && ! spell.canBeCastOnDeadEntities )
     {
         if ( messagePtr )
             *messagePtr = @"Target is dead";
         return NO;
     }
-    else if ( spell.spellType == DetrimentalSpell )
+    if ( spell.targeted )
     {
-        if ( target.isPlayer )
+        if ( ( spell.spellType == DetrimentalSpell ) && target.isPlayer )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";
             return NO;
         }
+//        if ( ( spell.spellType == BeneficialSpell ) && target.isEnemy )
+//        {
+//            if ( messagePtr )
+//                *messagePtr = @"Invalid target";
+//            return NO;
+//        }
     }
-    else if ( spell.spellType == BeneficialSpell )
+    if ( asSource && ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue ) )
     {
-        if ( target.isEnemy )
-        {
-            if ( messagePtr )
-                *messagePtr = @"Invalid target";
-            return NO;
-        }
+        if ( messagePtr )
+            *messagePtr = @"Not enough resources";
+        return NO;
     }
         
     if ( ! [spell validateWithSource:source target:self message:messagePtr] )
@@ -194,7 +197,10 @@
 }
 
 - (void)handleIncomingDamage:(NSNumber *)incomingDamage
-{
+{    
+    if ( self.hitSoundName )
+        [SoundManager playSpellHit:self.hitSoundName volume:HIGH_VOLUME];
+    
     __block NSNumber *netDamage = incomingDamage;
     __block NSNumber *totalAbsorbed = @0;
     
@@ -365,6 +371,9 @@
     {
         NSLog(@"%@ has died",self);
         self.isDead = YES;
+        
+        if ( self.deathSoundName )
+            [SoundManager playSpellHit:self.deathSoundName volume:HIGH_VOLUME];
         
         Effect *aStatusEffect = nil;
         while ( ( aStatusEffect = [self.statusEffects lastObject] ) )
@@ -732,6 +741,20 @@
     }
     
     return effectiveCastTime;
+}
+
+- (void)addAuxResources:(NSNumber *)addedResources
+{
+    if ( self.currentAuxiliaryResources.integerValue + addedResources.integerValue <= self.maxAuxiliaryResources.integerValue )
+    {
+        self.currentAuxiliaryResources = @( self.currentAuxiliaryResources.integerValue + addedResources.integerValue );
+        NSLog(@"%@ has gained an aux resource (%@)",self,self.currentAuxiliaryResources);
+    }
+    else
+    {
+        self.currentAuxiliaryResources = self.maxAuxiliaryResources;
+        NSLog(@"%@ is at full aux resources",self);
+    }
 }
 
 @end

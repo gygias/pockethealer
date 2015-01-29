@@ -19,17 +19,17 @@
     
     __block Spell *highestPrioritySpell = nil;
     [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
-        NSLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
+        //NSLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
         
         if ( spell.isOnCooldown )
         {
-            NSLog(@"  %@ is on cooldown",spell);
+            //NSLog(@"  %@ is on cooldown",spell);
             return;
         }
         
         if ( spell.manaCost.doubleValue > self.currentResources.doubleValue )
         {
-            NSLog(@"  %@ doesn't have enough mana for %@",self,spell);
+            //NSLog(@"  %@ doesn't have enough mana for %@",self,spell);
             return;
         }
         
@@ -37,14 +37,14 @@
         {
             if ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
-                NSLog(@"  %@ doesn't have enough aux resource for %@",self,spell);
+                //NSLog(@"  %@ doesn't have enough aux resource for %@",self,spell);
                 return;
             }
             
             if ( ! ( currentPriorities & CastWhenInFearOfOtherPlayerDyingPriority )
                 && spell.auxiliaryResourceIdealCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
-                NSLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
+                //NSLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
                 return;
             }
         }
@@ -53,11 +53,11 @@
         {
             if ( spell.aiSpellPriority > highestPrioritySpell.aiSpellPriority )
             {
-                NSLog(@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
+                //NSLog(@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
                 highestPrioritySpell = spell;
             }
-            else
-                NSLog(@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
+            //else
+            //    NSLog(@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
             
 //            if ( [NSStringFromClass([spell class]) isEqualToString:@"LayOnHandsSpell"] )
 //            {
@@ -67,8 +67,8 @@
             //*stop = YES;
             return;
         }
-        else
-            NSLog(@"  %@ is not currently a priority",spell);
+        //else
+            //NSLog(@"  %@ is not currently a priority",spell);
     }];
     
     // TODO

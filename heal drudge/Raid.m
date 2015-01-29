@@ -137,7 +137,7 @@
     NSLog(@"%@",raid.players);
     
     if ( outGygias )
-        *outGygias = gygias;
+        *outGygias = slyeri;
     
     return raid;
 }

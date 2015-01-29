@@ -23,6 +23,7 @@
         self.spellType = DetrimentalSpell;
         self.castableRange = @40;
         self.hitRange = @0;
+        self.grantsAuxResources = @1;
         
         self.castTime = @0;
         self.manaCost = @(0.1 * caster.baseMana.floatValue);
@@ -33,12 +34,6 @@
         self.hitSoundName = @"crusader_strike_hit"; // TODO
     }
     return self;
-}
-
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
-{
-    source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue + 1 );
-    NSLog(@"%@ has gained an aux resource (%@)",source,source.currentAuxiliaryResources);
 }
 
 - (NSArray *)hdClasses

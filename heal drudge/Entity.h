@@ -31,6 +31,8 @@
 @property NSNumber *currentResources;
 @property NSNumber *currentAuxiliaryResources;
 @property NSNumber *maxAuxiliaryResources;
+@property NSString *auxResourceName;
+- (void)addAuxResources:(NSNumber *)addedResources;
 @property Spell *castingSpell;
 @property (readonly) NSArray *statusEffects;
 @property BOOL isDead;
@@ -138,6 +140,10 @@
 @property NSTimeInterval currentGlobalCooldownDuration;
 
 @property NSNumber *lastHealth;
+
+@property NSString *aggroSoundName;
+@property NSString *hitSoundName;
+@property NSString *deathSoundName;
 
 @end
 

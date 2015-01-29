@@ -40,13 +40,7 @@
 {
     if ( source.hdClass.specID != HDHOLYPALADIN )
     {
-        if ( source.currentAuxiliaryResources.integerValue < source.maxAuxiliaryResources.integerValue )
-        {
-            source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue + 1 );
-            NSLog(@"%@ has gained an aux resource (%@)",source,source.currentAuxiliaryResources);
-        }
-        else
-            NSLog(@"%@ is already at full aux resources",source);
+        [source addAuxResources:@1];
     }
 }
 

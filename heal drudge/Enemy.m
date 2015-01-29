@@ -59,6 +59,9 @@
 {
     [super beginEncounter:encounter];
     
+    if ( self.aggroSoundName )
+        [SoundManager playSpellHit:self.aggroSoundName volume:HIGH_VOLUME];
+    
     [_abilities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Ability *ability = (Ability *)obj;
         //NSLog(@"%@: %@",ability,ability.nextFireDate);

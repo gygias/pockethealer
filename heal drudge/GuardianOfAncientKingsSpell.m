@@ -20,7 +20,6 @@
         self.image = [ImageFactory imageNamed:@"guardian_of_ancient_kings"];
         self.tooltip = @"Summons a Guardian of Ancient Kings to protect you for 12 sec.\n\nThe Guardian of Ancient Kings reduces damage taken by 50%.";
         self.triggersGCD = YES;
-        self.targeted = YES;
         self.cooldown = @( 3 * 60 );
         self.spellType = BeneficialSpell;
         self.castableRange = @40;

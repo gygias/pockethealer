@@ -16,9 +16,9 @@
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Word of Glory";
-        self.image = [ImageFactory imageNamed:@"word_of_glory"];
-        self.tooltip = @"Consumes up to 3 Holy Power to heal a friendly target for up to (264.591% of Spell power)..";
+        self.name = @"Lay on Hands";
+        self.image = [ImageFactory imageNamed:@"lay_on_hands"];
+        self.tooltip = @"Heals a friendly target for an amount equal to your maximum health.\n\nCannot be used on a target with Forbearance.  Causes Forbearance for 1 min.";
         self.triggersGCD = NO;
         self.targeted = YES;
         self.cooldown = @( 10 * 60 );

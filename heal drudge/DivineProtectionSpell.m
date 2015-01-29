@@ -20,7 +20,6 @@
         self.image = [ImageFactory imageNamed:@"divine_protection"];
         self.tooltip = @"Reduces magic damage taken by 40%.";
         self.triggersGCD = YES;
-        self.targeted = YES;
         self.cooldown = @15;
         self.spellType = BeneficialSpell;
         self.castableRange = @40;

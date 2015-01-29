@@ -196,6 +196,9 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             }
         }];
         
+        if ( spell.grantsAuxResources )
+            [source addAuxResources:spell.grantsAuxResources];
+        
         if ( target.currentHealth.integerValue <= 0 )
         {
             __block EventModifier *cheatDeathModifier = nil;

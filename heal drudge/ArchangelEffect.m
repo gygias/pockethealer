@@ -8,6 +8,8 @@
 
 #import "ArchangelEffect.h"
 
+#import "ImageFactory.h"
+
 @implementation ArchangelEffect
 
 - (id)init
@@ -19,6 +21,7 @@
         self.maxStacks = @5;
         self.stacksAreInvisible = YES;
         self.effectType = BeneficialEffect;
+        self.image = [ImageFactory imageNamed:@"archangel"];
     }
     
     return self;

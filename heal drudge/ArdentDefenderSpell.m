@@ -20,7 +20,6 @@
         self.image = [ImageFactory imageNamed:@"ardent_defender"];
         self.tooltip = @"Damage taken reduced by 20%.\nThe next attack that would otherwise kill you will instead cause you to be healed for 12% of your maximum health.";
         self.triggersGCD = YES;
-        self.targeted = YES;
         self.cooldown = @(3 * 60);
         self.spellType = BeneficialSpell;
         self.castableRange = @40;

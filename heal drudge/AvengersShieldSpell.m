@@ -23,6 +23,7 @@
         self.spellType = DetrimentalSpell;
         self.castableRange = @40;
         self.hitRange = @0;
+        self.grantsAuxResources = @1;
         
         self.castTime = @0;
         self.manaCost = @(0.7 * caster.baseMana.floatValue);
@@ -33,12 +34,6 @@
         self.hitSoundName = @"avengers_shield_hit";
     }
     return self;
-}
-
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
-{
-    source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue + 1 );
-    NSLog(@"%@ has gained an aux resource (%@)",source,source.currentAuxiliaryResources);
 }
 
 - (NSArray *)hdClasses
