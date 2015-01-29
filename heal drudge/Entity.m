@@ -307,6 +307,9 @@
     {
         case HDPROTPALADIN:
             [self handleProtPallyIncomingDamageEvent:damageEvent];
+            break;
+        default:
+            break;
     }
     
     NSInteger newHealth = self.currentHealth.doubleValue - damageEvent.netDamage.doubleValue;
@@ -417,6 +420,19 @@
     
     if ( object )
         [self consumeStatusEffect:object];
+}
+
+- (Spell *)spellWithClass:(Class)spellClass
+{
+    __block Spell *theSpell = nil;
+    [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+        if ( [spell class] == spellClass )
+        {
+            theSpell = spell;
+            *stop = YES;
+        }
+    }];
+    return theSpell;
 }
 
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell

@@ -52,6 +52,8 @@
 //@property dispatch_source_t automaticAbilitySource;
 //@property NSDate *lastAutomaticAbilityDate;
 
+- (Spell *)spellWithClass:(Class)spellClass;
+
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell;

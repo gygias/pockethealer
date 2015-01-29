@@ -13,6 +13,8 @@
 #import "Event.h"
 #import "Encounter.h"
 
+#import "AvengersShieldSpell.h"
+
 @implementation Entity (ProtPaladin)
 
 - (BOOL)doProtPaladinAI
@@ -93,10 +95,17 @@
 {
     if ( damageEvent.spell.school == PhysicalSchool )
     {
-        NSNumber *blockChance = self.blockChance;
-        NSNumber *parryChance = self.parryRating;
-        NSNumber *dodgeRating = self.dodgeChance;
-        NSNumber *armor = self.armor;
+        AvengersShieldSpell *asSpell = (AvengersShieldSpell *)[self spellWithClass:[AvengersShieldSpell class]];
+        if ( asSpell && asSpell.isOnCooldown )
+        {
+            // roll for CD reset
+            // Grand Crusader: "When you avoid a melee attack you have a 30% chance of refreshing the cooldown on your next Avenger's Shield and causing it to generate 1 Holy Power."
+            // TODO i think this is not totally correct, would proc too much, going with block for now
+            if ( damageEvent.netBlocked )
+            {
+                asSpell.nextCooldownDate = nil;
+            }
+        }
     }
 }
 
