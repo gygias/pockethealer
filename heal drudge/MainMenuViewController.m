@@ -29,9 +29,16 @@
     NSLog(@"create character");
 }
 
-- (IBAction)pressedQuickPlay:(id)sender
+- (IBAction)pressedQuickPlayGygias:(id)sender
 {
-    NSLog(@"quick play");
+    NSLog(@"quick play gygias");
+    self.state.playerName = @"Gygias";
+}
+
+- (IBAction)pressedQuickPlaySlyeri:(id)sender
+{
+    NSLog(@"quick play sly");
+    self.state.playerName = @"Slyeri";
 }
 
 - (IBAction)pressedLoadFromArmory:(id)sender

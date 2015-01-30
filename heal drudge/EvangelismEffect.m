@@ -8,6 +8,9 @@
 
 #import "EvangelismEffect.h"
 
+#import "Entity.h"
+#import "ArchangelSpell.h"
+
 #import "ImageFactory.h"
 
 @implementation EvangelismEffect
@@ -24,6 +27,18 @@
     }
     
     return self;
+}
+
+- (void)addStack
+{
+    [super addStack];
+    
+    if ( self.currentStacks.integerValue == self.maxStacks.integerValue )
+    {
+        // TODO this feels like spaghetti
+        ArchangelSpell *aa = (ArchangelSpell *)[self.source spellWithClass:[ArchangelSpell class]];
+        [self.source emphasizeSpell:aa duration:self.duration];
+    }
 }
 
 @end

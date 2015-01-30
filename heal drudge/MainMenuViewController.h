@@ -12,7 +12,8 @@
 @interface MainMenuViewController : BaseViewController
 
 - (IBAction)pressedCreateCharacter:(id)sender;
-- (IBAction)pressedQuickPlay:(id)sender;
+- (IBAction)pressedQuickPlayGygias:(id)sender;
+- (IBAction)pressedQuickPlaySlyeri:(id)sender;
 - (IBAction)pressedLoadFromArmory:(id)sender;
 
 @end

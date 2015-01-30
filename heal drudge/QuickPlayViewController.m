@@ -20,14 +20,16 @@
 
 @implementation QuickPlayViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     // Do any additional setup after loading the view.
     
-    Entity *gygias = nil;
-    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias];
+    Entity *gygias = nil, *slyeri = nil;
+    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri];
     
-    /*__block*/ Entity *aHealer = gygias;
+    BOOL playSlyeri = [self.state.playerName isEqual:@"Slyeri"];
+    /*__block*/ Entity *aHealer = playSlyeri ? slyeri : gygias;
     aHealer.isPlayingPlayer = YES;
     /*[raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Player *player = (Player *)obj;

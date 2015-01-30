@@ -13,6 +13,7 @@
 @interface State : NSObject
 
 @property Entity *player;
+@property NSString *playerName; // XXX
 
 // setup
 @property BOOL saveGuildToo;

@@ -70,7 +70,7 @@
     return [self randomRaidWithTanks:2 healerRatio:.2];
 }
 
-+ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias
++ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri
 {
     Raid *raid = [self randomRaidWithTanks:0 healerRatio:0];
     
@@ -137,7 +137,9 @@
     NSLog(@"%@",raid.players);
     
     if ( outGygias )
-        *outGygias = slyeri;
+        *outGygias = gygias;
+    if ( outSlyeri )
+        *outSlyeri = slyeri;
     
     return raid;
 }

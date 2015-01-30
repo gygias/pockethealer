@@ -53,6 +53,7 @@
 //@property NSDate *lastAutomaticAbilityDate;
 
 - (Spell *)spellWithClass:(Class)spellClass;
+- (void)emphasizeSpell:(Spell *)spell duration:(NSTimeInterval)duration;
 
 // instead of simply setting the property, say a holy priest
 // being dealt a killing blow can trigger spirit of redemption

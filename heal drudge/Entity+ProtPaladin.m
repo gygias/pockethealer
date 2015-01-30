@@ -104,6 +104,7 @@
             if ( damageEvent.netBlocked )
             {
                 asSpell.nextCooldownDate = nil;
+                [self emphasizeSpell:asSpell duration:5]; // TODO how long does the proc glow for?
             }
         }
     }

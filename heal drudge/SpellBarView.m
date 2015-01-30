@@ -57,17 +57,28 @@
         CGRect spellRect = CGRectMake(rect.origin.x + ( SPELL_WIDTH * column ),
                                       rect.origin.y + ( SPELL_HEIGHT * row ), SPELL_WIDTH, SPELL_HEIGHT);
         //NSLog(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
+        
+//#warning this is here due to emphasis yellow leaving traces when it stops drawing
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        //CGContextAddRect(context, spellRect);
+        //CGContextSetFillColorWithColor(context, [UIColor blackColor].CGColor);
+        //CGContextFillPath(context);
+        // nvm drawing outside specified rect lol
+        
         [spellImage drawInRect:spellRect];
                 
         // disabled mask
         if ( ! canStartCastingSpell && ! invalidDueToCooldown )
         {
-            CGContextRef context = UIGraphicsGetCurrentContext();
-            
             CGContextSetFillColorWithColor(context,[UIColor disabledSpellColor].CGColor);
             CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
             CGContextAddRect(context, rectangle);
             CGContextFillPath(context);
+        }
+        
+        if ( spell.isEmphasized )
+        {
+            [self _drawEmphasisInRect:spellRect spell:spell];
         }
         
         // cooldown clock
@@ -84,6 +95,43 @@
         
         idx++;
     }];
+}
+
+static CGFloat const kDashedBorderWidth     = (4.0f);
+static CGFloat const kDashedLinesLength[]   = {4.0f, 2.0f};
+static size_t const kDashedCount            = (2.0f);
+static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
+
+- (void)_drawEmphasisInRect:(CGRect)rect spell:(Spell *)spell
+{
+    if ( ! _emphasisReferenceDate )
+        _emphasisReferenceDate = [NSDate date];
+    NSDate *emphasisEndDate = spell.emphasisStopDate;
+    if ( ! emphasisEndDate )
+        return;
+    
+    NSDate *now = [NSDate date];
+    NSTimeInterval timeRemaining = -[now timeIntervalSinceDate:emphasisEndDate];
+    if ( timeRemaining <= 0 )
+        return;
+    
+    NSUInteger modTenthsOfASecond = (NSUInteger)( timeRemaining * 10 ) % 10;
+    
+    CGFloat kDashedPhase           = (((double)modTenthsOfASecond / (double)kTimeToMoveOneLengthTenthsOfASecond) * kDashedLinesLength[0]);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetLineWidth(context, kDashedBorderWidth);
+    CGContextSetStrokeColorWithColor(context, [UIColor yellowColor].CGColor);
+    
+    CGContextSetLineDash(context, kDashedPhase, kDashedLinesLength, kDashedCount) ;
+    
+    CGRect emphasisRect = CGRectMake(rect.origin.x + kDashedBorderWidth / 2,
+                                     rect.origin.y + kDashedBorderWidth / 2,
+                                     rect.size.width - ( kDashedBorderWidth ),
+                                     rect.size.height - ( kDashedBorderWidth ));
+    CGContextAddRect(context, emphasisRect);
+    CGContextStrokePath(context);
 }
 
 - (void)_drawCooldownClockInRect:(CGRect)rect withPercentage:(double)percentage

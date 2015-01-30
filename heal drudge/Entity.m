@@ -192,6 +192,10 @@
         if ( spell.isChanneled )
             effectiveCost = effectiveCost / spell.channelTicks.integerValue;
         self.currentResources = @(source.currentResources.integerValue - effectiveCost);
+        
+        // TODO this isn't really general, conceivably something could have a "stacked" emphasis effect, but i can't think of one
+        spell.isEmphasized = NO;
+        spell.emphasisStopDate = nil;
     }
     
     return addedModifiers;
@@ -435,6 +439,23 @@
     return theSpell;
 }
 
+- (void)emphasizeSpell:(Spell *)spell duration:(NSTimeInterval)duration
+{
+    NSDate *stopDate = [NSDate dateWithTimeIntervalSinceNow:duration];
+    spell.isEmphasized = YES;
+    spell.emphasisStopDate = stopDate;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+        if ( stopDate == spell.emphasisStopDate )
+        {
+            spell.isEmphasized = NO;
+            spell.emphasisStopDate = nil;
+        }
+        else
+            NSLog(@"Something seems to have refreshed the emphasis on %@",spell);
+    });
+}
+
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell
 {
     if ( dyingEntity == self )
@@ -525,6 +546,8 @@
     BOOL gcdTriggered = NO;
     
     if ( self.isDead )
+        return;
+    if ( self.stopped )
         return;
     
     BOOL classSwitchHandled = NO;

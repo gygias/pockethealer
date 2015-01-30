@@ -14,6 +14,9 @@
 typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 
 @interface SpellBarView : UIView
+{
+    NSDate *_emphasisReferenceDate;
+}
 
 @property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;
 
