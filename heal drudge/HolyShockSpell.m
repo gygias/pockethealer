@@ -33,6 +33,8 @@
         self.absorb = @0;
         
         self.school = HolySchool;
+        
+        self.hitSoundName = @"heal_hit"; // TODO
     }
     return self;
 }

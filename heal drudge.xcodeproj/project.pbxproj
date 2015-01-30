@@ -70,6 +70,8 @@
 		63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B411A7B0B790068E68A /* HolyShockSpell.m */; };
 		63027B451A7B0BEC0068E68A /* LightOfDawnSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B441A7B0BEC0068E68A /* LightOfDawnSpell.m */; };
 		63027B471A7B0CF00068E68A /* light_of_dawn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B461A7B0CF00068E68A /* light_of_dawn.jpg */; };
+		63027B4A1A7B1CA20068E68A /* holy_light_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B481A7B1CA20068E68A /* holy_light_hit.wav */; };
+		63027B4B1A7B1CA20068E68A /* light_of_dawn_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -400,6 +402,8 @@
 		63027B431A7B0BEC0068E68A /* LightOfDawnSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightOfDawnSpell.h; sourceTree = "<group>"; };
 		63027B441A7B0BEC0068E68A /* LightOfDawnSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightOfDawnSpell.m; sourceTree = "<group>"; };
 		63027B461A7B0CF00068E68A /* light_of_dawn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = light_of_dawn.jpg; sourceTree = "<group>"; };
+		63027B481A7B1CA20068E68A /* holy_light_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = holy_light_hit.wav; sourceTree = "<group>"; };
+		63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = light_of_dawn_cast.wav; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -1090,6 +1094,8 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63027B481A7B1CA20068E68A /* holy_light_hit.wav */,
+				63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */,
 				63027B2C1A79F4ED0068E68A /* kargath_aggro.wav */,
 				63027B2D1A79F4ED0068E68A /* kargath_death.wav */,
 				63027B2E1A79F4ED0068E68A /* kargath_hit.wav */,
@@ -1505,6 +1511,7 @@
 				632074021A7095B800AA4416 /* hand_of_freedom.png in Resources */,
 				632073FB1A7095B800AA4416 /* divine_protection.png in Resources */,
 				634F48D81A732D6F008761C6 /* divine_star.png in Resources */,
+				63027B4A1A7B1CA20068E68A /* holy_light_hit.wav in Resources */,
 				63564D6C1A57260F0025ACDE /* Names.plist in Resources */,
 				632074101A7095B800AA4416 /* leap_of_faith.png in Resources */,
 				632074871A70E93A00AA4416 /* resto_shaman.jpg in Resources */,
@@ -1514,6 +1521,7 @@
 				632073F11A7095B800AA4416 /* chakra_neutral.png in Resources */,
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
 				632074661A70E93A00AA4416 /* backstab.jpg in Resources */,
+				63027B4B1A7B1CA20068E68A /* light_of_dawn_cast.wav in Resources */,
 				63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
 				63027B311A79F4ED0068E68A /* kargath_hit.wav in Resources */,

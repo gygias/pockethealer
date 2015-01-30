@@ -36,6 +36,8 @@
         self.absorb = @0;
         
         self.school = HolySchool;
+        
+        self.castSoundName = @"light_of_dawn_cast";
     }
     return self;
 }

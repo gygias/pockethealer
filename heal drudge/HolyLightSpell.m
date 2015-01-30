@@ -31,6 +31,8 @@
         self.absorb = @0;
         
         self.school = HolySchool;
+        
+        self.hitSoundName = @"holy_light_hit";
     }
     return self;
 }
