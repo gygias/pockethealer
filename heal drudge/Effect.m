@@ -28,7 +28,7 @@
     return [NSString stringWithFormat:@"%@[%@]",NSStringFromClass([self class]),self.currentStacks];
 }
 
-- (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString *__autoreleasing *)message
+- (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
     return YES;
 }

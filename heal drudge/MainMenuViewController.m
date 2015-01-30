@@ -41,6 +41,12 @@
     self.state.playerName = @"Slyeri";
 }
 
+- (IBAction)pressedQuickPlayLireal:(id)sender
+{
+    NSLog(@"quick play lireal");
+    self.state.playerName = @"Lireal";
+}
+
 - (IBAction)pressedLoadFromArmory:(id)sender
 {
     NSLog(@"load from armory");

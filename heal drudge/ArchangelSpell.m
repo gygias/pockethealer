@@ -49,7 +49,7 @@
     return nil;
 }
 
-- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
     EvangelismEffect *evangelism = [self _evangelismForEntity:source];
     

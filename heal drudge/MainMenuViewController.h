@@ -14,6 +14,7 @@
 - (IBAction)pressedCreateCharacter:(id)sender;
 - (IBAction)pressedQuickPlayGygias:(id)sender;
 - (IBAction)pressedQuickPlaySlyeri:(id)sender;
+- (IBAction)pressedQuickPlayLireal:(id)sender;
 - (IBAction)pressedLoadFromArmory:(id)sender;
 
 @end

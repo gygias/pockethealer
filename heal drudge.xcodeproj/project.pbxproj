@@ -65,6 +65,11 @@
 		63027B331A7ACE270068E68A /* evangelism.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027B321A7ACE270068E68A /* evangelism.png */; };
 		63027B341A7AD1320068E68A /* judgement.png in Resources */ = {isa = PBXBuildFile; fileRef = 63027B1D1A79E77E0068E68A /* judgement.png */; };
 		63027B371A7AF1B40068E68A /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B361A7AF1B40068E68A /* Event.m */; };
+		63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B3B1A7B0A520068E68A /* HolyLightSpell.m */; };
+		63027B3F1A7B0B200068E68A /* FlashOfLightSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B3E1A7B0B200068E68A /* FlashOfLightSpell.m */; };
+		63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B411A7B0B790068E68A /* HolyShockSpell.m */; };
+		63027B451A7B0BEC0068E68A /* LightOfDawnSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B441A7B0BEC0068E68A /* LightOfDawnSpell.m */; };
+		63027B471A7B0CF00068E68A /* light_of_dawn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B461A7B0CF00068E68A /* light_of_dawn.jpg */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -386,6 +391,15 @@
 		63027B321A7ACE270068E68A /* evangelism.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = evangelism.png; sourceTree = "<group>"; };
 		63027B351A7AF1B40068E68A /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
 		63027B361A7AF1B40068E68A /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
+		63027B3A1A7B0A520068E68A /* HolyLightSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolyLightSpell.h; sourceTree = "<group>"; };
+		63027B3B1A7B0A520068E68A /* HolyLightSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyLightSpell.m; sourceTree = "<group>"; };
+		63027B3D1A7B0B200068E68A /* FlashOfLightSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashOfLightSpell.h; sourceTree = "<group>"; };
+		63027B3E1A7B0B200068E68A /* FlashOfLightSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlashOfLightSpell.m; sourceTree = "<group>"; };
+		63027B401A7B0B790068E68A /* HolyShockSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolyShockSpell.h; sourceTree = "<group>"; };
+		63027B411A7B0B790068E68A /* HolyShockSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyShockSpell.m; sourceTree = "<group>"; };
+		63027B431A7B0BEC0068E68A /* LightOfDawnSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightOfDawnSpell.h; sourceTree = "<group>"; };
+		63027B441A7B0BEC0068E68A /* LightOfDawnSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LightOfDawnSpell.m; sourceTree = "<group>"; };
+		63027B461A7B0CF00068E68A /* light_of_dawn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = light_of_dawn.jpg; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -724,6 +738,27 @@
 				63027AD71A798C1C0068E68A /* SacredShieldEffect.m */,
 				63027ADD1A798DCF0068E68A /* SacredShieldAbsorbEffect.h */,
 				63027ADE1A798DCF0068E68A /* SacredShieldAbsorbEffect.m */,
+				63027B021A79ADD00068E68A /* WordOfGlorySpell.h */,
+				63027B031A79ADD00068E68A /* WordOfGlorySpell.m */,
+				63027B121A79C68D0068E68A /* LayOnHandsSpell.h */,
+				63027B131A79C68D0068E68A /* LayOnHandsSpell.m */,
+				63027B171A79C79A0068E68A /* ForbearanceEffect.h */,
+				63027B181A79C79A0068E68A /* ForbearanceEffect.m */,
+				63027AE01A799F450068E68A /* CrusaderStrikeSpell.h */,
+				63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */,
+				63027B1A1A79E5F00068E68A /* JudgementSpell.h */,
+				63027B1B1A79E5F00068E68A /* JudgementSpell.m */,
+				63027B391A7B0A1B0068E68A /* Holy */,
+				63027B381A7B09DF0068E68A /* Prot */,
+			);
+			name = Paladin;
+			sourceTree = "<group>";
+		};
+		63027B381A7B09DF0068E68A /* Prot */ = {
+			isa = PBXGroup;
+			children = (
+				63027B0B1A79C4AD0068E68A /* AvengersShieldSpell.h */,
+				63027B0C1A79C4AD0068E68A /* AvengersShieldSpell.m */,
 				63027AE51A79A31C0068E68A /* GuardianOfAncientKingsSpell.h */,
 				63027AE61A79A31C0068E68A /* GuardianOfAncientKingsSpell.m */,
 				63027AE81A79A3600068E68A /* GuardianOfAncientKingsEffect.h */,
@@ -734,24 +769,27 @@
 				63027AF51A79A6060068E68A /* ShieldOfTheRighteousEffect.m */,
 				63027AF91A79A7A60068E68A /* BastionOfGloryEffect.h */,
 				63027AFA1A79A7A60068E68A /* BastionOfGloryEffect.m */,
-				63027B021A79ADD00068E68A /* WordOfGlorySpell.h */,
-				63027B031A79ADD00068E68A /* WordOfGlorySpell.m */,
-				63027B121A79C68D0068E68A /* LayOnHandsSpell.h */,
-				63027B131A79C68D0068E68A /* LayOnHandsSpell.m */,
-				63027B171A79C79A0068E68A /* ForbearanceEffect.h */,
-				63027B181A79C79A0068E68A /* ForbearanceEffect.m */,
-				63027AE01A799F450068E68A /* CrusaderStrikeSpell.h */,
-				63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */,
-				63027B0B1A79C4AD0068E68A /* AvengersShieldSpell.h */,
-				63027B0C1A79C4AD0068E68A /* AvengersShieldSpell.m */,
-				63027B1A1A79E5F00068E68A /* JudgementSpell.h */,
-				63027B1B1A79E5F00068E68A /* JudgementSpell.m */,
 				63027B201A79E85E0068E68A /* ArdentDefenderSpell.h */,
 				63027B211A79E85E0068E68A /* ArdentDefenderSpell.m */,
 				63027B231A79E8760068E68A /* ArdentDefenderEffect.h */,
 				63027B241A79E8760068E68A /* ArdentDefenderEffect.m */,
 			);
-			name = Paladin;
+			name = Prot;
+			sourceTree = "<group>";
+		};
+		63027B391A7B0A1B0068E68A /* Holy */ = {
+			isa = PBXGroup;
+			children = (
+				63027B3A1A7B0A520068E68A /* HolyLightSpell.h */,
+				63027B3B1A7B0A520068E68A /* HolyLightSpell.m */,
+				63027B3D1A7B0B200068E68A /* FlashOfLightSpell.h */,
+				63027B3E1A7B0B200068E68A /* FlashOfLightSpell.m */,
+				63027B401A7B0B790068E68A /* HolyShockSpell.h */,
+				63027B411A7B0B790068E68A /* HolyShockSpell.m */,
+				63027B431A7B0BEC0068E68A /* LightOfDawnSpell.h */,
+				63027B441A7B0BEC0068E68A /* LightOfDawnSpell.m */,
+			);
+			name = Holy;
 			sourceTree = "<group>";
 		};
 		632073A31A70934700AA4416 /* UI */ = {
@@ -795,6 +833,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63027B461A7B0CF00068E68A /* light_of_dawn.jpg */,
 				63027B321A7ACE270068E68A /* evangelism.png */,
 				63027B2A1A79EA730068E68A /* ardent_defender.jpg */,
 				63027B1D1A79E77E0068E68A /* judgement.png */,
@@ -963,16 +1002,12 @@
 			name = "Player Spells & Effects";
 			sourceTree = "<group>";
 		};
-		632074A61A7194D200AA4416 /* Abilities */ = {
+		632074A61A7194D200AA4416 /* Enemies & Spells */ = {
 			isa = PBXGroup;
 			children = (
-				632074C61A71D17600AA4416 /* Ability.h */,
-				632074C71A71D17600AA4416 /* Ability.m */,
-				631435F91A72E94100BDD708 /* Attack.h */,
-				631435FA1A72E94100BDD708 /* Attack.m */,
 				632074AD1A71951C00AA4416 /* Kargath */,
 			);
-			name = Abilities;
+			name = "Enemies & Spells";
 			sourceTree = "<group>";
 		};
 		632074AD1A71951C00AA4416 /* Kargath */ = {
@@ -1143,17 +1178,21 @@
 		63C5F3FF1A5243E900B9AE46 /* heal drudge */ = {
 			isa = PBXGroup;
 			children = (
-				63027AC51A7984220068E68A /* AI */,
+				632073A71A70959700AA4416 /* Icons */,
 				63A37EC81A75A15B0036C9D0 /* sounds */,
+				63027AC51A7984220068E68A /* AI */,
 				632074BA1A71A4E400AA4416 /* Encounter.h */,
 				632074BB1A71A4E400AA4416 /* Encounter.m */,
 				632074BD1A71A5CA00AA4416 /* Entity.h */,
 				632074BE1A71A5CA00AA4416 /* Entity.m */,
 				632074C01A71A65B00AA4416 /* Enemy.h */,
 				632074C11A71A65B00AA4416 /* Enemy.m */,
-				632074A61A7194D200AA4416 /* Abilities */,
+				632074C61A71D17600AA4416 /* Ability.h */,
+				632074C71A71D17600AA4416 /* Ability.m */,
+				631435F91A72E94100BDD708 /* Attack.h */,
+				631435FA1A72E94100BDD708 /* Attack.m */,
+				632074A61A7194D200AA4416 /* Enemies & Spells */,
 				6320749E1A718DEE00AA4416 /* Player Spells & Effects */,
-				632073A71A70959700AA4416 /* Icons */,
 				632073A31A70934700AA4416 /* UI */,
 				63C5F4041A5243E900B9AE46 /* AppDelegate.h */,
 				63C5F4051A5243E900B9AE46 /* AppDelegate.m */,
@@ -1443,6 +1482,7 @@
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				63027AEF1A79A47A0068E68A /* guardian_of_ancient_kings.png in Resources */,
 				632074131A7095B800AA4416 /* monk.png in Resources */,
+				63027B471A7B0CF00068E68A /* light_of_dawn.jpg in Resources */,
 				63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */,
 				63027ABF1A786ED00068E68A /* physical_hit.wav in Resources */,
 				632074921A70E93A00AA4416 /* unholy.png in Resources */,
@@ -1524,6 +1564,8 @@
 				63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */,
 				634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */,
 				63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */,
+				63027B3F1A7B0B200068E68A /* FlashOfLightSpell.m in Sources */,
+				63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
 				634F490A1A748CB8008761C6 /* OpenWoundsEffect.m in Sources */,
 				634F49071A748A65008761C6 /* BorrowedTimeEffect.m in Sources */,
@@ -1545,8 +1587,10 @@
 				634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */,
 				63027ACC1A7985790068E68A /* DivineProtectionSpell.m in Sources */,
 				63027AF61A79A6060068E68A /* ShieldOfTheRighteousEffect.m in Sources */,
+				63027B451A7B0BEC0068E68A /* LightOfDawnSpell.m in Sources */,
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
 				63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */,
+				63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,

@@ -60,7 +60,7 @@
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
-- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target;
 

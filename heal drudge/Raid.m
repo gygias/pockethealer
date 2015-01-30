@@ -70,7 +70,7 @@
     return [self randomRaidWithTanks:2 healerRatio:.2];
 }
 
-+ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri
++ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri :(Entity **)outLireal
 {
     Raid *raid = [self randomRaidWithTanks:0 healerRatio:0];
     
@@ -78,7 +78,6 @@
     gygias.isPlayer = YES;
     gygias.name = @"Gygias";
     gygias.hdClass = [HDClass discPriest];
-    
     NSNumber *gygiasIlvl = @670;
     [ItemLevelAndStatsConverter assignStatsToEntity:gygias
                     basedOnAverageEquippedItemLevel:gygiasIlvl];
@@ -88,15 +87,24 @@
     slyeri.isPlayer = YES;
     slyeri.name = @"Slyeri";
     slyeri.hdClass = [HDClass protPaladin];
-    
     NSNumber *slyIlvl = @670;
     [ItemLevelAndStatsConverter assignStatsToEntity:slyeri
                     basedOnAverageEquippedItemLevel:slyIlvl];
     [slyeri initializeSpells];
     
+    Entity *lireal = [Entity new];
+    lireal.isPlayer = YES;
+    lireal.name = @"Lireal";
+    lireal.hdClass = [HDClass holyPaladin];
+    NSNumber *lirealIlvl = @670;
+    [ItemLevelAndStatsConverter assignStatsToEntity:lireal
+                    basedOnAverageEquippedItemLevel:lirealIlvl];
+    [lireal initializeSpells];
+    
     NSMutableArray *raidCopy = raid.players.mutableCopy;
     __block NSInteger gygiasIdx = -1;
     __block NSInteger slyIdx = -1;
+    __block NSInteger lirealIdx = -1;
     __block NSInteger someHealerIdx = -1;
     [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
         if ( [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
@@ -105,6 +113,8 @@
             someHealerIdx = idx;
         else if ( [obj.name compare:slyeri.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
             slyIdx = idx;
+        else if ( [obj.name compare:lireal.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+            lirealIdx = idx;
     }];
     
     if ( slyIdx >= 0 )
@@ -112,9 +122,7 @@
         NSLog(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
         [raidCopy removeObjectAtIndex:slyIdx];
     }
-    
     slyIdx = raidCopy.count;
-    
     NSLog(@"adding %@",slyeri);
     [raidCopy insertObject:slyeri atIndex:slyIdx];
     
@@ -124,11 +132,19 @@
         NSLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
         [raidCopy removeObjectAtIndex:removeIndex];
     }
-    
     gygiasIdx = raidCopy.count;
-    
     NSLog(@"adding %@",gygias);
     [raidCopy insertObject:gygias atIndex:gygiasIdx];
+    
+    if ( lirealIdx >= 0 )
+    {
+        NSLog(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
+        [raidCopy removeObjectAtIndex:lirealIdx];
+    }
+    lirealIdx = raidCopy.count;
+    NSLog(@"adding %@",lireal);
+    [raidCopy insertObject:lireal atIndex:lirealIdx];
+    
     if ( raid.players.count >= 20 )
         [raidCopy removeObjectAtIndex: ( ( gygiasIdx >= 0 ? gygiasIdx : someHealerIdx )+ 1 % raid.players.count )];
     
@@ -140,6 +156,8 @@
         *outGygias = gygias;
     if ( outSlyeri )
         *outSlyeri = slyeri;
+    if ( outLireal )
+        *outLireal = lireal;
     
     return raid;
 }

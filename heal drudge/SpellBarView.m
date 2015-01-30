@@ -94,6 +94,8 @@
         }
         
         idx++;
+//#warning crashing here EXC_BAD_ACCESS objc_release (mystery object) when casting lay on hands
+        // fixed http://stackoverflow.com/questions/8814718/handling-pointer-to-pointer-ownership-issues-in-arc
     }];
 }
 

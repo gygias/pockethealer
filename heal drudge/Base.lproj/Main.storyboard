@@ -48,16 +48,6 @@
                                     <segue destination="9yQ-DE-UAV" kind="show" identifier="main-quick" id="zgj-eD-NvH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEn-mK-lM2">
-                                <rect key="frame" x="44" y="257" width="118" height="30"/>
-                                <state key="normal" title="load from armory">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="pressedLoadFromArmory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oWh-Ib-4dH"/>
-                                    <segue destination="RMg-zi-FX2" kind="show" id="VSK-zp-oLK"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Us-3D-8HJ">
                                 <rect key="frame" x="44" y="219" width="113" height="30"/>
                                 <state key="normal" title="quick play slyeri">
@@ -66,6 +56,26 @@
                                 <connections>
                                     <action selector="pressedQuickPlaySlyeri:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WW8-PL-atf"/>
                                     <segue destination="9yQ-DE-UAV" kind="show" id="i4D-Pu-xCV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaL-5Q-A24">
+                                <rect key="frame" x="44" y="257" width="113" height="30"/>
+                                <state key="normal" title="quick play lireal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedQuickPlayLireal:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eFs-P8-9ry"/>
+                                    <segue destination="9yQ-DE-UAV" kind="show" id="SVL-Iu-vqR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEn-mK-lM2">
+                                <rect key="frame" x="44" y="295" width="118" height="30"/>
+                                <state key="normal" title="load from armory">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedLoadFromArmory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oWh-Ib-4dH"/>
+                                    <segue destination="RMg-zi-FX2" kind="show" id="VSK-zp-oLK"/>
                                 </connections>
                             </button>
                         </subviews>

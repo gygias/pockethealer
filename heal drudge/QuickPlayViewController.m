@@ -25,11 +25,12 @@
     
     // Do any additional setup after loading the view.
     
-    Entity *gygias = nil, *slyeri = nil;
-    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri];
+    Entity *gygias = nil, *slyeri = nil, *lireal = nil;
+    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri :&lireal];
     
     BOOL playSlyeri = [self.state.playerName isEqual:@"Slyeri"];
-    /*__block*/ Entity *aHealer = playSlyeri ? slyeri : gygias;
+    BOOL playLireal = [self.state.playerName isEqual:@"Lireal"];
+    /*__block*/ Entity *aHealer = playSlyeri ? slyeri : ( playLireal ? lireal : gygias );
     aHealer.isPlayingPlayer = YES;
     /*[raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Player *player = (Player *)obj;

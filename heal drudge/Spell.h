@@ -49,15 +49,15 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 // on character stats
 - (id)initWithCaster:(Entity *)caster;
 
-- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message;
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message;
 
 // state
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
 - (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
-- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
-- (void)handleEndWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (void)handleEndWithSource:(Entity *)source target:(Entity *)target;
 
 //- (void)endSpell:(id)entity;
 

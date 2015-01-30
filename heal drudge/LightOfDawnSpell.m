@@ -1,42 +1,41 @@
 //
-//  WordOfGlorySpell.m
+//  LightOfDawnSpell.m
 //  heal drudge
 //
-//  Created by david on 1/28/15.
+//  Created by david on 1/29/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "WordOfGlorySpell.h"
+#import "LightOfDawnSpell.h"
 
 #import "EventModifier.h"
 
-@implementation WordOfGlorySpell
+@implementation LightOfDawnSpell
 
 - (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Word of Glory";
-        self.image = [ImageFactory imageNamed:@"word_of_glory"];
-        self.tooltip = @"Consumes up to 3 Holy Power to heal a friendly target for up to (264.591% of Spell power)..";
+        self.name = @"Holy Shock";
+        self.image = [ImageFactory imageNamed:@"light_of_dawn"];
+        self.tooltip = @"Consumes up to 3 Holy Power to unleash a wave of healing energy, healing 6 injured allies within 30 yards for up to [ 3 + 73.5% of Spell Power ].";
         self.triggersGCD = YES;
-        self.targeted = YES;
+        self.targeted = NO;
         self.cooldown = @0;
         self.spellType = BeneficialSpell;
         self.castableRange = @40;
-        self.hitRange = @0;
+        self.hitRange = @30;
+        self.maxHitTargets = @6;
         
-        self.castTime = @( caster.hdClass.specID == HDPROTPALADIN ? 0 : 1.5 );
+        self.castTime = @1.5;
         self.manaCost = @0;
+        self.damage = @0;
+        self.healing = @( 3 + .735 * [caster.spellPower floatValue] );
         self.auxiliaryResourceCost = @1;
         self.auxiliaryResourceIdealCost = @3;
-        self.damage = @0;
-        self.healing = @( 2.64591 * caster.spellPower.doubleValue );
         self.absorb = @0;
         
         self.school = HolySchool;
-        
-        self.hitSoundName = @"renew_hit"; // TODO
     }
     return self;
 }
@@ -60,13 +59,7 @@
 
 - (NSArray *)hdClasses
 {
-    return @[ [HDClass holyPaladin], [HDClass protPaladin] ];
-}
-
-- (AISpellPriority)aiSpellPriority
-{
-    AISpellPriority priority = CastOnIdealAuxResourceAvailablePriority | CastWhenInFearOfDyingPriority | CastWhenSourceNeedsHealingPriority;
-    return priority;
+    return @[ [HDClass holyPaladin] ];
 }
 
 @end

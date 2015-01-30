@@ -34,7 +34,7 @@ const NSString *SpellLevelHigh = @"high";
     return self;
 }
 
-- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString **)message
+- (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
     return YES;
 }
@@ -44,15 +44,15 @@ const NSString *SpellLevelHigh = @"high";
     return NO;
 }
 
-- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
 {
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
 {
 }
 
-- (void)handleEndWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleEndWithSource:(Entity *)source target:(Entity *)target
 {
 }
 
@@ -96,6 +96,11 @@ const NSString *SpellLevelHigh = @"high";
              @"LayOnHandsSpell",
              @"JudgementSpell",
              @"ArdentDefenderSpell",
+             
+             @"HolyLightSpell",
+             @"FlashOfLightSpell",
+             @"HolyShockSpell",
+             @"LightOfDawnSpell",
              
              @"HealingTideTotemSpell"
              ];

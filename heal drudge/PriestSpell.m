@@ -12,7 +12,7 @@
 
 @implementation PriestSpell
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers;
+- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
 {
     // TODO does it matter if DA is applied before or after the rest of "handling hit"?
     [super handleHitWithSource:source target:target modifiers:modifiers];

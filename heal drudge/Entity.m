@@ -60,7 +60,7 @@
     return _periodicEffectQueue;
 }
 
-- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString **)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
+- (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
 {
     Entity *source = asSource ? self : otherEntity;
     Entity *target = asSource ? otherEntity : self;
