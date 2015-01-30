@@ -42,4 +42,14 @@
     return @[ [HDClass holyPaladin] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriotity
+            | CastWhenSomeoneNeedsHealingPriority
+            | CastWhenTankNeedsHealingPriority;
+            // these situations are for flash heal
+            //| CastWhenInFearOfOtherPlayerDyingPriority
+            //| CastWhenInFearOfDyingPriority;
+}
+
 @end

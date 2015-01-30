@@ -64,4 +64,9 @@
     return @[ [HDClass holyPaladin] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenRaidNeedsHealing;
+}
+
 @end

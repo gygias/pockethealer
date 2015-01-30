@@ -42,4 +42,13 @@
     return @[ [HDClass holyPaladin] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriotity
+            // this situation is for holy light
+            //| CastWhenSomeoneNeedsHealingPriority
+            | CastWhenInFearOfOtherPlayerDyingPriority
+            | CastWhenInFearOfDyingPriority;
+}
+
 @end

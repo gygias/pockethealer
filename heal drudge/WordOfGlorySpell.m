@@ -65,7 +65,10 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority priority = CastOnIdealAuxResourceAvailablePriority | CastWhenInFearOfDyingPriority | CastWhenSourceNeedsHealingPriority;
+    AISpellPriority priority = CastWhenSomeoneNeedsHealingPriority |
+                                CastWhenTankNeedsHealingPriority |
+                                CastOnIdealAuxResourceAvailablePriority |
+                                CastWhenInFearOfDyingPriority;
     return priority;
 }
 

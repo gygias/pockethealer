@@ -28,7 +28,7 @@
     if ( healthPercentage < 1.0 )
     {
         NSLog(@"%@: I'm at %0.0f%% health so I need healing",self,healthPercentage*100);
-        priorities |= CastWhenSourceNeedsHealingPriority;
+        priorities |= CastWhenTankNeedsHealingPriority;
     }
     
     // if ( someWayOfKnowing.heroIncomingOrInProgress )

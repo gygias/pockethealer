@@ -76,6 +76,9 @@
 		63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B501A7B223E0068E68A /* DevotionAuraEffect.m */; };
 		63027B531A7B237D0068E68A /* devotion_aura.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B521A7B237D0068E68A /* devotion_aura.jpg */; };
 		63027B551A7B238D0068E68A /* devotion_aura_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B541A7B238D0068E68A /* devotion_aura_cast.wav */; };
+		63027B581A7B261D0068E68A /* AvengingWrathSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B571A7B261D0068E68A /* AvengingWrathSpell.m */; };
+		63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */; };
+		63027B5D1A7B29C30068E68A /* avenging_wrath_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -414,6 +417,11 @@
 		63027B501A7B223E0068E68A /* DevotionAuraEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevotionAuraEffect.m; sourceTree = "<group>"; };
 		63027B521A7B237D0068E68A /* devotion_aura.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = devotion_aura.jpg; sourceTree = "<group>"; };
 		63027B541A7B238D0068E68A /* devotion_aura_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = devotion_aura_cast.wav; sourceTree = "<group>"; };
+		63027B561A7B261D0068E68A /* AvengingWrathSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvengingWrathSpell.h; sourceTree = "<group>"; };
+		63027B571A7B261D0068E68A /* AvengingWrathSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvengingWrathSpell.m; sourceTree = "<group>"; };
+		63027B591A7B28E90068E68A /* AvengingWrathEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvengingWrathEffect.h; sourceTree = "<group>"; };
+		63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvengingWrathEffect.m; sourceTree = "<group>"; };
+		63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = avenging_wrath_cast.wav; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -762,6 +770,10 @@
 				63027AE11A799F450068E68A /* CrusaderStrikeSpell.m */,
 				63027B1A1A79E5F00068E68A /* JudgementSpell.h */,
 				63027B1B1A79E5F00068E68A /* JudgementSpell.m */,
+				63027B561A7B261D0068E68A /* AvengingWrathSpell.h */,
+				63027B571A7B261D0068E68A /* AvengingWrathSpell.m */,
+				63027B591A7B28E90068E68A /* AvengingWrathEffect.h */,
+				63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */,
 				63027B391A7B0A1B0068E68A /* Holy */,
 				63027B381A7B09DF0068E68A /* Prot */,
 			);
@@ -1109,6 +1121,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */,
 				63027B541A7B238D0068E68A /* devotion_aura_cast.wav */,
 				63027B481A7B1CA20068E68A /* holy_light_hit.wav */,
 				63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */,
@@ -1467,6 +1480,7 @@
 				63027B331A7ACE270068E68A /* evangelism.png in Resources */,
 				6320740A1A7095B800AA4416 /* holy_word_chastise.png in Resources */,
 				63A37F1F1A75D5C40036C9D0 /* flash_heal.wav in Resources */,
+				63027B5D1A7B29C30068E68A /* avenging_wrath_cast.wav in Resources */,
 				632074201A7095B800AA4416 /* rapture.png in Resources */,
 				63A37EF31A75ABE30036C9D0 /* 1.wav in Resources */,
 				632073F21A7095B800AA4416 /* chakra_red.png in Resources */,
@@ -1582,6 +1596,7 @@
 				63027AFB1A79A7A60068E68A /* BastionOfGloryEffect.m in Sources */,
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
+				63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
 				6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */,
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
@@ -1650,6 +1665,7 @@
 				6328FB551A73156E00DF6B50 /* UIColor+Extensions.m in Sources */,
 				63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */,
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
+				63027B581A7B261D0068E68A /* AvengingWrathSpell.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
 				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,

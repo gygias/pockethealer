@@ -53,4 +53,9 @@
     return @[ [HDClass holyPaladin] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastBeforeLargeMagicDamagePriority;
+}
+
 @end

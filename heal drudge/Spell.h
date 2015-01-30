@@ -36,12 +36,16 @@ typedef NS_ENUM(NSInteger, SpellType) {
 typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
     FillerPriotity                                          = 1 << 1,
-    CastWhenSourceNeedsHealingPriority                      = 1 << 2,
-    CastOnIdealAuxResourceAvailablePriority                 = 1 << 3,
-    CastWhenDamageDoneIncreasedPriority                     = 1 << 4, // during hero
-    CastBeforeLargeHitPriority                              = 1 << 5,
-    CastWhenInFearOfOtherPlayerDyingPriority                = 1 << 6,
-    CastWhenInFearOfDyingPriority                           = 1 << 7
+    CastWhenSomeoneNeedsHealingPriority                     = 1 << 2,
+    CastWhenTankNeedsHealingPriority                        = 1 << 3,
+    CastOnIdealAuxResourceAvailablePriority                 = 1 << 4,
+    CastWhenPartyNeedsHealing                               = 1 << 5,
+    CastWhenRaidNeedsHealing                                = 1 << 6,
+    CastWhenDamageDoneIncreasedPriority                     = 1 << 7, // during hero
+    CastBeforeLargeHitPriority                              = 1 << 8,
+    CastBeforeLargeMagicDamagePriority                      = CastBeforeLargeHitPriority,
+    CastWhenInFearOfOtherPlayerDyingPriority                = 1 << 9,
+    CastWhenInFearOfDyingPriority                           = 1 << 10
 };
 
 @interface Spell : NSObject

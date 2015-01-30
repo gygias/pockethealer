@@ -44,4 +44,11 @@
     return @[ [HDClass holyPaladin] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriotity |
+            CastWhenSomeoneNeedsHealingPriority |
+            CastWhenTankNeedsHealingPriority;
+}
+
 @end
