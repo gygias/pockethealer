@@ -17,13 +17,14 @@ extern const NSString *SpellLevelLow;
 extern const NSString *SpellLevelMedium;
 extern const NSString *SpellLevelHigh;
 
-typedef NS_ENUM(NSInteger, SpellSchool) {
+typedef NS_OPTIONS(NSInteger, SpellSchool) {
     PhysicalSchool  = 0,
-    HolySchool,
-    ShadowSchool,
-    NatureSchool,
-    FireSchool,
-    FrostSchool
+    HolySchool      = 1 << 1,
+    ShadowSchool    = 1 << 2,
+    NatureSchool    = 1 << 3,
+    FireSchool      = 1 << 4,
+    FrostSchool     = 1 << 5,
+    MagicSchool     = HolySchool | ShadowSchool | NatureSchool | FireSchool | FrostSchool
 };
 
 typedef NS_ENUM(NSInteger, SpellType) {

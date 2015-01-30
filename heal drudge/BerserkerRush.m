@@ -26,6 +26,7 @@
         
         self.abilityLevel = CatastrophicAbility;
         self.spellType = DetrimentalSpell;
+        self.school = PhysicalSchool;
     }
     return self;
 }

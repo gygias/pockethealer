@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Spell.h"
+
 @interface EventModifier : NSObject
 
+@property SpellSchool school;
 @property NSNumber *damageIncreasePercentage;
 @property NSNumber *damageIncrease;
 @property NSNumber *healingIncreasePercentage;

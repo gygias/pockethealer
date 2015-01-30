@@ -101,6 +101,7 @@ const NSString *SpellLevelHigh = @"high";
              @"FlashOfLightSpell",
              @"HolyShockSpell",
              @"LightOfDawnSpell",
+             @"DevotionAuraSpell",
              
              @"HealingTideTotemSpell"
              ];

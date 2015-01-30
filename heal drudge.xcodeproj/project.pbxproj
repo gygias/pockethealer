@@ -72,6 +72,10 @@
 		63027B471A7B0CF00068E68A /* light_of_dawn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B461A7B0CF00068E68A /* light_of_dawn.jpg */; };
 		63027B4A1A7B1CA20068E68A /* holy_light_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B481A7B1CA20068E68A /* holy_light_hit.wav */; };
 		63027B4B1A7B1CA20068E68A /* light_of_dawn_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */; };
+		63027B4E1A7B221F0068E68A /* DevotionAuraSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B4D1A7B221F0068E68A /* DevotionAuraSpell.m */; };
+		63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B501A7B223E0068E68A /* DevotionAuraEffect.m */; };
+		63027B531A7B237D0068E68A /* devotion_aura.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63027B521A7B237D0068E68A /* devotion_aura.jpg */; };
+		63027B551A7B238D0068E68A /* devotion_aura_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B541A7B238D0068E68A /* devotion_aura_cast.wav */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -404,6 +408,12 @@
 		63027B461A7B0CF00068E68A /* light_of_dawn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = light_of_dawn.jpg; sourceTree = "<group>"; };
 		63027B481A7B1CA20068E68A /* holy_light_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = holy_light_hit.wav; sourceTree = "<group>"; };
 		63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = light_of_dawn_cast.wav; sourceTree = "<group>"; };
+		63027B4C1A7B221E0068E68A /* DevotionAuraSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevotionAuraSpell.h; sourceTree = "<group>"; };
+		63027B4D1A7B221F0068E68A /* DevotionAuraSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevotionAuraSpell.m; sourceTree = "<group>"; };
+		63027B4F1A7B223E0068E68A /* DevotionAuraEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevotionAuraEffect.h; sourceTree = "<group>"; };
+		63027B501A7B223E0068E68A /* DevotionAuraEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevotionAuraEffect.m; sourceTree = "<group>"; };
+		63027B521A7B237D0068E68A /* devotion_aura.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = devotion_aura.jpg; sourceTree = "<group>"; };
+		63027B541A7B238D0068E68A /* devotion_aura_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = devotion_aura_cast.wav; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -784,6 +794,10 @@
 		63027B391A7B0A1B0068E68A /* Holy */ = {
 			isa = PBXGroup;
 			children = (
+				63027B4C1A7B221E0068E68A /* DevotionAuraSpell.h */,
+				63027B4D1A7B221F0068E68A /* DevotionAuraSpell.m */,
+				63027B4F1A7B223E0068E68A /* DevotionAuraEffect.h */,
+				63027B501A7B223E0068E68A /* DevotionAuraEffect.m */,
 				63027B3A1A7B0A520068E68A /* HolyLightSpell.h */,
 				63027B3B1A7B0A520068E68A /* HolyLightSpell.m */,
 				63027B3D1A7B0B200068E68A /* FlashOfLightSpell.h */,
@@ -837,6 +851,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				63027B521A7B237D0068E68A /* devotion_aura.jpg */,
 				63027B461A7B0CF00068E68A /* light_of_dawn.jpg */,
 				63027B321A7ACE270068E68A /* evangelism.png */,
 				63027B2A1A79EA730068E68A /* ardent_defender.jpg */,
@@ -1094,6 +1109,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63027B541A7B238D0068E68A /* devotion_aura_cast.wav */,
 				63027B481A7B1CA20068E68A /* holy_light_hit.wav */,
 				63027B491A7B1CA20068E68A /* light_of_dawn_cast.wav */,
 				63027B2C1A79F4ED0068E68A /* kargath_aggro.wav */,
@@ -1430,6 +1446,7 @@
 				632074741A70E93A00AA4416 /* freedom_wolf.png in Resources */,
 				63027AAC1A7605CE0068E68A /* healer_role.png in Resources */,
 				632074681A70E93A00AA4416 /* bestial_wrath.jpg in Resources */,
+				63027B531A7B237D0068E68A /* devotion_aura.jpg in Resources */,
 				632074931A70E93A00AA4416 /* water_shield.png in Resources */,
 				63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */,
 				6320741C1A7095B800AA4416 /* prayer_of_mending.png in Resources */,
@@ -1514,6 +1531,7 @@
 				63027B4A1A7B1CA20068E68A /* holy_light_hit.wav in Resources */,
 				63564D6C1A57260F0025ACDE /* Names.plist in Resources */,
 				632074101A7095B800AA4416 /* leap_of_faith.png in Resources */,
+				63027B551A7B238D0068E68A /* devotion_aura_cast.wav in Resources */,
 				632074871A70E93A00AA4416 /* resto_shaman.jpg in Resources */,
 				632073EE1A7095B800AA4416 /* chakra.png in Resources */,
 				632074031A7095B800AA4416 /* hand_of_protection.png in Resources */,
@@ -1599,6 +1617,7 @@
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
 				63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */,
 				63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */,
+				63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,
@@ -1651,6 +1670,7 @@
 				63C5F42B1A5247C400B9AE46 /* Healer.m in Sources */,
 				631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */,
 				63027B041A79ADD00068E68A /* WordOfGlorySpell.m in Sources */,
+				63027B4E1A7B221F0068E68A /* DevotionAuraSpell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

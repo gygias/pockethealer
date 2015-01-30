@@ -348,7 +348,10 @@
 }
 
 - (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source
-{    
+{
+    if ( self.isDead )
+        return;
+    
     if ( ! _statusEffects )
         _statusEffects = [NSMutableArray new];
     
