@@ -79,6 +79,8 @@
 		63027B581A7B261D0068E68A /* AvengingWrathSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B571A7B261D0068E68A /* AvengingWrathSpell.m */; };
 		63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */; };
 		63027B5D1A7B29C30068E68A /* avenging_wrath_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */; };
+		63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */; };
+		63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -248,6 +250,7 @@
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
 		63564D6C1A57260F0025ACDE /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63564D6B1A57260F0025ACDE /* Names.plist */; };
+		6364135B1A7D835100639007 /* EventTimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364135A1A7D835100639007 /* EventTimerView.m */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
 		6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645E1A74D61100D281B7 /* HolyNovaSpell.m */; };
@@ -422,6 +425,10 @@
 		63027B591A7B28E90068E68A /* AvengingWrathEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvengingWrathEffect.h; sourceTree = "<group>"; };
 		63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvengingWrathEffect.m; sourceTree = "<group>"; };
 		63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = avenging_wrath_cast.wav; sourceTree = "<group>"; };
+		63027B5E1A7B2DD80068E68A /* HandOfSacrificeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandOfSacrificeSpell.h; sourceTree = "<group>"; };
+		63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeSpell.m; sourceTree = "<group>"; };
+		63027B611A7B31490068E68A /* HandOfSacrificeEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandOfSacrificeEffect.h; sourceTree = "<group>"; };
+		63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeEffect.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -639,6 +646,8 @@
 		63564D651A5724AA0025ACDE /* Raid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raid.h; sourceTree = "<group>"; };
 		63564D661A5724AA0025ACDE /* Raid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raid.m; sourceTree = "<group>"; };
 		63564D6B1A57260F0025ACDE /* Names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Names.plist; sourceTree = "<group>"; };
+		636413591A7D835100639007 /* EventTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTimerView.h; sourceTree = "<group>"; };
+		6364135A1A7D835100639007 /* EventTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTimerView.m; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
 		636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemLevelAndStatsConverter.m; sourceTree = "<group>"; };
 		6378645A1A74D22700D281B7 /* PenanceSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PenanceSpell.h; sourceTree = "<group>"; };
@@ -774,6 +783,10 @@
 				63027B571A7B261D0068E68A /* AvengingWrathSpell.m */,
 				63027B591A7B28E90068E68A /* AvengingWrathEffect.h */,
 				63027B5A1A7B28E90068E68A /* AvengingWrathEffect.m */,
+				63027B5E1A7B2DD80068E68A /* HandOfSacrificeSpell.h */,
+				63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */,
+				63027B611A7B31490068E68A /* HandOfSacrificeEffect.h */,
+				63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */,
 				63027B391A7B0A1B0068E68A /* Holy */,
 				63027B381A7B09DF0068E68A /* Prot */,
 			);
@@ -856,6 +869,8 @@
 				63A37F021A75BE230036C9D0 /* AlertTextView.m */,
 				63A37F041A75BFA60036C9D0 /* AlertText.h */,
 				63A37F051A75BFA60036C9D0 /* AlertText.m */,
+				636413591A7D835100639007 /* EventTimerView.h */,
+				6364135A1A7D835100639007 /* EventTimerView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1608,6 +1623,7 @@
 				63027B3F1A7B0B200068E68A /* FlashOfLightSpell.m in Sources */,
 				63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
+				63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */,
 				634F490A1A748CB8008761C6 /* OpenWoundsEffect.m in Sources */,
 				634F49071A748A65008761C6 /* BorrowedTimeEffect.m in Sources */,
 				63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */,
@@ -1616,6 +1632,7 @@
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
+				6364135B1A7D835100639007 /* EventTimerView.m in Sources */,
 				632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */,
 				63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */,
 				6328FB521A72F98900DF6B50 /* SoundManager.m in Sources */,
@@ -1634,6 +1651,7 @@
 				63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */,
 				63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
+				63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,
 				634F48FE1A7480FB008761C6 /* PrayerOfMendingEffect.m in Sources */,

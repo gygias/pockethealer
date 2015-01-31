@@ -310,17 +310,31 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
             damageEvent.netAffected = @( damageEvent.netAffected.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
         }
-        else if (obj.damageIncreasePercentage )
+        if (obj.damageIncreasePercentage )
         {
             NSNumber *previousNetDamage = damageEvent.netDamage;
             damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
-            damageEvent.netAffected = @( damageEvent.netDamage.doubleValue - previousNetDamage.doubleValue );
+            damageEvent.netAffected = @( previousNetDamage.doubleValue - previousNetDamage.doubleValue );
         }
-        if ( obj.damageTakenDecreasePercentage )
+        if ( obj.damageTakenDecreasePercentage ) // todo inconsistent, some probably stack while others don't
         {
             if ( ! greatestDamageTakenDecreaseModifier ||
                 [greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage compare:obj.damageTakenDecreasePercentage] == NSOrderedAscending )
                 greatestDamageTakenDecreaseModifier = obj;
+        }
+        if ( obj.damageTakenDecrease ) // todo, should this be applied before percentages?
+        {
+            NSNumber *previousNetDamage = damageEvent.netDamage;
+            if ( obj.damageTakenDecrease.doubleValue >= damageEvent.netDamage.doubleValue )
+            {
+                damageEvent.netDamage = @0;
+                damageEvent.netAffected = @( obj.damageTakenDecrease.doubleValue - previousNetDamage.doubleValue );
+            }
+            else
+            {
+                damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - obj.damageTakenDecrease.doubleValue );
+                damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
+            }
         }
     }];
     

@@ -144,6 +144,12 @@
     
     [self _forceDraw:self];
     
+    [encounter.enemies enumerateObjectsUsingBlock:^(Enemy *enemy, NSUInteger idx, BOOL *stop) {
+        enemy.scheduledSpellHandler = ^(Spell *spell, NSDate *date){
+            [self.eventTimerView addSpellEvent:spell date:date];
+        };
+    }];
+    
     [encounter start];
     
     self.encounter = encounter;

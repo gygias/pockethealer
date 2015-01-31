@@ -482,7 +482,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
-                                <rect key="frame" x="16" y="49" width="216" height="48"/>
+                                <rect key="frame" x="16" y="49" width="143" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LrD-OZ-Fiv" customClass="AlertTextView">
@@ -512,6 +512,10 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="ecR-c9-0RC"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEx-iR-Bfo" customClass="EventTimerView">
+                                <rect key="frame" x="161" y="49" width="143" height="48"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -519,6 +523,7 @@
                         <outlet property="alertTextView" destination="LrD-OZ-Fiv" id="PAo-lD-mmb"/>
                         <outlet property="castBarView" destination="xfD-RV-5T3" id="buo-NF-rpg"/>
                         <outlet property="enemyFrameView" destination="ti6-cB-FxG" id="MNP-gr-u2U"/>
+                        <outlet property="eventTimerView" destination="VEx-iR-Bfo" id="W6Z-Hs-OfP"/>
                         <outlet property="playerAndTargetView" destination="7dB-1C-e9a" id="VQ1-mT-zua"/>
                         <outlet property="raidFramesView" destination="bHk-7k-FWl" id="dGM-A1-dBT"/>
                         <outlet property="spellBarView" destination="kxo-lk-dmB" id="AKW-VK-1v7"/>
@@ -531,7 +536,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7FA-GT-fCE"/>
+        <segue reference="ecR-c9-0RC"/>
         <segue reference="zgj-eD-NvH"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -180,7 +180,14 @@ typedef NS_ENUM(NSInteger, EntityRange) {
 
 - (NSArray *)rangePlayers
 {
-    return [self _playersWithRole:DPSRole range:RangeRange];
+    NSArray *rangeDPS = [self _playersWithRole:DPSRole range:RangeRange];
+    NSArray *healers = [self healers];
+    NSMutableArray *combined = [NSMutableArray new]; // TODO inconsistent with other methods returning nil if no players
+    if ( rangeDPS )
+        [combined addObjectsFromArray:rangeDPS];
+    if ( healers )
+        [combined addObjectsFromArray:healers];
+    return combined;
 }
 
 - (NSArray *)healers

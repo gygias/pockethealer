@@ -67,6 +67,8 @@
         //NSLog(@"%@: %@",ability,ability.nextFireDate);
         ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
         NSLog(@"set next fire date for %@: %@ based on %f",ability,ability.nextFireDate,ability.cooldown.doubleValue);
+        if ( self.scheduledSpellHandler && ability.abilityLevel > NormalAbility )
+            self.scheduledSpellHandler(ability,ability.nextFireDate);
     }];
     
     // choose a tank target
@@ -102,10 +104,12 @@
                 [self _dispatchAbility:ability toEncounter:encounter withTarget:target];
             }];
             
-            if ( ! ability.isPeriodic )
+            ability.nextFireDate = [NSDate distantFuture]; // XXX
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.periodicDuration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
                 ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
-            else
-                ability.nextFireDate = [NSDate distantFuture];
+                if ( self.scheduledSpellHandler && ability.abilityLevel > NormalAbility )
+                    self.scheduledSpellHandler(ability,ability.nextFireDate);
+            });
         }
     }
 }

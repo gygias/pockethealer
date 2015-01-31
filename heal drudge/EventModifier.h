@@ -19,6 +19,7 @@
 @property NSNumber *healingIncrease;
 @property NSNumber *hasteIncreasePercentage;
 @property NSNumber *damageTakenDecreasePercentage;
+@property NSNumber *damageTakenDecrease;
 @property BOOL      instantCast;
 @property NSNumber *cheatDeathAndApplyHealing;
 @property NSNumber *powerCostDecreasePercentage;

@@ -14,10 +14,12 @@
 #import "CastBarView.h"
 #import "PlayerAndTargetView.h"
 #import "AlertTextView.h"
+#import "EventTimerView.h"
 
 @interface QuickPlayViewController : BaseViewController
 
 @property IBOutlet EnemyFrameView *enemyFrameView;
+@property IBOutlet EventTimerView *eventTimerView;
 @property IBOutlet AlertTextView *alertTextView;
 @property IBOutlet RaidFramesView *raidFramesView;
 @property IBOutlet CastBarView *castBarView;

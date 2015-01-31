@@ -19,6 +19,8 @@
 @class Guild;
 @class Event;
 
+typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
+
 // represents a thing in the world, or an 'instance' of a character
 @interface Entity : ModelBase
 
@@ -148,6 +150,8 @@
 @property NSString *aggroSoundName;
 @property NSString *hitSoundName;
 @property NSString *deathSoundName;
+
+@property (copy) ScheduledSpellBlock scheduledSpellHandler;
 
 @end
 
