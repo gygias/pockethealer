@@ -155,7 +155,7 @@
             // this is fucking hideous
             if ( consumesEffect )
             {
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(self.encounter.encounterQueue, ^{
                     [self consumeStatusEffect:obj];
                 });
             }
@@ -178,7 +178,7 @@
             // this is fucking hideous
             if ( consumesEffect )
             {
-                dispatch_async(dispatch_get_current_queue(), ^{
+                dispatch_async(self.encounter.encounterQueue, ^{
                     [self consumeStatusEffect:obj];
                 });
             }
@@ -370,11 +370,12 @@
     if ( statusEffect.periodicTick.doubleValue > 0 )
     {
         NSLog(@"%@ will tick every %0.2f seconds",statusEffect,statusEffect.periodicTick.doubleValue);
-        [statusEffect handleTickWithOwner:self isInitialTick:YES];
+        __block BOOL isInitialTick = YES;
         statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
         dispatch_source_set_timer(statusEffect.periodicTickSource, DISPATCH_TIME_NOW, statusEffect.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(statusEffect.periodicTickSource, ^{
-            [statusEffect handleTickWithOwner:self isInitialTick:NO];
+            [statusEffect handleTickWithOwner:self isInitialTick:isInitialTick];
+            isInitialTick = NO;
         });
         dispatch_resume(statusEffect.periodicTickSource);
     }
@@ -627,7 +628,6 @@
 
 - (BOOL)_doAutomaticHealing
 {
-    return YES;
     if ( self.castingSpell )
         return YES;
     

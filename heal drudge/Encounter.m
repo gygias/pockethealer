@@ -310,7 +310,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
             damageEvent.netAffected = @( damageEvent.netAffected.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
         }
-        if (obj.damageIncreasePercentage )
+        if ( obj.damageIncreasePercentage )
         {
             NSNumber *previousNetDamage = damageEvent.netDamage;
             damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );

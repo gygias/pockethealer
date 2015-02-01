@@ -29,6 +29,9 @@
 
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( asSource )
+        return NO;
+    
     EventModifier *mod = [EventModifier new];
     mod.cheatDeathAndApplyHealing = @( source.health.doubleValue * 0.12 );
     [modifiers addObject:mod];

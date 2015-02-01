@@ -95,47 +95,28 @@
     castBlock = ^(Spell *spell) {
         
         // determine target
-        BOOL doCast = NO;
         Entity *target = nil;
         
         // determine target, shouldn't be doing validation at this level
-        if ( spell.targeted )
+        if ( spell.targeted && encounter.player.target.isEnemy && spell.spellType == BeneficialSpell )
         {
-            if ( encounter.player.target )
-            {
-                target = encounter.player.target;
-                doCast = YES;
-            }
-            else
-            {
-                if ( spell.spellType != DetrimentalSpell )
-                {
-                    NSLog(@"auto-self casting %@",spell);
-                    target = encounter.player;
-                    doCast = YES;
-                }
-            }
+            NSLog(@"auto-self casting %@",spell);
+            target = encounter.player;
         }
         else
-        {
-            target = encounter.player;
-            doCast = YES;
-        }
+            target = encounter.player.target;
         
+        NSString *message = nil;
+        
+        BOOL doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
         if ( doCast )
         {
-            NSString *message = nil;
-            
-            doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
-            if ( doCast )
-            {
-                NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target];
-                self.castBarView.castingEntity = encounter.player;
-                self.castBarView.effectiveCastTime = effectiveCastTime;
-            }
-            else
-                NSLog(@"%@'s %@ failed: %@",encounter.player,spell,message);
+            NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target];
+            self.castBarView.castingEntity = encounter.player;
+            self.castBarView.effectiveCastTime = effectiveCastTime;
         }
+        else
+            NSLog(@"%@'s %@ failed: %@",encounter.player,spell,message);
         
         return doCast;
     };

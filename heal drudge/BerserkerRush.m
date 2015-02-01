@@ -22,7 +22,7 @@
         self.castTime = @1.5;
         //self.canTargetTanks = YES;
         self.affectsRandomRange = YES;
-        self.damage = @1000000;
+        self.damage = @100000; // TODO making this not a oneshot until "player iq" is a thing
         
         self.abilityLevel = CatastrophicAbility;
         self.spellType = DetrimentalSpell;

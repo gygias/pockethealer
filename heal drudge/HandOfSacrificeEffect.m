@@ -28,6 +28,9 @@
 
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( asSource )
+        return NO;
+    
     if ( spell.damage.doubleValue <= 0 )
         return NO;
     
@@ -48,6 +51,7 @@
     
     Event *transferredDamageEvent = [Event new];
     transferredDamageEvent.netDamage = thirtyPercentOfDamage;
+    transferredDamageEvent.spell = spell;
     [self.source handleIncomingDamageEvent:transferredDamageEvent];
     
     if ( consumed )

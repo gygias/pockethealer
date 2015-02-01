@@ -79,6 +79,7 @@
     [self _drawRoleIconInRect:rect];
     [self _drawTextInRect:rect];
     [self _drawResourceBarInRect:rect];
+    [self _drawSpellCastingInRect:rect];
     [self _drawStatusEffectsInRect:rect];
 }
 
@@ -313,6 +314,36 @@
     CGContextSetFillColorWithColor(context,
                                    self.entity.hdClass.resourceColor.CGColor);
     CGContextFillRect(context, rectangle);
+}
+
+- (void)_drawSpellCastingInRect:(CGRect)rect
+{
+    Spell *castingSpell = self.entity.castingSpell;
+    if ( ! castingSpell || castingSpell.castTime.doubleValue <= 0 )
+        return;
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGFloat height = rect.size.height / 7;
+    CGFloat originY = ( rect.origin.y + RAID_FRAME_HEALTH_INSET ) + ( rect.size.height - height - RAID_FRAME_BORDER_INSET - RAID_FRAME_HEALTH_INSET - 1 );
+    CGFloat width = ( rect.size.width - ( RAID_FRAME_HEALTH_INSET * 2 ) );
+    
+    CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET,
+                                  originY,
+                                  width,
+                                  height);
+    NSTimeInterval timeSinceCastStart = [[NSDate date] timeIntervalSinceDate:castingSpell.lastCastStartDate];
+    double castPercentage = timeSinceCastStart / castingSpell.castTime.doubleValue;
+    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:5],
+                                  NSForegroundColorAttributeName : [UIColor whiteColor] };
+    [castingSpell.name drawInRect:rectangle withAttributes:attributes];
+    CGRect castNub = CGRectMake(rectangle.origin.x + ( castPercentage * rectangle.size.width ),
+                                rectangle.origin.y + rectangle.size.height - 3,
+                                3,
+                                3);
+    CGContextAddRect(context, castNub);
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextFillPath(context);
 }
 
 #define STATUS_EFFECT_ORIGIN_OFFSET_X [RaidFrameView desiredSize].width * .5

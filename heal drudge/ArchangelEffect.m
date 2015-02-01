@@ -27,8 +27,11 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( ! asSource )
+        return NO;
+    
     // TODO does 'beneficial' imply healing is defined? does it matter?
     EventModifier *mod = [EventModifier new];
     mod.healingIncreasePercentage = @( 0.05 * self.currentStacks.doubleValue );

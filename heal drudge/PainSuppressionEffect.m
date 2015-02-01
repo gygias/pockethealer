@@ -28,6 +28,9 @@
 
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( asSource )
+        return NO;
+    
     // borrowed time doesn't seem to be consumed in WoD
     //if ( handler )
     //    handler(YES);

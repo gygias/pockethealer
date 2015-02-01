@@ -28,6 +28,9 @@
 
 - (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
 {
+    if ( asSource )
+        return NO;
+    
     EventModifier *mod = [EventModifier new];
     mod.damageTakenDecreasePercentage = @0.5;
     [modifiers addObject:mod];

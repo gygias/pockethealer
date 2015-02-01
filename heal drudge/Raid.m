@@ -27,7 +27,7 @@
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
     // XXX
-    randomSize = 0;
+    randomSize = 7;
     NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
