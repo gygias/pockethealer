@@ -128,7 +128,7 @@
     
     if ( okay )
     {
-        if ( spell.nextCooldownDate || self.nextGlobalCooldownDate )
+        if ( spell.isOnCooldown || self.isOnGlobalCooldown )
         {
             if ( messagePtr )
                 *messagePtr = @"Not ready yet";
@@ -766,7 +766,7 @@
         NSTimeInterval effectiveGCD = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
         self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
         self.currentGlobalCooldownDuration = effectiveGCD;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
             self.nextGlobalCooldownDate = nil;
             self.currentGlobalCooldownDuration = 0;
         });
@@ -852,6 +852,12 @@
         self.currentAuxiliaryResources = self.maxAuxiliaryResources;
         NSLog(@"%@ is at full aux resources",self);
     }
+}
+
+- (BOOL)isOnGlobalCooldown
+{
+    NSDate *storedDate = self.nextGlobalCooldownDate;
+    return storedDate && [[NSDate date] timeIntervalSinceDate:storedDate] <= 0;
 }
 
 @end

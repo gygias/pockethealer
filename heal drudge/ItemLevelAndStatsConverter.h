@@ -26,4 +26,6 @@
 
 + (NSNumber *)automaticHealValueWithEntity:(Entity *)entity;
 
++ (NSNumber *)averageDPSOfEntities:(NSArray *)entities;
+
 @end

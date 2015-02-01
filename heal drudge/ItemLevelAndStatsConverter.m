@@ -11,6 +11,9 @@
 #import "Entity.h"
 #import "HDClass.h"
 
+#import "GenericDamageSpell.h"
+#import "GenericPhysicalAttackSpell.h"
+
 @implementation ItemLevelAndStatsConverter
 
 + (void)assignStatsToEntity:(Entity *)entity basedOnAverageEquippedItemLevel:(NSNumber *)ilvl
@@ -267,6 +270,26 @@
 + (NSNumber *)automaticHealValueWithEntity:(Entity *)entity
 {
     return @( [entity.spellPower floatValue] * 3.3264 );
+}
+
++ (NSNumber *)averageDPSOfEntities:(NSArray *)entities
+{
+    __block double averageDPS = 0;
+    [entities enumerateObjectsUsingBlock:^(Entity *entity, NSUInteger idx, BOOL *stop) {
+        Spell *spell = nil;
+        if ( entity.hdClass.isCasterDPS )
+            spell = [[GenericDamageSpell alloc] initWithCaster:entity];
+        else if ( entity.hdClass.isMeleeDPS || entity.hdClass.isTank )
+            spell = [[GenericPhysicalAttackSpell alloc] initWithCaster:entity];
+        
+        NSNumber *entityGcd = [self globalCooldownWithEntity:entity hasteBuffPercentage:nil];
+        if ( spell.cooldown.doubleValue > 0 )
+            averageDPS += spell.damage.doubleValue / ( ( spell.cooldown.doubleValue > entityGcd.doubleValue ) ? spell.cooldown.doubleValue : entityGcd.doubleValue );
+        else
+            averageDPS += spell.damage.doubleValue / entityGcd.doubleValue;
+    }];
+    
+    return @(averageDPS);
 }
 
 @end

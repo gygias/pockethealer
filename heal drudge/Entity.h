@@ -152,6 +152,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property NSString *deathSoundName;
 
 @property (copy) ScheduledSpellBlock scheduledSpellHandler;
+@property (readonly) BOOL isOnGlobalCooldown;
 
 @end
 

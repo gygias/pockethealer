@@ -9,6 +9,7 @@
 #import "KargathBladefist.h"
 
 #import "Raid.h"
+#import "ItemLevelAndStatsConverter.h"
 
 @implementation KargathBladefist
 
@@ -16,7 +17,8 @@
 {
     if ( self = [super initWithRaid:raid] )
     {
-        self.stamina = @(500000 / 60 * ( ( raid.players.count < 5 ? 5 : raid.players.count ) / 5 ));
+        NSNumber *raidAverageDPS = [ItemLevelAndStatsConverter averageDPSOfEntities:raid.players];
+        self.stamina = @(.5 * 60 * raidAverageDPS.doubleValue / 60);
         self.aggroSoundName = @"kargath_aggro";
         self.hitSoundName = @"kargath_hit";
         self.deathSoundName = @"kargath_death";
