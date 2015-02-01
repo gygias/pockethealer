@@ -90,6 +90,13 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 
 - (void)endEncounter
 {
+    if ( _encounterTimer )
+    {
+        dispatch_source_cancel(_encounterTimer);
+        //dispatch_release(_encounterTimer);
+        _encounterTimer = NULL;
+    }
+    
     [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
         NSLog(@"end encounter => %@",enemy);
         [enemy endEncounter:self];
@@ -99,17 +106,8 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         [player endEncounter:self];
     }];
     
-    if ( _encounterTimer )
-    {
-        dispatch_source_cancel(_encounterTimer);
-        //dispatch_release(_encounterTimer);
-        _encounterTimer = NULL;
-    }
-    
     if ( _encounterQueue )
-    {
         _encounterQueue = NULL;
-    }
     
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);

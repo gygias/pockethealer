@@ -128,7 +128,7 @@
     
     if ( okay )
     {
-        if ( spell.isOnCooldown || self.isOnGlobalCooldown )
+        if ( asSource && ( spell.isOnCooldown || self.isOnGlobalCooldown ) )
         {
             if ( messagePtr )
                 *messagePtr = @"Not ready yet";
@@ -369,27 +369,34 @@
     
     if ( statusEffect.periodicTick.doubleValue > 0 )
     {
-        NSLog(@"%@ will tick every %0.2f seconds",statusEffect,statusEffect.periodicTick.doubleValue);
-        __block BOOL isInitialTick = YES;
+        unsigned long totalTicks = statusEffect.duration / statusEffect.periodicTick.unsignedLongValue;
+        __block unsigned long thisTick = 1;
         statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
         dispatch_source_set_timer(statusEffect.periodicTickSource, DISPATCH_TIME_NOW, statusEffect.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(statusEffect.periodicTickSource, ^{
-            [statusEffect handleTickWithOwner:self isInitialTick:isInitialTick];
-            isInitialTick = NO;
+            //unsigned long ticks = dispatch_source_get_data(statusEffect.periodicTickSource);
+            [statusEffect handleTickWithOwner:self isInitialTick:( thisTick == 1 )];
+            if ( thisTick == totalTicks )
+            {
+                dispatch_source_cancel(statusEffect.periodicTickSource);
+                statusEffect.periodicTickSource = NULL;
+                
+                if ( [_statusEffects containsObject:statusEffect] )
+                {
+                    NSLog(@"%@ on %@ has timed out",statusEffect,self);
+                    [(NSMutableArray *)_statusEffects removeObject:statusEffect];
+                }
+                else
+                    NSLog(@"%@ on %@ was removed some other way",statusEffect,self);
+            }
+            
+            thisTick++;
         });
         dispatch_resume(statusEffect.periodicTickSource);
+        NSLog(@"%@ will tick %lu times every %0.2f seconds and time out in %0.2f seconds",statusEffect,totalTicks,statusEffect.periodicTick.doubleValue,statusEffect.duration);
     }
-    
-    NSLog(@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-        if ( [_statusEffects containsObject:statusEffect] )
-        {
-            NSLog(@"%@ on %@ has timed out",statusEffect,self);
-            [(NSMutableArray *)_statusEffects removeObject:statusEffect];
-        }
-        else
-            NSLog(@"%@ on %@ was removed some other way",statusEffect,self);
-    });
+    else
+        NSLog(@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
 }
 
 - (void)consumeStatusEffect:(Effect *)effect absolute:(BOOL)absolute
@@ -637,8 +644,7 @@
         {
             //NSNumber *averageHealing = [ItemLevelAndStatsConverter automaticHealValueWithEntity:self];
             Spell *spell = [[GenericHealingSpell alloc] initWithCaster:self];
-            NSLog(@"%@ is healing %@ for %@",self,player,spell.healing);
-            self.target = player;
+            self.target = [self.encounter.raid.tankPlayers lastObject];
             //[encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
             
             NSString *message = nil;
@@ -647,7 +653,7 @@
                 NSLog(@"%@ automatic spell cast failed: %@",self,message);
                 return;
             }
-            if ( ! [player validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
+            if ( ! [self.target validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
             {
                 NSLog(@"%@ automatic spell cast failed: %@",self,message);
                 return;
@@ -663,7 +669,7 @@
     if ( spellToCast )
         [self castSpell:spellToCast withTarget:self.target];
     
-    return YES;
+    return spellToCast.triggersGCD;
 }
 
 - (void)updateEncounter:(Encounter *)encounter
