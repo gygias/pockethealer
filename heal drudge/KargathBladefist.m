@@ -18,7 +18,7 @@
     if ( self = [super initWithRaid:raid] )
     {
         NSNumber *raidAverageDPS = [ItemLevelAndStatsConverter averageDPSOfEntities:raid.players];
-        self.stamina = @(.5 * 60 * raidAverageDPS.doubleValue / 60);
+        self.stamina = @(3 * 60 * raidAverageDPS.doubleValue / 60);
         self.aggroSoundName = @"kargath_aggro";
         self.hitSoundName = @"kargath_hit";
         self.deathSoundName = @"kargath_death";

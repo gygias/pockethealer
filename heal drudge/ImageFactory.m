@@ -10,21 +10,50 @@
 
 @implementation ImageFactory
 
+NSMutableDictionary *sImageFactoryCache = nil;
+
++ (void)initialize
+{
+    if ( self == [ImageFactory class] )
+        sImageFactoryCache = [NSMutableDictionary new];
+}
+
 + (UIImage *)questionMark
 {
-    return [UIImage imageNamed:@"question_mark"];
+    NSString *name = @"question_mark";
+    UIImage *questionMark = [sImageFactoryCache objectForKey:name];
+    if ( ! questionMark )
+        [UIImage imageNamed:name];
+    if ( questionMark )
+        [sImageFactoryCache setObject:questionMark forKey:name];
+    return questionMark;
 }
 
 + (UIImage *)imageNamed:(NSString *)vagueName
 {
-    NSArray *extensionsInOrderOfPreference = @[@"png",@"jpg",@"jpeg",@"gif"];
-    for ( NSString *extension in extensionsInOrderOfPreference )
+    UIImage *theImage = [sImageFactoryCache objectForKey:vagueName];
+    if ( ! theImage )
     {
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:vagueName ofType:extension];
-        if ( imagePath )
-            return [UIImage imageWithContentsOfFile:imagePath];
+        NSArray *extensionsInOrderOfPreference = @[@"png",@"jpg",@"jpeg",@"gif"];
+        for ( NSString *extension in extensionsInOrderOfPreference )
+        {
+            NSString *imagePath = [[NSBundle mainBundle] pathForResource:vagueName ofType:extension];
+            if ( imagePath )
+            {
+                theImage = [UIImage imageWithContentsOfFile:imagePath];
+                if ( theImage )
+                {
+                    [sImageFactoryCache setObject:theImage forKey:vagueName];
+                    break;
+                }
+            }
+        }
     }
-    return [self questionMark];
+    
+    if ( ! theImage )
+        theImage = [self questionMark];
+    
+    return theImage;
 }
 
 + (UIImage *)imageForClass:(HDClass *)hdClass

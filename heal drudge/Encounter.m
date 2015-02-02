@@ -76,12 +76,12 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 
 - (void)updateEncounter
 {
-    [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(Entity *)obj updateEncounter:self];
+    [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
+        [enemy updateEncounter:self];
     }];
     
-    [self.raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [(Entity *)obj updateEncounter:self];
+    [self.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+        [player updateEncounter:self];
     }];
     
     if ( self.encounterUpdatedHandler )
@@ -98,11 +98,9 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     }
     
     [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
-        NSLog(@"end encounter => %@",enemy);
         [enemy endEncounter:self];
     }];
     [self.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
-        NSLog(@"end encounter => %@",player);
         [player endEncounter:self];
     }];
     
