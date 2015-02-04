@@ -35,6 +35,7 @@
     // TODO does 'beneficial' imply healing is defined? does it matter?
     EventModifier *mod = [EventModifier new];
     mod.healingIncreasePercentage = @( 0.05 * self.currentStacks.doubleValue );
+    //mod.
     mod.source = self;
     [modifiers addObject:mod];
     return YES;

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "SoundManager.h"
 
 #import <AVFoundation/AVFoundation.h>
@@ -26,98 +28,102 @@ static SoundManager *sSoundManager;
 + (void)playNoteSound
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"belltollnightelf" ofType:@"wav"];
-    [self playFileWithPath:path];
+    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"ding"];
 }
 
 + (void)playDangerSound
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"UR_Algalon_BHole01" ofType:@"wav"];
-    [self playFileWithPath:path];
+    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"bee wear"];
 }
 
 + (void)playCatastrophicSound;
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"KILJAEDEN02" ofType:@"wav"];
-    [self playFileWithPath:path];
+    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"destruction"];
 }
 
-+ (void)playFileWithPath:(NSString *)path
-{
-    [self playFileWithPath:path duration:0];
-}
-
-+ (void)playSpellHit:(NSString *)hitSoundName volume:(float)volume
++ (void)playSpellHit:(Spell *)spell
 {
     // TODO if this gets called with nil, "1.wav" plays. (???)
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:hitSoundName ofType:@"wav"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:spell.hitSoundName ofType:@"wav"];
     if ( filePath )
-        [self playFileWithPath:filePath volume:volume];
+    {
+        BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
+        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+        [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
+    }
 }
 
-+ (void)playFileWithPath:(NSString *)path volume:(float)volume
++ (void)playEffectHit:(Effect *)effect
 {
-    [self playFileWithPath:path volume:volume duration:0 handler:NULL];
+    // TODO if this gets called with nil, "1.wav" plays. (???)
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:effect.hitSoundName ofType:@"wav"];
+    if ( filePath )
+    {
+        BOOL emphasized = effect.source.isPlayingPlayer || effect.source.isEnemy;
+        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+        [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
+    }
 }
 
-+ (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration
-{
-    return [self playFileWithPath:path duration:duration handler:NULL];
-}
-
-+ (void)playFileWithPath:(NSString *)path duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
-{
-    [self playFileWithPath:path volume:HIGH_VOLUME duration:duration handler:handler];
-}
-
-+ (void)playFileWithPath:(NSString *)path volume:(float)volume duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
++ (void)playFileWithPath:(NSString *)path volume:(float)volume duration:(NSTimeInterval)duration throttled:(BOOL)throttled handler:(StartedPlayingSoundBlock)handler
 {
     if ( ! path )
         return;
     
     dispatch_async(sSoundManager.soundQueue, ^{
-        NSError *error = nil;
-        if ( path )
+        
+        NSDictionary *existingSoundEvent = [sSoundManager.audioPlayers objectForKey:path];
+        if ( [existingSoundEvent[@"throttled"] boolValue] )
         {
-            NSURL * url = [NSURL fileURLWithPath:path];
-            AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url
-                                                                        error:&error];
-            sound.volume = volume;
+            NSLog(@"%@ is throttled",path);
+            return;
+        }
+        
+        NSError *error = nil;
+        NSURL * url = [NSURL fileURLWithPath:path];
+        AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url
+                                                                    error:&error];
+        sound.volume = volume;
+        
+        if ( sound )
+        {
+            // http://stackoverflow.com/questions/14951535/how-to-play-wav-file
+            // When audioPlayer gets out of scope it gets deallocated and then sound playing will be stopped. Add a property to the class and it will remain for the duration of the object life-time. –  Jens Schwarzer Sep 25 '13
+            if ( ! sSoundManager.audioPlayers )
+                sSoundManager.audioPlayers = [NSMutableDictionary new];
+            NSDictionary *soundEvent = @{ @"date" : [NSDate date],
+                                          @"throttled" : [NSNumber numberWithBool:throttled],
+                                          @"sound" : sound };
+            [sSoundManager.audioPlayers setObject:soundEvent forKey:path];
+            NSTimeInterval effectiveDuration = duration ? duration : sound.duration;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveDuration * 2 * NSEC_PER_SEC)), sSoundManager.soundQueue, ^{
+                [sSoundManager.audioPlayers removeObjectForKey:path];
+            });
             
-            if ( sound )
+            if ( [sound play] )
             {
-                // http://stackoverflow.com/questions/14951535/how-to-play-wav-file
-                // When audioPlayer gets out of scope it gets deallocated and then sound playing will be stopped. Add a property to the class and it will remain for the duration of the object life-time. –  Jens Schwarzer Sep 25 '13
-                if ( ! sSoundManager.audioPlayers )
-                    sSoundManager.audioPlayers = [NSMutableArray new];
-                [sSoundManager.audioPlayers addObject:sound];
-                NSTimeInterval effectiveDuration = duration ? duration : sound.duration;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveDuration * 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [sSoundManager.audioPlayers removeObject:sound];
-                });
+                //PHLog(@"playing %@",path);
                 
-                if ( [sound play] )
+                if ( handler )
+                    handler(sound);
+                
+                if ( duration > 0 )
                 {
-                    //NSLog(@"playing %@",path);
-                    
-                    if ( handler )
-                        handler(sound);
-                    
-                    if ( duration > 0 )
-                    {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [sound stop];
-                        });
-                    }
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [sound stop];
+                    });
                 }
-                else
-                    NSLog(@"failed playing %@",path);
             }
             else
-                NSLog(@"failed to initialize sound from %@",url);
+                PHLog(@"failed playing %@",path);
         }
+        else
+            PHLog(@"failed to initialize sound from %@",url);
     });
 }
 
@@ -139,10 +145,10 @@ static SoundManager *sSoundManager;
     }
 }
 
-+ (void)playSpellFizzle:(SpellSchool)school volume:(float)volume
++ (void)playSpellFizzle:(Spell *)spell
 {
     NSString *fileName = nil;
-    switch(school)
+    switch(spell.school)
     {
         case FireSchool:
             fileName = @"spell_fizzle_fire";
@@ -165,13 +171,45 @@ static SoundManager *sSoundManager;
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
     if ( fileName )
-        [self playFileWithPath:filePath volume:volume];
+    {
+        BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
+        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+        [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
+    }
 }
 
-+ (void)playSpellSound:(SpellSchool)school level:(NSString *)level volume:(float)volume duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler
++ (void)playHitSound:(Entity *)entity
+{
+    if ( entity.hitSoundName )
+    {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:entity.hitSoundName ofType:@"wav"];
+        if ( filePath )
+        {
+            BOOL emphasized = entity.isPlayingPlayer || entity.isEnemy;
+            float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+            [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
+        }
+    }
+}
+
++ (void)playAggroSound:(Entity *)entity
+{
+    if ( entity.aggroSoundName )
+    {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:entity.aggroSoundName ofType:@"wav"];
+        if ( filePath )
+        {
+            BOOL emphasized = entity.isPlayingPlayer || entity.isEnemy;
+            float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+            [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
+        }
+    }
+}
+
++ (void)playSpellSound:(Spell *)spell duration:(NSTimeInterval)duration
 {
     NSString *fileNameBase = nil;
-    switch(school)
+    switch(spell.school)
     {
         case HolySchool:
             fileNameBase = @"precast_holy";
@@ -183,11 +221,13 @@ static SoundManager *sSoundManager;
             
     }
     
-    if ( fileNameBase && level )
+    if ( fileNameBase && spell.level )
     {
-        NSString *fileName = [NSString stringWithFormat:@"%@_%@",fileNameBase,level];
+        NSString *fileName = [NSString stringWithFormat:@"%@_%@",fileNameBase,spell.level];
         NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
-        [self playFileWithPath:filePath volume:volume duration:duration handler:handler];
+        BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
+        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+        [self playFileWithPath:filePath volume:volume duration:duration throttled:!emphasized handler:NULL];
     }
 }
 
@@ -214,10 +254,10 @@ static SoundManager *sSoundManager;
 //        NSNumber *maxCountdownIndex = @10;
 //        if ( currentIndex > maxCountdownIndex.unsignedIntegerValue )
 //        {
-//            NSLog(@"%@ can only count down from %@",self,maxCountdownIndex);
+//            PHLog(@"%@ can only count down from %@",self,maxCountdownIndex);
 //            return;
 //        }
-//        NSLog(@"%@ is counting down from %@",self,startIndex);
+//        PHLog(@"%@ is counting down from %@",self,startIndex);
 //        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, globalQueue);
 //        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
 //        dispatch_source_set_event_handler(timer, ^{
@@ -233,7 +273,7 @@ static SoundManager *sSoundManager;
 + (void)playDeathSound
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"abandon_quest" ofType:@"wav"];
-    [self playFileWithPath:filePath];
+    [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
 }
 
 + (void)_nsTimerCountdown:(id)nsTimer
@@ -249,7 +289,7 @@ static SoundManager *sSoundManager;
         userInfo[@"index"] = @( currentIndex.integerValue - 1 );
     NSString *fileName = [NSString stringWithFormat:@"%@",currentIndex];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
-    [self playFileWithPath:filePath];
+    [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
 }
 
 @end

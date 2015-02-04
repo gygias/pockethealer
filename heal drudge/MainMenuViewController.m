@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "MainMenuViewController.h"
 
 @interface MainMenuViewController ()
@@ -26,30 +28,30 @@
 
 - (IBAction)pressedCreateCharacter:(id)sender
 {
-    NSLog(@"create character");
+    PHLog(@"create character");
 }
 
 - (IBAction)pressedQuickPlayGygias:(id)sender
 {
-    NSLog(@"quick play gygias");
+    PHLog(@"quick play gygias");
     self.state.playerName = @"Gygias";
 }
 
 - (IBAction)pressedQuickPlaySlyeri:(id)sender
 {
-    NSLog(@"quick play sly");
+    PHLog(@"quick play sly");
     self.state.playerName = @"Slyeri";
 }
 
 - (IBAction)pressedQuickPlayLireal:(id)sender
 {
-    NSLog(@"quick play lireal");
+    PHLog(@"quick play lireal");
     self.state.playerName = @"Lireal";
 }
 
 - (IBAction)pressedLoadFromArmory:(id)sender
 {
-    NSLog(@"load from armory");
+    PHLog(@"load from armory");
 }
 
 @end

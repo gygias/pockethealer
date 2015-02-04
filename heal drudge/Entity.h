@@ -46,8 +46,6 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL stopped;
 @property NSArray *spells;
 
-@property NSMutableArray *emittingSounds;
-
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;
 

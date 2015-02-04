@@ -25,7 +25,7 @@
         self.maxStacks = @5;
         self.currentStacks = @5;
         self.image = [ImageFactory imageNamed:@"prayer_of_mending"];
-        self.hitSound = @"prayer_of_mending_hit";
+        self.hitSoundName = @"prayer_of_mending_hit";
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;
         self.healingOnDamageIsOneShot = YES;
@@ -63,7 +63,7 @@
     // TODO this is racey
     NSMutableArray *livingPlayers = [NSMutableArray new];
     [players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-        //NSLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
+        //PHLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
         if ( ! obj.isDead && obj != excludingPlayer )
             [livingPlayers addObject:obj];
     }];

@@ -226,6 +226,7 @@
 		6328FB601A731E7F00DF6B50 /* HealingTideTotemSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6328FB5F1A731E7F00DF6B50 /* HealingTideTotemSpell.m */; };
 		6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6328FB621A732B4400DF6B50 /* ArchangelSpell.m */; };
 		6328FB681A732C1800DF6B50 /* DivineStarSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6328FB671A732C1800DF6B50 /* DivineStarSpell.m */; };
+		634D18051A802D9E003CE395 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 634D18031A802D9E003CE395 /* Logging.m */; };
 		634F48D81A732D6F008761C6 /* divine_star.png in Resources */ = {isa = PBXBuildFile; fileRef = 634F48D71A732D6F008761C6 /* divine_star.png */; };
 		634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48DA1A734B6C008761C6 /* WeakenedSoulEffect.m */; };
 		634F48DE1A734B89008761C6 /* Effect.m in Sources */ = {isa = PBXBuildFile; fileRef = 634F48DD1A734B89008761C6 /* Effect.m */; };
@@ -604,6 +605,8 @@
 		6328FB621A732B4400DF6B50 /* ArchangelSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchangelSpell.m; sourceTree = "<group>"; };
 		6328FB661A732C1800DF6B50 /* DivineStarSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DivineStarSpell.h; sourceTree = "<group>"; };
 		6328FB671A732C1800DF6B50 /* DivineStarSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DivineStarSpell.m; sourceTree = "<group>"; };
+		634D18031A802D9E003CE395 /* Logging.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Logging.m; sourceTree = "<group>"; };
+		634D18041A802D9E003CE395 /* Logging.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = Logging.h; sourceTree = "<group>"; };
 		634F48D71A732D6F008761C6 /* divine_star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = divine_star.png; sourceTree = "<group>"; };
 		634F48D91A734B6C008761C6 /* WeakenedSoulEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakenedSoulEffect.h; sourceTree = "<group>"; };
 		634F48DA1A734B6C008761C6 /* WeakenedSoulEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeakenedSoulEffect.m; sourceTree = "<group>"; };
@@ -1279,6 +1282,8 @@
 				6328FB511A72F98900DF6B50 /* SoundManager.m */,
 				6328FB531A73156E00DF6B50 /* UIColor+Extensions.h */,
 				6328FB541A73156E00DF6B50 /* UIColor+Extensions.m */,
+				634D18031A802D9E003CE395 /* Logging.m */,
+				634D18041A802D9E003CE395 /* Logging.h */,
 			);
 			path = "heal drudge";
 			sourceTree = "<group>";
@@ -1640,6 +1645,7 @@
 				634F49041A7489E9008761C6 /* PowerWordShieldEffect.m in Sources */,
 				63C5F4031A5243E900B9AE46 /* main.m in Sources */,
 				639E1DB91A702E290062E803 /* WoWRealm.m in Sources */,
+				634D18051A802D9E003CE395 /* Logging.m in Sources */,
 				63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */,
 				63027B221A79E85E0068E68A /* ArdentDefenderSpell.m in Sources */,
 				634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */,

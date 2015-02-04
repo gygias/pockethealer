@@ -22,7 +22,7 @@
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;
         
-        self.hitSound = @"power_word_shield_hit";
+        self.hitSoundName = @"power_word_shield_hit";
     }
     
     return self;

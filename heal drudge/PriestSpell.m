@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "PriestSpell.h"
 
 #import "DivineAegisEffect.h"
@@ -17,12 +19,12 @@
     // TODO does it matter if DA is applied before or after the rest of "handling hit"?
     [super handleHitWithSource:source target:target modifiers:modifiers];
     
+    //if ( ! modifiers.crit )
+    //    return;
+    
     // apply divine aegis
     if ( [source.hdClass isEqual:[HDClass discPriest]] )
     {
-        if ( arc4random() % 5 != 0 ) // TODO crits...
-            return;
-        
         // TODO does DA also proc off of absorbs?
         NSNumber *effectiveHealing = ( self.isChanneled || self.isPeriodic ) ? self.periodicHeal : self.healing;
         if ( effectiveHealing )
@@ -34,7 +36,7 @@
                 da = [DivineAegisEffect new];
                 [target addStatusEffect:da source:source];
             } else
-                NSLog(@"%@'s existing %@ is going from %@ to %@!",target,da.absorb,da.absorb,effectiveAbsorb);
+                PHLog(@"%@'s existing %@ is going from %@ to %@!",target,da.absorb,da.absorb,effectiveAbsorb);
             da.absorb = effectiveAbsorb;
         }
     }

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "EnemyFrameView.h"
 
 #import "Enemy.h"
@@ -76,7 +78,7 @@
     UITouch *theTouch = [myTouches anyObject]; // XXX
     if ( theTouch )
     {
-        NSLog(@"you touched %@",self.enemy);
+        PHLog(@"you touched %@",self.enemy);
     
         if ( self.enemyTouchedHandler )
             self.enemyTouchedHandler(self.enemy);

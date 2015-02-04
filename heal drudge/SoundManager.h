@@ -10,6 +10,7 @@
 
 #import "Ability.h"
 #import "Spell.h"
+#import "Effect.h"
 
 #define LOW_VOLUME ((float)0.1)
 #define MED_VOLUME ((float)0.5)
@@ -18,7 +19,7 @@
 @interface SoundManager : NSObject
 
 @property (nonatomic,retain) dispatch_queue_t soundQueue;
-@property NSMutableArray *audioPlayers;
+@property NSMutableDictionary *audioPlayers;
 
 typedef void(^StartedPlayingSoundBlock)(id sound);
 
@@ -26,9 +27,12 @@ typedef void(^StartedPlayingSoundBlock)(id sound);
 + (void)playDangerSound;
 + (void)playCatastrophicSound;
 + (void)playSoundForAbilityLevel:(AbilityLevel)abilityLevel;
-+ (void)playSpellFizzle:(SpellSchool)school volume:(float)volume;
-+ (void)playSpellSound:(SpellSchool)school level:(NSString *)level volume:(float)volume duration:(NSTimeInterval)duration handler:(StartedPlayingSoundBlock)handler;
-+ (void)playSpellHit:(NSString *)hitSoundName volume:(float)volume;
++ (void)playSpellFizzle:(Spell *)school;
++ (void)playSpellSound:(Spell *)spell duration:(NSTimeInterval)duration;
++ (void)playSpellHit:(Spell *)spell;
++ (void)playEffectHit:(Effect *)spell;
++ (void)playHitSound:(Entity *)entity;
++ (void)playAggroSound:(Entity *)entity;
 + (void)playDeathSound;
 
 + (void)playCountdownWithStartIndex:(NSNumber *)startIndex;

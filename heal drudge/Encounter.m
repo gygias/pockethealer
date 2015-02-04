@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Encounter.h"
 
 #import "Event.h"
@@ -61,7 +63,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         // begin update timer
         _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
-        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
+        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.005 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(_encounterTimer, ^{
             [self updateEncounter];
         });
@@ -127,17 +129,17 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if ( spell.nextCooldownDate == thisNextCooldownDate )
             {
-                NSLog(@"%@'s %@ has cooled down",source,spell);
+                PHLog(@"%@'s %@ has cooled down",source,spell);
                 spell.nextCooldownDate = nil;
             }
             else
-                NSLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
+                PHLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
         });
     }
     
     dispatch_async(_encounterQueue, ^{
     
-        NSLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
+        PHLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
         
         if ( source.isEnemy && self.enemyAbilityHandler )
             self.enemyAbilityHandler((Enemy *)source,(Ability *)spell);
@@ -145,18 +147,17 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         NSMutableArray *modifiers = [NSMutableArray new];
         if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
         {
-            NSLog(@"%@->%@ modified %@",source,target,spell);
+            PHLog(@"%@->%@ modified %@",source,target,spell);
         }
         if ( [target handleSpell:spell asSource:NO otherEntity:source modifiers:modifiers] )
         {
-            NSLog(@"%@->%@ modified %@",source,target,spell);
+            PHLog(@"%@->%@ modified %@",source,target,spell);
         }
         
-        float volume = source.isPlayingPlayer || source.hdClass.isTank ? HIGH_VOLUME : LOW_VOLUME;
         if ( spell.castSoundName )
-            [SoundManager playSpellHit:spell.castSoundName volume:volume];
+            [SoundManager playSpellHit:spell];
         if ( spell.hitSoundName )
-            [SoundManager playSpellHit:spell.hitSoundName volume:volume];
+            [SoundManager playSpellHit:spell];
         
         NSMutableArray *allTargets = [NSMutableArray new];
         if ( spell.isSmart )
@@ -210,7 +211,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             
             if ( cheatDeathModifier )
             {
-                NSLog(@"CHEATING DEATH and healing %@ for %@",target,cheatDeathModifier.cheatDeathAndApplyHealing);
+                PHLog(@"CHEATING DEATH and healing %@ for %@",target,cheatDeathModifier.cheatDeathAndApplyHealing);
                 
                 NSInteger newHealth = target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
                 if ( newHealth > target.health.integerValue )
@@ -233,7 +234,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                 // source has to choose a new target
                 if ( source.isEnemy && ! [(Enemy *)source targetNextThreatWithEncounter:self] )
                 {
-                    NSLog(@"the encounter is over because there are no targets for %@",source);
+                    PHLog(@"the encounter is over because there are no targets for %@",source);
                     [self endEncounter];
                 }
                 else // TODO is there some ability by which players could kill themselves as the last one alive?
@@ -248,7 +249,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                     }];
                     if ( ! someEnemyIsAlive )
                     {
-                        NSLog(@"the encounter is over because all enemies are dead");
+                        PHLog(@"the encounter is over because all enemies are dead");
                         [self endEncounter];
                         return;
                     }
@@ -300,7 +301,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     // deliberately applying all damage increases before decreases, TODO no idea if this is right
     __block EventModifier *greatestDamageTakenDecreaseModifier = nil;
     [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"considering %@ for damage of %@",obj,spell);
+        PHLog(@"considering %@ for damage of %@",obj,spell);
         if ( obj.damageIncrease )
         {
             damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
@@ -340,7 +341,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         NSNumber *previousNetDamage = damageEvent.netDamage;
         damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 - greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage.doubleValue ) );
         damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
-        NSLog(@"applying %@ to %@ -> %@",greatestDamageTakenDecreaseModifier,spell,damageEvent.netDamage);
+        PHLog(@"applying %@ to %@ -> %@",greatestDamageTakenDecreaseModifier,spell,damageEvent.netDamage);
     }
     
     [target handleIncomingDamageEvent:damageEvent];
@@ -359,7 +360,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     if ( healingValue.doubleValue > 0 )
     {
         [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-            NSLog(@"considering %@ for healing of %@",obj,spell);
+            PHLog(@"considering %@ for healing of %@",obj,spell);
             if ( obj.healingIncrease )
                 healingValue = @( healingValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
             else if ( obj.healingIncreasePercentage )
@@ -372,7 +373,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         target.currentHealth = @(newHealth);
         
-        NSLog(@"%@ was healed for %@",target,healingValue);
+        PHLog(@"%@ was healed for %@",target,healingValue);
     }
     
     __block NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
@@ -380,7 +381,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     if ( absorbValue.doubleValue > 0 )
     {
         [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-            NSLog(@"considering %@ for absorb of %@",obj,spell);
+            PHLog(@"considering %@ for absorb of %@",obj,spell);
             if ( obj.healingIncrease )
                 absorbValue = @( absorbValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
             else if ( obj.healingIncreasePercentage )
@@ -393,7 +394,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 //        
 //        target.currentAbsorb = @(newAbsorb);
         
-        NSLog(@"%@ received a %@ absorb",target,absorbValue);
+        PHLog(@"%@ received a %@ absorb",target,absorbValue);
     }
 }
 

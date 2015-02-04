@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "LoadFromArmoryViewController.h"
 
 #import "WoWAPIRequest.h"
@@ -45,7 +47,7 @@
 - (void)textFieldChanged:(id)huh
 {
     WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
-    //NSLog(@"sup: %@ -> %@",self.realmField.text,suggestedRealm);
+    //PHLog(@"sup: %@ -> %@",self.realmField.text,suggestedRealm);
     
     NSString *suggestedText = (NSString *)suggestedRealm.name;
     
@@ -73,10 +75,10 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
 //    if ( textField == self.nameField )
-//        NSLog(@"name field should");
+//        PHLog(@"name field should");
 //    else if ( textField == self.realmField )
 //    {
-//        NSLog(@"realm field should");
+//        PHLog(@"realm field should");
 //        //dispatch_async(dispatch_get_current_queue(), ^{
 ////            WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
 ////            if ( suggestedRealm )
@@ -112,8 +114,8 @@
         apiRequest.isCharacterInfoRequest = YES;
         apiRequest.characterName = self.nameField.text;
         [apiRequest sendRequestWithCompletionHandler:^(BOOL success, id response) {
-            NSLog(@"initial character load claims %@",success?@"success":@"failure");
-            //NSLog(@"%@",response);
+            PHLog(@"initial character load claims %@",success?@"success":@"failure");
+            //PHLog(@"%@",response);
             
             if ( ! success || ! [response isKindOfClass:[NSDictionary class]] )
             {
@@ -125,12 +127,12 @@
                 self.guildLabel.text = @"???";
                 return;
             }
-//            NSLog(@"%@",[WoWAPIRequest characterNamesFromGuildListResponse:response]);
+//            PHLog(@"%@",[WoWAPIRequest characterNamesFromGuildListResponse:response]);
 //            
 //            NSUInteger randomIndex = arc4random() % [response count];
 //            NSDictionary *aAPICharacterGuildDict = [[response objectForKey:@"members"] objectAtIndex:randomIndex]; // XXX
 //            NSDictionary *aAPICharacterDict = aAPICharacterGuildDict[@"character"]; // also includes a 'rank' number
-//            NSLog(@"%@",aAPICharacterDict);
+//            PHLog(@"%@",aAPICharacterDict);
             Entity *entity =     [WoWAPIRequest entityWithAPICharacterDict:response
                                                                 fetchingImage:YES];
 //            character.guildName = guildName;
@@ -162,7 +164,7 @@
             self.specView.image = [ImageFactory imageForSpec:entity.hdClass];
             
             //            NSArray *realmsArray = [WoWAPIRequest realmsFromRealmStatusResponse:response country:realmCountry];
-            //            NSLog(@"%@",realmsArray);
+            //            PHLog(@"%@",realmsArray);
             //            NSArray *realmsPlist = [WoWRealm realmsAsPropertyList:realmsArray];
             //
             //            NSString *filePath = @"/tmp/Realms.plist";
@@ -182,7 +184,7 @@
 
 - (IBAction)pressedContinue:(id)sender
 {
-    NSLog(@"continue...");
+    PHLog(@"continue...");
 }
 
 @end

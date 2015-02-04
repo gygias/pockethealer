@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "BaseViewController.h"
 
 @interface BaseViewController ()
@@ -45,7 +47,7 @@ static State *sBaseViewControllerState = nil;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSLog(@"yoyo (%@) %@ -> %@",sender,segue.sourceViewController,segue.destinationViewController);
+    PHLog(@"yoyo (%@) %@ -> %@",sender,segue.sourceViewController,segue.destinationViewController);
 }
 
 @end

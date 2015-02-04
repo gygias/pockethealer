@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "CreateHealerViewController.h"
 
 #import "Entity.h"
@@ -51,50 +53,50 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSLog(@"name field should blah blah");
+    PHLog(@"name field should blah blah");
     [self _refreshState];
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"name field did end editing");
+    PHLog(@"name field did end editing");
     [self _refreshState];
 }
 
 - (IBAction)nameFieldDidSomething:(id)sender
 {
-    NSLog(@"name field did something");
+    PHLog(@"name field did something");
     [self _refreshState];
 }
 
 - (IBAction)classSelectorDidSomething:(id)sender
 {
-    NSLog(@"class selector did something");
+    PHLog(@"class selector did something");
     [self _refreshState];
 }
 
 - (IBAction)ilvlSliderDidSomething:(id)sender
 {
-    //NSLog(@"ilvl slider did something");
+    //PHLog(@"ilvl slider did something");
     [self _refreshState];
 }
 
 - (IBAction)preferredSecondaryOneSelectorDidSomething:(id)sender
 {
-    NSLog(@"preferred secondary one did something");
+    PHLog(@"preferred secondary one did something");
     [self _refreshState];
 }
 
 - (IBAction)preferredSecondaryTwoSelectorDidSomething:(id)sender
 {
-    NSLog(@"preferred secondary two did something");
+    PHLog(@"preferred secondary two did something");
     [self _refreshState];
 }
 
 - (IBAction)createButtonTapped:(id)sender
 {
-    NSLog(@"create button tapped");
+    PHLog(@"create button tapped");
     
     [self performSegueWithIdentifier:@"create-main" sender:self];
 }
@@ -105,7 +107,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSLog(@"prepare for segue: %@: %@",sender,segue);
+    PHLog(@"prepare for segue: %@: %@",sender,segue);
 }
 
 

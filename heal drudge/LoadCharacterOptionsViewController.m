@@ -58,7 +58,7 @@
 
 - (IBAction)ilvlSliderDidSomething:(id)sender
 {
-    //NSLog(@"guild ilvl slider did something");
+    //PHLog(@"guild ilvl slider did something");
     NSUInteger rounded = self.minGuildiLvlSlider.value;
     [sender setValue:rounded animated:NO];
     self.minGuildiLvlLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.minGuildiLvlSlider.value];

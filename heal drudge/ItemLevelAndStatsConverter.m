@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "ItemLevelAndStatsConverter.h"
 
 #import "Entity.h"
@@ -205,7 +207,7 @@
     // average = 0.00020618556701 secs per haste
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00020618556701 );
-    NSLog(@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    PHLog(@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > baseCastTime.doubleValue ? 0 : baseCastTime.doubleValue - reduction );
 }
 
@@ -218,7 +220,7 @@
     // average = 0.00015376574384
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00015376574384 );
-    //NSLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    //PHLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > 1.5 ? 0 : 1.5 - reduction );
 }
 

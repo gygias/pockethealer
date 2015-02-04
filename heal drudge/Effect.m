@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Effect.h"
 
 #import "Encounter.h"
@@ -53,9 +55,7 @@
 
 - (BOOL)handleAdditionWithOwner:(Entity *)owner
 {
-    BOOL hitIsPlayingPlayer = owner.encounter.player == owner;
-    if ( self.hitSound )
-        [SoundManager playSpellHit:self.hitSound volume:( hitIsPlayingPlayer ? HIGH_VOLUME : LOW_VOLUME )];
+    [SoundManager playEffectHit:self];
     return YES;
 }
 
@@ -74,7 +74,7 @@
     if ( self.currentStacks.integerValue < self.maxStacks.integerValue )
         self.currentStacks = @(self.currentStacks.integerValue + 1);
     self.startDate = [NSDate date];
-    NSLog(@"%@ has gained a stack -> %@",self,self.currentStacks);
+    PHLog(@"%@ has gained a stack -> %@",self,self.currentStacks);
 }
 
 - (void)removeStack

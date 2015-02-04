@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "HDClass.h"
 
 #import "UIColor+Extensions.h"
@@ -348,6 +350,33 @@ const NSString *WoWAPIClassKey = @"class";
     }
     
     return [UIColor blackColor];
+}
+
+- (UIColor *)auxResourceColor
+{
+    switch (_classID) {
+        case HDPALADIN:
+            return [UIColor yellowColor];
+            break;
+        case HDMONK:
+            return [UIColor cyanColor];
+            break;
+        case HDROGUE:
+            return [UIColor redColor];
+            break;
+        default:
+            break;
+    }
+    
+    switch (_specID) {
+        case HDSHADOWPRIEST:
+            return [UIColor purpleColor];
+            break;
+        default:
+            break;
+    }
+    
+    return nil;
 }
 
 - (NSString *)description
@@ -761,7 +790,7 @@ const NSString *WoWAPIClassKey = @"class";
             break;
     }
     
-    NSLog(@"bug at -primaryStatName");
+    PHLog(@"bug at -primaryStatName");
     return @"intellect";
 }
 

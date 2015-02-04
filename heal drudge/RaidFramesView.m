@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "RaidFramesView.h"
 #import "RaidFrameView.h"
 #import "Entity.h"
@@ -19,7 +21,7 @@
     // Drawing code
     if ( self.raid.players.count == 0 )
     {
-        NSLog(@"raid has no players or is nil!");
+        PHLog(@"raid has no players or is nil!");
         return;
     }
     
@@ -31,7 +33,7 @@
         Entity *thisPlayer = self.raid.players[idx];
         NSUInteger idxParty = idx / partySize;
         NSUInteger partyPosition = idx % partySize;
-        //NSLog(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
+        //PHLog(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
         CGRect thisRect = CGRectMake( idxParty * frameSize.width, partyPosition * frameSize.height, frameSize.width, frameSize.height );
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:thisRect];
         
@@ -51,15 +53,15 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //NSLog(@"touches ended: %@",event);
-    //NSLog(@"for me: %@",[event touchesForView:self]);
+    //PHLog(@"touches ended: %@",event);
+    //PHLog(@"for me: %@",[event touchesForView:self]);
     NSSet *myTouches = [event touchesForView:self];
     UITouch *theTouch = [myTouches anyObject]; // XXX
     
     // determine which player
     NSUInteger  party = [theTouch locationInView:self].x / [RaidFrameView desiredSize].width,
                 pos = [theTouch locationInView:self].y / [RaidFrameView desiredSize].height;
-    //NSLog(@"party: %lu pos: %lu",party,pos);
+    //PHLog(@"party: %lu pos: %lu",party,pos);
     self.selectedFrame = ( party * 5 ) + pos;
     
     if ( self.targetedPlayerBlock )

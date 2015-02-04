@@ -14,6 +14,7 @@
 #import "UIColor+Extensions.h"
 #import "ImageFactory.h"
 #import "Encounter.h"
+#import "Logging.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -66,10 +67,10 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-    //NSLog(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+    //PHLog(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
     double snapshottedHealthPercentage = self.entity.currentHealth.doubleValue / self.entity.health.doubleValue;//(CGFloat)( arc4random() % 100 ) / 100 ;
     //if ( snapshottedHealthPercentage < 1.0 )
-    //    NSLog(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
+    //    PHLog(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
     [self _drawBackgroundInRect:rect];
     [self _drawBorderInRect:rect];
     [self _drawHealthInRect:rect withHealth:snapshottedHealthPercentage];
@@ -81,6 +82,7 @@
     [self _drawResourceBarInRect:rect];
     [self _drawSpellCastingInRect:rect];
     [self _drawStatusEffectsInRect:rect];
+    [self _drawAuxResourcesInRect:rect];
 }
 
 - (void)_drawBackgroundInRect:(CGRect)rect
@@ -142,7 +144,7 @@
     CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET, rect.origin.y + RAID_FRAME_HEALTH_INSET, width, rect.size.height - ( RAID_FRAME_HEALTH_INSET * 2 ));
     CGContextAddRect(context, rectangle);
     
-    //NSLog(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
+    //PHLog(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
     CGContextSetStrokeColorWithColor(context,
                                      self.entity.hdClass.classColor.CGColor);
     
@@ -161,7 +163,7 @@
     
     CGFloat originX = rect.origin.x + RAID_FRAME_HEALTH_INSET + ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
     CGFloat incomingHeals = 0;//( (CGFloat)( arc4random() % 20 ) / 100 );
-    //NSLog(@"incomingHeals: %f origin: %f",incomingHeals,originX);
+    //PHLog(@"incomingHeals: %f origin: %f",incomingHeals,originX);
     
     if ( incomingHeals == 0 )
         return;
@@ -191,7 +193,7 @@
     
     CGFloat originX = rect.origin.x + RAID_FRAME_HEALTH_INSET + ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
     CGFloat absorbs = self.entity.currentAbsorb.doubleValue / self.entity.health.doubleValue;//( (CGFloat)( arc4random() % 50 ) / 100 );
-    //NSLog(@"absorbs: %f origin: %f",absorbs,originX);
+    //PHLog(@"absorbs: %f origin: %f",absorbs,originX);
     
     // optimize for <= incoming heals?
     if ( absorbs == 0 )
@@ -237,10 +239,19 @@
     UIImage *roleImage = [ImageFactory imageForRole:self.entity.hdClass.role];
     
     if ( ! roleImage && ! self.entity.isEnemy )
-        NSLog(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
-        //[NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
+    {
+        PHLog(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
+        [NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
+    }
     CGRect imageRect = CGRectMake(rect.origin.x + ROLE_ICON_ORIGIN_X, rect.origin.y + ROLE_ICON_ORIGIN_Y, ROLE_ICON_SIZE, ROLE_ICON_SIZE);
     [roleImage drawInRect:imageRect];
+//    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:10] };
+//    if ( self.entity.hdClass.isHealerClass )
+//        [@"H" drawInRect:imageRect withAttributes:attributes];
+//    else if ( self.entity.hdClass.isTank )
+//        [@"T" drawInRect:imageRect withAttributes:attributes];
+//    else if ( self.entity.hdClass.isDPS )
+//        [@"D" drawInRect:imageRect withAttributes:attributes];
 }
 
 - (void)_drawTextInRect:(CGRect)rect
@@ -386,7 +397,7 @@
         theta -= 360;
     double thetaRadians = theta * ( M_PI / 180 );
     CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
-    //NSLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
+    //PHLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
     
     CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
     CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
@@ -408,6 +419,30 @@
     //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
     //CGContextAddRect(context, rectangle);
     CGContextFillPath(context);
+}
+
+- (void)_drawAuxResourcesInRect:(CGRect)rect
+{
+    UIColor *auxColor = self.entity.hdClass.auxResourceColor;
+    if ( ! auxColor )
+        return;
+    
+    NSUInteger idx = 0;
+    for ( ; idx < self.entity.currentAuxiliaryResources.unsignedIntegerValue; idx++ )
+    {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        //CGRect bounds = [self bounds];
+        
+        //CGPoint center;
+        //center.x = bounds.origin.x + bounds.size.width / 2.0;
+        //center.y = bounds.origin.y + bounds.size.height / 2.0;
+        //CGContextSaveGState(ctx);
+        
+        CGContextSetLineWidth(ctx,5);
+        CGContextSetFillColorWithColor(ctx, auxColor.CGColor);
+        CGContextAddArc(ctx,rect.origin.x + 5 * idx + 5,rect.origin.y + rect.size.height / 2,2,0.0,M_PI*2,YES);
+        CGContextFillPath(ctx);
+    }
 }
 
 @end

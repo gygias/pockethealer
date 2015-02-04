@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "ShieldOfTheRighteousSpell.h"
 
 #import "ShieldOfTheRighteousEffect.h"
@@ -44,7 +46,7 @@
 {
     ShieldOfTheRighteousEffect *sotr = [ShieldOfTheRighteousEffect new];
     sotr.holyPower = source.currentAuxiliaryResources;
-    NSLog(@"%@ has lost their aux resources due to %@ being cast",source,self);
+    PHLog(@"%@ has lost their aux resources due to %@ being cast",source,self);
     source.currentAuxiliaryResources = @0;
     [source addStatusEffect:sotr source:source];
     

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Enemy.h"
 #import "Ability.h"
 #import "Encounter.h"
@@ -60,13 +62,13 @@
     [super beginEncounter:encounter];
     
     if ( self.aggroSoundName )
-        [SoundManager playSpellHit:self.aggroSoundName volume:HIGH_VOLUME];
+        [SoundManager playAggroSound:self];
     
     [_abilities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Ability *ability = (Ability *)obj;
-        //NSLog(@"%@: %@",ability,ability.nextFireDate);
+        //PHLog(@"%@: %@",ability,ability.nextFireDate);
         ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
-        NSLog(@"set next fire date for %@: %@ based on %f",ability,ability.nextFireDate,ability.cooldown.doubleValue);
+        PHLog(@"set next fire date for %@: %@ based on %f",ability,ability.nextFireDate,ability.cooldown.doubleValue);
         if ( self.scheduledSpellHandler && ability.abilityLevel > NormalAbility )
             self.scheduledSpellHandler(ability,ability.nextFireDate);
     }];
@@ -82,11 +84,11 @@
     {
         Class abilityClass = NSClassFromString(abilityName);
         Ability *ability = [abilityClass new];
-        //NSLog(@"initialized ability %@ with fire date %@",ability,ability.nextFireDate);
+        //PHLog(@"initialized ability %@ with fire date %@",ability,ability.nextFireDate);
         if ( ability )
             [(NSMutableArray *)_abilities addObject:ability];
         else
-            NSLog(@"Ability %@ didn't initialize",abilityName);
+            PHLog(@"Ability %@ didn't initialize",abilityName);
     }
 }
 
@@ -95,7 +97,7 @@
     // canned automatic thing happening
     for ( Ability *ability in [self abilities] )
     {
-        //NSLog(@"%@ since %@ == %f",[NSDate date],ability.nextFireDate,[[NSDate date] timeIntervalSinceDate:ability.nextFireDate]);
+        //PHLog(@"%@ since %@ == %f",[NSDate date],ability.nextFireDate,[[NSDate date] timeIntervalSinceDate:ability.nextFireDate]);
         if ( [[NSDate date] timeIntervalSinceDate:ability.nextFireDate] >= 0 )
         {
             NSArray *targets = [self _determineTargetsForAbility:ability raid:encounter.raid];
@@ -118,8 +120,8 @@
 {
     Entity *newTarget = [self _randomLivingPlayerInRaid:encounter.raid fromRolePreferenceList:@[ TankRole, HealerRole, DPSRole]];
     if ( ! self.target.isDead || self.target == newTarget )
-        NSLog(@"wtf");
-    NSLog(@"%@ is changing targets from %@ to %@",self,self.target,newTarget);
+        PHLog(@"wtf");
+    PHLog(@"%@ is changing targets from %@ to %@",self,self.target,newTarget);
     self.target = newTarget; // should encounter be doing this?
     return ( newTarget );
 }
@@ -136,7 +138,7 @@
         dispatch_source_set_event_handler(timer, ^{
             if ( self.isDead || self.stopped )
             {
-                NSLog(@"stopping periodic %@ because %@ is %@",ability,self,self.isDead?@"dead":@"stopped");
+                PHLog(@"stopping periodic %@ because %@ is %@",ability,self,self.isDead?@"dead":@"stopped");
                 dispatch_source_cancel(timer);
                 return;
             }
@@ -147,7 +149,7 @@
             else
                 tickTargets = @[target];
             [tickTargets enumerateObjectsUsingBlock:^(Entity *tickTarget, NSUInteger idx, BOOL *stop) {
-                NSLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
+                PHLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
                 [encounter handleSpell:ability source:self target:tickTarget periodicTick:YES periodicTickSource:timer isFirstTick:isFirstTick];
             }];
             
@@ -156,7 +158,7 @@
         dispatch_resume(timer);
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.periodicDuration * NSEC_PER_SEC)), self.periodicEffectQueue, ^{
-            NSLog(@"%@ has ended",ability);
+            PHLog(@"%@ has ended",ability);
             dispatch_source_cancel(timer);
             
             ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
@@ -204,7 +206,7 @@
         if ( self.target )
             [targets addObject:self.target];
         else
-            NSLog(@"%@ targets main target, but %@ has none!",ability,self);
+            PHLog(@"%@ targets main target, but %@ has none!",ability,self);
     }
     
     if ( ability.hitRange )
@@ -257,7 +259,7 @@
     // TODO this is racey
     NSMutableArray *livingPlayers = [NSMutableArray new];
     [players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-        //NSLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
+        //PHLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
         if ( ! obj.isDead )
             [livingPlayers addObject:obj];
     }];

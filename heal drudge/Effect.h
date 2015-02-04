@@ -45,7 +45,7 @@ typedef void(^EffectEventHandler)(BOOL);
 @property BOOL drawsInFrame;
 @property BOOL isBeneficial;
 @property BOOL isEmphasized; // e.g. boss's main big debuff on players
-@property NSString *hitSound;
+@property NSString *hitSoundName;
 
 @property NSNumber *healingOnDamage;
 @property BOOL healingOnDamageIsOneShot;

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Spell.h"
 #import "SpellPriv.h"
 
@@ -22,7 +24,7 @@ const NSString *SpellLevelHigh = @"high";
     if ( self = [super init] )
     {
         if ( [[self hdClasses] containsObject:caster.hdClass] )
-            NSLog(@"initializing %@'s %@",caster,self);
+            PHLog(@"initializing %@'s %@",caster,self);
         else
             return nil;
         

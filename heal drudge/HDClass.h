@@ -109,6 +109,7 @@ typedef enum
 @property (readonly) HDSPECID specID;
 @property (readonly) UIColor *classColor;
 @property (readonly) UIColor *resourceColor;
+@property (readonly) UIColor *auxResourceColor;
 
 + (id)classWithID:(HDCLASSID)classID spec:(HDSPECID)specID;
 + (HDClass *)classWithAPICharacterDictionary:(NSDictionary *)apiDict apiSpecName:(NSString *)apiSpecName;

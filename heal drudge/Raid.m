@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Raid.h"
 #import "Entity.h"
 #import "HDClass.h"
@@ -49,7 +51,7 @@
                         basedOnAverageEquippedItemLevel:@630];
         [aPlayer initializeSpells];
         
-        NSLog(@"added %@",aPlayer);
+        PHLog(@"added %@",aPlayer);
         
         // cheap ass randomize
         if ( idx == 0 )
@@ -119,30 +121,30 @@
     
     if ( slyIdx >= 0 )
     {
-        NSLog(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
+        PHLog(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
         [raidCopy removeObjectAtIndex:slyIdx];
     }
     slyIdx = raidCopy.count;
-    NSLog(@"adding %@",slyeri);
+    PHLog(@"adding %@",slyeri);
     [raidCopy insertObject:slyeri atIndex:slyIdx];
     
     if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
     {
         NSInteger removeIndex = gygiasIdx >= 0 ? gygiasIdx : someHealerIdx;
-        NSLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
+        PHLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
         [raidCopy removeObjectAtIndex:removeIndex];
     }
     gygiasIdx = raidCopy.count;
-    NSLog(@"adding %@",gygias);
+    PHLog(@"adding %@",gygias);
     [raidCopy insertObject:gygias atIndex:gygiasIdx];
     
     if ( lirealIdx >= 0 )
     {
-        NSLog(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
+        PHLog(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
         [raidCopy removeObjectAtIndex:lirealIdx];
     }
     lirealIdx = raidCopy.count;
-    NSLog(@"adding %@",lireal);
+    PHLog(@"adding %@",lireal);
     [raidCopy insertObject:lireal atIndex:lirealIdx];
     
     if ( raid.players.count >= 20 )
@@ -150,7 +152,7 @@
     
     raid.players = raidCopy;
     
-    NSLog(@"%@",raid.players);
+    PHLog(@"%@",raid.players);
     
     if ( outGygias )
         *outGygias = gygias;
@@ -224,7 +226,7 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     NSUInteger idx = [self.players indexOfObject:entity];
     if ( idx == NSNotFound )
     {
-        NSLog(@"error: %@ not found in raid",entity);
+        PHLog(@"error: %@ not found in raid",entity);
         return nil;
     }
     

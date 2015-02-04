@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "LightOfDawnSpell.h"
 
 #import "EventModifier.h"
@@ -52,7 +54,7 @@
     if ( source.currentAuxiliaryResources.doubleValue >= 3 )
         resourcesToConsume = @3;
     source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
-    NSLog(@"%@ is consuming %@ resources casting %@",source,resourcesToConsume,self);
+    PHLog(@"%@ is consuming %@ resources casting %@",source,resourcesToConsume,self);
     
     EventModifier *mod = [EventModifier new];
     mod.healingIncreasePercentage = @( resourcesToConsume.doubleValue * self.healing.doubleValue );

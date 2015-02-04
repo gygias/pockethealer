@@ -23,6 +23,7 @@
 @property BOOL      instantCast;
 @property NSNumber *cheatDeathAndApplyHealing;
 @property NSNumber *powerCostDecreasePercentage;
+@property BOOL      crit;
 @property NSObject *source; // this isn't really necessary but helpful for debugging
 
 @property NSNumber *absorbedDamage;

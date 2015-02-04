@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "Logging.h"
+
 #import "Entity+ProtPaladin.h"
 
 #import "Entity+AI.h"
@@ -23,17 +25,17 @@
     
     __block Spell *highestPrioritySpell = nil;
     [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
-        //NSLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
+        //PHLog(@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
         
         if ( spell.isOnCooldown )
         {
-            //NSLog(@"  %@ is on cooldown",spell);
+            //PHLog(@"  %@ is on cooldown",spell);
             return;
         }
         
         if ( spell.manaCost.doubleValue > self.currentResources.doubleValue )
         {
-            //NSLog(@"  %@ doesn't have enough mana for %@",self,spell);
+            //PHLog(@"  %@ doesn't have enough mana for %@",self,spell);
             return;
         }
         
@@ -41,14 +43,14 @@
         {
             if ( spell.auxiliaryResourceCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
-                //NSLog(@"  %@ doesn't have enough aux resource for %@",self,spell);
+                //PHLog(@"  %@ doesn't have enough aux resource for %@",self,spell);
                 return;
             }
             
             if ( ! ( currentPriorities & CastWhenInFearOfOtherPlayerDyingPriority )
                 && spell.auxiliaryResourceIdealCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
-                //NSLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
+                //PHLog(@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
                 return;
             }
         }
@@ -57,22 +59,22 @@
         {
             if ( spell.aiSpellPriority > highestPrioritySpell.aiSpellPriority )
             {
-                //NSLog(@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
+                //PHLog(@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
                 highestPrioritySpell = spell;
             }
             //else
-            //    NSLog(@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
+            //    PHLog(@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
             
 //            if ( [NSStringFromClass([spell class]) isEqualToString:@"LayOnHandsSpell"] )
 //            {
-//                NSLog(@"SPELL %08x CURRENT %08x",spell.aiSpellPriority,currentPriorities);
-//                NSLog(@"i'm casting loh...?");
+//                PHLog(@"SPELL %08x CURRENT %08x",spell.aiSpellPriority,currentPriorities);
+//                PHLog(@"i'm casting loh...?");
 //            }
             //*stop = YES;
             return;
         }
         //else
-            //NSLog(@"  %@ is not currently a priority",spell);
+            //PHLog(@"  %@ is not currently a priority",spell);
     }];
     
     // TODO
@@ -83,10 +85,10 @@
     if ( highestPrioritySpell )
     {
         [self castSpell:highestPrioritySpell withTarget:target];
-        NSLog(@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
+        PHLog(@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
     }
     else
-        NSLog(@"%@ couldn't figure out anything to do on this update",self);
+        PHLog(@"%@ couldn't figure out anything to do on this update",self);
     
     return ! highestPrioritySpell || highestPrioritySpell.triggersGCD;
 }
