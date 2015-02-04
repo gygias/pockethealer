@@ -197,11 +197,7 @@
 - (void)handleIncomingDamageEvent:(Event *)damageEvent
 {    
     if ( self.hitSoundName )
-    {
-        BOOL oneInTen = ( arc4random() % 10 == 0 );
-        if ( oneInTen )
-            [SoundManager playHitSound:self];
-    }
+        [SoundManager playHitSound:self];
     
     BOOL dodged = NO;
     BOOL blocked = NO;

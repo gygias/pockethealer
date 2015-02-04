@@ -75,8 +75,8 @@
     [self _drawBorderInRect:rect];
     [self _drawHealthInRect:rect withHealth:snapshottedHealthPercentage];
     // do incoming heals overlap absorbs?
-    [self _drawAbsorbsInRect:rect withHealth:snapshottedHealthPercentage];
     [self _drawIncomingHealsInRect:rect withHealth:snapshottedHealthPercentage];
+    [self _drawAbsorbsInRect:rect withHealth:snapshottedHealthPercentage];
     [self _drawRoleIconInRect:rect];
     [self _drawTextInRect:rect];
     [self _drawResourceBarInRect:rect];
@@ -162,13 +162,19 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGFloat originX = rect.origin.x + RAID_FRAME_HEALTH_INSET + ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
-    CGFloat incomingHeals = 0;//( (CGFloat)( arc4random() % 20 ) / 100 );
-    //PHLog(@"incomingHeals: %f origin: %f",incomingHeals,originX);
+    __block CGFloat incomingHeals = 0;
     
-    if ( incomingHeals == 0 )
+    [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+        if ( player.castingSpell.target == self.entity && player.castingSpell.healing.doubleValue )
+            incomingHeals += player.castingSpell.healing.doubleValue;
+    }];
+    
+    if ( incomingHeals <= 0 )
         return;
     
-    CGFloat incomingHealsDrawableWidth = ( incomingHeals + health > 1 ? 1 - health : incomingHeals ) * rect.size.width - ( RAID_FRAME_HEALTH_INSET * 2 );
+    double incomingHealsPercentage = incomingHeals / self.entity.health.doubleValue * 1.5; // TODO why 1.5
+    //NSLog(@"%@ incoming heals: %0.2f / %0.3f",self.entity,incomingHeals,incomingHealsPercentage);
+    CGFloat incomingHealsDrawableWidth = ( incomingHealsPercentage + health > 1 ? 1 - health : incomingHealsPercentage ) * rect.size.width - ( RAID_FRAME_HEALTH_INSET * 2 );
     // maybe should have each particular method pass out an inner rect discounting their own offsets / "owned space"
     //if ( ( originX + width ) > rect.size.width - RAID_FRAME_BORDER_INSET * 2 - RAID_FRAME_HEALTH_INSET * 2 - )
     

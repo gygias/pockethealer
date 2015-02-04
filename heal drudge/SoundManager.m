@@ -80,7 +80,7 @@ static SoundManager *sSoundManager;
         NSDictionary *existingSoundEvent = [sSoundManager.audioPlayers objectForKey:path];
         if ( [existingSoundEvent[@"throttled"] boolValue] )
         {
-            NSLog(@"%@ is throttled",path);
+            PHLog(@"%@ is throttled",path);
             return;
         }
         
@@ -187,7 +187,7 @@ static SoundManager *sSoundManager;
         {
             BOOL emphasized = entity.isPlayingPlayer || entity.isEnemy;
             float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
-            [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
+            [self playFileWithPath:filePath volume:volume duration:0 throttled:YES handler:NULL];
         }
     }
 }
