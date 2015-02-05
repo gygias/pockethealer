@@ -100,7 +100,7 @@
         Entity *target = nil;
         
         // determine target, shouldn't be doing validation at this level
-        if ( spell.targeted && encounter.player.target.isEnemy && spell.spellType == BeneficialSpell )
+        if ( spell.targeted && ( encounter.player.target.isEnemy || ! encounter.player.target ) && spell.spellType != DetrimentalSpell )
         {
             PHLog(@"auto-self casting %@",spell);
             target = encounter.player;

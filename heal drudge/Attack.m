@@ -10,10 +10,11 @@
 
 @implementation Attack
 
-- (id)init
+- (id)initWithCaster:(Entity *)caster
 {
-    if ( self = [super init] )
+    if ( self = [super initWithCaster:caster] )
     {
+        self.caster = caster;
         self.name = @"Attack";
         self.image = [ImageFactory imageNamed:@"melee_attack"];
         self.tooltip = @"Attacks the target.";
@@ -26,6 +27,7 @@
         //self.periodicDuration = 10;
         //self.hitRange = @7;
         self.damage = @15000;
+        self.targeted = YES;
         
         self.spellType = DetrimentalSpell;
         

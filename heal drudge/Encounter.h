@@ -15,6 +15,7 @@
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
+typedef void(^DyingEntitiesBlock)(NSArray *);
 
 @interface Encounter : NSObject
 {
@@ -37,7 +38,7 @@ typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 - (void)end;
 
 // called by entities when the a timed spell goes off
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick;
+- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick modifiers:(NSArray *)modifiers dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler;
 
 - (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic;
 - (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic;

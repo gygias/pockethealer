@@ -40,15 +40,15 @@
 }
 
 // one stack per cast, so this should be done on the 'start (of channel)' event
-- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (BOOL)addModifiers:(NSMutableArray *)modifiers
 {
-    if ( target.isEnemy )
+    if ( self.target.isEnemy )
     {
-        EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
+        EvangelismEffect *currentEvangelism = [self _evangelismForEntity:self.caster];
         if ( ! currentEvangelism )
         {
             currentEvangelism = [EvangelismEffect new];
-            [source addStatusEffect:currentEvangelism source:source];
+            [self.caster addStatusEffect:currentEvangelism source:self.caster];
         }
         else
             [currentEvangelism addStack];

@@ -24,9 +24,9 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( ! asSource )
+    if ( spell.caster != self.source )
         return NO;
     
     EventModifier *mod = [EventModifier new];

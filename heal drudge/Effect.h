@@ -27,8 +27,6 @@ typedef NS_ENUM(NSInteger, EffectType) {
     BeneficialOrDetrimentalEffect
 };
 
-typedef void(^EffectEventHandler)(BOOL);
-
 @interface Effect : NSObject
 
 @property EffectSchool school;
@@ -62,8 +60,8 @@ typedef void(^EffectEventHandler)(BOOL);
 
 // other spells
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message;
-- (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler;
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers;
+- (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier;
 
 // our own periodic tick
 - (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick;

@@ -39,10 +39,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     ForbearanceEffect *f = [ForbearanceEffect new];
-    [target addStatusEffect:f source:source];
+    [self.target addStatusEffect:f source:self.caster];
 }
 
 - (NSArray *)hdClasses

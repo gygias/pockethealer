@@ -25,49 +25,50 @@ static SoundManager *sSoundManager;
     }
 }
 
++ (NSString *)_pathForResourceNamed:(NSString *)name
+{
+    if ( ! name )
+        return nil;
+    // for whatever reason, if name is empty or nil this returns the 'last path encountered for type'
+    return [[NSBundle mainBundle] pathForResource:name ofType:@"wav"];
+}
+
 + (void)playNoteSound
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"belltollnightelf" ofType:@"wav"];
+    NSString *path = [self _pathForResourceNamed:@"belltollnightelf"];
     [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"ding"];
 }
 
 + (void)playDangerSound
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"UR_Algalon_BHole01" ofType:@"wav"];
+    NSString *path = [self _pathForResourceNamed:@"UR_Algalon_BHole01"];
     [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"bee wear"];
 }
 
 + (void)playCatastrophicSound;
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"KILJAEDEN02" ofType:@"wav"];
+    NSString *path = [self _pathForResourceNamed:@"KILJAEDEN02"];
     [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
     //[self say:@"destruction"];
 }
 
 + (void)playSpellHit:(Spell *)spell
 {
-    // TODO if this gets called with nil, "1.wav" plays. (???)
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:spell.hitSoundName ofType:@"wav"];
-    if ( filePath )
-    {
-        BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
-        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
-        [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
-    }
+    NSString *filePath = [self _pathForResourceNamed:spell.hitSoundName];
+    BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
+    float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+    [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
 }
 
 + (void)playEffectHit:(Effect *)effect
 {
     // TODO if this gets called with nil, "1.wav" plays. (???)
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:effect.hitSoundName ofType:@"wav"];
-    if ( filePath )
-    {
-        BOOL emphasized = effect.source.isPlayingPlayer || effect.source.isEnemy;
-        float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
-        [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
-    }
+    NSString *filePath = [self _pathForResourceNamed:effect.hitSoundName];
+    BOOL emphasized = effect.source.isPlayingPlayer || effect.source.isEnemy;
+    float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
+    [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
 }
 
 + (void)playFileWithPath:(NSString *)path volume:(float)volume duration:(NSTimeInterval)duration throttled:(BOOL)throttled handler:(StartedPlayingSoundBlock)handler
@@ -169,7 +170,7 @@ static SoundManager *sSoundManager;
             break;
     }
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+    NSString *filePath = [self _pathForResourceNamed:fileName];
     if ( fileName )
     {
         BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
@@ -182,7 +183,7 @@ static SoundManager *sSoundManager;
 {
     if ( entity.hitSoundName )
     {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:entity.hitSoundName ofType:@"wav"];
+        NSString *filePath = [self _pathForResourceNamed:entity.hitSoundName];
         if ( filePath )
         {
             BOOL emphasized = entity.isPlayingPlayer || entity.isEnemy;
@@ -196,7 +197,7 @@ static SoundManager *sSoundManager;
 {
     if ( entity.aggroSoundName )
     {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:entity.aggroSoundName ofType:@"wav"];
+        NSString *filePath = [self _pathForResourceNamed:entity.aggroSoundName];
         if ( filePath )
         {
             BOOL emphasized = entity.isPlayingPlayer || entity.isEnemy;
@@ -224,7 +225,7 @@ static SoundManager *sSoundManager;
     if ( fileNameBase && spell.level )
     {
         NSString *fileName = [NSString stringWithFormat:@"%@_%@",fileNameBase,spell.level];
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+        NSString *filePath = [self _pathForResourceNamed:fileName];
         BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
         float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
         [self playFileWithPath:filePath volume:volume duration:duration throttled:!emphasized handler:NULL];
@@ -272,7 +273,7 @@ static SoundManager *sSoundManager;
 
 + (void)playDeathSound
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"abandon_quest" ofType:@"wav"];
+    NSString *filePath = [self _pathForResourceNamed:@"abandon_quest"];
     [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
 }
 
@@ -288,7 +289,7 @@ static SoundManager *sSoundManager;
     else
         userInfo[@"index"] = @( currentIndex.integerValue - 1 );
     NSString *fileName = [NSString stringWithFormat:@"%@",currentIndex];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"wav"];
+    NSString *filePath = [self _pathForResourceNamed:fileName];
     [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
 }
 

@@ -14,29 +14,29 @@
 
 @implementation PriestSpell
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers;
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     // TODO does it matter if DA is applied before or after the rest of "handling hit"?
-    [super handleHitWithSource:source target:target modifiers:modifiers];
+    [super handleHitWithModifier:modifier];
     
     //if ( ! modifiers.crit )
     //    return;
     
     // apply divine aegis
-    if ( [source.hdClass isEqual:[HDClass discPriest]] )
+    if ( [self.caster.hdClass isEqual:[HDClass discPriest]] )
     {
         // TODO does DA also proc off of absorbs?
         NSNumber *effectiveHealing = ( self.isChanneled || self.isPeriodic ) ? self.periodicHeal : self.healing;
         if ( effectiveHealing )
         {
-            DivineAegisEffect *da = [PriestSpell _divineAegisEffectForEntity:target];
-            NSNumber *effectiveAbsorb = [DivineAegisEffect absorbWithExistingAbsorb:da.absorb healing:effectiveHealing masteryRating:source.masteryRating sourceMaxHealth:source.health];
+            DivineAegisEffect *da = [PriestSpell _divineAegisEffectForEntity:self.target];
+            NSNumber *effectiveAbsorb = [DivineAegisEffect absorbWithExistingAbsorb:da.absorb healing:effectiveHealing masteryRating:self.caster.masteryRating sourceMaxHealth:self.caster.health];
             if ( ! da )
             {
                 da = [DivineAegisEffect new];
-                [target addStatusEffect:da source:source];
+                [self.target addStatusEffect:da source:self.caster];
             } else
-                PHLog(@"%@'s existing %@ is going from %@ to %@!",target,da.absorb,da.absorb,effectiveAbsorb);
+                PHLog(@"%@'s existing %@ is going from %@ to %@!",self.target,da.absorb,da.absorb,effectiveAbsorb);
             da.absorb = effectiveAbsorb;
         }
     }

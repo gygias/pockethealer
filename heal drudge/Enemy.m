@@ -27,12 +27,12 @@
 {
     if ( self = [super init] )
     {
-        [self _initializeAbilities];
         self.stamina = @1;
         self.currentHealth = self.health;
         self.currentResources = @100;
         self.hdClass = [HDClass enemyClass];
         self.isEnemy = YES;
+        [self _initializeAbilities];
     }
     return self;
 }
@@ -83,7 +83,7 @@
     for ( NSString *abilityName in [self abilityNames] )
     {
         Class abilityClass = NSClassFromString(abilityName);
-        Ability *ability = [abilityClass new];
+        Ability *ability = [[abilityClass alloc] initWithCaster:self];
         //PHLog(@"initialized ability %@ with fire date %@",ability,ability.nextFireDate);
         if ( ability )
             [(NSMutableArray *)_abilities addObject:ability];
@@ -130,6 +130,11 @@
 {
     [SoundManager playSoundForAbilityLevel:ability.abilityLevel];
     
+    self.castingSpell = ability;
+    self.castingSpell.target = target;
+    NSDate *thisCastStartDate = [NSDate date];
+    self.castingSpell.lastCastStartDate = thisCastStartDate;
+    
     if ( ability.isPeriodic )
     {
         __block BOOL isFirstTick = YES;
@@ -150,7 +155,15 @@
                 tickTargets = @[target];
             [tickTargets enumerateObjectsUsingBlock:^(Entity *tickTarget, NSUInteger idx, BOOL *stop) {
                 PHLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
-                [encounter handleSpell:ability source:self target:tickTarget periodicTick:YES periodicTickSource:timer isFirstTick:isFirstTick];
+                ability.target = tickTarget;
+                [encounter handleSpell:ability periodicTick:YES isFirstTick:isFirstTick modifiers:nil dyingEntitiesHandler:^(NSArray *dyingEntities) {
+                    if ( [dyingEntities containsObject:self] || [dyingEntities containsObject:target] )
+                    {
+                        NSLog(@"%@ or %@ have died during %@, so it is unscheduling",self,target,ability);
+                        dispatch_source_cancel(timer);
+                        return;
+                    }
+                }];
             }];
             
             isFirstTick = NO;
@@ -166,16 +179,12 @@
     }
     else if ( ability.castTime.doubleValue > 0 )
     {
-        self.castingSpell = ability;
-        self.castingSpell.target = target;
-        NSDate *thisCastStartDate = [NSDate date];
-        self.castingSpell.lastCastStartDate = thisCastStartDate;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.castTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [encounter handleSpell:ability source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+            [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:nil dyingEntitiesHandler:NULL];
         });
     }
     else
-        [encounter handleSpell:ability source:self target:target periodicTick:NO periodicTickSource:NULL isFirstTick:NO];
+        [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:nil dyingEntitiesHandler:NULL];
 }
 
 // this needs some work to handle multiple targets

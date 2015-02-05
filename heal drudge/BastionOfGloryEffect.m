@@ -27,18 +27,20 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( ! asSource )
+    if ( spell.caster != self.source )
         return NO;
     
     if ( [spell isKindOfClass:[WordOfGlorySpell class]]
-        && ( target == self.source ) )
+        && ( spell.target == self.source ) )
     {
         EventModifier *mod = [EventModifier new];
         mod.healingIncreasePercentage = @( self.currentStacks.doubleValue * 0.06 );
+        [mod addBlock:^{
+            [self.source consumeStatusEffect:self absolute:YES];
+        }];
         [modifiers addObject:mod];
-        handler(YES);
         return YES;
     }
     return NO;

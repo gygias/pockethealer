@@ -10,6 +10,16 @@
 
 @implementation EventModifier
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        _blocks = [NSMutableArray new];
+    }
+    
+    return self;
+}
+
 - (NSString *)description
 {
     NSString *descriptionString = nil;
@@ -26,6 +36,11 @@
     if ( self.damageTakenDecreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(decrease damage taken by %0.2f%%)",descriptionString?@" & ":@"",self.damageTakenDecreasePercentage.doubleValue];
     return descriptionString;
+}
+
+- (void)addBlock:(EventModifierBlock)block
+{
+    [_blocks addObject:block];
 }
 
 @end

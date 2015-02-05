@@ -26,9 +26,9 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( asSource )
+    if ( self.source == spell.target )
         return NO;
     
     if ( spell.damage.doubleValue <= 0 )
@@ -47,15 +47,18 @@
     
     EventModifier *mod = [EventModifier new];
     mod.damageTakenDecrease = damageReduction;
+    if ( consumed )
+    {
+        [mod addBlock:^{
+            [self.source consumeStatusEffect:self absolute:YES];
+        }];
+    }
     [modifiers addObject:mod];
     
     Event *transferredDamageEvent = [Event new];
     transferredDamageEvent.netDamage = thirtyPercentOfDamage;
     transferredDamageEvent.spell = spell;
     [self.source handleIncomingDamageEvent:transferredDamageEvent];
-    
-    if ( consumed )
-        handler(YES);
     
     return YES;
 }

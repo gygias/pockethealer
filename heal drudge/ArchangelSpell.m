@@ -62,14 +62,14 @@
     return YES;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {    
-    EvangelismEffect *evangelism = [self _evangelismForEntity:source];
+    EvangelismEffect *evangelism = [self _evangelismForEntity:self.caster];
     ArchangelEffect *effect = [ArchangelEffect new];
     [effect addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
     
-    [source addStatusEffect:effect source:source];
-    [source consumeStatusEffect:evangelism absolute:YES];
+    [self.caster addStatusEffect:effect source:self.caster];
+    [self.caster consumeStatusEffect:evangelism absolute:YES];
 }
 
 - (NSArray *)hdClasses

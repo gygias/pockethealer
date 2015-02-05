@@ -39,10 +39,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     SacredShieldEffect *ss = [SacredShieldEffect new];
-    [source addStatusEffect:ss source:source];
+    [self.caster addStatusEffect:ss source:self.caster];
 }
 
 - (NSArray *)hdClasses

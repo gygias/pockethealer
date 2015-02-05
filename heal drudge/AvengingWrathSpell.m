@@ -38,10 +38,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     AvengingWrathEffect *aw = [AvengingWrathEffect new];
-    [source addStatusEffect:aw source:source];
+    [self.caster addStatusEffect:aw source:self.caster];
 }
 
 - (NSArray *)hdClasses

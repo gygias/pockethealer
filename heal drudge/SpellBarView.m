@@ -164,6 +164,12 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     rect	CGRect	origin=(x=0, y=90) size=(width=45, height=45) \
     unitPoint	CGPoint	(x=NaN, y=0) \
     midPoint	CGPoint	(x=3.0852801497810434E-314, y=NaN)
+    if ( isnan(mysteryPoint.x) || isnan(mysteryPoint.y) )
+    {
+        NSLog(@"cooldown clock nan bug happened");
+        return;
+    }
+    
     CGContextAddLineToPoint(context, mysteryPoint.x, mysteryPoint.y); // the mystery point
     double rotatedByDegress = ( 360 - cooldownInDegress );
     if ( rotatedByDegress <= 90 )

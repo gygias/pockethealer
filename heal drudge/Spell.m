@@ -19,6 +19,12 @@ const NSString *SpellLevelHigh = @"high";
 
 @implementation Spell
 
+- (id)init
+{
+    [NSException raise:@"SpellWithoutCasterException" format:@"Tried to initialize %@ without a caster",NSStringFromClass([self class])];
+    return nil;
+}
+
 - (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super init] )
@@ -41,20 +47,20 @@ const NSString *SpellLevelHigh = @"high";
     return YES;
 }
 
-- (BOOL)handleStartWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (BOOL)addModifiers:(NSMutableArray *)modifiers
 {
     return NO;
 }
 
-- (void)handleTickWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (void)handleTickWithModifier:(EventModifier *)modifier
 {
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
 }
 
-- (void)handleEndWithSource:(Entity *)source target:(Entity *)target
+- (void)handleEndWithModifier:(EventModifier *)modifier
 {
 }
 

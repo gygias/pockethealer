@@ -38,10 +38,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     DivineProtectionEffect *dp = [DivineProtectionEffect new];
-    [source addStatusEffect:dp source:source];
+    [self.caster addStatusEffect:dp source:self.caster];
 }
 
 - (NSArray *)hdClasses

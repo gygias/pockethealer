@@ -39,10 +39,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     ArdentDefenderEffect *ad = [ArdentDefenderEffect new];
-    [source addStatusEffect:ad source:source];
+    [self.caster addStatusEffect:ad source:self.caster];
 }
 
 - (NSArray *)hdClasses

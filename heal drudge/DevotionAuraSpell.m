@@ -40,11 +40,11 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    [source.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
+    [self.caster.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
         DevotionAuraEffect *da = [DevotionAuraEffect new];
-        [player addStatusEffect:da source:source];
+        [player addStatusEffect:da source:self.caster];
     }];
 }
 

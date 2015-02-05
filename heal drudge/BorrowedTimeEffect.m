@@ -27,17 +27,17 @@
     return self;
 }
 
-- (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
     // borrowed time doesn't seem to be consumed in WoD
     //if ( handler )
     //    handler(YES);
-    if ( ! asSource )
+    if ( spell.caster != self.source )
         return NO;
     return [self _applyHasteBuff:modifiers];
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers
 {
     if ( ! asSource )
         return NO;

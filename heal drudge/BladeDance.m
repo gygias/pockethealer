@@ -10,10 +10,11 @@
 
 @implementation BladeDance
 
-- (id)init
+- (id)initWithCaster:(Entity *)caster
 {
-    if ( self = [super init] )
+    if ( self = [super initWithCaster:caster] )
     {
+        self.caster = caster;
         self.name = @"Blade Dance";
         self.image = [ImageFactory imageNamed:@"bladestorm"];
         self.tooltip = @"With blinding speed, Kargath rushes random targets every 2 sec. for 10 sec, doing 35,714 Physical damage to anyone within 7 yards.";
@@ -25,6 +26,7 @@
         self.periodicDamage = @35714;
         self.periodicDuration = 10;
         self.hitRange = @7;
+        self.targeted = YES;
         
         self.affectsRandomRange = YES;
         self.periodicEffectChangesTargets = YES;

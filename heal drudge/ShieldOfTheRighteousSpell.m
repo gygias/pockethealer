@@ -42,13 +42,13 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     ShieldOfTheRighteousEffect *sotr = [ShieldOfTheRighteousEffect new];
-    sotr.holyPower = source.currentAuxiliaryResources;
-    PHLog(@"%@ has lost their aux resources due to %@ being cast",source,self);
-    source.currentAuxiliaryResources = @0;
-    [source addStatusEffect:sotr source:source];
+    sotr.holyPower = self.caster.currentAuxiliaryResources;
+    PHLog(@"%@ has lost their aux resources due to %@ being cast",self.caster,self);
+    self.caster.currentAuxiliaryResources = @0;
+    [self.caster addStatusEffect:sotr source:self.caster];
     
     BastionOfGloryEffect *bog = [self _existingBastionOfGloryEffect];
     if ( bog )
@@ -56,7 +56,7 @@
     else
     {
         bog = [BastionOfGloryEffect new];
-        [source addStatusEffect:bog source:source];
+        [self.caster addStatusEffect:bog source:self.caster];
     }
 }
 

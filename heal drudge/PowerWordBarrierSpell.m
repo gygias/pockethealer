@@ -40,7 +40,7 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
 #warning TODO
     // this smells like hitRange, but applies to targets currently within the range

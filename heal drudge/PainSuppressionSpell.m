@@ -39,10 +39,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     PainSuppressionEffect *effect = [PainSuppressionEffect new];
-    [target addStatusEffect:effect source:source];
+    [self.target addStatusEffect:effect source:self.caster];
 }
 
 - (NSArray *)hdClasses

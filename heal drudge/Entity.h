@@ -18,6 +18,7 @@
 @class WoWRealm;
 @class Guild;
 @class Event;
+@class EventModifier;
 
 typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 
@@ -65,10 +66,10 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target;
 
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
-- (BOOL)handleSpellStart:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
+- (BOOL)handleSpellStart:(Spell *)spell modifiers:(NSMutableArray *)modifiers;
+- (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier;
 - (void)handleIncomingDamageEvent:(Event *)damageEvent;
-- (BOOL)handleSpellEnd:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity modifiers:(NSMutableArray *)modifiers;
+- (void)handleSpellEnd:(Spell *)spell modifier:(EventModifier *)modifier;
 
 //- (NSNumber *)handleIncomingDamage:(NSNumber *)damage;
 

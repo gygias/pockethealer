@@ -44,20 +44,22 @@
 }
 
 // this needs to be done in "hit" instead of "started", due to prot having instant cast, but not others
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSMutableArray *)modifiers
+- (BOOL)addModifiers:(NSMutableArray *)modifiers
 {
-    if ( source.currentAuxiliaryResources.doubleValue < 1 )
+    if ( self.caster.currentAuxiliaryResources.doubleValue < 1 )
 #warning ss
-        [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",source,source.currentAuxiliaryResources];
-    NSNumber *resourcesToConsume = source.currentAuxiliaryResources;
-    if ( source.currentAuxiliaryResources.doubleValue >= 3 )
+        [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
+    NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
+    if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
         resourcesToConsume = @3;
-    source.currentAuxiliaryResources = @( source.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
-    PHLog(@"%@ is consuming %@ resources casting %@",source,resourcesToConsume,self);
+    self.caster.currentAuxiliaryResources = @( self.caster.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
+    PHLog(@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
     
     EventModifier *mod = [EventModifier new];
     mod.healingIncreasePercentage = @( resourcesToConsume.doubleValue * self.healing.doubleValue );
     [modifiers addObject:mod];
+    
+    return YES;
 }
 
 - (NSArray *)hdClasses

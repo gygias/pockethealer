@@ -10,4 +10,19 @@
 
 @implementation Ability
 
+- (id)initWithCaster:(Entity *)caster
+{
+    if ( self = [super initWithCaster:caster] )
+    {
+        self.hitSoundName = nil;
+    }
+    
+    return self;
+}
+
+- (NSArray *)hdClasses
+{
+    return @[ [HDClass enemyClass] ];
+}
+
 @end

@@ -42,12 +42,12 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     HandOfSacrificeEffect *hos = [HandOfSacrificeEffect new];
     // TODO ret also dispels, apparently
-    hos.healthTransferRemaining = source.health;
-    [target addStatusEffect:hos source:source];
+    hos.healthTransferRemaining = self.caster.health;
+    [self.target addStatusEffect:hos source:self.caster];
 }
 
 - (NSArray *)hdClasses

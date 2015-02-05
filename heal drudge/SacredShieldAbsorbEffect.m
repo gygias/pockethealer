@@ -17,7 +17,7 @@
     if ( self = [super init] )
     {
         self.name = @"Sacred Shield";
-        self.duration = 10;
+        self.duration = 6; // TODO not sure this number is right, no 'unique' attribute replacing pre-existing absorb
         self.image = [ImageFactory imageNamed:@"sacred_shield"];
         self.drawsInFrame = YES;
         self.effectType = BeneficialEffect;

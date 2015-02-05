@@ -44,11 +44,11 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {    
     PrayerOfMendingEffect *pom = [PrayerOfMendingEffect new];
     pom.healingOnDamage = self.healing;
-    [target addStatusEffect:pom source:source];
+    [self.target addStatusEffect:pom source:self.caster];
 }
 
 @end

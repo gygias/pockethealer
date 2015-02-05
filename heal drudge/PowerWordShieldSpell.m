@@ -41,20 +41,20 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {    
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
-    [source addStatusEffect:bt source:source];
+    [self.caster addStatusEffect:bt source:self.caster];
     
     // weakened soul
     WeakenedSoulEffect *weakenedSoul = [WeakenedSoulEffect new];
-    [target addStatusEffect:weakenedSoul source:source];
+    [self.target addStatusEffect:weakenedSoul source:self.caster];
     
     // power word shield
     PowerWordShieldEffect *pws = [PowerWordShieldEffect new];
     pws.absorb = self.absorb;
-    [target addStatusEffect:pws source:source];
+    [self.target addStatusEffect:pws source:self.caster];
 }
 
 - (NSArray *)hdClasses

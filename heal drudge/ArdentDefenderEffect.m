@@ -27,13 +27,13 @@
     return self;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( asSource )
+    if ( spell.target != self.source )
         return NO;
     
     EventModifier *mod = [EventModifier new];
-    mod.cheatDeathAndApplyHealing = @( source.health.doubleValue * 0.12 );
+    mod.cheatDeathAndApplyHealing = @( self.source.health.doubleValue * 0.12 );
     [modifiers addObject:mod];
 #warning TODO there is currently no way for this to be consumed IF the target dies
     //handler(YES);

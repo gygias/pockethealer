@@ -37,13 +37,13 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {    
-    EvangelismEffect *currentEvangelism = [self _evangelismForEntity:source];
+    EvangelismEffect *currentEvangelism = [self _evangelismForEntity:self.caster];
     if ( ! currentEvangelism )
     {
         currentEvangelism = [EvangelismEffect new];
-        [source addStatusEffect:currentEvangelism source:source];
+        [self.caster addStatusEffect:currentEvangelism source:self.caster];
     }
     else
         [currentEvangelism addStack];

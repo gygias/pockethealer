@@ -36,11 +36,11 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    if ( source.hdClass.specID != HDHOLYPALADIN )
+    if ( self.caster.hdClass.specID != HDHOLYPALADIN )
     {
-        [source addAuxResources:@1];
+        [self.caster addAuxResources:@1];
     }
 }
 

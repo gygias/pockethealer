@@ -35,18 +35,13 @@
     return YES;
 }
 
-- (BOOL)handleSpellStarted:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( handler )
-        handler(NO);
     return NO;
 }
 
-- (BOOL)handleSpell:(Spell *)spell asSource:(BOOL)asSource source:(Entity *)source target:(Entity *)target modifier:(NSMutableArray *)modifiers handler:(EffectEventHandler)handler
+- (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier
 {
-    if ( handler )
-        handler(NO);
-    return NO;
 }
 
 - (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick

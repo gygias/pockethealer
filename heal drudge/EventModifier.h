@@ -10,7 +10,12 @@
 
 #import "Spell.h"
 
+typedef void (^EventModifierBlock)();
+
 @interface EventModifier : NSObject
+{
+    NSMutableArray *_blocks;
+}
 
 @property SpellSchool school;
 @property NSNumber *damageIncreasePercentage;
@@ -28,5 +33,8 @@
 
 @property NSNumber *absorbedDamage;
 @property NSNumber *healOnDamage;
+
+@property NSArray *blocks;
+- (void)addBlock:(EventModifierBlock)block;
 
 @end

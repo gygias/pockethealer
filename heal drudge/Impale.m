@@ -10,9 +10,9 @@
 
 @implementation Impale
 
-- (id)init
+- (id)initWithCaster:(Entity *)caster
 {
-    if ( self = [super init] )
+    if ( self = [super initWithCaster:caster] )
     {
         self.name = @"Impale";
         self.image = [ImageFactory imageNamed:@"hunger_for_blood"];
@@ -24,6 +24,7 @@
         self.periodicDuration = 10;
         self.periodicDamage = @38392;
         //self.hitRange = @7;
+        self.targeted = YES;
         
         self.canTargetTanks = YES;
         

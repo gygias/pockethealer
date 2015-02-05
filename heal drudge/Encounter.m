@@ -113,7 +113,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         self.encounterUpdatedHandler(self);
 }
 
-- (void)handleSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target periodicTick:(BOOL)periodicTick periodicTickSource:(dispatch_source_t)periodicTickSource isFirstTick:(BOOL)firstTick
+- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick modifiers:(NSArray *)modifiers dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler
 {
     // while implementing cast bar, encounter isn't started
     if ( ! _encounterQueue )
@@ -129,30 +129,25 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if ( spell.nextCooldownDate == thisNextCooldownDate )
             {
-                PHLog(@"%@'s %@ has cooled down",source,spell);
+                PHLog(@"%@'s %@ has cooled down",spell.caster,spell);
                 spell.nextCooldownDate = nil;
             }
             else
-                PHLog(@"Something else seems to have reset the cooldown on %@'s %@",source,spell);
+                PHLog(@"Something else seems to have reset the cooldown on %@'s %@",spell.caster,spell);
         });
     }
     
     dispatch_async(_encounterQueue, ^{
     
-        PHLog(@"%@%@ %@ on %@!",source,periodicTick?@"'s channel is ticking":@" is casting",spell.name,target);
+        NSLog(@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
         
-        if ( source.isEnemy && self.enemyAbilityHandler )
-            self.enemyAbilityHandler((Enemy *)source,(Ability *)spell);
+        if ( spell.caster.isEnemy && self.enemyAbilityHandler )
+            self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
         
-        NSMutableArray *modifiers = [NSMutableArray new];
-        if ( [source handleSpell:spell asSource:YES otherEntity:target modifiers:modifiers] )
-        {
-            PHLog(@"%@->%@ modified %@",source,target,spell);
-        }
-        if ( [target handleSpell:spell asSource:NO otherEntity:source modifiers:modifiers] )
-        {
-            PHLog(@"%@->%@ modified %@",source,target,spell);
-        }
+#warning WARNING
+        EventModifier *netMod = [modifiers lastObject];//[EventModifier netModifierWithModifiers:modifiers];
+        [spell.caster handleSpell:spell modifier:netMod];
+        [spell.target handleSpell:spell modifier:netMod];
         
         if ( spell.castSoundName )
             [SoundManager playSpellHit:spell];
@@ -162,42 +157,42 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         NSMutableArray *allTargets = [NSMutableArray new];
         if ( spell.isSmart )
         {
-            NSArray *smartTargets = [self _smartTargetsForSpell:spell source:source target:target];
+            NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
             if ( smartTargets )
                 [allTargets addObjectsFromArray:smartTargets];
         }
         else if ( spell.affectsPartyOfTarget )
         {
-            NSArray *partyTargets = [self.raid partyForEntity:target includingEntity:YES];
+            NSArray *partyTargets = [self.raid partyForEntity:spell.target includingEntity:YES];
             if ( partyTargets )
                 [allTargets addObjectsFromArray:partyTargets];
         }
-        else
-            [allTargets addObject:target];
+        else if ( spell.targeted )
+            [allTargets addObject:spell.target];
         
         [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
             if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
             {
                 if ( spell.spellType == BeneficialOrDeterimentalSpell )
                 {
-                    if ( target.isPlayer )
-                        [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+                    if ( spell.target.isPlayer )
+                        [self doHealing:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
                     else
-                        [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];                    
+                        [self doDamage:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
                 }
                 else if ( spell.spellType == DetrimentalSpell )
-                    [self doDamage:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
+                    [self doDamage:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
                 else // ( spell.spellType == BeneficialSpell )
-                    [self doHealing:spell source:source target:aTarget modifiers:modifiers periodic:periodicTick];
-                
-                [spell handleHitWithSource:source target:aTarget modifiers:modifiers];
+                    [self doHealing:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
             }
         }];
         
-        if ( spell.grantsAuxResources )
-            [source addAuxResources:spell.grantsAuxResources];
+        [spell handleHitWithModifier:netMod];
         
-        if ( target.currentHealth.integerValue <= 0 )
+        if ( spell.grantsAuxResources )
+            [spell.caster addAuxResources:spell.grantsAuxResources];
+        
+        if ( spell.target.currentHealth.integerValue <= 0 )
         {
             __block EventModifier *cheatDeathModifier = nil;
             [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
@@ -211,30 +206,30 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             
             if ( cheatDeathModifier )
             {
-                PHLog(@"CHEATING DEATH and healing %@ for %@",target,cheatDeathModifier.cheatDeathAndApplyHealing);
+                PHLog(@"CHEATING DEATH and healing %@ for %@",spell.target,cheatDeathModifier.cheatDeathAndApplyHealing);
                 
-                NSInteger newHealth = target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
-                if ( newHealth > target.health.integerValue )
-                    newHealth = target.health.integerValue;
+                NSInteger newHealth = spell.target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
+                if ( newHealth > spell.target.health.integerValue )
+                    newHealth = spell.target.health.integerValue;
                 
-                target.currentHealth = @(newHealth);
+                spell.target.currentHealth = @(newHealth);
             }
             else
             {
-                if ( periodicTickSource )
-                    dispatch_source_cancel(periodicTickSource);
-                
                 [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                    [obj handleDeathOfEntity:target fromSpell:spell];
+                    [obj handleDeathOfEntity:spell.target fromSpell:spell];
                 }];
                 [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                    [obj handleDeathOfEntity:target fromSpell:spell];
+                    [obj handleDeathOfEntity:spell.target fromSpell:spell];
                 }];
                 
+                if ( dyingEntitiesHandler )
+                    dyingEntitiesHandler( @[ spell.target ] );
+                
                 // source has to choose a new target
-                if ( source.isEnemy && ! [(Enemy *)source targetNextThreatWithEncounter:self] )
+                if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
                 {
-                    PHLog(@"the encounter is over because there are no targets for %@",source);
+                    PHLog(@"the encounter is over because there are no targets for %@",spell.caster);
                     [self endEncounter];
                 }
                 else // TODO is there some ability by which players could kill themselves as the last one alive?

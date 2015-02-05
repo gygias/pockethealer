@@ -38,10 +38,10 @@
     return self;
 }
 
-- (void)handleHitWithSource:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers
+- (void)handleHitWithModifier:(EventModifier *)modifier
 {
     GuardianOfAncientKingsEffect *goak = [GuardianOfAncientKingsEffect new];
-    [target addStatusEffect:goak source:source];
+    [self.target addStatusEffect:goak source:self.caster];
 }
 
 - (NSArray *)hdClasses
