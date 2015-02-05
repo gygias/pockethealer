@@ -53,7 +53,7 @@
     
     // power word shield
     PowerWordShieldEffect *pws = [PowerWordShieldEffect new];
-    pws.absorb = self.absorb;
+    pws.absorb = @( self.absorb.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
     [self.target addStatusEffect:pws source:self.caster];
 }
 

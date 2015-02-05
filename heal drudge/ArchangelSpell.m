@@ -10,6 +10,7 @@
 
 #import "ArchangelEffect.h"
 #import "EvangelismEffect.h"
+#import "EmpoweredArchangelEffect.h"
 
 @implementation ArchangelSpell
 
@@ -65,10 +66,14 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {    
     EvangelismEffect *evangelism = [self _evangelismForEntity:self.caster];
-    ArchangelEffect *effect = [ArchangelEffect new];
-    [effect addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
     
-    [self.caster addStatusEffect:effect source:self.caster];
+    ArchangelEffect *aa = [ArchangelEffect new];
+    [aa addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
+    [self.caster addStatusEffect:aa source:self.caster];
+    
+    EmpoweredArchangelEffect *eaa = [EmpoweredArchangelEffect new];
+    [self.caster addStatusEffect:eaa source:self.caster];
+    
     [self.caster consumeStatusEffect:evangelism absolute:YES];
 }
 

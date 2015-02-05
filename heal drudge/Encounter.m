@@ -145,7 +145,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
         
 #warning WARNING
-        EventModifier *netMod = [modifiers lastObject];//[EventModifier netModifierWithModifiers:modifiers];
+        EventModifier *netMod = [EventModifier netModifierWithSpell:spell modifiers:modifiers];
         [spell.caster handleSpell:spell modifier:netMod];
         [spell.target handleSpell:spell modifier:netMod];
         
@@ -169,25 +169,34 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         }
         else if ( spell.targeted )
             [allTargets addObject:spell.target];
+        else
+            [allTargets addObject:spell.caster];
         
+        Entity *originalTarget = spell.target;
         [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
             if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
             {
                 if ( spell.spellType == BeneficialOrDeterimentalSpell )
                 {
                     if ( spell.target.isPlayer )
-                        [self doHealing:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
+                        [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                     else
-                        [self doDamage:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
+                        [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                 }
                 else if ( spell.spellType == DetrimentalSpell )
-                    [self doDamage:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
+                    [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                 else // ( spell.spellType == BeneficialSpell )
-                    [self doHealing:spell source:spell.caster target:aTarget modifiers:modifiers periodic:periodicTick];
+                    [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
             }
+            
+            spell.target = aTarget;
+            [spell handleHitWithModifier:netMod];
         }];
+        spell.target = originalTarget;
         
-        [spell handleHitWithModifier:netMod];
+        [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
+            block();
+        }];
         
         if ( spell.grantsAuxResources )
             [spell.caster addAuxResources:spell.grantsAuxResources];
@@ -287,80 +296,60 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     return isTargeted;
 }
 
-- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
+- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic
 {
     Event *damageEvent = [Event new];
     damageEvent.spell = spell;
     damageEvent.netDamage = periodic ? spell.periodicDamage : spell.damage;
     
     // deliberately applying all damage increases before decreases, TODO no idea if this is right
-    __block EventModifier *greatestDamageTakenDecreaseModifier = nil;
-    [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-        PHLog(@"considering %@ for damage of %@",obj,spell);
-        if ( obj.damageIncrease )
-        {
-            damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
-            damageEvent.netAffected = @( damageEvent.netAffected.unsignedIntegerValue + obj.damageIncrease.unsignedIntegerValue );
-        }
-        if ( obj.damageIncreasePercentage )
-        {
-            NSNumber *previousNetDamage = damageEvent.netDamage;
-            damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 + obj.damageIncreasePercentage.doubleValue ) );
-            damageEvent.netAffected = @( previousNetDamage.doubleValue - previousNetDamage.doubleValue );
-        }
-        if ( obj.damageTakenDecreasePercentage ) // todo inconsistent, some probably stack while others don't
-        {
-            if ( ! greatestDamageTakenDecreaseModifier ||
-                [greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage compare:obj.damageTakenDecreasePercentage] == NSOrderedAscending )
-                greatestDamageTakenDecreaseModifier = obj;
-        }
-        if ( obj.damageTakenDecrease ) // todo, should this be applied before percentages?
-        {
-            NSNumber *previousNetDamage = damageEvent.netDamage;
-            if ( obj.damageTakenDecrease.doubleValue >= damageEvent.netDamage.doubleValue )
-            {
-                damageEvent.netDamage = @0;
-                damageEvent.netAffected = @( obj.damageTakenDecrease.doubleValue - previousNetDamage.doubleValue );
-            }
-            else
-            {
-                damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - obj.damageTakenDecrease.doubleValue );
-                damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
-            }
-        }
-    }];
-    
-    // apply damage taken decrease
-    if ( greatestDamageTakenDecreaseModifier )
+    PHLog(@"considering %@ for damage of %@",modifier,spell);
+    if ( modifier.damageIncrease )
+    {
+        damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + modifier.damageIncrease.unsignedIntegerValue );
+        damageEvent.netAffected = @( damageEvent.netAffected.unsignedIntegerValue + modifier.damageIncrease.unsignedIntegerValue );
+    }
+    if ( modifier.damageIncreasePercentage )
     {
         NSNumber *previousNetDamage = damageEvent.netDamage;
-        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 - greatestDamageTakenDecreaseModifier.damageTakenDecreasePercentage.doubleValue ) );
+        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 + modifier.damageIncreasePercentage.doubleValue ) );
+        damageEvent.netAffected = @( previousNetDamage.doubleValue - previousNetDamage.doubleValue );
+    }
+    if ( modifier.damageTakenDecreasePercentage ) // todo inconsistent, some probably stack while others don't
+    {
+        NSNumber *previousNetDamage = damageEvent.netDamage;
+        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue * ( 1 - modifier.damageTakenDecreasePercentage.doubleValue ) );
         damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
-        PHLog(@"applying %@ to %@ -> %@",greatestDamageTakenDecreaseModifier,spell,damageEvent.netDamage);
+    }
+    if ( modifier.damageTakenDecrease ) // todo, should this be applied before percentages?
+    {
+        NSNumber *previousNetDamage = damageEvent.netDamage;
+        if ( modifier.damageTakenDecrease.doubleValue >= damageEvent.netDamage.doubleValue )
+        {
+            damageEvent.netDamage = @0;
+            damageEvent.netAffected = @( modifier.damageTakenDecrease.doubleValue - previousNetDamage.doubleValue );
+        }
+        else
+        {
+            damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - modifier.damageTakenDecrease.doubleValue );
+            damageEvent.netAffected = @( previousNetDamage.doubleValue - damageEvent.netDamage.doubleValue );
+        }
     }
     
     [target handleIncomingDamageEvent:damageEvent];
-//    NSInteger newAbsorb = target.currentAbsorb.doubleValue - effectiveDamage.doubleValue;
-//    if ( newAbsorb < 0 )
-//        newAbsorb = 0;
-//    
-//    NSInteger amountAbsorbed = target.currentAbsorb.doubleValue - newAbsorb;
-//    NSInteger effectiveDamageMinusAbsorbs = ( effectiveDamage.doubleValue - amountAbsorbed );
 }
 
-- (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifiers:(NSArray *)modifiers periodic:(BOOL)periodic
+- (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic
 {
-    __block NSNumber *healingValue = periodic ? spell.periodicHeal : spell.healing;
+    NSNumber *healingValue = periodic ? spell.periodicHeal : spell.healing;
     
     if ( healingValue.doubleValue > 0 )
     {
-        [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-            PHLog(@"considering %@ for healing of %@",obj,spell);
-            if ( obj.healingIncrease )
-                healingValue = @( healingValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
-            else if ( obj.healingIncreasePercentage )
-                healingValue = @( healingValue.doubleValue * ( 1 + obj.healingIncreasePercentage.doubleValue ) );
-        }];
+        NSLog(@"considering %@ for healing of %@",modifier,spell);
+        if ( modifier.healingIncrease )
+            healingValue = @( healingValue.unsignedIntegerValue + modifier.healingIncrease.unsignedIntegerValue );
+        else if ( modifier.healingIncreasePercentage )
+            healingValue = @( healingValue.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
         
         NSInteger newHealth = target.currentHealth.doubleValue + healingValue.doubleValue;
         if ( newHealth > target.health.integerValue )
@@ -368,29 +357,28 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         target.currentHealth = @(newHealth);
         
-        PHLog(@"%@ was healed for %@",target,healingValue);
+        NSLog(@"%@ was healed for %@",target,healingValue);
     }
     
-    __block NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
-    
-    if ( absorbValue.doubleValue > 0 )
-    {
-        [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-            PHLog(@"considering %@ for absorb of %@",obj,spell);
-            if ( obj.healingIncrease )
-                absorbValue = @( absorbValue.unsignedIntegerValue + obj.healingIncrease.unsignedIntegerValue );
-            else if ( obj.healingIncreasePercentage )
-                absorbValue = @( absorbValue.doubleValue * ( 1 + obj.healingIncreasePercentage.doubleValue ) );
-        }];
-        
-//        NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
-//        //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
-//        //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;
+    // TODO how can modifiers buff absorbs as constituent effects?
+//    NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
+//    
+//    if ( absorbValue.doubleValue > 0 )
+//    {
+//        PHLog(@"considering %@ for absorb of %@",obj,spell);
+//        if ( modifier.healingIncrease )
+//            absorbValue = @( absorbValue.unsignedIntegerValue + modifier.healingIncrease.unsignedIntegerValue );
+//        else if ( modifier.healingIncreasePercentage )
+//            absorbValue = @( absorbValue.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
 //        
-//        target.currentAbsorb = @(newAbsorb);
-        
-        PHLog(@"%@ received a %@ absorb",target,absorbValue);
-    }
+////        NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
+////        //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
+////        //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;
+////        
+////        target.currentAbsorb = @(newAbsorb);
+//        
+//        PHLog(@"%@ received a %@ absorb",target,absorbValue);
+//    }
 }
 
 @end

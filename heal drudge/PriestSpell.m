@@ -19,8 +19,8 @@
     // TODO does it matter if DA is applied before or after the rest of "handling hit"?
     [super handleHitWithModifier:modifier];
     
-    //if ( ! modifiers.crit )
-    //    return;
+    if ( ! modifier.crit )
+        return;
     
     // apply divine aegis
     if ( [self.caster.hdClass isEqual:[HDClass discPriest]] )

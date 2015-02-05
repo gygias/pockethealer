@@ -18,7 +18,8 @@ extern const NSString *SpellLevelMedium;
 extern const NSString *SpellLevelHigh;
 
 typedef NS_OPTIONS(NSInteger, SpellSchool) {
-    PhysicalSchool  = 0,
+    AnySchool       = 0,
+    PhysicalSchool  = 1 << 0,
     HolySchool      = 1 << 1,
     ShadowSchool    = 1 << 2,
     NatureSchool    = 1 << 3,

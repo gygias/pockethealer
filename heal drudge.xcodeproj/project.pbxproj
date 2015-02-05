@@ -255,6 +255,7 @@
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
 		6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645E1A74D61100D281B7 /* HolyNovaSpell.m */; };
+		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -657,6 +658,8 @@
 		6378645B1A74D22700D281B7 /* PenanceSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PenanceSpell.m; sourceTree = "<group>"; };
 		6378645D1A74D61100D281B7 /* HolyNovaSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolyNovaSpell.h; sourceTree = "<group>"; };
 		6378645E1A74D61100D281B7 /* HolyNovaSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyNovaSpell.m; sourceTree = "<group>"; };
+		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
+		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -1095,6 +1098,8 @@
 				634F48DA1A734B6C008761C6 /* WeakenedSoulEffect.m */,
 				634F48EA1A7443F3008761C6 /* ArchangelEffect.h */,
 				634F48EB1A7443F3008761C6 /* ArchangelEffect.m */,
+				637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */,
+				637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */,
 				6328FB611A732B4400DF6B50 /* ArchangelSpell.h */,
 				6328FB621A732B4400DF6B50 /* ArchangelSpell.m */,
 				634F48ED1A744472008761C6 /* EvangelismEffect.h */,
@@ -1695,6 +1700,7 @@
 				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,
 				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
+				637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */,
 				6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */,
 				63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */,
 				6328FB601A731E7F00DF6B50 /* HealingTideTotemSpell.m in Sources */,

@@ -37,4 +37,6 @@ typedef void (^EventModifierBlock)();
 @property NSArray *blocks;
 - (void)addBlock:(EventModifierBlock)block;
 
++ (EventModifier *)netModifierWithSpell:(Spell *)spell modifiers:(NSArray *)modifiers;
+
 @end
