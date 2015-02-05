@@ -28,7 +28,8 @@
     // Do any additional setup after loading the view.
     
     Entity *gygias = nil, *slyeri = nil, *lireal = nil;
-    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri :&lireal];
+    NSUInteger size = self.state.raidSize <= 3 ? 0 : self.state.raidSize - 3;
+    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri :&lireal size:size];
     
     BOOL playSlyeri = [self.state.playerName isEqual:@"Slyeri"];
     BOOL playLireal = [self.state.playerName isEqual:@"Lireal"];

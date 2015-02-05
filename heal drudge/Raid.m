@@ -18,10 +18,10 @@
 
 + (Raid *)randomRaid
 {
-    return [self randomRaidWithTanks:2 healerRatio:0.2];
+    return [self randomRaidWithSize:10 tanks:2 healerRatio:0.2];
 }
 
-+ (Raid *)randomRaidWithTanks:(NSUInteger)tanks healerRatio:(float)healerRatio
++ (Raid *)randomRaidWithSize:(NSUInteger)size tanks:(NSUInteger)tanks healerRatio:(float)healerRatio
 {
     NSString *namesPath = [[NSBundle mainBundle] pathForResource:@"Names" ofType:@"plist"];
     NSArray *names = [NSArray arrayWithContentsOfFile:namesPath];
@@ -29,7 +29,7 @@
     NSMutableArray *players = [NSMutableArray array];
     NSUInteger randomSize = [names count] - arc4random() % 10;
     // XXX
-    randomSize = 2;
+    randomSize = size;
     NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
     for ( ; idx < randomSize; idx++ )
@@ -69,12 +69,17 @@
 
 + (Raid *)randomRaidWithStandardDistribution
 {
-    return [self randomRaidWithTanks:2 healerRatio:.2];
+    return [self randomRaidWithSize:10 tanks:2 healerRatio:.2];
 }
 
-+ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri :(Entity **)outLireal
++ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri :(Entity **)outLireal size:(NSUInteger)sizeExcludingPrincipals
 {
-    Raid *raid = [self randomRaidWithTanks:0 healerRatio:0];
+    NSUInteger nTanks = 0;
+    if ( ( sizeExcludingPrincipals + 3 ) > 5 )
+    {
+        nTanks = 1;
+    }
+    Raid *raid = [self randomRaidWithSize:sizeExcludingPrincipals tanks:nTanks healerRatio:0];
     
     Entity *gygias = [Entity new];
     gygias.isPlayer = YES;
@@ -147,8 +152,8 @@
     PHLog(@"adding %@",lireal);
     [raidCopy insertObject:lireal atIndex:lirealIdx];
     
-    if ( raid.players.count >= 20 )
-        [raidCopy removeObjectAtIndex: ( ( gygiasIdx >= 0 ? gygiasIdx : someHealerIdx )+ 1 % raid.players.count )];
+    //if ( raid.players.count >= 20 )
+    //    [raidCopy removeObjectAtIndex: ( ( gygiasIdx >= 0 ? gygiasIdx : someHealerIdx )+ 1 % raid.players.count )];
     
     raid.players = raidCopy;
     

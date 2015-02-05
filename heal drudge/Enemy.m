@@ -135,6 +135,14 @@
     NSDate *thisCastStartDate = [NSDate date];
     self.castingSpell.lastCastStartDate = thisCastStartDate;
     
+    NSMutableArray *modifiers = [NSMutableArray new];
+    if ( [self handleSpellStart:ability modifiers:modifiers] )
+    {
+    }
+    else if ( [target handleSpellStart:ability modifiers:modifiers] )
+    {
+    }
+    
     if ( ability.isPeriodic )
     {
         __block BOOL isFirstTick = YES;
@@ -156,7 +164,7 @@
             [tickTargets enumerateObjectsUsingBlock:^(Entity *tickTarget, NSUInteger idx, BOOL *stop) {
                 PHLog(@"%@ is ticking on %@ (%@)",ability.name,tickTarget,@( tickTarget.currentHealth.doubleValue - ability.periodicDamage.doubleValue ));
                 ability.target = tickTarget;
-                [encounter handleSpell:ability periodicTick:YES isFirstTick:isFirstTick modifiers:nil dyingEntitiesHandler:^(NSArray *dyingEntities) {
+                [encounter handleSpell:ability periodicTick:YES isFirstTick:isFirstTick modifiers:modifiers dyingEntitiesHandler:^(NSArray *dyingEntities) {
                     if ( [dyingEntities containsObject:self] || [dyingEntities containsObject:target] )
                     {
                         NSLog(@"%@ or %@ have died during %@, so it is unscheduling",self,target,ability);
@@ -180,7 +188,7 @@
     else if ( ability.castTime.doubleValue > 0 )
     {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.castTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:nil dyingEntitiesHandler:NULL];
+            [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
         });
     }
     else

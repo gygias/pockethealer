@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.state.raidSize = self.raidSizeSlider.value;
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -52,6 +53,17 @@
 - (IBAction)pressedLoadFromArmory:(id)sender
 {
     PHLog(@"load from armory");
+}
+
+- (IBAction)raidSizeSliderDidSomething:(id)sender
+{
+    PHLog(@"raid size slider did something");
+    
+    NSUInteger rounded = self.raidSizeSlider.value;
+    [sender setValue:rounded animated:NO];
+    self.raidSizeLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.raidSizeSlider.value];
+    
+    self.state.raidSize = self.raidSizeSlider.value;
 }
 
 @end

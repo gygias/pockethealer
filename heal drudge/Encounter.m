@@ -139,7 +139,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     
     dispatch_async(_encounterQueue, ^{
     
-        NSLog(@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
+        PHLog(@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
         
         if ( spell.caster.isEnemy && self.enemyAbilityHandler )
             self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);

@@ -28,7 +28,7 @@
 
 - (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( self.source == spell.target )
+    if ( ! ( spell.spellType == DetrimentalEffect && spell.target == self.owner ) )
         return NO;
     
     if ( spell.damage.doubleValue <= 0 )
@@ -58,7 +58,9 @@
     Event *transferredDamageEvent = [Event new];
     transferredDamageEvent.netDamage = thirtyPercentOfDamage;
     transferredDamageEvent.spell = spell;
-    [self.source handleIncomingDamageEvent:transferredDamageEvent];
+    [self.source handleIncomingDamageEvent:transferredDamageEvent avoidable:NO];
+    
+    NSLog(@"%@'s %@ transferred %@ of %@'s %@ to %@%@",self.owner,self,thirtyPercentOfDamage,spell.caster,spell,self.source,consumed?@" and will be consumed":@"");
     
     return YES;
 }

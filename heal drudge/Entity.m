@@ -169,49 +169,58 @@
 }
 
 - (void)handleIncomingDamageEvent:(Event *)damageEvent
-{    
+{
+    [self handleIncomingDamageEvent:damageEvent avoidable:YES];
+}
+
+- (void)handleIncomingDamageEvent:(Event *)damageEvent avoidable:(BOOL)avoidable
+{
     if ( self.hitSoundName )
         [SoundManager playHitSound:self];
     
     BOOL dodged = NO;
     BOOL blocked = NO;
     BOOL parried = NO;
-    // apply avoidance
-    NSUInteger dodgeRoll = arc4random() % 100;
-    if ( dodgeRoll <= self.dodgeChance.doubleValue * 100 )
-        dodged = YES;
-    else
+    
+    if ( avoidable )
     {
-        NSUInteger blockRoll = arc4random() % 100;
-        if ( blockRoll <= self.blockChance.doubleValue * 100 )
-            blocked = YES;
+        // apply avoidance
+        NSUInteger dodgeRoll = arc4random() % 100;
+        if ( dodgeRoll <= self.dodgeChance.doubleValue * 100 )
+            dodged = YES;
         else
         {
-            // savin    23.08% (765 adds 4.72%)
-            // sly      20.64% (634 adds 3.91%)
-            // analog   20.35% (986 adds 6.09%)
-            NSUInteger parryRoll = arc4random() % 100;
-            double parryChance = .2; // TODO armory numbers inconsistent
-            if ( parryRoll <= parryChance * 100 )
-                parried = YES;
+            NSUInteger blockRoll = arc4random() % 100;
+            if ( blockRoll <= self.blockChance.doubleValue * 100 )
+                blocked = YES;
+            else
+            {
+                // savin    23.08% (765 adds 4.72%)
+                // sly      20.64% (634 adds 3.91%)
+                // analog   20.35% (986 adds 6.09%)
+                NSUInteger parryRoll = arc4random() % 100;
+                double parryChance = .2; // TODO armory numbers inconsistent
+                if ( parryRoll <= parryChance * 100 )
+                    parried = YES;
+            }
         }
-    }
-    
-    if ( dodged )
-    {
-        damageEvent.netDodged = damageEvent.netDamage;
-        damageEvent.netDamage = @0;
-    }
-    else if ( blocked )
-    {
-        NSNumber *amountBlocked = @( damageEvent.netDamage.doubleValue * 0.3 );
-        damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - amountBlocked.doubleValue ); // TODO
-        damageEvent.netBlocked = @( damageEvent.netBlocked.doubleValue + amountBlocked.doubleValue );
-    }
-    else if ( parried )
-    {
-        damageEvent.netParried = damageEvent.netDamage;
-        damageEvent.netDamage = @0; // TODO
+        
+        if ( dodged )
+        {
+            damageEvent.netDodged = damageEvent.netDamage;
+            damageEvent.netDamage = @0;
+        }
+        else if ( blocked )
+        {
+            NSNumber *amountBlocked = @( damageEvent.netDamage.doubleValue * 0.3 );
+            damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - amountBlocked.doubleValue ); // TODO
+            damageEvent.netBlocked = @( damageEvent.netBlocked.doubleValue + amountBlocked.doubleValue );
+        }
+        else if ( parried )
+        {
+            damageEvent.netParried = damageEvent.netDamage;
+            damageEvent.netDamage = @0; // TODO
+        }
     }
     
     if ( damageEvent.netDamage.doubleValue > 0 )
@@ -330,6 +339,7 @@
     }
     
     NSDate *thisStartDate = [NSDate date];
+    statusEffect.owner = self;
     statusEffect.startDate = thisStartDate;
     statusEffect.source = source;
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
@@ -815,7 +825,7 @@
     if ( self.currentAuxiliaryResources.integerValue + addedResources.integerValue <= self.maxAuxiliaryResources.integerValue )
     {
         self.currentAuxiliaryResources = @( self.currentAuxiliaryResources.integerValue + addedResources.integerValue );
-        NSLog(@"%@ has gained an aux resource (%@)",self,self.currentAuxiliaryResources);
+        PHLog(@"%@ has gained an aux resource (%@)",self,self.currentAuxiliaryResources);
     }
     else
     {

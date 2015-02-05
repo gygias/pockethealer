@@ -44,10 +44,17 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
+    if ( self.caster.currentAuxiliaryResources.doubleValue < 1 )
+#warning ss
+        [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
+    NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
+    if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
+        resourcesToConsume = @3;
+    self.caster.currentAuxiliaryResources = @( self.caster.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
+    PHLog(@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
+    
     ShieldOfTheRighteousEffect *sotr = [ShieldOfTheRighteousEffect new];
-    sotr.holyPower = self.caster.currentAuxiliaryResources;
-    PHLog(@"%@ has lost their aux resources due to %@ being cast",self.caster,self);
-    self.caster.currentAuxiliaryResources = @0;
+    sotr.holyPower = resourcesToConsume;
     [self.caster addStatusEffect:sotr source:self.caster];
     
     BastionOfGloryEffect *bog = [self _existingBastionOfGloryEffect];

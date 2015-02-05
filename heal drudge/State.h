@@ -14,6 +14,7 @@
 
 @property Entity *player;
 @property NSString *playerName; // XXX
+@property NSUInteger raidSize; // XXX
 
 // setup
 @property BOOL saveGuildToo;

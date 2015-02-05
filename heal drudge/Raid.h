@@ -15,7 +15,7 @@
 
 + (Raid *)randomRaid;
 + (Raid *)randomRaidWithStandardDistribution; // 2 tanks, 1 healer per 5 players
-+ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri :(Entity **)outLireal;
++ (Raid *)randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:(Entity **)outGygias :(Entity **)outSlyeri :(Entity **)outLireal size:(NSUInteger)sizeExcludingPrincipals;
 
 - (NSArray *)partyForEntity:(Entity *)entity includingEntity:(BOOL)includingEntity;
 

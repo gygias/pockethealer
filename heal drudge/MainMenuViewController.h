@@ -16,6 +16,9 @@
 - (IBAction)pressedQuickPlaySlyeri:(id)sender;
 - (IBAction)pressedQuickPlayLireal:(id)sender;
 - (IBAction)pressedLoadFromArmory:(id)sender;
+- (IBAction)raidSizeSliderDidSomething:(id)sender;
+@property IBOutlet UISlider *raidSizeSlider;
+@property IBOutlet UILabel *raidSizeLabel;
 
 @end
 

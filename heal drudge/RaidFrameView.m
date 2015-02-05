@@ -363,14 +363,14 @@
     CGContextFillPath(context);
 }
 
-#define STATUS_EFFECT_ORIGIN_OFFSET_X [RaidFrameView desiredSize].width * .5
+#define STATUS_EFFECT_ORIGIN_OFFSET_X [RaidFrameView desiredSize].width * .1 // .5
 #define STATUS_EFFECT_ORIGIN_OFFSET_Y [RaidFrameView desiredSize].height * .6
-#define STATUS_EFFECT_WIDTH 7
+#define STATUS_EFFECT_WIDTH 8
 #define STATUS_EFFECT_HEIGHT STATUS_EFFECT_WIDTH
 
 - (void)_drawStatusEffectsInRect:(CGRect)rect
 {
-    __block NSInteger maxVisibleStatusEffects = 5;
+    __block NSInteger maxVisibleStatusEffects = (rect.size.width - STATUS_EFFECT_ORIGIN_OFFSET_X) / STATUS_EFFECT_WIDTH;
     [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
         if ( effect.drawsInFrame || ( effect.source == self.player ) )
         {

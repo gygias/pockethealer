@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, EffectType) {
 @property EffectType effectType;
 @property NSString *name;
 @property NSString *tooltip;
+@property Entity *owner;
 @property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
 @property NSNumber *maxStacks;
 @property NSNumber *currentStacks;
