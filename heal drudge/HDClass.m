@@ -6,11 +6,9 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "HDClass.h"
-
-#import "UIColor+Extensions.h"
 
 #define SPECS_PER_CLASS 3
 
@@ -790,7 +788,7 @@ const NSString *WoWAPIClassKey = @"class";
             break;
     }
     
-    PHLog(@"bug at -primaryStatName");
+    PHLogV(@"bug at -primaryStatName");
     return @"intellect";
 }
 

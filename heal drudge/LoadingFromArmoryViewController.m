@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "LoadingFromArmoryViewController.h"
 
@@ -46,15 +46,15 @@
         [guildListRequest sendRequestWithCompletionHandler:^(BOOL success, id result) {
             if ( ! success )
             {
-                PHLog(@"guild list request failed");
+                PHLogV(@"guild list request failed");
                 [self _admitFailure];
             }
             
-            PHLog(@"result: %@",result);
+            PHLogV(@"result: %@",result);
             
             if ( ! [result isKindOfClass:[NSDictionary class]] )
             {
-                PHLog(@"guild list result is not of expected type");
+                PHLogV(@"guild list result is not of expected type");
                 [self _admitFailure];
             }
             
@@ -76,17 +76,17 @@
                 [guildieInfoRequest sendRequestWithCompletionHandler:^(BOOL success, id result) {
                     if ( ! success )
                     {
-                        PHLog(@"guildie info request failed");
+                        PHLogV(@"guildie info request failed");
                         [self _admitPartialFailure];
                     }
                     
                     if ( ! [result isKindOfClass:[NSDictionary class]] )
                     {
-                        PHLog(@"guildie info result is not of expected type: %@",result);
+                        PHLogV(@"guildie info result is not of expected type: %@",result);
                         [self _admitPartialFailure];
                     }
                     
-                    PHLog(@"guildie %@ request: %lu key/values",tempCharacter.name,[result count]);
+                    PHLogV(@"guildie %@ request: %lu key/values",tempCharacter.name,[result count]);
                 }];
                 
                 idx++;

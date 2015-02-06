@@ -6,13 +6,12 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "SpellBarView.h"
 
 #import "Spell.h"
 #import "Entity.h"
-#import "UIColor+Extensions.h"
 
 #define SPELL_HEIGHT 45
 #define SPELL_WIDTH SPELL_HEIGHT
@@ -58,7 +57,7 @@
         NSInteger column = idx % SPELLS_PER_ROW;
         CGRect spellRect = CGRectMake(rect.origin.x + ( SPELL_WIDTH * column ),
                                       rect.origin.y + ( SPELL_HEIGHT * row ), SPELL_WIDTH, SPELL_HEIGHT);
-        //PHLog(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
+        //PHLogV(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
         
 //#warning this is here due to emphasis yellow leaving traces when it stops drawing
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -149,7 +148,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
         theta -= 360;
     double thetaRadians = theta * ( M_PI / 180 );
     CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
-    //PHLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
+    //PHLogV(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
     
     CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
     CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
@@ -166,7 +165,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     midPoint	CGPoint	(x=3.0852801497810434E-314, y=NaN)
     if ( isnan(mysteryPoint.x) || isnan(mysteryPoint.y) )
     {
-        NSLog(@"cooldown clock nan bug happened");
+        PHLogV(@"cooldown clock nan bug happened");
         return;
     }
     
@@ -197,7 +196,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
-    PHLog(@"you began touching %@ (%lu,%lu)",theSpell,row,column);
+    PHLogV(@"you began touching %@ (%lu,%lu)",theSpell,row,column);
     
     [self setNeedsDisplay];
 }
@@ -219,7 +218,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
-    PHLog(@"you stopped touching %@ (%lu,%lu)",theSpell,row,column);
+    PHLogV(@"you stopped touching %@ (%lu,%lu)",theSpell,row,column);
     
     if ( self.spellCastAttemptHandler )
         self.spellCastAttemptHandler(theSpell);

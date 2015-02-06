@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "LightOfDawnSpell.h"
 
@@ -54,7 +54,7 @@
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
         resourcesToConsume = @3;
     self.caster.currentAuxiliaryResources = @( self.caster.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
-    PHLog(@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
+    PHLog(self,@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
     
     EventModifier *mod = [EventModifier new];
     mod.healingIncreasePercentage = @( resourcesToConsume.doubleValue * self.healing.doubleValue );

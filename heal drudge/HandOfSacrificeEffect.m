@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "HandOfSacrificeEffect.h"
 
 #import "Event.h"
@@ -60,7 +62,7 @@
     transferredDamageEvent.spell = spell;
     [self.source handleIncomingDamageEvent:transferredDamageEvent avoidable:NO];
     
-    NSLog(@"%@'s %@ transferred %@ of %@'s %@ to %@%@",self.owner,self,thirtyPercentOfDamage,spell.caster,spell,self.source,consumed?@" and will be consumed":@"");
+    PHLog(spell,@"%@'s %@ transferred %@ of %@'s %@ to %@%@",self.owner,self,thirtyPercentOfDamage,spell.caster,spell,self.source,consumed?@" and will be consumed":@"");
     
     return YES;
 }

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "PowerWordShieldSpell.h"
 #import "PowerWordShieldEffect.h"
 #import "WeakenedSoulEffect.h"

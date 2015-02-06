@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "MainMenuViewController.h"
 
@@ -29,35 +29,35 @@
 
 - (IBAction)pressedCreateCharacter:(id)sender
 {
-    PHLog(@"create character");
+    PHLogV(@"create character");
 }
 
 - (IBAction)pressedQuickPlayGygias:(id)sender
 {
-    PHLog(@"quick play gygias");
+    PHLogV(@"quick play gygias");
     self.state.playerName = @"Gygias";
 }
 
 - (IBAction)pressedQuickPlaySlyeri:(id)sender
 {
-    PHLog(@"quick play sly");
+    PHLogV(@"quick play sly");
     self.state.playerName = @"Slyeri";
 }
 
 - (IBAction)pressedQuickPlayLireal:(id)sender
 {
-    PHLog(@"quick play lireal");
+    PHLogV(@"quick play lireal");
     self.state.playerName = @"Lireal";
 }
 
 - (IBAction)pressedLoadFromArmory:(id)sender
 {
-    PHLog(@"load from armory");
+    PHLogV(@"load from armory");
 }
 
 - (IBAction)raidSizeSliderDidSomething:(id)sender
 {
-    PHLog(@"raid size slider did something");
+    PHLogV(@"raid size slider did something");
     
     NSUInteger rounded = self.raidSizeSlider.value;
     [sender setValue:rounded animated:NO];

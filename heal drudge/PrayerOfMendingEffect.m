@@ -6,13 +6,14 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "PrayerOfMendingEffect.h"
 
 #import "ImageFactory.h"
 
 #import "Entity.h"
 #import "Encounter.h"
-#import "NSCollections+Random.h"
 
 @implementation PrayerOfMendingEffect
 
@@ -63,7 +64,7 @@
     // TODO this is racey
     NSMutableArray *livingPlayers = [NSMutableArray new];
     [players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-        //PHLog(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
+        //PHLogV(@"%@ is %@",obj,obj.isDead?@"dead":@"alive");
         if ( ! obj.isDead && obj != excludingPlayer )
             [livingPlayers addObject:obj];
     }];

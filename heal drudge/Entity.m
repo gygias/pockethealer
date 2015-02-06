@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "Entity.h"
 
@@ -19,7 +19,6 @@
 #import "GenericDamageSpell.h"
 #import "GenericHealingSpell.h"
 #import "GenericPhysicalAttackSpell.h"
-#import "SoundManager.h"
 
 // AI
 #import "Entity+ProtPaladin.h"
@@ -238,7 +237,7 @@
             {
                 if ( damageEvent.netDamage.doubleValue >= effect.absorb.doubleValue )
                 {
-                    PHLog(@"%@ damage will consumed %@'s %@",damageEvent.netDamage,self,effect);
+                    PHLog(self,@"%@ damage will consumed %@'s %@",damageEvent.netDamage,self,effect);
                     [consumedEffects addIndex:idx];
                     damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + effect.absorb.doubleValue );
                     damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.absorb.doubleValue );
@@ -246,7 +245,7 @@
                 else
                 {
                     NSNumber *thisAbsorbRemaining = @( effect.absorb.doubleValue - damageEvent.netDamage.doubleValue );
-                    PHLog(@"%@'s %@ has %@ absorb remaining after %@ damage",self,effect,thisAbsorbRemaining,damageEvent.netDamage);
+                    PHLog(self,@"%@'s %@ has %@ absorb remaining after %@ damage",self,effect,thisAbsorbRemaining,damageEvent.netDamage);
                     effect.absorb = thisAbsorbRemaining;
                     damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + damageEvent.netDamage.doubleValue );
                     damageEvent.netDamage = @0;
@@ -256,7 +255,7 @@
             {
                 if ( damageEvent.netDamage.doubleValue >= effect.healingOnDamage.doubleValue )
                 {
-                    PHLog(@"%@ damage will consume %@'s %@",damageEvent.netDamage,self,effect);
+                    PHLog(self,@"%@ damage will consume %@'s %@",damageEvent.netDamage,self,effect);
                     damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.healingOnDamage.doubleValue );
                     damageEvent.netHealedOnDamage = effect.healingOnDamage;
                     [consumedEffects addIndex:idx];
@@ -265,7 +264,7 @@
                 {
                     if ( effect.healingOnDamageIsOneShot )
                     {
-                        PHLog(@"%@ damage will consume %@'s ONE-SHOT %@",damageEvent.netDamage,self,effect);
+                        PHLog(self,@"%@ damage will consume %@'s ONE-SHOT %@",damageEvent.netDamage,self,effect);
                         [consumedEffects addIndex:idx];
                     }
                     else
@@ -298,7 +297,7 @@
     
     self.currentHealth = @(newHealth);
     
-    PHLog(@"%@ took %@ net damage from %@ (%@%@)",self,damageEvent.netDamage,damageEvent.spell.damage,
+    PHLog(self,@"%@ took %@ net damage from %@ (%@%@)",self,damageEvent.netDamage,damageEvent.spell.damage,
           damageEvent.netAbsorbed.doubleValue > 0 ?[NSString stringWithFormat:@"%@ absorbed",damageEvent.netAbsorbed]:@"",
             dodged?@", dodged":
                 blocked?@", blocked":
@@ -334,7 +333,7 @@
     // TODO this callout should not exist merely to handle an effect which can't have multiple applications to the same target
     if ( ! [statusEffect handleAdditionWithOwner:self] )
     {
-        PHLog(@"%@ says no to addition to %@ from %@",statusEffect,self,source);
+        PHLog(self,@"%@ says no to addition to %@ from %@",statusEffect,self,source);
         return;
     }
     
@@ -343,7 +342,7 @@
     statusEffect.startDate = thisStartDate;
     statusEffect.source = source;
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
-    PHLog(@"%@ is affected by %@",self,statusEffect);
+    PHLog(self,@"%@ is affected by %@",self,statusEffect);
     
     if ( statusEffect.periodicTick.doubleValue > 0 )
     {
@@ -361,26 +360,26 @@
                 
                 if ( [_statusEffects containsObject:statusEffect] )
                 {
-                    NSLog(@"%@ on %@ has timed out",statusEffect,self);
+                    PHLog(self,@"%@ on %@ has timed out",statusEffect,self);
                     [(NSMutableArray *)_statusEffects removeObject:statusEffect];
                 }
                 else
-                    PHLog(@"%@ on %@ was removed some other way",statusEffect,self);
+                    PHLog(self,@"%@ on %@ was removed some other way",statusEffect,self);
             }
             
             thisTick++;
         });
         dispatch_resume(statusEffect.periodicTickSource);
-        PHLog(@"%@ will tick %lu times every %0.2f seconds and time out in %0.2f seconds",statusEffect,totalTicks,statusEffect.periodicTick.doubleValue,statusEffect.duration);
+        PHLog(self,@"%@ will tick %lu times every %0.2f seconds and time out in %0.2f seconds",statusEffect,totalTicks,statusEffect.periodicTick.doubleValue,statusEffect.duration);
     }
     else
     {
-        PHLog(@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
+        PHLog(self,@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
             if ( statusEffect.startDate == thisStartDate )
                 [(NSMutableArray *)_statusEffects removeObject:statusEffect];
             else
-                NSLog(@"something else seems to have removed %@'s %@",self,statusEffect);
+                PHLog(self,@"something else seems to have removed %@'s %@",self,statusEffect);
         });
     }
 }
@@ -391,7 +390,7 @@
     {
         if ( effect.currentStacks.integerValue > 1 )
         {
-            PHLog(@"consumed a stack of %@",effect);
+            PHLog(self,@"consumed a stack of %@",effect);
             effect.currentStacks = @( effect.currentStacks.integerValue - 1 );
             [effect handleConsumptionWithOwner:self];
             return;
@@ -400,7 +399,7 @@
     
     [effect handleRemovalWithOwner:self];
     [(NSMutableArray *)_statusEffects removeObject:effect];
-    PHLog(@"removed %@'s %@",self,effect);
+    PHLog(self,@"removed %@'s %@",self,effect);
 }
 
 - (void)consumeStatusEffect:(Effect *)effect
@@ -449,7 +448,7 @@
             spell.emphasisStopDate = nil;
         }
         else
-            PHLog(@"Something seems to have refreshed the emphasis on %@",spell);
+            PHLog(self,@"Something seems to have refreshed the emphasis on %@",spell);
     });
 }
 
@@ -457,7 +456,7 @@
 {
     if ( dyingEntity == self )
     {
-        PHLog(@"%@ has died",self);
+        PHLog(self,@"%@ has died",self);
         self.isDead = YES;
         
         if ( self.deathSoundName )
@@ -479,7 +478,7 @@
         }
         else if ( self.castingSpell && dyingEntity == self.castingSpell.target )
         {
-            PHLog(@"%@ aborting %@ because %@ died",self,self.castingSpell,dyingEntity);
+            PHLog(self,@"%@ aborting %@ because %@ died",self,self.castingSpell,dyingEntity);
             
             [SoundManager playSpellFizzle:dyingEntity.castingSpell];
             self.castingSpell = nil;
@@ -497,7 +496,7 @@
 
 - (void)beginEncounter:(Encounter *)encounter
 {
-    //PHLog(@"i, %@ (%@), should begin encounter",self,self.isPlayingPlayer?@"playing player":@"automated player");
+    //PHLog(self,@"i, %@ (%@), should begin encounter",self,self.isPlayingPlayer?@"playing player":@"automated player");
     
     if ( ! self.isPlayingPlayer && self.isPlayer )
     {
@@ -545,7 +544,7 @@
     
     //if ( ! self.lastAutomaticAbilityDate ||
     //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
-    //PHLog(@"%@ is doing automated stuff",self);
+    //PHLog(self,@"%@ is doing automated stuff",self);
     if ( ! classSwitchHandled )
     {
         if ( [self.hdClass.role isEqualToString:(NSString *)TankRole] )
@@ -565,7 +564,7 @@
     self.lastHealth = self.currentHealth;
     
     NSNumber *nextFireDate = gcdTriggered ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil] : @0;
-    //PHLog(@"%@ will act again in %@ seconds",self,nextFireDate);
+    //PHLog(self,@"%@ will act again in %@ seconds",self,nextFireDate);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(nextFireDate.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         [self _doAutomaticStuff];
     });
@@ -583,7 +582,7 @@
     Class spellClass = self.hdClass.isCasterDPS ? [GenericDamageSpell class] : [GenericPhysicalAttackSpell class];
     Spell *spell = [[spellClass alloc] initWithCaster:self];
     self.target = enemy;
-    PHLog(@"%@ is auto dpsing %@ for %@",self,enemy,spell.damage);
+    PHLog(self,@"%@ is auto dpsing %@ for %@",self,enemy,spell.damage);
     //[encounter doDamage:spell source:self target:enemy modifiers:nil periodic:NO];
     //- (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target inEncounter:(Encounter *)encounter;
     // TODO, should be enumerating possible spells based on priorities and finding the best one
@@ -591,12 +590,12 @@
     NSString *message = nil;
     if ( ! [self validateSpell:spell asSource:YES otherEntity:enemy message:&message invalidDueToCooldown:NULL] )
     {
-        PHLog(@"%@ automatic spell cast failed: %@",self,message);
+        PHLog(self,@"%@ automatic spell cast failed: %@",self,message);
         return YES;
     }
     else if ( ! [enemy validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
     {
-        PHLog(@"%@ automatic spell cast failed: %@",self,message);
+        PHLog(self,@"%@ automatic spell cast failed: %@",self,message);
         return YES;
     }
     [self castSpell:spell withTarget:enemy];
@@ -621,12 +620,12 @@
             NSString *message = nil;
             if ( ! [self validateSpell:spell asSource:YES otherEntity:player message:&message invalidDueToCooldown:NULL] )
             {
-                PHLog(@"%@ automatic spell cast failed: %@",self,message);
+                PHLog(self,@"%@ automatic spell cast failed: %@",self,message);
                 return;
             }
             if ( ! [self.target validateSpell:spell asSource:NO otherEntity:self message:&message invalidDueToCooldown:NULL] )
             {
-                PHLog(@"%@ automatic spell cast failed: %@",self,message);
+                PHLog(self,@"%@ automatic spell cast failed: %@",self,message);
                 return;
             }
             
@@ -645,14 +644,14 @@
 
 - (void)updateEncounter:(Encounter *)encounter
 {
-    //PHLog(@"i, %@, should update encounter",self);
+    //PHLog(self,@"i, %@, should update encounter",self);
     
     // TODO enumerate and remove status effects
 }
 
 - (void)endEncounter:(Encounter *)encounter
 {
-    //PHLog(@"i, %@, should end encounter",self);
+    //PHLog(self,@"i, %@, should end encounter",self);
     self.stopped = YES;
     self.castingSpell = nil;
 }
@@ -713,7 +712,7 @@
     
     if ( self.castingSpell )
     {
-        PHLog(@"%@ cancelled casting %@",self,self.castingSpell);
+        PHLog(self,@"%@ cancelled casting %@",self,self.castingSpell);
         self.castingSpell = nil;
         self.castingSpell.lastCastStartDate = nil;
         
@@ -725,7 +724,7 @@
     NSDate *thisCastStartDate = [NSDate date];
     self.castingSpell.lastCastStartDate = thisCastStartDate;
     
-    PHLog(@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
+    PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
     NSMutableArray *modifiers = [NSMutableArray new];
     if ( [self handleSpellStart:spell modifiers:modifiers] )
@@ -737,7 +736,7 @@
     
     __block NSNumber *hasteBuff = nil;
     [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-        PHLog(@"considering %@ for %@",obj,spell);
+        PHLog(self,@"considering %@ for %@",obj,spell);
         if ( obj.hasteIncreasePercentage )
         {
             if ( ! hasteBuff || [obj.hasteIncreasePercentage compare:hasteBuff] == NSOrderedDescending )
@@ -759,7 +758,7 @@
     if ( spell.isChanneled || spell.castTime.doubleValue > 0 )
     {
         if ( hasteBuff )
-            PHLog(@"%@'s haste is buffed by %@",self,hasteBuff);
+            PHLog(self,@"%@'s haste is buffed by %@",self,hasteBuff);
         
         // get base cast time
         effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
@@ -776,12 +775,12 @@
             dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
             dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
-                PHLog(@"%@ is channel-ticking",spell);
+                PHLog(self,@"%@ is channel-ticking",spell);
                 
                 [self.encounter handleSpell:spell periodicTick:YES isFirstTick:firstTick modifiers:modifiers dyingEntitiesHandler:^(NSArray *dyingEntities) {
                     if ( [dyingEntities containsObject:self] || [dyingEntities containsObject:target] )
                     {
-                        NSLog(@"%@ or %@ have died during %@, so it is unscheduling",self,target,spell);
+                        PHLog(spell,@"%@ or %@ have died during %@, so it is unscheduling",self,target,spell);
                         dispatch_source_cancel(timer);
                         return;
                     }
@@ -789,7 +788,7 @@
                 firstTick = NO;
                 if ( --ticksRemaining <= 0 )
                 {
-                    PHLog(@"%@ has finished channeling",spell);
+                    PHLog(self,@"%@ has finished channeling",spell);
                     dispatch_source_cancel(timer);
                     self.castingSpell = nil;
                 }
@@ -802,18 +801,18 @@
                 // blah
                 if ( thisCastStartDate != self.castingSpell.lastCastStartDate )
                 {
-                    PHLog(@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
+                    PHLog(self,@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
                     return;
                 }
                 [self.encounter handleSpell:self.castingSpell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
                 self.castingSpell = nil;
-                PHLog(@"%@ finished casting %@",self,spell);
+                PHLog(self,@"%@ finished casting %@",self,spell);
             });
         }
     }
     else
     {
-        PHLog(@"%@ cast %@ (instant)",self,spell);
+        PHLog(self,@"%@ cast %@ (instant)",self,spell);
         [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
     }
     
@@ -825,12 +824,12 @@
     if ( self.currentAuxiliaryResources.integerValue + addedResources.integerValue <= self.maxAuxiliaryResources.integerValue )
     {
         self.currentAuxiliaryResources = @( self.currentAuxiliaryResources.integerValue + addedResources.integerValue );
-        PHLog(@"%@ has gained an aux resource (%@)",self,self.currentAuxiliaryResources);
+        PHLog(self,@"%@ has gained an aux resource (%@)",self,self.currentAuxiliaryResources);
     }
     else
     {
         self.currentAuxiliaryResources = self.maxAuxiliaryResources;
-        PHLog(@"%@ is at full aux resources",self);
+        PHLog(self,@"%@ is at full aux resources",self);
     }
 }
 

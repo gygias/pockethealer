@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "Spell.h"
 #import "SpellPriv.h"
@@ -29,12 +29,11 @@ const NSString *SpellLevelHigh = @"high";
 {
     if ( self = [super init] )
     {
-        if ( [[self hdClasses] containsObject:caster.hdClass] )
-            PHLog(@"initializing %@'s %@",caster,self);
-        else
-            return nil;
-        
         self.caster = caster;
+        if ( [[self hdClasses] containsObject:caster.hdClass] )
+            PHLog(self,@"initializing %@'s %@",caster,self);
+        else
+            return nil;        
         self.level = @"low";
         self.hitSoundName = @"heal_hit";
         self.castSoundName = @"nature_cast";

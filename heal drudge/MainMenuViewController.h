@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 

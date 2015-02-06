@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "EventModifier.h"
 
 @implementation EventModifier
@@ -68,7 +70,7 @@
         
         if ( mod.school != AnySchool && ! ( mod.school & spell.school ) )
         {
-            NSLog(@"the school of %@'s %@ doesn't match that of %@",mod.source,mod,spell);
+            PHLog(spell,@"the school of %@'s %@ doesn't match that of %@",mod.source,mod,spell);
             return;
         }
         

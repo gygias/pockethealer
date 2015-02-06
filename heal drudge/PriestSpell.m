@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "Logging.h"
 
 #import "PriestSpell.h"
@@ -36,7 +38,7 @@
                 da = [DivineAegisEffect new];
                 [self.target addStatusEffect:da source:self.caster];
             } else
-                PHLog(@"%@'s existing %@ is going from %@ to %@!",self.target,da.absorb,da.absorb,effectiveAbsorb);
+                PHLog(self,@"%@'s existing %@ is going from %@ to %@!",self.target,da.absorb,da.absorb,effectiveAbsorb);
             da.absorb = effectiveAbsorb;
         }
     }

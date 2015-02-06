@@ -6,9 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
-
-#import "SoundManager.h"
+#import "PocketHealer.h"
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -81,7 +79,7 @@ static SoundManager *sSoundManager;
         NSDictionary *existingSoundEvent = [sSoundManager.audioPlayers objectForKey:path];
         if ( [existingSoundEvent[@"throttled"] boolValue] )
         {
-            PHLog(@"%@ is throttled",path);
+            //PHLogV(@"%@ is throttled",path);
             return;
         }
         
@@ -108,7 +106,7 @@ static SoundManager *sSoundManager;
             
             if ( [sound play] )
             {
-                //PHLog(@"playing %@",path);
+                //PHLogV(@"playing %@",path);
                 
                 if ( handler )
                     handler(sound);
@@ -121,10 +119,10 @@ static SoundManager *sSoundManager;
                 }
             }
             else
-                PHLog(@"failed playing %@",path);
+                PHLogV(@"failed playing %@",path);
         }
         else
-            PHLog(@"failed to initialize sound from %@",url);
+            PHLogV(@"failed to initialize sound from %@",url);
     });
 }
 
@@ -255,10 +253,10 @@ static SoundManager *sSoundManager;
 //        NSNumber *maxCountdownIndex = @10;
 //        if ( currentIndex > maxCountdownIndex.unsignedIntegerValue )
 //        {
-//            PHLog(@"%@ can only count down from %@",self,maxCountdownIndex);
+//            PHLogV(@"%@ can only count down from %@",self,maxCountdownIndex);
 //            return;
 //        }
-//        PHLog(@"%@ is counting down from %@",self,startIndex);
+//        PHLogV(@"%@ is counting down from %@",self,startIndex);
 //        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, globalQueue);
 //        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
 //        dispatch_source_set_event_handler(timer, ^{

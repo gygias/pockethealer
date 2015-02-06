@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "DirectoryGuesser.h"
 
@@ -27,14 +27,14 @@ NSMutableDictionary *sGiantFuckingDictionary = nil;
 + (BOOL)guessWhereToPutGuild:(Guild *)guild
 {
     if ( ! guild.isComplete )
-        PHLog(@"i can't store incomplete guilds ya idjit");
+        PHLogV(@"i can't store incomplete guilds ya idjit");
     return YES;
 }
 
 + (BOOL)guessWhereToPutCharacter:(Entity *)character
 {
     if ( ! character.isComplete )
-        PHLog(@"i can't store incomplete characters ya idjit");
+        PHLogV(@"i can't store incomplete characters ya idjit");
     return YES;
 }
 

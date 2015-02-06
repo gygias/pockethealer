@@ -6,12 +6,10 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "Effect.h"
-
 #import "Encounter.h"
-#import "SoundManager.h"
 
 @implementation Effect
 
@@ -69,7 +67,7 @@
     if ( self.currentStacks.integerValue < self.maxStacks.integerValue )
         self.currentStacks = @(self.currentStacks.integerValue + 1);
     self.startDate = [NSDate date];
-    PHLog(@"%@ has gained a stack -> %@",self,self.currentStacks);
+    PHLog(self.source,@"%@ has gained a stack -> %@",self,self.currentStacks);
 }
 
 - (void)removeStack

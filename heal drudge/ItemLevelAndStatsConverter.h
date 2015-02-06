@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import <Foundation/Foundation.h>
 
 @class Entity,HDClass;
@@ -27,5 +29,7 @@
 + (NSNumber *)automaticHealValueWithEntity:(Entity *)entity;
 
 + (NSNumber *)averageDPSOfEntities:(NSArray *)entities;
+
++ (NSNumber *)critChanceWithEntity:(Entity *)entity;
 
 @end

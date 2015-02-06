@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "QuickPlayViewController.h"
 
@@ -39,7 +39,7 @@
         Player *player = (Player *)obj;
         if ( player.character.hdClass.isHealerClass )
         {
-            PHLog(@"random healer: %@",player);
+            PHLogV(@"random healer: %@",player);
             aHealer = player;
             *stop = YES;
         }
@@ -47,7 +47,7 @@
     
     if ( ! aHealer )
     {
-        PHLog(@"there is no healer in this random raid!");
+        PHLogV(@"there is no healer in this random raid!");
     }
     
     Enemy *enemy = [Enemy randomEnemyWithRaid:raid];
@@ -72,7 +72,7 @@
     enemyTouchedBlock = ^(Enemy *enemy){
         encounter.player.target = enemy;
         self.playerAndTargetView.target = enemy;
-        PHLog(@"player targeted enemy %@",enemy);
+        //PHLogV(@"player targeted enemy %@",enemy);
         return YES;
     };
     self.enemyFrameView.enemyTouchedHandler = enemyTouchedBlock;
@@ -83,7 +83,7 @@
     self.raidFramesView.targetedPlayerBlock = ^(Entity *target){
         encounter.player.target = target;
         self.playerAndTargetView.target = target;
-        PHLog(@"player targeted %@",target);
+        //PHLogV(@"player targeted %@",target);
     };
     //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_forceDraw:) userInfo:nil repeats:YES];
 
@@ -103,7 +103,7 @@
         // determine target, shouldn't be doing validation at this level
         if ( spell.targeted && ( encounter.player.target.isEnemy || ! encounter.player.target ) && spell.spellType != DetrimentalSpell )
         {
-            PHLog(@"auto-self casting %@",spell);
+            PHLogV(@"auto-self casting %@",spell);
             target = encounter.player;
         }
         else
@@ -119,7 +119,7 @@
             self.castBarView.effectiveCastTime = effectiveCastTime;
         }
         else
-            PHLog(@"%@'s %@ failed: %@",encounter.player,spell,message);
+            PHLogV(@"%@'s %@ failed: %@",encounter.player,spell,message);
         
         return doCast;
     };
@@ -146,7 +146,6 @@
 
 - (void)_forceDraw:(id)sender
 {
-    //PHLog(@"needsDisplay");
     dispatch_async(dispatch_get_main_queue(), ^{
         for ( UIView *view in [[self view] subviews] )
             [view setNeedsDisplay];

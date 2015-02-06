@@ -6,14 +6,12 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "Encounter.h"
-
 #import "Event.h"
 #import "EventModifier.h"
-
-#import "SoundManager.h"//XXX
+#import "ItemLevelAndStatsConverter.h"
 
 @implementation Encounter
 
@@ -129,23 +127,39 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if ( spell.nextCooldownDate == thisNextCooldownDate )
             {
-                PHLog(@"%@'s %@ has cooled down",spell.caster,spell);
+                PHLog(spell,@"%@'s %@ has cooled down",spell.caster,spell);
                 spell.nextCooldownDate = nil;
             }
             else
-                PHLog(@"Something else seems to have reset the cooldown on %@'s %@",spell.caster,spell);
+                PHLog(spell,@"Something else seems to have reset the cooldown on %@'s %@",spell.caster,spell);
         });
     }
     
     dispatch_async(_encounterQueue, ^{
     
-        PHLog(@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
+        PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
         
         if ( spell.caster.isEnemy && self.enemyAbilityHandler )
             self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
         
 #warning WARNING
         EventModifier *netMod = [EventModifier netModifierWithSpell:spell modifiers:modifiers];
+        
+        // apply standard crit chance
+        if ( ! netMod.crit )
+        {
+            NSNumber *critChance = [ItemLevelAndStatsConverter critChanceWithEntity:spell.caster];
+            NSUInteger critChance10000 = critChance.doubleValue * 10000.0;
+            // .05 -> 10000.05
+            NSUInteger critRoll = arc4random() % 10000;
+            BOOL standardCrit = ( critRoll <= critChance10000 );
+            if ( standardCrit )
+            {
+                PHLog(spell,@"%@ gained a standard crit (%llu vs %llu)",spell,critChance10000,critRoll);
+                netMod.crit = YES;
+            }
+        }
+        
         [spell.caster handleSpell:spell modifier:netMod];
         [spell.target handleSpell:spell modifier:netMod];
         
@@ -215,7 +229,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             
             if ( cheatDeathModifier )
             {
-                PHLog(@"CHEATING DEATH and healing %@ for %@",spell.target,cheatDeathModifier.cheatDeathAndApplyHealing);
+                PHLog(spell,@"CHEATING DEATH and healing %@ for %@",spell.target,cheatDeathModifier.cheatDeathAndApplyHealing);
                 
                 NSInteger newHealth = spell.target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
                 if ( newHealth > spell.target.health.integerValue )
@@ -238,7 +252,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                 // source has to choose a new target
                 if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
                 {
-                    PHLog(@"the encounter is over because there are no targets for %@",spell.caster);
+                    PHLog(spell,@"the encounter is over because there are no targets for %@",spell.caster);
                     [self endEncounter];
                 }
                 else // TODO is there some ability by which players could kill themselves as the last one alive?
@@ -253,7 +267,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                     }];
                     if ( ! someEnemyIsAlive )
                     {
-                        PHLog(@"the encounter is over because all enemies are dead");
+                        PHLog(spell,@"the encounter is over because all enemies are dead");
                         [self endEncounter];
                         return;
                     }
@@ -303,7 +317,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     damageEvent.netDamage = periodic ? spell.periodicDamage : spell.damage;
     
     // deliberately applying all damage increases before decreases, TODO no idea if this is right
-    PHLog(@"considering %@ for damage of %@",modifier,spell);
+    PHLog(spell,@"considering %@ for damage of %@",modifier,spell);
     if ( modifier.damageIncrease )
     {
         damageEvent.netDamage = @( damageEvent.netDamage.unsignedIntegerValue + modifier.damageIncrease.unsignedIntegerValue );
@@ -345,7 +359,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     
     if ( healingValue.doubleValue > 0 )
     {
-        NSLog(@"considering %@ for healing of %@",modifier,spell);
+        PHLog(spell,@"considering %@ for healing of %@",modifier,spell);
         if ( modifier.healingIncrease )
             healingValue = @( healingValue.unsignedIntegerValue + modifier.healingIncrease.unsignedIntegerValue );
         else if ( modifier.healingIncreasePercentage )
@@ -357,7 +371,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         target.currentHealth = @(newHealth);
         
-        NSLog(@"%@ was healed for %@",target,healingValue);
+        PHLog(spell,@"%@ was healed for %@",target,healingValue);
     }
     
     // TODO how can modifiers buff absorbs as constituent effects?
@@ -365,7 +379,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 //    
 //    if ( absorbValue.doubleValue > 0 )
 //    {
-//        PHLog(@"considering %@ for absorb of %@",obj,spell);
+//        PHLog(spell,@"considering %@ for absorb of %@",obj,spell);
 //        if ( modifier.healingIncrease )
 //            absorbValue = @( absorbValue.unsignedIntegerValue + modifier.healingIncrease.unsignedIntegerValue );
 //        else if ( modifier.healingIncreasePercentage )
@@ -377,7 +391,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 ////        
 ////        target.currentAbsorb = @(newAbsorb);
 //        
-//        PHLog(@"%@ received a %@ absorb",target,absorbValue);
+//        PHLog(spell,@"%@ received a %@ absorb",target,absorbValue);
 //    }
 }
 

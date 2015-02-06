@@ -6,10 +6,9 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "EnemyFrameView.h"
-
 #import "Enemy.h"
 
 @implementation EnemyFrameView
@@ -78,7 +77,7 @@
     UITouch *theTouch = [myTouches anyObject]; // XXX
     if ( theTouch )
     {
-        PHLog(@"you touched %@",self.enemy);
+        //PHLogV(@"you touched %@",self.enemy);
     
         if ( self.enemyTouchedHandler )
             self.enemyTouchedHandler(self.enemy);

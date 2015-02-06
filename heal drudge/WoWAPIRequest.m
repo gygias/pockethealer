@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "WoWAPIRequest.h"
 #import "HDClass.h"
@@ -27,7 +27,7 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLResponse *response = nil;
     NSError *error = nil;
-    PHLog(@"sending %@",url);
+    PHLogV(@"sending %@",url);
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
     BOOL okay = ( error == nil );
@@ -42,7 +42,7 @@
     }
     else
     {
-        PHLog(@"nil data result from NSURLConnection");
+        PHLogV(@"nil data result from NSURLConnection");
         okay = NO;
     }
     
@@ -51,7 +51,7 @@
         if ( [responseObject[@"status"] isEqualToString:@"nok"] )
         {
             okay = NO;
-            PHLog(@"request failed: %@",responseObject[@"reason"]);
+            PHLogV(@"request failed: %@",responseObject[@"reason"]);
             responseObject = nil;
         }
     }
@@ -153,9 +153,9 @@
 //                                                                         format:NULL
 //                                                                          error:NULL];
 //            assert([unesc isKindOfClass:[NSString class]]);
-//            PHLog(@"Output = %@", unesc);
+//            PHLogV(@"Output = %@", unesc);
 //            if ( [characterName rangeOfString:@"tara"].location != NSNotFound )
-//                PHLog(@"lol %@",characterName);
+//                PHLogV(@"lol %@",characterName);
 //            //characterName = [characterName stringByReplacingOccurrencesOfString:@"\\U" withString:@"\\u"];
 //            NSString *convertedString = [characterName mutableCopy];
 //            
@@ -1127,7 +1127,7 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
     
     if ( winningMainSpecDict )
     {
-        PHLog(@"%@'s appears to be main %@ OS %@",entity.name,winningMainSpecDict[@"name"],runnerUpOffSpecDict[@"name"]);
+        PHLog(entity,@"%@'s appears to be main %@ OS %@",entity.name,winningMainSpecDict[@"name"],runnerUpOffSpecDict[@"name"]);
         entity.specName = winningMainSpecDict[@"name"];
         
         // TODO?
@@ -1187,9 +1187,9 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
  
         [fetchRequest sendRequestWithCompletionHandler:^(BOOL success, id response) {
             if ( ! success )
-                PHLog(@"failed to fetch thumbnail image for '%@'",entity);
+                PHLogV(@"failed to fetch thumbnail image for '%@'",entity);
             else if ( ! [response isKindOfClass:[UIImage class]] )
-                PHLog(@"thumbnail image data for '%@' is not an image",entity);
+                PHLogV(@"thumbnail image data for '%@' is not an image",entity);
             else
                 entity.image = response;
         }];

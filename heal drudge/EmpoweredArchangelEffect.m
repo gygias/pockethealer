@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "EmpoweredArchangelEffect.h"
 
 #import "PrayerOfHealingSpell.h"
@@ -37,7 +39,7 @@
     
     // TODO does 'beneficial' imply healing is defined? does it matter?
     EventModifier *mod = [EventModifier new];
-    NSLog(@"%@'s %@ should crit due to EAA!",spell.caster,spell);
+    PHLog(spell,@"%@'s %@ should crit due to EAA!",spell.caster,spell);
     mod.crit = YES;
     mod.source = self;
     [mod addBlock:^{

@@ -6,11 +6,19 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #ifndef __heal_drudge__Logging__
 #define __heal_drudge__Logging__
 
 #import <Foundation/Foundation.h>
 
-void PHLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
+@class Entity;
+
+typedef BOOL (^PHLogApprovalBlock)(id source);
+
+#define PHLogV NSLog
+void PHLog(id source,NSString *format, ...);
+void PHLogSetApprovalBlock(PHLogApprovalBlock block);
 
 #endif /* defined(__heal_drudge__Logging__) */

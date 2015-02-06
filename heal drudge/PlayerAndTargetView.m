@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "PlayerAndTargetView.h"
 
@@ -108,7 +108,7 @@
         theTouchedEntity = self.target.target;
     if ( theTouchedEntity )
     {
-        PHLog(@"you touched %@",theTouchedEntity);
+        //PHLogV(@"you touched %@",theTouchedEntity);
         
         if ( self.entityTouchedHandler )
             self.entityTouchedHandler(theTouchedEntity);

@@ -660,6 +660,7 @@
 		6378645E1A74D61100D281B7 /* HolyNovaSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyNovaSpell.m; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
+		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -1236,6 +1237,7 @@
 		63C5F3FF1A5243E900B9AE46 /* heal drudge */ = {
 			isa = PBXGroup;
 			children = (
+				637F42741A84419600B27671 /* PocketHealer.h */,
 				632073A71A70959700AA4416 /* Icons */,
 				63A37EC81A75A15B0036C9D0 /* sounds */,
 				63027AC51A7984220068E68A /* AI */,

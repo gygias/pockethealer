@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "LoadCharacterOptionsViewController.h"
 
 #import "Entity.h"
@@ -58,7 +60,7 @@
 
 - (IBAction)ilvlSliderDidSomething:(id)sender
 {
-    //PHLog(@"guild ilvl slider did something");
+    //PHLogV(@"guild ilvl slider did something");
     NSUInteger rounded = self.minGuildiLvlSlider.value;
     [sender setValue:rounded animated:NO];
     self.minGuildiLvlLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.minGuildiLvlSlider.value];

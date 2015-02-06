@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "Effect.h"
 
 @interface SacredShieldAbsorbEffect : Effect

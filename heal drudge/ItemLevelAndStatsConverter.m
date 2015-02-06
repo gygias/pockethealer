@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "ItemLevelAndStatsConverter.h"
 
@@ -207,7 +207,7 @@
     // average = 0.00020618556701 secs per haste
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00020618556701 );
-    PHLog(@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    PHLog(entity,@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > baseCastTime.doubleValue ? 0 : baseCastTime.doubleValue - reduction );
 }
 
@@ -220,7 +220,7 @@
     // average = 0.00015376574384
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00015376574384 );
-    //PHLog(@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
+    //PHLog(entity,@"%@'s gcd becomes %0.4fs faster with %@ haste and %@%% haste buff",entity,reduction,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");
     return @( reduction > 1.5 ? 0 : 1.5 - reduction );
 }
 
@@ -292,6 +292,17 @@
     }];
     
     return @(averageDPS);
+}
+
++ (NSNumber *)critChanceWithEntity:(Entity *)entity
+{
+    if ( entity.isEnemy )
+        return @0;
+    double baseChance = 0.05;
+    // iliss 604 adds 5.49%, 0.00008940397351 per crit rating
+    double chance = baseChance + 0.00008940397351 * entity.critRating.doubleValue;
+    
+    return @(chance);
 }
 
 @end

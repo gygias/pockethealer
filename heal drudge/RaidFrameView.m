@@ -6,15 +6,14 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
+#import "PocketHealer.h"
+
 #import "RaidFrameView.h"
 
 #import "Entity.h"
 #import "HDClass.h"
 #import "Effect.h"
-#import "UIColor+Extensions.h"
-#import "ImageFactory.h"
 #import "Encounter.h"
-#import "Logging.h"
 
 @interface RaidFrameView ()
 - (void)_drawBackgroundInRect:(CGRect)rect;
@@ -67,10 +66,10 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-    //PHLog(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+    //PHLogV(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
     double snapshottedHealthPercentage = self.entity.currentHealth.doubleValue / self.entity.health.doubleValue;//(CGFloat)( arc4random() % 100 ) / 100 ;
     //if ( snapshottedHealthPercentage < 1.0 )
-    //    PHLog(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
+    //    PHLogV(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
     [self _drawBackgroundInRect:rect];
     [self _drawBorderInRect:rect];
     [self _drawHealthInRect:rect withHealth:snapshottedHealthPercentage];
@@ -144,7 +143,7 @@
     CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET, rect.origin.y + RAID_FRAME_HEALTH_INSET, width, rect.size.height - ( RAID_FRAME_HEALTH_INSET * 2 ));
     CGContextAddRect(context, rectangle);
     
-    //PHLog(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
+    //PHLogV(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
     CGContextSetStrokeColorWithColor(context,
                                      self.entity.hdClass.classColor.CGColor);
     
@@ -173,7 +172,7 @@
         return;
     
     double incomingHealsPercentage = incomingHeals / self.entity.health.doubleValue * 1.5; // TODO why 1.5
-    //NSLog(@"%@ incoming heals: %0.2f / %0.3f",self.entity,incomingHeals,incomingHealsPercentage);
+    //PHLog(self.entity,@"%@ incoming heals: %0.2f / %0.3f",self.entity,incomingHeals,incomingHealsPercentage);
     CGFloat incomingHealsDrawableWidth = ( incomingHealsPercentage + health > 1 ? 1 - health : incomingHealsPercentage ) * rect.size.width - ( RAID_FRAME_HEALTH_INSET * 2 );
     // maybe should have each particular method pass out an inner rect discounting their own offsets / "owned space"
     //if ( ( originX + width ) > rect.size.width - RAID_FRAME_BORDER_INSET * 2 - RAID_FRAME_HEALTH_INSET * 2 - )
@@ -199,7 +198,7 @@
     
     CGFloat originX = rect.origin.x + RAID_FRAME_HEALTH_INSET + ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
     CGFloat absorbs = self.entity.currentAbsorb.doubleValue / self.entity.health.doubleValue;//( (CGFloat)( arc4random() % 50 ) / 100 );
-    //PHLog(@"absorbs: %f origin: %f",absorbs,originX);
+    //PHLogV(@"absorbs: %f origin: %f",absorbs,originX);
     
     // optimize for <= incoming heals?
     if ( absorbs == 0 )
@@ -246,7 +245,7 @@
     
     if ( ! roleImage && ! self.entity.isEnemy )
     {
-        PHLog(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
+        PHLogV(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
         [NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
     }
     CGRect imageRect = CGRectMake(rect.origin.x + ROLE_ICON_ORIGIN_X, rect.origin.y + ROLE_ICON_ORIGIN_Y, ROLE_ICON_SIZE, ROLE_ICON_SIZE);
@@ -403,7 +402,7 @@
         theta -= 360;
     double thetaRadians = theta * ( M_PI / 180 );
     CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
-    //PHLog(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
+    //PHLogV(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
     
     CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
     CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);

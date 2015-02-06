@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "Logging.h"
+#import "PocketHealer.h"
 
 #import "Raid.h"
 #import "Entity.h"
@@ -51,7 +51,7 @@
                         basedOnAverageEquippedItemLevel:@630];
         [aPlayer initializeSpells];
         
-        PHLog(@"added %@",aPlayer);
+        PHLogV(@"added %@",aPlayer);
         
         // cheap ass randomize
         if ( idx == 0 )
@@ -126,30 +126,30 @@
     
     if ( slyIdx >= 0 )
     {
-        PHLog(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
+        PHLogV(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
         [raidCopy removeObjectAtIndex:slyIdx];
     }
     slyIdx = raidCopy.count;
-    PHLog(@"adding %@",slyeri);
+    PHLogV(@"adding %@",slyeri);
     [raidCopy insertObject:slyeri atIndex:slyIdx];
     
     if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
     {
         NSInteger removeIndex = gygiasIdx >= 0 ? gygiasIdx : someHealerIdx;
-        PHLog(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
+        PHLogV(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
         [raidCopy removeObjectAtIndex:removeIndex];
     }
     gygiasIdx = raidCopy.count;
-    PHLog(@"adding %@",gygias);
+    PHLogV(@"adding %@",gygias);
     [raidCopy insertObject:gygias atIndex:gygiasIdx];
     
     if ( lirealIdx >= 0 )
     {
-        PHLog(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
+        PHLogV(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
         [raidCopy removeObjectAtIndex:lirealIdx];
     }
     lirealIdx = raidCopy.count;
-    PHLog(@"adding %@",lireal);
+    PHLogV(@"adding %@",lireal);
     [raidCopy insertObject:lireal atIndex:lirealIdx];
     
     //if ( raid.players.count >= 20 )
@@ -157,7 +157,7 @@
     
     raid.players = raidCopy;
     
-    PHLog(@"%@",raid.players);
+    PHLogV(@"%@",raid.players);
     
     if ( outGygias )
         *outGygias = gygias;
@@ -231,7 +231,7 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     NSUInteger idx = [self.players indexOfObject:entity];
     if ( idx == NSNotFound )
     {
-        PHLog(@"error: %@ not found in raid",entity);
+        PHLogV(@"error: %@ not found in raid",entity);
         return nil;
     }
     
