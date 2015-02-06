@@ -83,6 +83,8 @@
     
     if ( highestPrioritySpell )
     {
+        if ( [NSStringFromClass([highestPrioritySpell class]) isEqualToString:@"WordOfGlorySpell"] && self.currentAuxiliaryResources.integerValue == 0 )
+            NSLog(@"WTF");
         [self castSpell:highestPrioritySpell withTarget:target];
         PHLog(self,@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
     }

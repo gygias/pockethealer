@@ -33,7 +33,7 @@
 //                                     [UIColor grayColor].CGColor);
 //    CGContextFillPath(context);
     
-    double healthPercentage = self.enemy.currentHealth.doubleValue / self.enemy.health.doubleValue;
+    double healthPercentage = self.enemy.currentHealthPercentage.doubleValue;
     
     CGFloat lineWidth = 1;
     CGContextSetLineWidth(context, 1);

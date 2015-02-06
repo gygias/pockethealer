@@ -47,16 +47,17 @@
 - (BOOL)addModifiers:(NSMutableArray *)modifiers
 {
     if ( self.caster.currentAuxiliaryResources.doubleValue < 1 )
-#warning ss
         [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
     NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
         resourcesToConsume = @3;
-    self.caster.currentAuxiliaryResources = @( self.caster.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
-    PHLog(self,@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
     
     EventModifier *mod = [EventModifier new];
     mod.healingIncrease = @( resourcesToConsume.doubleValue * self.healing.doubleValue );
+    [mod addBlock:^(Spell *spell, BOOL cheatedDeath) {
+        self.caster.currentAuxiliaryResources = @( self.caster.currentAuxiliaryResources.integerValue - resourcesToConsume.integerValue );
+        PHLog(self,@"%@ consumed %@ resources casting %@",self.caster,resourcesToConsume,self);
+    }];
     [modifiers addObject:mod];
     
     return YES;

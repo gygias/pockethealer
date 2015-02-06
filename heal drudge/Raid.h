@@ -23,6 +23,7 @@
 
 @property (strong,retain) NSArray *players;
 @property (nonatomic,readonly) NSArray *tankPlayers;
+@property (nonatomic,readonly) NSArray *nonTankPlayers;
 @property (nonatomic,readonly) NSArray *meleePlayers;
 @property (nonatomic,readonly) NSArray *rangePlayers;
 @property (nonatomic,readonly) NSArray *healers;

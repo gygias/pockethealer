@@ -67,7 +67,7 @@
     // Drawing code
     
     //PHLogV(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-    double snapshottedHealthPercentage = self.entity.currentHealth.doubleValue / self.entity.health.doubleValue;//(CGFloat)( arc4random() % 100 ) / 100 ;
+    double snapshottedHealthPercentage = self.entity.currentHealthPercentage.doubleValue;
     //if ( snapshottedHealthPercentage < 1.0 )
     //    PHLogV(@"%@ is at %0.2f%",self.player,snapshottedHealthPercentage * 100);
     [self _drawBackgroundInRect:rect];

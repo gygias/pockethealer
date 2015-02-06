@@ -33,6 +33,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property (nonatomic) HDClass *hdClass;
 - (void)initializeSpells;
 @property NSNumber *currentHealth;
+@property (readonly) NSNumber *currentHealthPercentage;
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
 @property NSNumber *currentAuxiliaryResources;

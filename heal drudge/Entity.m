@@ -557,7 +557,7 @@
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
         {
-            gcdTriggered = YES;//[self _doAutomaticHealing];
+            gcdTriggered = [self _doAutomaticHealing];
         }
     }
     
@@ -614,8 +614,45 @@
         {
             //NSNumber *averageHealing = [ItemLevelAndStatsConverter automaticHealValueWithEntity:self];
             Spell *spell = [[GenericHealingSpell alloc] initWithCaster:self];
-            self.target = [self.encounter.raid.tankPlayers lastObject];
-            //[encounter doHealing:spell source:self target:player modifiers:nil periodic:NO];
+            
+            NSArray *tankPlayers = self.encounter.raid.tankPlayers;
+            __block Entity *mostDamagedTank = nil;
+            __block double mostDamagedTankHealthPercentage = 1;
+            [tankPlayers enumerateObjectsUsingBlock:^(Entity *tankPlayer, NSUInteger idx, BOOL *stop) {
+                double thisTankHealthPercentage = tankPlayer.currentHealthPercentage.doubleValue;
+                if ( thisTankHealthPercentage < mostDamagedTankHealthPercentage )
+                {
+                    mostDamagedTank = tankPlayer;
+                    mostDamagedTankHealthPercentage = thisTankHealthPercentage;
+                }
+            }];
+            
+            __block Entity *mostDamagedNonTank = nil;
+            __block double mostDamagedNonTankHealthPercentage = 1;
+            NSArray *nonTankPlayers = [self.encounter.raid nonTankPlayers];
+            [nonTankPlayers enumerateObjectsUsingBlock:^(Entity *nonTankPlayer, NSUInteger idx, BOOL *stop) {
+                double thisNonTankHealthPercentage = nonTankPlayer.currentHealthPercentage.doubleValue;
+                if ( thisNonTankHealthPercentage < mostDamagedNonTankHealthPercentage )
+                {
+                    mostDamagedNonTank = nonTankPlayer;
+                    mostDamagedNonTankHealthPercentage = thisNonTankHealthPercentage;
+                }
+            }];
+            
+            Entity *entityToHeal = nil;
+            double preferTankHealthPercentageThreshold = 1 - mostDamagedTankHealthPercentage;
+            if ( mostDamagedTank )
+            {
+                if ( mostDamagedNonTankHealthPercentage < mostDamagedTankHealthPercentage
+                    && ( (mostDamagedTankHealthPercentage - mostDamagedNonTankHealthPercentage ) > preferTankHealthPercentageThreshold ) )
+                    entityToHeal = mostDamagedNonTank;
+                else
+                    entityToHeal = mostDamagedTank;
+            }
+            else if ( mostDamagedNonTank )
+                entityToHeal = mostDamagedNonTank;
+            
+            self.target = entityToHeal;
             
             NSString *message = nil;
             if ( ! [self validateSpell:spell asSource:YES otherEntity:player message:&message invalidDueToCooldown:NULL] )
@@ -860,6 +897,11 @@
 {
     NSDate *storedDate = self.nextGlobalCooldownDate;
     return storedDate && [[NSDate date] timeIntervalSinceDate:storedDate] <= 0;
+}
+
+- (NSNumber *)currentHealthPercentage
+{
+    return @( self.currentHealth.doubleValue / self.health.doubleValue );
 }
 
 @end

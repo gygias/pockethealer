@@ -15,7 +15,7 @@
 - (AISpellPriority)currentSpellPriorities
 {
     AISpellPriority priorities = FillerPriotity;
-    double healthPercentage = self.currentHealth.doubleValue / self.health.doubleValue;
+    double healthPercentage = self.currentHealthPercentage.doubleValue;
     double healthDelta = ( self.currentHealth.doubleValue - self.lastHealth.doubleValue ) / self.health.doubleValue;
     if ( healthDelta > 0.33 )
     {

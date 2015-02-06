@@ -180,6 +180,18 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     return [self _playersWithRole:TankRole range:MeleeRange];
 }
 
+- (NSArray *)nonTankPlayers
+{
+    NSMutableArray *nonTankPlayers = [NSMutableArray array];
+    NSArray *healers = [self healers];
+    if ( healers )
+        [nonTankPlayers addObjectsFromArray:healers];
+    NSArray *dpsPlayers = [self dpsPlayers];
+    if ( dpsPlayers )
+        [nonTankPlayers addObjectsFromArray:dpsPlayers];
+    return nonTankPlayers;
+}
+
 - (NSArray *)meleePlayers
 {
     return [self _playersWithRole:DPSRole range:MeleeRange];
