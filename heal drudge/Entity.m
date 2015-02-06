@@ -708,23 +708,32 @@
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target
 {
-    __block NSNumber *effectiveCastTime = nil;
-    
     if ( self.castingSpell )
     {
-        PHLog(self,@"%@ cancelled casting %@",self,self.castingSpell);
-        self.castingSpell = nil;
-        self.castingSpell.lastCastStartDate = nil;
-        
-        [SoundManager playSpellFizzle:spell];
+        // enqueue cast if within 'lead time'
+        if ( self.castingSpell.lastCastEffectiveCastTime > 0 )
+        {
+            NSTimeInterval timeSinceCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate];
+            double percentCast = timeSinceCast / self.castingSpell.lastCastEffectiveCastTime;
+            if ( percentCast >= 0.66 )
+            {
+                if ( ! self.isPlayingPlayer )
+                    [NSException raise:@"CastLeadTimeForAutomatedPlayer" format:@"%@",self];
+                self.enqueuedSpell = spell;
+                self.enqueuedSpell.target = target;
+                PHLog(self,@"player enqueued %@->%@",spell,target);
+                return nil;
+            }
+        }
+        else
+        {
+            PHLog(self,@"%@ cancelled casting %@",self,self.castingSpell);
+            self.castingSpell = nil;
+            self.castingSpell.lastCastStartDate = nil;
+            
+            [SoundManager playSpellFizzle:spell];
+        }
     }
-    
-    self.castingSpell = spell;
-    self.castingSpell.target = target;
-    NSDate *thisCastStartDate = [NSDate date];
-    self.castingSpell.lastCastStartDate = thisCastStartDate;
-    
-    PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
     NSMutableArray *modifiers = [NSMutableArray new];
     if ( [self handleSpellStart:spell modifiers:modifiers] )
@@ -743,6 +752,16 @@
                 hasteBuff = obj.hasteIncreasePercentage; // oh yeah, we're not using haste at all yet
         }
     }];
+            
+    self.castingSpell = spell;
+    self.castingSpell.target = target;
+    NSDate *thisCastStartDate = [NSDate date];
+    self.castingSpell.lastCastStartDate = thisCastStartDate;
+    // get base cast time
+    NSNumber *effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
+    self.castingSpell.lastCastEffectiveCastTime = effectiveCastTime.doubleValue;
+    
+    PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
     if ( spell.triggersGCD )
     {
@@ -760,9 +779,6 @@
         if ( hasteBuff )
             PHLog(self,@"%@'s haste is buffed by %@",self,hasteBuff);
         
-        // get base cast time
-        effectiveCastTime = [ItemLevelAndStatsConverter castTimeWithBaseCastTime:spell.castTime entity:self hasteBuffPercentage:hasteBuff];
-        
         // TODO
         if ( self.isPlayer )
             [SoundManager playSpellSound:spell duration:effectiveCastTime.doubleValue];
@@ -772,7 +788,7 @@
             NSTimeInterval timeBetweenTicks = effectiveCastTime.doubleValue / spell.channelTicks.doubleValue;
             __block NSInteger ticksRemaining = spell.channelTicks.unsignedIntegerValue;
             __block BOOL firstTick = YES;
-            dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+            dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
             dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
                 PHLog(self,@"%@ is channel-ticking",spell);
@@ -797,7 +813,7 @@
         }
         else
         {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveCastTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveCastTime.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
                 // blah
                 if ( thisCastStartDate != self.castingSpell.lastCastStartDate )
                 {
@@ -807,6 +823,13 @@
                 [self.encounter handleSpell:self.castingSpell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
                 self.castingSpell = nil;
                 PHLog(self,@"%@ finished casting %@",self,spell);
+                
+                if ( self.enqueuedSpell )
+                {
+                    Spell *dequeuedSpell = self.enqueuedSpell;
+                    self.enqueuedSpell = nil;
+                    [self castSpell:dequeuedSpell withTarget:dequeuedSpell.target];
+                }
             });
         }
     }
@@ -814,6 +837,7 @@
     {
         PHLog(self,@"%@ cast %@ (instant)",self,spell);
         [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
+        self.castingSpell = nil;
     }
     
     return effectiveCastTime;

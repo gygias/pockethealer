@@ -144,5 +144,6 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSDate *nextCooldownDate;
 @property NSDate *lastCastStartDate;
 @property NSDate *lastChannelStartDate;
+@property NSTimeInterval lastCastEffectiveCastTime;
 
 @end

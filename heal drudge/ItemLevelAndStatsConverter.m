@@ -205,6 +205,10 @@
     
     // there seems to be some kind of curve to this relationship
     // average = 0.00020618556701 secs per haste
+    
+    if ( ! baseCastTime || baseCastTime.doubleValue <= 0 )
+        return @0;
+    
     double buffRating = ( entity.hasteRating.doubleValue * ( 1 + hasteBuffPercentage.doubleValue ) );
     double reduction = ( buffRating * 0.00020618556701 );
     PHLog(entity,@"%@ cast time becomes %0.4fs faster with %@'s %@ haste and %@%% haste buff",baseCastTime,reduction,entity,entity.hasteRating,hasteBuffPercentage?hasteBuffPercentage:@"0");

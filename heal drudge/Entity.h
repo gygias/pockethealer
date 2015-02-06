@@ -40,6 +40,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property NSString *auxResourceName;
 - (void)addAuxResources:(NSNumber *)addedResources;
 @property Spell *castingSpell;
+@property Spell *enqueuedSpell;
 @property (readonly) NSArray *statusEffects;
 @property BOOL isDead;
 @property BOOL isPlayer;

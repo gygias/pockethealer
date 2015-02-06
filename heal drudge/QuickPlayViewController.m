@@ -114,9 +114,7 @@
         BOOL doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
         if ( doCast )
         {
-            NSNumber *effectiveCastTime = [encounter.player castSpell:spell withTarget:target];
-            self.castBarView.castingEntity = encounter.player;
-            self.castBarView.effectiveCastTime = effectiveCastTime;
+            [encounter.player castSpell:spell withTarget:target];
         }
         else
             PHLogV(@"%@'s %@ failed: %@",encounter.player,spell,message);
@@ -125,6 +123,8 @@
     };
     
     self.spellBarView.spellCastAttemptHandler = castBlock;
+    
+    self.castBarView.entity = encounter.player;
     
     [self _forceDraw:self];
     

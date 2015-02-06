@@ -15,7 +15,6 @@
 
 @interface CastBarView : UIView
 
-@property Entity *castingEntity;
-@property NSNumber *effectiveCastTime;
+@property Entity *entity;
 
 @end
