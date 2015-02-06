@@ -39,7 +39,7 @@
     {
         EventModifier *mod = [EventModifier new];
         mod.healingIncreasePercentage = @( self.currentStacks.doubleValue * 0.06 );
-        [mod addBlock:^{
+        [mod addBlock:^(Spell *spell, BOOL cheatedDeath) {
             [self.source consumeStatusEffect:self absolute:YES];
         }];
         [modifiers addObject:mod];

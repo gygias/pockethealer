@@ -12,7 +12,7 @@
 
 #import "Spell.h"
 
-typedef void (^EventModifierBlock)();
+typedef void (^EventModifierBlock)(Spell * spell,BOOL cheatedDeath);
 
 @interface EventModifier : NSObject
 {

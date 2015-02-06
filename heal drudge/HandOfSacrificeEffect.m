@@ -51,7 +51,7 @@
     mod.damageTakenDecrease = damageReduction;
     if ( consumed )
     {
-        [mod addBlock:^{
+        [mod addBlock:^(Spell *spell, BOOL cheatedDeath) {
             [self.source consumeStatusEffect:self absolute:YES];
         }];
     }

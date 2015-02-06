@@ -40,9 +40,9 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
 - (void)end;
 
 // called by entities when the a timed spell goes off
-- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick modifiers:(NSArray *)modifiers dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler;
+- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler;
 
-- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic;
+- (BOOL)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic;
 - (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic;
 
 - (BOOL)entityIsTargetedByEntity:(Entity *)entity;

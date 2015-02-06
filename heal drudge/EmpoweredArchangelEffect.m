@@ -42,7 +42,7 @@
     PHLog(spell,@"%@'s %@ should crit due to EAA!",spell.caster,spell);
     mod.crit = YES;
     mod.source = self;
-    [mod addBlock:^{
+    [mod addBlock:^(Spell *spell, BOOL cheatedDeath) {
         [spell.caster consumeStatusEffect:self absolute:YES];
     }];
     [modifiers addObject:mod];

@@ -553,11 +553,11 @@
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
         {
-            gcdTriggered = [self _doAutomaticDPS];
+            gcdTriggered = YES;//[self _doAutomaticDPS];
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
         {
-            gcdTriggered = [self _doAutomaticHealing];
+            gcdTriggered = YES;//[self _doAutomaticHealing];
         }
     }
     
@@ -789,11 +789,10 @@
             __block NSInteger ticksRemaining = spell.channelTicks.unsignedIntegerValue;
             __block BOOL firstTick = YES;
             dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
-            dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
+            dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC), timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
-                PHLog(self,@"%@ is channel-ticking",spell);
                 
-                [self.encounter handleSpell:spell periodicTick:YES isFirstTick:firstTick modifiers:modifiers dyingEntitiesHandler:^(NSArray *dyingEntities) {
+                [self.encounter handleSpell:spell periodicTick:YES isFirstTick:firstTick dyingEntitiesHandler:^(NSArray *dyingEntities) {
                     if ( [dyingEntities containsObject:self] || [dyingEntities containsObject:target] )
                     {
                         PHLog(spell,@"%@ or %@ have died during %@, so it is unscheduling",self,target,spell);
@@ -820,7 +819,7 @@
                     PHLog(self,@"%@ was aborted because it is no longer the current spell at dispatch time",spell);
                     return;
                 }
-                [self.encounter handleSpell:self.castingSpell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
+                [self.encounter handleSpell:self.castingSpell periodicTick:NO isFirstTick:NO dyingEntitiesHandler:NULL];
                 self.castingSpell = nil;
                 PHLog(self,@"%@ finished casting %@",self,spell);
                 
@@ -836,7 +835,7 @@
     else
     {
         PHLog(self,@"%@ cast %@ (instant)",self,spell);
-        [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
+        [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO dyingEntitiesHandler:NULL];
         self.castingSpell = nil;
     }
     

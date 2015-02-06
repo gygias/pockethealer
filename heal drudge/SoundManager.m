@@ -77,7 +77,7 @@ static SoundManager *sSoundManager;
     dispatch_async(sSoundManager.soundQueue, ^{
         
         NSDictionary *existingSoundEvent = [sSoundManager.audioPlayers objectForKey:path];
-        if ( [existingSoundEvent[@"throttled"] boolValue] )
+        if ( throttled && [existingSoundEvent[@"throttled"] boolValue] )
         {
             //PHLogV(@"%@ is throttled",path);
             return;
@@ -113,7 +113,7 @@ static SoundManager *sSoundManager;
                 
                 if ( duration > 0 )
                 {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), sSoundManager.soundQueue, ^{
                         [sound stop];
                     });
                 }

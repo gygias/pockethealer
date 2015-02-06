@@ -149,11 +149,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         for ( UIView *view in [[self view] subviews] )
             [view setNeedsDisplay];
-//        [self.raidFramesView setNeedsDisplay];
-//        [self.spellBarView setNeedsDisplay];
-//        [self.castBarView setNeedsDisplay];
-//        [self.enemyFrameView setNeedsDisplay];
-//        [self.playerAndTargetView setNeedsDisplay];
     });
 }
 

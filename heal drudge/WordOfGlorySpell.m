@@ -56,7 +56,7 @@
     PHLog(self,@"%@ is consuming %@ resources casting %@",self.caster,resourcesToConsume,self);
     
     EventModifier *mod = [EventModifier new];
-    mod.healingIncreasePercentage = @( resourcesToConsume.doubleValue * self.healing.doubleValue );
+    mod.healingIncrease = @( resourcesToConsume.doubleValue * self.healing.doubleValue );
     [modifiers addObject:mod];
     
     return YES;

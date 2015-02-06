@@ -111,11 +111,20 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         self.encounterUpdatedHandler(self);
 }
 
-- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick modifiers:(NSArray *)modifiers dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler
+- (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler
 {
     // while implementing cast bar, encounter isn't started
     if ( ! _encounterQueue )
         return;
+    
+    // is this ok for multitarget spells?
+    NSMutableArray *modifiers = [NSMutableArray new];
+    if ( [spell.caster handleSpellStart:spell modifiers:modifiers] )
+    {
+    }
+    else if ( [spell.target handleSpellStart:spell modifiers:modifiers] )
+    {
+    }
     
     // this was moved outside the dispatch_async to fix automated LoH (first spell w/o triggering gcd)
     // from causing an infinite loop, since the code which would set the next cooldown wouldn't
@@ -135,15 +144,18 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         });
     }
     
-    dispatch_async(_encounterQueue, ^{
+    void (^stuffBlock)();
+    stuffBlock = ^() {
     
-        PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick?@"'s channel is ticking":@" is casting",spell.name,spell.target);
+        PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick? (firstTick?@"'s channel is first-ticking":@"'s channel is ticking"):@" is casting",spell.name,spell.target);
         
         if ( spell.caster.isEnemy && self.enemyAbilityHandler )
             self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
         
-#warning WARNING
+#warning this flattens 'modifier blocks' to be executed once for all targets, even those \
+        they didn't originate from below, which will probably be problematic for something
         EventModifier *netMod = [EventModifier netModifierWithSpell:spell modifiers:modifiers];
+        //PHLog(spell, @"MODIFIERS %@ -> %@",modifiers,netMod);
         
         // apply standard crit chance
         if ( ! netMod.crit )
@@ -188,6 +200,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         Entity *originalTarget = spell.target;
         [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
+            BOOL cheatedDeath = NO;
             if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
             {
                 if ( spell.spellType == BeneficialOrDeterimentalSpell )
@@ -195,89 +208,77 @@ static Encounter *sYouAreATerribleProgrammer = nil;
                     if ( spell.target.isPlayer )
                         [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                     else
-                        [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
+                        cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                 }
                 else if ( spell.spellType == DetrimentalSpell )
-                    [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
+                    cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
                 else // ( spell.spellType == BeneficialSpell )
                     [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
             }
             
             spell.target = aTarget;
+            
             [spell handleHitWithModifier:netMod];
+            
+            [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
+                block(spell,cheatedDeath);
+            }];
         }];
         spell.target = originalTarget;
-        
-        [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
-            block();
-        }];
         
         if ( spell.grantsAuxResources )
             [spell.caster addAuxResources:spell.grantsAuxResources];
         
         if ( spell.target.currentHealth.integerValue <= 0 )
         {
-            __block EventModifier *cheatDeathModifier = nil;
-            [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {
-                if ( obj.cheatDeathAndApplyHealing.doubleValue > 0 )
-                {
-                    cheatDeathModifier = obj;
-                    *stop = YES;
-                    return;
-                }
+            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:spell.target fromSpell:spell];
+            }];
+            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+                [obj handleDeathOfEntity:spell.target fromSpell:spell];
             }];
             
-            if ( cheatDeathModifier )
+            if ( dyingEntitiesHandler )
+                dyingEntitiesHandler( @[ spell.target ] );
+            
+            // source has to choose a new target
+            if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
             {
-                PHLog(spell,@"CHEATING DEATH and healing %@ for %@",spell.target,cheatDeathModifier.cheatDeathAndApplyHealing);
-                
-                NSInteger newHealth = spell.target.currentHealth.doubleValue + cheatDeathModifier.cheatDeathAndApplyHealing.doubleValue;
-                if ( newHealth > spell.target.health.integerValue )
-                    newHealth = spell.target.health.integerValue;
-                
-                spell.target.currentHealth = @(newHealth);
+                PHLog(spell,@"the encounter is over because there are no targets for %@",spell.caster);
+                [self endEncounter];
             }
-            else
+            else // TODO is there some ability by which players could kill themselves as the last one alive?
             {
-                [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                    [obj handleDeathOfEntity:spell.target fromSpell:spell];
-                }];
-                [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                    [obj handleDeathOfEntity:spell.target fromSpell:spell];
-                }];
-                
-                if ( dyingEntitiesHandler )
-                    dyingEntitiesHandler( @[ spell.target ] );
-                
-                // source has to choose a new target
-                if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
-                {
-                    PHLog(spell,@"the encounter is over because there are no targets for %@",spell.caster);
-                    [self endEncounter];
-                }
-                else // TODO is there some ability by which players could kill themselves as the last one alive?
-                {
-                    __block BOOL someEnemyIsAlive = NO;
-                    [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
-                        if ( ! obj.isDead )
-                        {
-                            someEnemyIsAlive = YES;
-                            *stop = YES;
-                        }
-                    }];
-                    if ( ! someEnemyIsAlive )
+                __block BOOL someEnemyIsAlive = NO;
+                [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
+                    if ( ! obj.isDead )
                     {
-                        PHLog(spell,@"the encounter is over because all enemies are dead");
-                        [self endEncounter];
-                        return;
+                        someEnemyIsAlive = YES;
+                        *stop = YES;
                     }
+                }];
+                if ( ! someEnemyIsAlive )
+                {
+                    PHLog(spell,@"the encounter is over because all enemies are dead");
+                    [self endEncounter];
+                    return;
                 }
             }
         }
         
         if ( self.encounterUpdatedHandler )
             self.encounterUpdatedHandler(self);
-    });
+    };
+    
+    if ( dispatch_get_current_queue() != self.encounterQueue )
+    {
+        NSLog(@"yoyo dispatch");
+        dispatch_async(self.encounterQueue, ^{
+            stuffBlock();
+        });
+    }
+    else
+        stuffBlock();
 }
 
 - (NSArray *)_smartTargetsForSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target
@@ -310,7 +311,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     return isTargeted;
 }
 
-- (void)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic
+- (BOOL)doDamage:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic
 {
     Event *damageEvent = [Event new];
     damageEvent.spell = spell;
@@ -351,6 +352,24 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     }
     
     [target handleIncomingDamageEvent:damageEvent];
+    
+    __block BOOL didCheatDeath = NO;
+    if ( target.currentHealth.integerValue <= 0 )
+    {
+        if ( modifier.cheatDeathAndApplyHealing )
+        {
+            PHLog(spell,@"CHEATING DEATH and healing %@ for %@",spell.target,modifier.cheatDeathAndApplyHealing);
+            
+            NSInteger newHealth = spell.target.currentHealth.doubleValue + modifier.cheatDeathAndApplyHealing.doubleValue;
+            if ( newHealth > spell.target.health.integerValue )
+                newHealth = spell.target.health.integerValue;
+            
+            target.currentHealth = @(newHealth);
+            didCheatDeath = YES;
+        }
+    }
+    
+    return didCheatDeath;
 }
 
 - (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic

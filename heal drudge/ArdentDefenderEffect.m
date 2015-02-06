@@ -36,9 +36,11 @@
     
     EventModifier *mod = [EventModifier new];
     mod.cheatDeathAndApplyHealing = @( self.source.health.doubleValue * 0.12 );
+    [mod addBlock:^(Spell *spell, BOOL cheatedDeath) {
+        if ( cheatedDeath )
+            [self.source consumeStatusEffect:self absolute:YES];
+    }];
     [modifiers addObject:mod];
-#warning TODO there is currently no way for this to be consumed IF the target dies
-    //handler(YES);
     return YES;
 }
 

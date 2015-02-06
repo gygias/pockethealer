@@ -1289,8 +1289,8 @@
 				6328FB511A72F98900DF6B50 /* SoundManager.m */,
 				6328FB531A73156E00DF6B50 /* UIColor+Extensions.h */,
 				6328FB541A73156E00DF6B50 /* UIColor+Extensions.m */,
-				634D18031A802D9E003CE395 /* Logging.m */,
 				634D18041A802D9E003CE395 /* Logging.h */,
+				634D18031A802D9E003CE395 /* Logging.m */,
 			);
 			path = "heal drudge";
 			sourceTree = "<group>";
