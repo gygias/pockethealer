@@ -189,7 +189,7 @@
         });
     }
     else
-        [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:nil dyingEntitiesHandler:NULL];
+        [encounter handleSpell:ability periodicTick:NO isFirstTick:NO modifiers:modifiers dyingEntitiesHandler:NULL];
 }
 
 // this needs some work to handle multiple targets

@@ -27,16 +27,35 @@
     NSString *descriptionString = nil;
     if ( self.damageIncrease )
         descriptionString = [NSString stringWithFormat:@"%@(increase damage by %@)",descriptionString?@" & ":@"",self.damageIncrease];
-    else if ( self.damageIncreasePercentage )
+    if ( self.damageIncreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(increase damage by %0.2f%%)",descriptionString?@" & ":@"",self.damageIncreasePercentage.doubleValue];
     if ( self.healingIncrease )
         descriptionString = [NSString stringWithFormat:@"%@(increase healing by %@)",descriptionString?@" & ":@"",self.healingIncrease];
-    else if ( self.healingIncreasePercentage )
+    if ( self.healingIncreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(increase healing by %0.2f%%)",descriptionString?@" & ":@"",self.healingIncreasePercentage.doubleValue];
     if ( self.hasteIncreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(increase haste by %0.2f%%)",descriptionString?@" & ":@"",self.hasteIncreasePercentage.doubleValue];
     if ( self.damageTakenDecreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(decrease damage taken by %0.2f%%)",descriptionString?@" & ":@"",self.damageTakenDecreasePercentage.doubleValue];
+    if ( self.cheatDeathAndApplyHealing )
+        descriptionString = [NSString stringWithFormat:@"%@(cheat death and heal for %@)",descriptionString?@" & ":@"",self.cheatDeathAndApplyHealing];
+    if ( self.powerCostDecreasePercentage )
+        descriptionString = [NSString stringWithFormat:@"%@(reduce power cost by %0.2f%%)",descriptionString?@" & ":@"",self.powerCostDecreasePercentage.doubleValue];
+    if ( self.crit )
+        descriptionString = [NSString stringWithFormat:@"%@(crit)",descriptionString?@" & ":@""];
+    if ( self.crit )
+        descriptionString = [NSString stringWithFormat:@"%@(instant cast)",descriptionString?@" & ":@""];
+    if ( self.absorbedDamage )
+        descriptionString = [NSString stringWithFormat:@"%@(absorb %@ damage)",descriptionString?@" & ":@"",self.absorbedDamage];
+    if ( descriptionString )
+    {
+        if ( self.healOnDamage )
+            descriptionString = [NSString stringWithFormat:@"%@(heal on damage for %@)",descriptionString?@" & ":@"",self.healOnDamage];
+        descriptionString = [NSString stringWithFormat:@"%@ -love (((%@)))",descriptionString,self.source?self.source:@"anonymous"];
+    }
+    else
+        descriptionString = @"(empty modifier)";
+    
     return descriptionString;
 }
 

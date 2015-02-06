@@ -18,7 +18,7 @@
 typedef BOOL (^PHLogApprovalBlock)(id source);
 
 #define PHLogV NSLog
-void PHLog(id source,NSString *format, ...);
+void PHLog(id source,NSString *format, ...) NS_FORMAT_FUNCTION(2,3);
 void PHLogSetApprovalBlock(PHLogApprovalBlock block);
 
 #endif /* defined(__heal_drudge__Logging__) */

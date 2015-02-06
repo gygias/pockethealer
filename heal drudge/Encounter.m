@@ -155,7 +155,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             BOOL standardCrit = ( critRoll <= critChance10000 );
             if ( standardCrit )
             {
-                PHLog(spell,@"%@ gained a standard crit (%llu vs %llu)",spell,critChance10000,critRoll);
+                PHLog(spell,@"%@ gained a standard crit",spell);
                 netMod.crit = YES;
             }
         }
