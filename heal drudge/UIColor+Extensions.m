@@ -31,4 +31,11 @@
     return cooldownClockColor;
 }
 
++ (UIColor *)speechBubbleColor
+{
+    UIColor *blueColor = [UIColor whiteColor];
+    UIColor *speechBubbleColor = [blueColor colorWithAlphaComponent:0.75];
+    return speechBubbleColor;
+}
+
 @end

@@ -79,27 +79,48 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="CIy-1J-yQO">
-                                <rect key="frame" x="42" y="390" width="263" height="31"/>
+                                <rect key="frame" x="42" y="429" width="263" height="31"/>
                                 <connections>
                                     <action selector="raidSizeSliderDidSomething:" destination="BYZ-38-t0r" eventType="valueChanged" id="tc9-dP-IEZ"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Raid Size: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9o-v3-sfD">
-                                <rect key="frame" x="44" y="361" width="81" height="21"/>
+                                <rect key="frame" x="44" y="400" width="81" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pi-a2-jSr">
-                                <rect key="frame" x="133" y="361" width="81" height="21"/>
+                                <rect key="frame" x="133" y="400" width="81" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Dv-K0-Jqs">
+                                <rect key="frame" x="213" y="180" width="51" height="31"/>
+                                <connections>
+                                    <action selector="touchedForceGygias:" destination="BYZ-38-t0r" eventType="valueChanged" id="KtF-Oi-y1J"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yKP-Ce-9PH">
+                                <rect key="frame" x="213" y="218" width="51" height="31"/>
+                                <connections>
+                                    <action selector="touchedForceSlyeri:" destination="BYZ-38-t0r" eventType="valueChanged" id="6hk-M6-HWn"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rjq-8Y-Ebj">
+                                <rect key="frame" x="213" y="257" width="51" height="31"/>
+                                <connections>
+                                    <action selector="touchedForceLireal:" destination="BYZ-38-t0r" eventType="valueChanged" id="et5-08-c9X"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="forceGygiasSwitch" destination="9Dv-K0-Jqs" id="5Hk-bv-fEr"/>
+                        <outlet property="forceLirealSwitch" destination="rjq-8Y-Ebj" id="bEl-gi-x4R"/>
+                        <outlet property="forceSlyeriSwitch" destination="yKP-Ce-9PH" id="Ex1-22-Bw1"/>
                         <outlet property="raidSizeLabel" destination="0Pi-a2-jSr" id="MtU-iQ-OIE"/>
                         <outlet property="raidSizeSlider" destination="CIy-1J-yQO" id="E8c-Sg-Xhm"/>
                     </connections>

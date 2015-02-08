@@ -16,5 +16,6 @@
 #import "SoundManager.h"
 #import "NSCollections+Random.h"
 #import "UIColor+Extensions.h"
+#import "NSDate+Pause.h"
 
 #endif

@@ -10,8 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Ability.h"
 #import "Spell.h"
+#import "Ability.h"
 #import "Effect.h"
 
 #define LOW_VOLUME ((float)0.1)

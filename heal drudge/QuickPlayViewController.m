@@ -28,22 +28,43 @@
     // Do any additional setup after loading the view.
     
     Entity *gygias = nil, *slyeri = nil, *lireal = nil;
-    NSUInteger size = self.state.raidSize <= 3 ? 0 : self.state.raidSize - 3;
-    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:&gygias :&slyeri :&lireal size:size];
+    NSUInteger size = self.state.raidSize;
+    NSUInteger nForced = 0;
+    if ( self.state.forceGygias )
+    {
+        size++;
+        nForced++;
+    }
+    if ( self.state.forceSlyeri )
+    {
+        size++;
+        nForced++;
+    }
+    if ( self.state.forceLireal )
+    {
+        size++;
+        nForced++;
+    }
+    Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:self.state.forceGygias ? &gygias : NULL
+                                                                            :self.state.forceSlyeri ? &slyeri : NULL
+                                                                            :self.state.forceLireal ? &lireal : NULL
+                                                                        size:size - nForced];
     
     BOOL playSlyeri = [self.state.playerName isEqual:@"Slyeri"];
     BOOL playLireal = [self.state.playerName isEqual:@"Lireal"];
-    /*__block*/ Entity *aHealer = playSlyeri ? slyeri : ( playLireal ? lireal : gygias );
+    __block Entity *aHealer = playSlyeri ? slyeri : ( playLireal ? lireal : gygias );
+    if ( ! aHealer )
+    {
+        [raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+            if ( aPlayer.hdClass.isHealerClass )
+            {
+                PHLogV(@"random healer: %@",aPlayer);
+                aHealer = aPlayer;
+                *stop = YES;
+            }
+         }];
+    }
     aHealer.isPlayingPlayer = YES;
-    /*[raid.players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        Player *player = (Player *)obj;
-        if ( player.character.hdClass.isHealerClass )
-        {
-            PHLogV(@"random healer: %@",player);
-            aHealer = player;
-            *stop = YES;
-        }
-    }];*/
     
     if ( ! aHealer )
     {
@@ -133,6 +154,28 @@
             [self.eventTimerView addSpellEvent:spell date:date];
         };
     }];
+    
+    encounter.advisor = [Advisor new];
+    encounter.advisor.encounter = encounter;
+    encounter.advisor.callback = ^(Entity *e, SpeechBubbleViewController *vc) {
+        if ( vc && e && ! self.currentSpeechBubble )
+        {
+            [NSDate pause];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSDate *showDate = [NSDate date];
+                self.currentSpeechBubble = vc;
+                self.currentSpeechBubble.dismissHandler = ^(SpeechBubbleViewController *vc) {
+                    NSTimeInterval shownInterval = [[NSDate date] timeIntervalSinceDate:showDate];
+                    NSLog(@"adding pause time: %0.2f",shownInterval);
+                    [NSDate unpause];
+                    [vc.view removeFromSuperview];
+                    self.currentSpeechBubble = nil;
+                };
+                vc.bubbleOrigin = [self.raidFramesView originForEntity:e];
+                [[self view] addSubview:vc.view];
+            });
+        }
+    };
     
     [encounter start];
     

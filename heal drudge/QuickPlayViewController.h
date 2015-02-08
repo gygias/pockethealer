@@ -17,6 +17,7 @@
 #import "PlayerAndTargetView.h"
 #import "AlertTextView.h"
 #import "EventTimerView.h"
+#import "SpeechBubbleViewController.h"
 
 @interface QuickPlayViewController : BaseViewController
 
@@ -27,5 +28,6 @@
 @property IBOutlet CastBarView *castBarView;
 @property IBOutlet PlayerAndTargetView *playerAndTargetView;
 @property IBOutlet SpellBarView *spellBarView;
+@property SpeechBubbleViewController *currentSpeechBubble;
 
 @end

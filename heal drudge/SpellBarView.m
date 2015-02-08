@@ -85,12 +85,12 @@
         // cooldown clock
         if ( spell.nextCooldownDate )
         {
-            double cooldownPercentage = -[[NSDate date] timeIntervalSinceDate:spell.nextCooldownDate] / spell.cooldown.doubleValue;
+            double cooldownPercentage = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.nextCooldownDate] / spell.cooldown.doubleValue;
             [self _drawCooldownClockInRect:spellRect withPercentage:cooldownPercentage];
         }
         else if ( self.player.nextGlobalCooldownDate && self.player.currentGlobalCooldownDuration > 0 )
         {
-            double gcdPercentage = -[[NSDate date] timeIntervalSinceDate:self.player.nextGlobalCooldownDate] / self.player.currentGlobalCooldownDuration;
+            double gcdPercentage = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.player.nextGlobalCooldownDate] / self.player.currentGlobalCooldownDuration;
             [self _drawCooldownClockInRect:spellRect withPercentage:gcdPercentage];
         }
         
@@ -114,7 +114,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
         return;
     
     NSDate *now = [NSDate date];
-    NSTimeInterval timeRemaining = -[now timeIntervalSinceDate:emphasisEndDate];
+    NSTimeInterval timeRemaining = -[now timeIntervalSinceDateMinusPauseTime:emphasisEndDate];
     if ( timeRemaining <= 0 )
         return;
     

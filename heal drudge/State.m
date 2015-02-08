@@ -12,4 +12,24 @@
 
 @implementation State
 
++ (State *)readState
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    State *state = [State new];
+    state.forceGygias = [defaults boolForKey:@"forceGygias"];
+    state.forceSlyeri = [defaults boolForKey:@"forceSlyeri"];
+    state.forceLireal = [defaults boolForKey:@"forceLireal"];
+    state.raidSize = [defaults integerForKey:@"raidSize"];
+    return state;
+}
+
+- (void)writeState
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:self.forceGygias forKey:@"forceGygias"];
+    [defaults setBool:self.forceSlyeri forKey:@"forceSlyeri"];
+    [defaults setBool:self.forceLireal forKey:@"forceLireal"];
+    [defaults setInteger:self.raidSize forKey:@"raidSize"];
+}
+
 @end

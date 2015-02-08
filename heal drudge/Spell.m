@@ -119,7 +119,7 @@ const NSString *SpellLevelHigh = @"high";
 - (BOOL)isOnCooldown
 {
     NSDate *storedDate = self.nextCooldownDate;
-    return storedDate && [[NSDate date] timeIntervalSinceDate:storedDate] <= 0;
+    return storedDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:storedDate] <= 0;
 }
 
 @end

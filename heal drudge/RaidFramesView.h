@@ -25,4 +25,6 @@ typedef void(^TargetedPlayerBlock)(Entity *);
 @property NSUInteger selectedFrame;
 @property Encounter *encounter; // this is only necessary for ferrying encounter to RaidFrameView for isTargeted block
 
+- (CGPoint)originForEntity:(Entity *)e;
+
 @end

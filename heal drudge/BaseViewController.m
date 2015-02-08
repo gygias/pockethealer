@@ -23,7 +23,7 @@ static State *sBaseViewControllerState = nil;
     {
         if ( sBaseViewControllerState )
             abort();// XXX
-        sBaseViewControllerState = [State new];
+        sBaseViewControllerState = [State readState];
     }
 }
 

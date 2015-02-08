@@ -15,5 +15,6 @@
 + (UIColor *)pinkColor;
 + (UIColor *)cooldownClockColor;
 + (UIColor *)disabledSpellColor;
++ (UIColor *)speechBubbleColor;
 
 @end

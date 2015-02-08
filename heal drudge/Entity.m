@@ -511,7 +511,9 @@
     self.resourceGenerationSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, encounter.encounterQueue);
     dispatch_source_set_timer(self.resourceGenerationSource, DISPATCH_TIME_NOW, 0.2 * NSEC_PER_SEC, 0.2 * NSEC_PER_SEC);
     dispatch_source_set_event_handler(self.resourceGenerationSource, ^{
-        NSNumber *regeneratedResources = [ItemLevelAndStatsConverter resourceGenerationWithEntity:self timeInterval:[[NSDate date] timeIntervalSinceDate:self.lastResourceGenerationDate]];
+        NSNumber *regeneratedResources = [ItemLevelAndStatsConverter resourceGenerationWithEntity:self timeInterval:[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastResourceGenerationDate]];
+        if ( regeneratedResources.doubleValue < 0 )
+            NSLog(@"wat");
         double newResources = self.currentResources.doubleValue + regeneratedResources.doubleValue;
         if ( newResources > self.power.doubleValue )
             self.currentResources = self.power;
@@ -543,7 +545,7 @@
     }
     
     //if ( ! self.lastAutomaticAbilityDate ||
-    //    [[NSDate date] timeIntervalSinceDate:self.lastAutomaticAbilityDate] )
+    //    [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastAutomaticAbilityDate] )
     //PHLog(self,@"%@ is doing automated stuff",self);
     if ( ! classSwitchHandled )
     {
@@ -619,6 +621,8 @@
             __block Entity *mostDamagedTank = nil;
             __block double mostDamagedTankHealthPercentage = 1;
             [tankPlayers enumerateObjectsUsingBlock:^(Entity *tankPlayer, NSUInteger idx, BOOL *stop) {
+                if ( tankPlayer.isDead )
+                    return;
                 double thisTankHealthPercentage = tankPlayer.currentHealthPercentage.doubleValue;
                 if ( thisTankHealthPercentage < mostDamagedTankHealthPercentage )
                 {
@@ -631,6 +635,8 @@
             __block double mostDamagedNonTankHealthPercentage = 1;
             NSArray *nonTankPlayers = [self.encounter.raid nonTankPlayers];
             [nonTankPlayers enumerateObjectsUsingBlock:^(Entity *nonTankPlayer, NSUInteger idx, BOOL *stop) {
+                if ( nonTankPlayer.isDead )
+                    return;
                 double thisNonTankHealthPercentage = nonTankPlayer.currentHealthPercentage.doubleValue;
                 if ( thisNonTankHealthPercentage < mostDamagedNonTankHealthPercentage )
                 {
@@ -750,7 +756,7 @@
         // enqueue cast if within 'lead time'
         if ( self.castingSpell.lastCastEffectiveCastTime > 0 )
         {
-            NSTimeInterval timeSinceCast = [[NSDate date] timeIntervalSinceDate:self.castingSpell.lastCastStartDate];
+            NSTimeInterval timeSinceCast = [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.castingSpell.lastCastStartDate];
             double percentCast = timeSinceCast / self.castingSpell.lastCastEffectiveCastTime;
             if ( percentCast >= 0.66 )
             {
@@ -896,7 +902,7 @@
 - (BOOL)isOnGlobalCooldown
 {
     NSDate *storedDate = self.nextGlobalCooldownDate;
-    return storedDate && [[NSDate date] timeIntervalSinceDate:storedDate] <= 0;
+    return storedDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:storedDate] <= 0;
 }
 
 - (NSNumber *)currentHealthPercentage

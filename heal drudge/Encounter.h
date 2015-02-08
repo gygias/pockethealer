@@ -14,6 +14,7 @@
 #import "Enemy.h"
 #import "Raid.h"
 #import "Ability.h"
+#import "Advisor.h"
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
@@ -31,12 +32,14 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
 @property Raid *raid;
 @property NSArray *enemies;
 @property NSDate *startDate;
+@property Advisor *advisor;
 @property (nonatomic,copy) EncounterUpdatedBlock encounterUpdatedHandler;
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
 @property (nonatomic,readonly) dispatch_queue_t encounterQueue;
 
 - (void)start;
+- (void)pause;
 - (void)end;
 
 // called by entities when the a timed spell goes off

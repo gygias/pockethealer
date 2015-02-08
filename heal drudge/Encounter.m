@@ -69,6 +69,10 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     });
 }
 
+- (void)pause
+{
+}
+
 - (void)end
 {
     [self endEncounter];
@@ -83,6 +87,8 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     [self.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
         [player updateEncounter:self];
     }];
+    
+    [self.advisor updateEncounter];
     
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);
@@ -223,6 +229,8 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
                 block(spell,cheatedDeath);
             }];
+            
+            [self.advisor handleSpell:spell event:nil modifier:netMod];
         }];
         spell.target = originalTarget;
         

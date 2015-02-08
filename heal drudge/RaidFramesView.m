@@ -73,4 +73,14 @@
     [self setNeedsDisplay];
 }
 
+- (CGPoint)originForEntity:(Entity *)e
+{
+    NSUInteger idx = [self.raid.players indexOfObject:e];
+    NSUInteger partySize = 5;
+    CGSize frameSize = [RaidFrameView desiredSize];
+    NSUInteger idxParty = idx / partySize;
+    NSUInteger partyPosition = idx % partySize;
+    return CGPointMake(self.frame.origin.x + idxParty * frameSize.width, self.frame.origin.y + partyPosition * frameSize.height);
+}
+
 @end

@@ -17,8 +17,14 @@
 @property Entity *player;
 @property NSString *playerName; // XXX
 @property NSUInteger raidSize; // XXX
+@property BOOL forceGygias;
+@property BOOL forceSlyeri;
+@property BOOL forceLireal;
 
 // setup
 @property BOOL saveGuildToo;
+
++ (State *)readState;
+- (void)writeState;
 
 @end

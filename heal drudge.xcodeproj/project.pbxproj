@@ -81,6 +81,13 @@
 		63027B5D1A7B29C30068E68A /* avenging_wrath_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */; };
 		63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */; };
 		63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */; };
+		630B99801A86C51C00B186CA /* NSDate+Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B997F1A86C51C00B186CA /* NSDate+Pause.m */; };
+		630B99831A86C61C00B186CA /* Advisor.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99821A86C61C00B186CA /* Advisor.m */; };
+		630B99851A86C8C500B186CA /* SpeechBubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630B99841A86C8C500B186CA /* SpeechBubbleView.xib */; };
+		630B99881A86CA5900B186CA /* SpeechBubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */; };
+		630B998B1A86CE9D00B186CA /* SpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */; };
+		630B998E1A86E50800B186CA /* SpeechBubbleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */; };
+		630B99911A882B3000B186CA /* SpeechBubblePassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
@@ -431,6 +438,19 @@
 		63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeSpell.m; sourceTree = "<group>"; };
 		63027B611A7B31490068E68A /* HandOfSacrificeEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandOfSacrificeEffect.h; sourceTree = "<group>"; };
 		63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeEffect.m; sourceTree = "<group>"; };
+		630B997E1A86C51C00B186CA /* NSDate+Pause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Pause.h"; sourceTree = "<group>"; };
+		630B997F1A86C51C00B186CA /* NSDate+Pause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Pause.m"; sourceTree = "<group>"; };
+		630B99811A86C61C00B186CA /* Advisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advisor.h; sourceTree = "<group>"; };
+		630B99821A86C61C00B186CA /* Advisor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advisor.m; sourceTree = "<group>"; };
+		630B99841A86C8C500B186CA /* SpeechBubbleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpeechBubbleView.xib; sourceTree = "<group>"; };
+		630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubbleViewController.h; sourceTree = "<group>"; };
+		630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBubbleViewController.m; sourceTree = "<group>"; };
+		630B99891A86CE9D00B186CA /* SpeechBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubbleView.h; sourceTree = "<group>"; };
+		630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBubbleView.m; sourceTree = "<group>"; };
+		630B998C1A86E50800B186CA /* SpeechBubbleContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubbleContentView.h; sourceTree = "<group>"; };
+		630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBubbleContentView.m; sourceTree = "<group>"; };
+		630B998F1A882B3000B186CA /* SpeechBubblePassThroughView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubblePassThroughView.h; sourceTree = "<group>"; };
+		630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBubblePassThroughView.m; sourceTree = "<group>"; };
 		631435F61A72E0BA00BDD708 /* NSCollections+Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCollections+Random.h"; sourceTree = "<group>"; };
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
@@ -878,6 +898,15 @@
 				63A37F051A75BFA60036C9D0 /* AlertText.m */,
 				636413591A7D835100639007 /* EventTimerView.h */,
 				6364135A1A7D835100639007 /* EventTimerView.m */,
+				630B99841A86C8C500B186CA /* SpeechBubbleView.xib */,
+				630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */,
+				630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */,
+				630B99891A86CE9D00B186CA /* SpeechBubbleView.h */,
+				630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */,
+				630B998C1A86E50800B186CA /* SpeechBubbleContentView.h */,
+				630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */,
+				630B998F1A882B3000B186CA /* SpeechBubblePassThroughView.h */,
+				630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1291,6 +1320,10 @@
 				6328FB541A73156E00DF6B50 /* UIColor+Extensions.m */,
 				634D18041A802D9E003CE395 /* Logging.h */,
 				634D18031A802D9E003CE395 /* Logging.m */,
+				630B997E1A86C51C00B186CA /* NSDate+Pause.h */,
+				630B997F1A86C51C00B186CA /* NSDate+Pause.m */,
+				630B99811A86C61C00B186CA /* Advisor.h */,
+				630B99821A86C61C00B186CA /* Advisor.m */,
 			);
 			path = "heal drudge";
 			sourceTree = "<group>";
@@ -1459,6 +1492,7 @@
 				632074651A70E93A00AA4416 /* arms.png in Resources */,
 				632073F71A7095B800AA4416 /* devotion_aura.png in Resources */,
 				632074151A7095B800AA4416 /* paladin.png in Resources */,
+				630B99851A86C8C500B186CA /* SpeechBubbleView.xib in Resources */,
 				6320747D1A70E93A00AA4416 /* lightning_shield.jpg in Resources */,
 				63A37F111A75C6930036C9D0 /* spell_fizzle_shadow.wav in Resources */,
 				632074001A7095B800AA4416 /* guardian_spirit.png in Resources */,
@@ -1621,6 +1655,7 @@
 				63A37F281A75E3BF0036C9D0 /* PainSuppressionSpell.m in Sources */,
 				63A37F061A75BFA60036C9D0 /* AlertText.m in Sources */,
 				63027AFB1A79A7A60068E68A /* BastionOfGloryEffect.m in Sources */,
+				630B99831A86C61C00B186CA /* Advisor.m in Sources */,
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
 				63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */,
@@ -1690,6 +1725,7 @@
 				639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */,
 				63C5F4281A52464300B9AE46 /* CreateHealerViewController.m in Sources */,
 				632074C81A71D17600AA4416 /* Ability.m in Sources */,
+				630B99881A86CA5900B186CA /* SpeechBubbleViewController.m in Sources */,
 				636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */,
 				632074A11A718E0700AA4416 /* PowerWordShieldSpell.m in Sources */,
 				63027AD51A798C0F0068E68A /* SacredShieldSpell.m in Sources */,
@@ -1697,13 +1733,16 @@
 				63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */,
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
 				63027B581A7B261D0068E68A /* AvengingWrathSpell.m in Sources */,
+				630B998E1A86E50800B186CA /* SpeechBubbleContentView.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
 				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,
 				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,
+				630B998B1A86CE9D00B186CA /* SpeechBubbleView.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
 				637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */,
 				6328FB631A732B4400DF6B50 /* ArchangelSpell.m in Sources */,
+				630B99911A882B3000B186CA /* SpeechBubblePassThroughView.m in Sources */,
 				63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */,
 				6328FB601A731E7F00DF6B50 /* HealingTideTotemSpell.m in Sources */,
 				634F48F81A7480D8008761C6 /* PrayerOfHealingSpell.m in Sources */,
@@ -1714,6 +1753,7 @@
 				634F48E11A735CCD008761C6 /* CastBarView.m in Sources */,
 				632073A21A70912400AA4416 /* BaseViewController.m in Sources */,
 				6328FB681A732C1800DF6B50 /* DivineStarSpell.m in Sources */,
+				630B99801A86C51C00B186CA /* NSDate+Pause.m in Sources */,
 				63027ADF1A798DCF0068E68A /* SacredShieldAbsorbEffect.m in Sources */,
 				63C5F42B1A5247C400B9AE46 /* Healer.m in Sources */,
 				631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */,

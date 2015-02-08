@@ -25,7 +25,7 @@
         
         UIColor *drawColor = [UIColor redColor];
 #warning TODO i've crashed here sending -[CALayer startDate] to obj.startDate
-        drawColor = [drawColor colorWithAlphaComponent:( ( 1 - [[NSDate date] timeIntervalSinceDate:obj.startDate] / obj.duration ) )];
+        drawColor = [drawColor colorWithAlphaComponent:( ( 1 - [[NSDate date] timeIntervalSinceDateMinusPauseTime:obj.startDate] / obj.duration ) )];
         NSDictionary *attributes = @{ NSForegroundColorAttributeName : drawColor };
         CGSize alertTextSize = [obj.text sizeWithAttributes:attributes];
         CGRect alertTextRect = CGRectMake(rect.origin.x, rect.origin.y + ( alertTextSize.height * idx ), rect.size.width, rect.size.height);

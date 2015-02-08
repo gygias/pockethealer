@@ -348,7 +348,7 @@
                                   originY,
                                   width,
                                   height);
-    NSTimeInterval timeSinceCastStart = [[NSDate date] timeIntervalSinceDate:castingSpell.lastCastStartDate];
+    NSTimeInterval timeSinceCastStart = [[NSDate date] timeIntervalSinceDateMinusPauseTime:castingSpell.lastCastStartDate];
     double castPercentage = timeSinceCastStart / castingSpell.castTime.doubleValue;
     NSDictionary *attributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:5],
                                   NSForegroundColorAttributeName : [UIColor whiteColor] };
@@ -381,7 +381,7 @@
             
             if ( effect.duration )
             {
-                double percentage = [[NSDate date] timeIntervalSinceDate:effect.startDate] / effect.duration;
+                double percentage = [[NSDate date] timeIntervalSinceDateMinusPauseTime:effect.startDate] / effect.duration;
                 [self _drawCooldownClockInRect:effectRect withPercentage:percentage];
             }
             

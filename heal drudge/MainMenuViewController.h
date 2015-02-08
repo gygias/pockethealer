@@ -22,5 +22,12 @@
 @property IBOutlet UISlider *raidSizeSlider;
 @property IBOutlet UILabel *raidSizeLabel;
 
+@property IBOutlet UISwitch *forceGygiasSwitch;
+- (IBAction)touchedForceGygias:(id)sender;
+@property IBOutlet UISwitch *forceSlyeriSwitch;
+- (IBAction)touchedForceSlyeri:(id)sender;
+@property IBOutlet UISwitch *forceLirealSwitch;
+- (IBAction)touchedForceLireal:(id)sender;
+
 @end
 

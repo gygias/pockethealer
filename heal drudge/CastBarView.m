@@ -27,7 +27,7 @@
     if ( ! spell )
         return;
     
-    if ( [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate] >= spell.lastCastEffectiveCastTime )
+    if ( [[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.lastCastStartDate] >= spell.lastCastEffectiveCastTime )
         return;
     
     if ( spell.lastCastEffectiveCastTime <= 0 )
@@ -40,7 +40,7 @@
     
     // fill bar
     
-    double percentCast = [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate] / spell.lastCastEffectiveCastTime;
+    double percentCast = [[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.lastCastStartDate] / spell.lastCastEffectiveCastTime;
     percentCast = spell.isChanneled ? ( 1 - percentCast ) : percentCast;
     
     CGRect barRect = CGRectMake(rect.origin.x,rect.origin.y,rect.size.width * percentCast,rect.size.height);
@@ -61,7 +61,7 @@
     NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
     [spell.name drawInRect:textRect withAttributes:attributes];
     
-    NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",spell.lastCastEffectiveCastTime - [[NSDate date] timeIntervalSinceDate:spell.lastCastStartDate]];
+    NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",spell.lastCastEffectiveCastTime - [[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.lastCastStartDate]];
     CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
     CGFloat rightMargin = remainingTimeSize.width + 5;
     CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y + CAST_BAR_TOP_MARGIN, rightMargin, rect.size.height);
@@ -77,7 +77,7 @@
     NSDate *nextGCD = self.entity.nextGlobalCooldownDate;
     if ( nextGCD )
     {
-        double ratio = -[[NSDate date] timeIntervalSinceDate:nextGCD] / self.entity.currentGlobalCooldownDuration;
+        double ratio = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:nextGCD] / self.entity.currentGlobalCooldownDuration;
         double invertedRatio = ( 1 - ratio );
         //if ( self.castingSpell.isChanneled )
         //    ratio = ( 1 - ratio );

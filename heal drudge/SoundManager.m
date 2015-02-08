@@ -34,21 +34,21 @@ static SoundManager *sSoundManager;
 + (void)playNoteSound
 {
     NSString *path = [self _pathForResourceNamed:@"belltollnightelf"];
-    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
+    [self playFileWithPath:path volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
     //[self say:@"ding"];
 }
 
 + (void)playDangerSound
 {
     NSString *path = [self _pathForResourceNamed:@"UR_Algalon_BHole01"];
-    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
+    [self playFileWithPath:path volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
     //[self say:@"bee wear"];
 }
 
 + (void)playCatastrophicSound;
 {
     NSString *path = [self _pathForResourceNamed:@"KILJAEDEN02"];
-    [self playFileWithPath:path volume:0 duration:0 throttled:NO handler:NULL];
+    [self playFileWithPath:path volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
     //[self say:@"destruction"];
 }
 
@@ -57,7 +57,7 @@ static SoundManager *sSoundManager;
     NSString *filePath = [self _pathForResourceNamed:spell.hitSoundName];
     BOOL emphasized = spell.caster.isPlayingPlayer || spell.caster.isEnemy;
     float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
-    [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
+    [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
 }
 
 + (void)playEffectHit:(Effect *)effect
@@ -66,7 +66,7 @@ static SoundManager *sSoundManager;
     NSString *filePath = [self _pathForResourceNamed:effect.hitSoundName];
     BOOL emphasized = effect.source.isPlayingPlayer || effect.source.isEnemy;
     float volume = emphasized ? HIGH_VOLUME : LOW_VOLUME;
-    [self playFileWithPath:filePath volume:volume duration:0 throttled:NO handler:NULL];
+    [self playFileWithPath:filePath volume:volume duration:0 throttled:!emphasized handler:NULL];
 }
 
 + (void)playFileWithPath:(NSString *)path volume:(float)volume duration:(NSTimeInterval)duration throttled:(BOOL)throttled handler:(StartedPlayingSoundBlock)handler

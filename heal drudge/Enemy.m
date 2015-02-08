@@ -94,8 +94,8 @@
     // canned automatic thing happening
     for ( Ability *ability in [self abilities] )
     {
-        //PHLog(self,@"%@ since %@ == %f",[NSDate date],ability.nextFireDate,[[NSDate date] timeIntervalSinceDate:ability.nextFireDate]);
-        if ( [[NSDate date] timeIntervalSinceDate:ability.nextFireDate] >= 0 )
+        //PHLog(self,@"%@ since %@ == %f",[NSDate date],ability.nextFireDate,[[NSDate date] timeIntervalSinceDateMinusPauseTime:ability.nextFireDate]);
+        if ( [[NSDate date] timeIntervalSinceDateMinusPauseTime:ability.nextFireDate] >= 0 )
         {
             NSArray *targets = [self _determineTargetsForAbility:ability raid:encounter.raid];
             [targets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

@@ -28,9 +28,9 @@
         
         NSDate *scheduledDate = dateDict[@"scheduledDate"];
         NSDate *fireDate = dateDict[@"fireDate"];
-        NSTimeInterval timeUntilEvent = -[[NSDate date] timeIntervalSinceDate:fireDate];
-        //NSTimeInterval timeSinceScheduled = [[NSDate date] timeIntervalSinceDate:scheduledDate];
-        NSTimeInterval timeBetweenScheduleAndEvent = [fireDate timeIntervalSinceDate:scheduledDate];
+        NSTimeInterval timeUntilEvent = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:fireDate];
+        //NSTimeInterval timeSinceScheduled = [[NSDate date] timeIntervalSinceDateMinusPauseTime:scheduledDate];
+        NSTimeInterval timeBetweenScheduleAndEvent = [fireDate timeIntervalSinceDateMinusPauseTime:scheduledDate];
         double percentFill = timeUntilEvent / timeBetweenScheduleAndEvent;
         
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -59,12 +59,12 @@
             self.spellEvents = [NSMutableArray new];
         
         __block NSUInteger insertIdx = 0;
-        NSTimeInterval timeUntilThisEvent = -[[NSDate date] timeIntervalSinceDate:date];
+        NSTimeInterval timeUntilThisEvent = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:date];
         [self.spellEvents enumerateObjectsUsingBlock:^(NSDictionary *eventDict, NSUInteger idx, BOOL *stop) {
             insertIdx = idx;
             NSDictionary *dateDict = [[eventDict allKeys] lastObject];
             NSDate *fireDate = dateDict[@"fireDate"];
-            NSTimeInterval timeUntilAEvent = -[[NSDate date] timeIntervalSinceDate:fireDate];
+            NSTimeInterval timeUntilAEvent = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:fireDate];
             if ( timeUntilAEvent < timeUntilThisEvent )
                 *stop = YES;
         }];
@@ -75,7 +75,7 @@
             [NSException raise:@"EventTimerViewAlreadyHasEvent" format:@"something happened: %@ vs %@",eventDict,self.spellEvents];
         [(NSMutableArray *)self.spellEvents insertObject:eventDict atIndex:insertIdx];
         
-        NSTimeInterval timeUntilEvent = -[[NSDate date] timeIntervalSinceDate:date];
+        NSTimeInterval timeUntilEvent = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:date];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeUntilEvent * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [(NSMutableArray *)self.spellEvents removeObject:eventDict];
         });
