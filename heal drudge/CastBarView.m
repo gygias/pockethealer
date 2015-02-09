@@ -15,9 +15,9 @@
 
 @implementation CastBarView
 
-#define CAST_BAR_IMAGE_SQUARE 15
-#define CAST_BAR_LEFT_MARGIN 3
-#define CAST_BAR_TOP_MARGIN 3
+#define CAST_BAR_IMAGE_SQUARE ( self.frame.size.height * 0.8 )
+#define CAST_BAR_TOP_MARGIN ( self.frame.size.height * 0.1 )
+#define CAST_BAR_LEFT_MARGIN ( CAST_BAR_TOP_MARGIN )
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

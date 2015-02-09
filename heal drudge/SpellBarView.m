@@ -13,7 +13,7 @@
 #import "Spell.h"
 #import "Entity.h"
 
-#define SPELL_HEIGHT 45
+#define SPELL_HEIGHT ( [SpellBarView desiredSize].width )
 #define SPELL_WIDTH SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
 
@@ -31,6 +31,27 @@
     // only reason this was overridden
     //self.spells = [[Spell castableSpellsForCharacter:player] mutableCopy];
     _player = player;
+}
+
+CGSize sSpellBarSpellSize = {0,0};
++ (CGSize)desiredSize
+{
+    if ( sSpellBarSpellSize.width == 0 )
+    {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        CGFloat screenHeight = screenRect.size.height;
+        if ( screenRect.size.width > screenRect.size.height )
+        {
+            screenWidth = screenRect.size.height;
+            screenHeight = screenRect.size.width;
+        }
+        // iphone 6 667/375
+        //  70 / 375 = 0.18666666666667
+        //  40 / 667 = 0.0599700149925
+        sSpellBarSpellSize = CGSizeMake(0.15 * screenWidth, 0.15 * screenHeight);
+    }
+    return sSpellBarSpellSize;
 }
 
 // Only override drawRect: if you perform custom drawing.
