@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SpeechBubbleViewController">
@@ -52,6 +53,7 @@
                                 <constraint firstAttribute="bottom" secondItem="qzP-tB-4WH" secondAttribute="bottom" id="oKX-o1-M1B"/>
                                 <constraint firstAttribute="width" constant="285" id="sZe-bd-qch"/>
                                 <constraint firstAttribute="centerY" secondItem="qzP-tB-4WH" secondAttribute="centerY" id="w43-oP-Qr0"/>
+                                <constraint firstAttribute="width" secondItem="Aay-e7-bxH" secondAttribute="height" multiplier="19:6" id="yLm-0I-MhM"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">

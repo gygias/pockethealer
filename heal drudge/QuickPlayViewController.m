@@ -212,7 +212,12 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         for ( UIView *view in [[self view] subviews] )
+        {
             [view setNeedsDisplay];
+            for ( UIView *subview in view.subviews )
+                [subview setNeedsDisplay];
+        }
+        
     });
 }
 
