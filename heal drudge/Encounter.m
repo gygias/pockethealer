@@ -110,8 +110,8 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         [player endEncounter:self];
     }];
     
-    if ( _encounterQueue )
-        _encounterQueue = NULL;
+    //if ( _encounterQueue )
+    //    _encounterQueue = NULL;
     
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);
