@@ -18,6 +18,7 @@
 @property IBOutlet UIImageView *imageView;
 @property IBOutlet UILabel *textLabel;
 @property CGPoint bubbleOrigin;
+@property UIView *referenceView;
 typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *);
 @property (copy) SpeechBubbleViewControllerDismissedHandler dismissHandler;
 

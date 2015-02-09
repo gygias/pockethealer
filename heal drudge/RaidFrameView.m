@@ -32,9 +32,25 @@
 #define RAID_FRAME_HEALTH_INSET ( RAID_FRAME_BORDER_INSET + 1 )
 #define RAID_FRAME_NAME_INSET_X ( ROLE_ICON_ORIGIN_X + ROLE_ICON_SIZE + 3 )
 
+CGSize sRaidFrameSize = {0,0};
 + (CGSize)desiredSize
 {
-    return CGSizeMake(70, 40);
+    if ( sRaidFrameSize.width == 0 )
+    {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        CGFloat screenHeight = screenRect.size.height;
+        if ( screenRect.size.width > screenRect.size.height )
+        {
+            screenWidth = screenRect.size.height;
+            screenHeight = screenRect.size.width;
+        }
+        // iphone 6 667/375
+        //  70 / 375 = 0.18666666666667
+        //  40 / 667 = 0.0599700149925
+        sRaidFrameSize = CGSizeMake(0.18666666666667 * screenWidth, 0.0599700149925 * screenHeight);
+    }
+    return sRaidFrameSize;
 }
 
 - (void)_setDefaults

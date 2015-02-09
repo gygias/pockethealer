@@ -80,7 +80,7 @@
     CGSize frameSize = [RaidFrameView desiredSize];
     NSUInteger idxParty = idx / partySize;
     NSUInteger partyPosition = idx % partySize;
-    return CGPointMake(self.frame.origin.x + idxParty * frameSize.width, self.frame.origin.y + partyPosition * frameSize.height);
+    return CGPointMake(self.frame.origin.x + idxParty * frameSize.width + frameSize.width / 2, self.frame.origin.y + partyPosition * frameSize.height + frameSize.height / 2);
 }
 
 @end

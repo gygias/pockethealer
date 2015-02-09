@@ -172,7 +172,28 @@
                     self.currentSpeechBubble = nil;
                 };
                 vc.bubbleOrigin = [self.raidFramesView originForEntity:e];
-                [[self view] addSubview:vc.view];
+                //[contentView removeFromSuperview];
+                //NSLog(@"forwarding (%f,%f),[%f,%f]",self.advisorGuideView.frame.origin.x,self.advisorGuideView.frame.origin.y,self.advisorGuideView.frame.size.width,self.advisorGuideView.frame.size.height);
+                vc.referenceView = self.advisorGuideView;
+                vc.view.frame = self.view.frame;
+                //[vc.speechBubbleContentView removeFromSuperview];
+                //[self.advisorGuideView addSubview:vc.speechBubbleContentView];
+                [self.view addSubview:vc.view];
+                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:vc.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
+                [vc.speechBubbleContentView.superview addConstraint:constraint];
+                constraint = [NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:vc.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
+                [vc.speechBubbleContentView.superview addConstraint:constraint];
+                [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                    if ( self.currentSpeechBubble )
+                    {
+                        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
+                        self.currentSpeechBubble = nil;
+                    }
+                }];
+                //[vc.speechBubbleContentView addConstraint:[NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.advisorGuideView attribute:NSLayoutAttributeLeading multiplier:0 constant:0]];
+                //vc.speechBubbleContentView.frame = self.advisorGuideView.frame;
+                //[self.advisorGuideView addSubview:contentView];
+                //vc.speechBubbleContentView.bounds = self.advisorGuideView.bounds;
             });
         }
     };

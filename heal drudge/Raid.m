@@ -32,7 +32,7 @@
     randomSize = size;
     NSUInteger nHealers = healerRatio * randomSize;
     NSUInteger idx = 0;
-    for ( ; idx < randomSize; idx++ )
+    for ( ; idx < size && idx < names.count; idx++ )
     {
         Entity *aPlayer = [Entity new];
         aPlayer.isPlayer = YES;

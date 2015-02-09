@@ -29,5 +29,6 @@
 @property IBOutlet PlayerAndTargetView *playerAndTargetView;
 @property IBOutlet SpellBarView *spellBarView;
 @property SpeechBubbleViewController *currentSpeechBubble;
+@property IBOutlet UIView *advisorGuideView;
 
 @end

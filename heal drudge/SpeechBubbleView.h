@@ -12,6 +12,6 @@
 @interface SpeechBubbleView : UIView
 
 @property CGPoint bubbleOrigin;
-@property CGRect contentRect;
+@property UIView *referenceView;
 
 @end

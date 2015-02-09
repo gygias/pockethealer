@@ -16,12 +16,23 @@
 // An empty implementation adversely affects performance during animation.
 static CGFloat sSpeechBubbleInset = 10;
 - (void)drawRect:(CGRect)rect {
-    
-    UIView *contentView = [[self subviews] firstObject];
-    CGRect contentFrame = contentView.frame;
+    CGRect contentFrame = self.referenceView.frame;
+    //contentFrame.size.width = 225;
+    NSArray *constraints = [self constraints];
     
     // Drawing code
     CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //CGRect boundingBox = CGContextGetClipBoundingBox(context);
+//    CGContextSetFillColorWithColor(context, [[UIColor purpleColor] colorWithAlphaComponent:0.25].CGColor);
+//    CGContextAddRect(context, rect);
+//    CGContextFillPath(context);
+//    CGRect lolRect = CGRectMake(50, 50, 100, 100);
+//    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor purpleColor]};
+//    [@"lollercopters" drawAtPoint:lolRect.origin withAttributes:attributes];
+//    lolRect = CGRectMake(contentFrame.origin.x, contentFrame.origin.y, contentFrame.size.width, contentFrame.size.height);
+    //[@"lollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopterslollercopters" drawAtPoint:lolRect.origin withAttributes:attributes];
+    
     CGContextSetFillColorWithColor(context, [UIColor speechBubbleColor].CGColor);
     CGContextAddArc(context, contentFrame.origin.x + sSpeechBubbleInset, contentFrame.origin.y + sSpeechBubbleInset, sSpeechBubbleInset, M_PI, 3 * M_PI_2, NO);
     CGContextAddLineToPoint(context, contentFrame.origin.x + contentFrame.size.width - sSpeechBubbleInset, contentFrame.origin.y);
@@ -49,16 +60,21 @@ static CGFloat sSpeechBubbleInset = 10;
     }
     
     CGContextMoveToPoint(context, firstPoint.x, firstPoint.y);
-    CGPoint secondPoint = CGPointMake(firstPoint.x + 20, firstPoint.y);
+    CGPoint secondPoint = CGPointMake(firstPoint.x + 40, firstPoint.y);
     CGContextAddLineToPoint(context, secondPoint.x, secondPoint.y);
     CGPoint controlPointOne = CGPointMake( self.bubbleOrigin.x, midpointBetweenBubbleAndOrigin);
-    CGPoint controlPointTwo = CGPointMake( secondPoint.x, secondPoint.y + ( originIsAbove ? -10 : 10 ));
-    CGContextAddCurveToPoint(context, controlPointOne.x, controlPointOne.y, controlPointTwo.x, controlPointTwo.y, self.bubbleOrigin.x, self.bubbleOrigin.y);
+    CGPoint controlPointTwo = CGPointMake( secondPoint.x, secondPoint.y + ( originIsAbove ? -20 : 20 ));
+    //CGContextAddCurveToPoint(context, controlPointOne.x, controlPointOne.y, controlPointTwo.x, controlPointTwo.y, self.bubbleOrigin.x, self.bubbleOrigin.y);
+    CGContextAddQuadCurveToPoint(context, controlPointTwo.x, controlPointTwo.y, self.bubbleOrigin.x, self.bubbleOrigin.y);
     //controlPointOne = CGPointMake( firstPoint.x - 5, firstPoint.y + 5);
     //controlPointTwo = CGPointMake(( firstPoint.x + self.bubbleOrigin.x ) / 2 - 10, ( firstPoint.y + self.bubbleOrigin.y ) / 2 - 10);
-    CGContextAddCurveToPoint(context, controlPointTwo.x - 10, controlPointTwo.y - 10, controlPointOne.x, controlPointOne.y, firstPoint.x, firstPoint.y);
+    //CGContextAddCurveToPoint(context, controlPointTwo.x - 10, controlPointTwo.y - 10, controlPointOne.x, controlPointOne.y, firstPoint.x, firstPoint.y);
+    controlPointTwo = CGPointMake( secondPoint.x - 10, secondPoint.y + ( originIsAbove ? -20 : 20 ));
+    CGContextAddQuadCurveToPoint(context, controlPointTwo.x, controlPointTwo.y, firstPoint.x, firstPoint.y);
     CGContextSetFillColorWithColor(context, [UIColor speechBubbleColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
     CGContextFillPath(context);
+    CGContextStrokePath(context);
     
     BOOL drawControlPoints = NO;
     if ( drawControlPoints )

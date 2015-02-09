@@ -555,7 +555,7 @@
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)DPSRole] )
         {
-            gcdTriggered = YES;//[self _doAutomaticDPS];
+            gcdTriggered = [self _doAutomaticDPS];
         }
         else if ( [self.hdClass.role isEqualToString:(NSString *)HealerRole] )
         {
