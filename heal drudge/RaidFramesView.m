@@ -15,8 +15,19 @@
 
 @implementation RaidFramesView
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+@synthesize raid = _raid;
+
+- (CGSize)intrinsicContentSize
+{
+    return CGSizeMake([RaidFrameView desiredSize].width * ( self.raid.players.count / 5 ), [RaidFrameView desiredSize].height * ( self.raid.players.count >= 5 ? 5 : self.raid.players.count ));
+}
+
+- (void)setRaid:(Raid *)raid
+{
+    [self invalidateIntrinsicContentSize];
+    _raid = raid;
+}
+
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     if ( self.raid.players.count == 0 )

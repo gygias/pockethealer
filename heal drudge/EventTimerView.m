@@ -14,6 +14,12 @@
 
 @implementation EventTimerView
 
+- (CGSize)intrinsicContentSize
+{
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+    return CGSizeMake(100, 3 * [@"foo" sizeWithAttributes:attributes].height);
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
@@ -54,6 +60,8 @@
 
 - (void)addSpellEvent:(Spell *)spell date:(NSDate *)date
 {
+    [self invalidateIntrinsicContentSize];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if ( ! self.spellEvents )
             self.spellEvents = [NSMutableArray new];

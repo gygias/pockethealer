@@ -30,7 +30,13 @@
 {
     // only reason this was overridden
     //self.spells = [[Spell castableSpellsForCharacter:player] mutableCopy];
+    [self invalidateIntrinsicContentSize];
     _player = player;
+}
+
+- (CGSize)intrinsicContentSize
+{
+    return CGSizeMake(SPELLS_PER_ROW * SPELL_WIDTH, SPELL_HEIGHT * ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) ));
 }
 
 CGSize sSpellBarSpellSize = {0,0};

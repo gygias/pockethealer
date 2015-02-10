@@ -15,13 +15,10 @@
 
 @implementation PlayerAndTargetView
 
-- (id)initWithFrame:(CGRect)frame
+#define PLAYER_TARGET_OFFSET 10
+- (CGSize)intrinsicContentSize
 {
-    if ( self = [super initWithFrame:frame] )
-    {
-        
-    }
-    return self;
+    return CGSizeMake(3 * PLAYER_TARGET_OFFSET + 3 * [RaidFrameView desiredSize].width, [RaidFrameView desiredSize].height);
 }
 
 
@@ -69,8 +66,6 @@
     CGSize frameSize = [RaidFrameView desiredSize];
     return CGRectMake( rect.origin.x, rect.origin.y, frameSize.width, frameSize.height );
 }
-
-#define PLAYER_TARGET_OFFSET 10
 
 - (CGRect)_targetRectWithRect:(CGRect)rect
 {

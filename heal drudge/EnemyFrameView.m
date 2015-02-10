@@ -16,6 +16,19 @@
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 
+@synthesize enemy = _enemy;
+
+- (void)setEnemy:(Enemy *)enemy
+{
+    [self invalidateIntrinsicContentSize];
+    _enemy = enemy;
+}
+
+- (CGSize)intrinsicContentSize
+{
+    return CGSizeMake(100, 50);
+}
+
 #define ENEMY_FRAME_BORDER_INSET 1
 
 - (void)drawRect:(CGRect)rect {
