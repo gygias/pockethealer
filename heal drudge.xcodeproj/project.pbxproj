@@ -262,6 +262,8 @@
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
 		6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645E1A74D61100D281B7 /* HolyNovaSpell.m */; };
+		637E8B461A89A2390002C9DC /* hand_spell_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B441A89A2390002C9DC /* hand_spell_hit.wav */; };
+		637E8B471A89A2390002C9DC /* lay_on_hands_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
@@ -678,6 +680,8 @@
 		6378645B1A74D22700D281B7 /* PenanceSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PenanceSpell.m; sourceTree = "<group>"; };
 		6378645D1A74D61100D281B7 /* HolyNovaSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HolyNovaSpell.h; sourceTree = "<group>"; };
 		6378645E1A74D61100D281B7 /* HolyNovaSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyNovaSpell.m; sourceTree = "<group>"; };
+		637E8B441A89A2390002C9DC /* hand_spell_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hand_spell_hit.wav; sourceTree = "<group>"; };
+		637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lay_on_hands_hit.wav; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
@@ -1174,6 +1178,8 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B441A89A2390002C9DC /* hand_spell_hit.wav */,
+				637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */,
 				63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */,
 				63027B541A7B238D0068E68A /* devotion_aura_cast.wav */,
 				63027B481A7B1CA20068E68A /* holy_light_hit.wav */,
@@ -1617,10 +1623,12 @@
 				63027B4B1A7B1CA20068E68A /* light_of_dawn_cast.wav in Resources */,
 				63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
+				637E8B461A89A2390002C9DC /* hand_spell_hit.wav in Resources */,
 				63027B311A79F4ED0068E68A /* kargath_hit.wav in Resources */,
 				63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */,
 				632073F41A7095B800AA4416 /* cleanse.png in Resources */,
 				632074841A70E93A00AA4416 /* rain_of_fire.png in Resources */,
+				637E8B471A89A2390002C9DC /* lay_on_hands_hit.wav in Resources */,
 				6320747F1A70E93A00AA4416 /* marksmanship.png in Resources */,
 				632073EB1A7095B800AA4416 /* binding_heal.png in Resources */,
 				632073ED1A7095B800AA4416 /* cascade.png in Resources */,
