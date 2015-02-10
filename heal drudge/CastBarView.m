@@ -19,8 +19,11 @@
 #define CAST_BAR_TOP_MARGIN ( self.frame.size.height * 0.1 )
 #define CAST_BAR_LEFT_MARGIN ( CAST_BAR_TOP_MARGIN )
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+- (CGSize)intrinsicContentSize
+{
+    return CGSizeMake(UIViewNoIntrinsicMetric, 15);
+}
+
 - (void)drawRect:(CGRect)rect {
     
     Spell *spell = self.entity.castingSpell;
