@@ -189,6 +189,7 @@
                         self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
                         self.currentSpeechBubble = nil;
                     }
+                    [self.spellBarView invalidateIntrinsicContentSize];
                 }];
                 //[vc.speechBubbleContentView addConstraint:[NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.advisorGuideView attribute:NSLayoutAttributeLeading multiplier:0 constant:0]];
                 //vc.speechBubbleContentView.frame = self.advisorGuideView.frame;

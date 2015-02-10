@@ -40,8 +40,8 @@ static CGSize sMyDesiredContentSize = {0,0};
         return;
     }
     
-    if ( rect.size.width != sMyDesiredContentSize.width || rect.size.height != sMyDesiredContentSize.height )
-        NSLog(@"(%0.2f,%0.2f) [%0.2f,%0.2f] vs [%0.2f,%0.2f]",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height,sMyDesiredContentSize.width,sMyDesiredContentSize.height);
+    //if ( rect.size.width != sMyDesiredContentSize.width || rect.size.height != sMyDesiredContentSize.height )
+    //    NSLog(@"(%0.2f,%0.2f) [%0.2f,%0.2f] vs [%0.2f,%0.2f]",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height,sMyDesiredContentSize.width,sMyDesiredContentSize.height);
     
     NSUInteger idx = 0;
     NSUInteger partySize = 5;

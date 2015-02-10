@@ -26,7 +26,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(100, 50);
+    return CGSizeMake(100, 30);
 }
 
 #define ENEMY_FRAME_BORDER_INSET 1

@@ -18,6 +18,8 @@ typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 @interface SpellBarView : UIView
 {
     NSDate *_emphasisReferenceDate;
+    NSUInteger rows;
+    NSUInteger columns;
 }
 
 @property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;

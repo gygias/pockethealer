@@ -16,7 +16,7 @@
 #define INTRINSIC_SPELL_HEIGHT ( [SpellBarView desiredSize].width )
 #define INTRINSIC_SPELL_WIDTH INTRINSIC_SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
-#define SPELL_WIDTH ( rect.size.width / SPELLS_PER_ROW )
+#define SPELL_WIDTH (( ( rect.size.height / rows ) < ( rect.size.width / SPELLS_PER_ROW ) ) ? ( rect.size.height / rows ) : ( rect.size.width / SPELLS_PER_ROW ))
 #define SPELL_HEIGHT SPELL_WIDTH
 
 @interface SpellBarView (PrivateProperties)
@@ -34,11 +34,13 @@
     //self.spells = [[Spell castableSpellsForCharacter:player] mutableCopy];
     [self invalidateIntrinsicContentSize];
     _player = player;
+    rows = ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) );
+    columns = SPELLS_PER_ROW;
 }
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(SPELLS_PER_ROW * INTRINSIC_SPELL_WIDTH, INTRINSIC_SPELL_HEIGHT * ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) ));
+    return CGSizeMake(rows * INTRINSIC_SPELL_WIDTH, INTRINSIC_SPELL_HEIGHT * columns);
 }
 
 CGSize sSpellBarSpellSize = {0,0};
@@ -57,7 +59,7 @@ CGSize sSpellBarSpellSize = {0,0};
         // iphone 6 667/375
         //  70 / 375 = 0.18666666666667
         //  40 / 667 = 0.0599700149925
-        sSpellBarSpellSize = CGSizeMake(0.15 * screenWidth, 0.15 * screenHeight);
+        sSpellBarSpellSize = CGSizeMake(0.10 * screenWidth, 0.10 * screenHeight);
     }
     return sSpellBarSpellSize;
 }
@@ -66,6 +68,8 @@ CGSize sSpellBarSpellSize = {0,0};
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    CGFloat spellWidth = SPELL_WIDTH;
+    CGFloat spellHeight = SPELL_HEIGHT;
     [self.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
         
         NSString *message = nil;
@@ -84,8 +88,8 @@ CGSize sSpellBarSpellSize = {0,0};
         
         NSInteger row = idx / SPELLS_PER_ROW;
         NSInteger column = idx % SPELLS_PER_ROW;
-        CGRect spellRect = CGRectMake(rect.origin.x + ( SPELL_WIDTH * column ),
-                                      rect.origin.y + ( SPELL_HEIGHT * row ), SPELL_WIDTH, SPELL_HEIGHT);
+        CGRect spellRect = CGRectMake(rect.origin.x + ( spellWidth * column ),
+                                      rect.origin.y + ( spellHeight * row ), spellWidth, spellHeight);
         //PHLogV(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
         
 //#warning this is here due to emphasis yellow leaving traces when it stops drawing
