@@ -13,9 +13,11 @@
 #import "Spell.h"
 #import "Entity.h"
 
-#define SPELL_HEIGHT ( [SpellBarView desiredSize].width )
-#define SPELL_WIDTH SPELL_HEIGHT
+#define INTRINSIC_SPELL_HEIGHT ( [SpellBarView desiredSize].width )
+#define INTRINSIC_SPELL_WIDTH INTRINSIC_SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
+#define SPELL_WIDTH ( rect.size.width / SPELLS_PER_ROW )
+#define SPELL_HEIGHT SPELL_WIDTH
 
 @interface SpellBarView (PrivateProperties)
 // It is not possible to add members and properties to an existing class via a category — only methods.
@@ -36,7 +38,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(SPELLS_PER_ROW * SPELL_WIDTH, SPELL_HEIGHT * ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) ));
+    return CGSizeMake(SPELLS_PER_ROW * INTRINSIC_SPELL_WIDTH, INTRINSIC_SPELL_HEIGHT * ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) ));
 }
 
 CGSize sSpellBarSpellSize = {0,0};
@@ -217,6 +219,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     UITouch *theTouch = [myTouches anyObject]; // XXX
     
     //NSUInteger spellIndex = ( ( [theTouch locationInView:self].x / SPELL_WIDTH );
+    CGRect rect = self.frame;
     NSUInteger row = [theTouch locationInView:self].y / SPELL_HEIGHT;
     NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
@@ -239,6 +242,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     UITouch *theTouch = [myTouches anyObject]; // XXX
     
     //NSUInteger spellIndex = ( ( [theTouch locationInView:self].x / SPELL_WIDTH );
+    CGRect rect = self.frame;
     NSUInteger row = [theTouch locationInView:self].y / SPELL_HEIGHT;
     NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;

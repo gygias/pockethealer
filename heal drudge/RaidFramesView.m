@@ -17,9 +17,13 @@
 
 @synthesize raid = _raid;
 
+static CGSize sMyDesiredContentSize = {0,0};
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake([RaidFrameView desiredSize].width * ( self.raid.players.count / 5 ), [RaidFrameView desiredSize].height * ( self.raid.players.count >= 5 ? 5 : self.raid.players.count ));
+    NSUInteger nRows = self.raid.players.count >= 5 ? 5 : self.raid.players.count;
+    NSUInteger nColumns = self.raid.players.count / 5 + 1;
+    sMyDesiredContentSize = CGSizeMake([RaidFrameView desiredSize].width * ( nColumns ), [RaidFrameView desiredSize].height * ( nRows ));
+    return sMyDesiredContentSize;
 }
 
 - (void)setRaid:(Raid *)raid
@@ -35,6 +39,9 @@
         PHLogV(@"raid has no players or is nil!");
         return;
     }
+    
+    if ( rect.size.width != sMyDesiredContentSize.width || rect.size.height != sMyDesiredContentSize.height )
+        NSLog(@"(%0.2f,%0.2f) [%0.2f,%0.2f] vs [%0.2f,%0.2f]",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height,sMyDesiredContentSize.width,sMyDesiredContentSize.height);
     
     NSUInteger idx = 0;
     NSUInteger partySize = 5;

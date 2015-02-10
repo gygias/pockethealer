@@ -561,12 +561,12 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="664-60-9vG"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-Ay-aNh" userLabel="up/left">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-Ay-aNh" userLabel="up/left">
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="380"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="568" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="380" width="0.0" height="0.0"/>
@@ -575,15 +575,15 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEx-iR-Bfo" customClass="EventTimerView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="380"/>
+                                            <rect key="frame" x="568" y="0.0" width="0.0" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="380" width="368" height="0.0"/>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
+                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="380" width="0.0" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="380" width="568" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="397.5" width="368" height="0.0"/>
@@ -610,7 +610,7 @@
                                     <constraint firstItem="ti6-cB-FxG" firstAttribute="top" secondItem="EHr-Ay-aNh" secondAttribute="top" id="zGU-wl-gHc"/>
                                 </constraints>
                                 <variation key="heightClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="16" y="20" width="0.0" height="380"/>
+                                    <rect key="frame" x="16" y="20" width="568" height="380"/>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="16" y="20" width="368" height="380"/>
@@ -642,12 +642,12 @@
                                     <rect key="frame" x="16" y="225" width="768" height="149"/>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEn-CO-azg" userLabel="bottom/right">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEn-CO-azg" userLabel="bottom/right">
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="-13" width="568" height="0.0"/>
+                                        <variation key="heightClass=compact" ambiguous="YES">
+                                            <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="-246" width="368" height="80"/>
@@ -661,8 +661,8 @@
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-RV-5T3" customClass="CastBarView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="-13" width="568" height="0.0"/>
+                                        <variation key="heightClass=compact" ambiguous="YES">
+                                            <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="-166" width="368" height="30"/>
@@ -675,8 +675,8 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="-8" width="568" height="0.0"/>
+                                        <variation key="heightClass=compact" ambiguous="YES">
+                                            <rect key="frame" x="0.0" y="372" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="169" width="368" height="0.0"/>
@@ -701,7 +701,7 @@
                                     <constraint firstItem="xfD-RV-5T3" firstAttribute="top" secondItem="7dB-1C-e9a" secondAttribute="bottom" id="h3c-W6-BQX"/>
                                     <constraint firstAttribute="trailing" secondItem="kxo-lk-dmB" secondAttribute="trailing" id="m78-nG-0f3"/>
                                 </constraints>
-                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=compact" ambiguous="YES">
                                     <rect key="frame" x="584" y="20" width="0.0" height="380"/>
                                 </variation>
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
