@@ -17,5 +17,7 @@
 - (void)_applyAbsorbs:(Entity *)entity;
 - (void)_applyStatusEffects:(Entity *)entity;
 
+- (Effect *)_existingEffectWithClass:(Class)aClass;
+
 @end
 

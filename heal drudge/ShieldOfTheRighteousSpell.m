@@ -8,6 +8,8 @@
 
 #import "PocketHealer.h"
 
+#import "SpellPriv.h"
+
 #import "ShieldOfTheRighteousSpell.h"
 
 #import "ShieldOfTheRighteousEffect.h"
@@ -58,7 +60,7 @@
     sotr.holyPower = resourcesToConsume;
     [self.caster addStatusEffect:sotr source:self.caster];
     
-    BastionOfGloryEffect *bog = [self _existingBastionOfGloryEffect];
+    BastionOfGloryEffect *bog = [self _existingEffectWithClass:[BastionOfGloryEffect class]];
     if ( bog )
         [bog addStack];
     else
@@ -66,20 +68,6 @@
         bog = [BastionOfGloryEffect new];
         [self.caster addStatusEffect:bog source:self.caster];
     }
-}
-
-- (BastionOfGloryEffect *)_existingBastionOfGloryEffect
-{
-    __block BastionOfGloryEffect *bog = nil;
-    [self.caster.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
-        if ( [effect isKindOfClass:[BastionOfGloryEffect class]] )
-        {
-            bog = (BastionOfGloryEffect *)effect;
-            *stop = YES;
-            return;
-        }
-    }];
-    return bog;
 }
 
 - (NSArray *)hdClasses

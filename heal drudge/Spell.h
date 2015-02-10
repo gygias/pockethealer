@@ -63,7 +63,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 //- (void)beginCastingWithTarget:(Character *)target;
 // when a spell completes casting, the magic thing will call this on each target
 - (BOOL)addModifiers:(NSMutableArray *)modifiers;
-- (void)handleTickWithModifier:(EventModifier *)modifier;
+- (void)handleTickWithModifier:(EventModifier *)modifier firstTick:(BOOL)firstTick;
 - (void)handleHitWithModifier:(EventModifier *)modifier;
 - (void)handleEndWithModifier:(EventModifier *)modifier;
 

@@ -19,19 +19,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="heal drudge" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taw-KF-WFs">
-                                <rect key="frame" x="44" y="62" width="105" height="21"/>
+                                <rect key="frame" x="16" y="28" width="105" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="because healing should be a chore" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F4-DB-W6T">
-                                <rect key="frame" x="44" y="91" width="274" height="21"/>
+                                <rect key="frame" x="16" y="57" width="274" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZLn-h1-K00">
-                                <rect key="frame" x="44" y="143" width="89" height="30"/>
+                                <rect key="frame" x="16" y="109" width="89" height="30"/>
                                 <state key="normal" title="create healer">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -41,7 +41,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXI-Yk-7zL">
-                                <rect key="frame" x="44" y="181" width="124" height="30"/>
+                                <rect key="frame" x="16" y="147" width="124" height="30"/>
                                 <state key="normal" title="quick play gygias">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -51,7 +51,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Us-3D-8HJ">
-                                <rect key="frame" x="44" y="219" width="113" height="30"/>
+                                <rect key="frame" x="16" y="185" width="113" height="30"/>
                                 <state key="normal" title="quick play slyeri">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -61,7 +61,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaL-5Q-A24">
-                                <rect key="frame" x="44" y="257" width="113" height="30"/>
+                                <rect key="frame" x="16" y="223" width="113" height="30"/>
                                 <state key="normal" title="quick play lireal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -71,7 +71,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEn-mK-lM2">
-                                <rect key="frame" x="44" y="295" width="118" height="30"/>
+                                <rect key="frame" x="16" y="261" width="118" height="30"/>
                                 <state key="normal" title="load from armory">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -81,45 +81,78 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="CIy-1J-yQO">
-                                <rect key="frame" x="42" y="429" width="263" height="31"/>
+                                <rect key="frame" x="14" y="328" width="263" height="31"/>
                                 <connections>
                                     <action selector="raidSizeSliderDidSomething:" destination="BYZ-38-t0r" eventType="valueChanged" id="tc9-dP-IEZ"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Raid Size: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9o-v3-sfD">
-                                <rect key="frame" x="44" y="400" width="81" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="16" y="299" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Pi-a2-jSr">
-                                <rect key="frame" x="133" y="400" width="81" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="85" y="299" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Dv-K0-Jqs">
-                                <rect key="frame" x="213" y="180" width="51" height="31"/>
+                                <rect key="frame" x="185" y="146" width="51" height="31"/>
                                 <connections>
                                     <action selector="touchedForceGygias:" destination="BYZ-38-t0r" eventType="valueChanged" id="KtF-Oi-y1J"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yKP-Ce-9PH">
-                                <rect key="frame" x="213" y="218" width="51" height="31"/>
+                                <rect key="frame" x="185" y="184" width="51" height="31"/>
                                 <connections>
                                     <action selector="touchedForceSlyeri:" destination="BYZ-38-t0r" eventType="valueChanged" id="6hk-M6-HWn"/>
                                 </connections>
                             </switch>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rjq-8Y-Ebj">
-                                <rect key="frame" x="213" y="257" width="51" height="31"/>
+                                <rect key="frame" x="185" y="223" width="51" height="31"/>
                                 <connections>
                                     <action selector="touchedForceLireal:" destination="BYZ-38-t0r" eventType="valueChanged" id="et5-08-c9X"/>
                                 </connections>
                             </switch>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="E6Y-NF-clw">
+                                <rect key="frame" x="14" y="395" width="263" height="31"/>
+                                <connections>
+                                    <action selector="difficultySliderDidSomething:" destination="BYZ-38-t0r" eventType="valueChanged" id="zNA-9y-0KJ"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Difficulty:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bx3-Vy-ibg">
+                                <rect key="frame" x="16" y="366" width="61" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="50%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbY-Sy-kNj">
+                                <rect key="frame" x="85" y="366" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x9L-I8-I5o">
+                                <rect key="frame" x="185" y="433" width="51" height="31"/>
+                                <connections>
+                                    <action selector="debugViewsSliderDidSomething:" destination="BYZ-38-t0r" eventType="valueChanged" id="PjY-Vn-ttq"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Debug Views:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTF-yN-oMW">
+                                <rect key="frame" x="16" y="438" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="debugViewsSlider" destination="x9L-I8-I5o" id="EJ7-bf-CCW"/>
+                        <outlet property="difficultyLabel" destination="mbY-Sy-kNj" id="a4u-Mz-qfU"/>
+                        <outlet property="difficultySlider" destination="E6Y-NF-clw" id="u82-4y-HXb"/>
                         <outlet property="forceGygiasSwitch" destination="9Dv-K0-Jqs" id="5Hk-bv-fEr"/>
                         <outlet property="forceLirealSwitch" destination="rjq-8Y-Ebj" id="bEl-gi-x4R"/>
                         <outlet property="forceSlyeriSwitch" destination="yKP-Ce-9PH" id="Ex1-22-Bw1"/>
@@ -761,12 +794,14 @@
                     <connections>
                         <outlet property="advisorGuideView" destination="4lg-59-kdb" id="dNs-eZ-EoH"/>
                         <outlet property="alertTextView" destination="LrD-OZ-Fiv" id="PAo-lD-mmb"/>
+                        <outlet property="bottomRightView" destination="FEn-CO-azg" id="thT-p4-Vf7"/>
                         <outlet property="castBarView" destination="xfD-RV-5T3" id="buo-NF-rpg"/>
                         <outlet property="enemyFrameView" destination="ti6-cB-FxG" id="MNP-gr-u2U"/>
                         <outlet property="eventTimerView" destination="VEx-iR-Bfo" id="W6Z-Hs-OfP"/>
                         <outlet property="playerAndTargetView" destination="7dB-1C-e9a" id="VQ1-mT-zua"/>
                         <outlet property="raidFramesView" destination="bHk-7k-FWl" id="dGM-A1-dBT"/>
                         <outlet property="spellBarView" destination="kxo-lk-dmB" id="AKW-VK-1v7"/>
+                        <outlet property="upLeftView" destination="EHr-Ay-aNh" id="gPX-4X-UNN"/>
                         <outlet property="view" destination="9dJ-3D-5VX" id="83R-Ut-qLX"/>
                     </connections>
                 </viewController>

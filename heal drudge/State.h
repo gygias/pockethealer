@@ -20,6 +20,8 @@
 @property BOOL forceGygias;
 @property BOOL forceSlyeri;
 @property BOOL forceLireal;
+@property float difficulty;
+@property BOOL debugViews;
 
 // setup
 @property BOOL saveGuildToo;

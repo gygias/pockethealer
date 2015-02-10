@@ -20,6 +20,8 @@
     state.forceSlyeri = [defaults boolForKey:@"forceSlyeri"];
     state.forceLireal = [defaults boolForKey:@"forceLireal"];
     state.raidSize = [defaults integerForKey:@"raidSize"];
+    state.difficulty = [defaults floatForKey:@"difficulty"];
+    state.debugViews = [defaults boolForKey:@"debugViws"];
     return state;
 }
 
@@ -30,6 +32,8 @@
     [defaults setBool:self.forceSlyeri forKey:@"forceSlyeri"];
     [defaults setBool:self.forceLireal forKey:@"forceLireal"];
     [defaults setInteger:self.raidSize forKey:@"raidSize"];
+    [defaults setFloat:self.difficulty forKey:@"difficulty"];
+    [defaults setBool:self.debugViews forKey:@"debugViews"];
 }
 
 @end

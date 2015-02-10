@@ -15,12 +15,12 @@
 
 @implementation KargathBladefist
 
-- (id)initWithRaid:(Raid *)raid
+- (id)initWithRaid:(Raid *)raid difficulty:(float)difficulty
 {
-    if ( self = [super initWithRaid:raid] )
+    if ( self = [super initWithRaid:raid difficulty:difficulty] )
     {
         NSNumber *raidAverageDPS = [ItemLevelAndStatsConverter averageDPSOfEntities:raid.players];
-        self.stamina = @(3 * 60 * raidAverageDPS.doubleValue / 60);
+        self.stamina = @(( 3 * 60 * raidAverageDPS.doubleValue / 60 ) * ( difficulty + .5 ) );
         self.aggroSoundName = @"kargath_aggro";
         self.hitSoundName = @"kargath_hit";
         self.deathSoundName = @"kargath_death";

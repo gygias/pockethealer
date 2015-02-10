@@ -31,4 +31,8 @@
 @property SpeechBubbleViewController *currentSpeechBubble;
 @property IBOutlet UIView *advisorGuideView;
 
+// debug
+@property IBOutlet UIView *upLeftView;
+@property IBOutlet UIView *bottomRightView;
+
 @end

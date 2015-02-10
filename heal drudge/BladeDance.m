@@ -10,6 +10,8 @@
 
 #import "BladeDance.h"
 
+#import "Enemy.h"
+
 @implementation BladeDance
 
 - (id)initWithCaster:(Entity *)caster
@@ -25,7 +27,7 @@
         self.cooldown = @15;
         self.isPeriodic = YES;
         self.period = 2.0;
-        self.periodicDamage = @35714;
+        self.periodicDamage = @( 35714 * ( .5 + ((Enemy *)caster).difficulty ) );
         self.periodicDuration = 10;
         self.hitRange = @7;
         self.targeted = YES;

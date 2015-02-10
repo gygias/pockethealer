@@ -29,5 +29,12 @@
 @property IBOutlet UISwitch *forceLirealSwitch;
 - (IBAction)touchedForceLireal:(id)sender;
 
+@property IBOutlet UILabel *difficultyLabel;
+@property IBOutlet UISlider *difficultySlider;
+- (IBAction)difficultySliderDidSomething:(id)sender;
+
+@property IBOutlet UISwitch *debugViewsSlider;
+- (IBAction)debugViewsSliderDidSomething:(id)sender;
+
 @end
 

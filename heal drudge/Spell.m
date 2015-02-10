@@ -51,7 +51,7 @@ const NSString *SpellLevelHigh = @"high";
     return NO;
 }
 
-- (void)handleTickWithModifier:(EventModifier *)modifier
+- (void)handleTickWithModifier:(EventModifier *)modifier firstTick:(BOOL)firstTick
 {
 }
 
@@ -120,6 +120,20 @@ const NSString *SpellLevelHigh = @"high";
 {
     NSDate *storedDate = self.nextCooldownDate;
     return storedDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:storedDate] <= 0;
+}
+
+- (Effect *)_existingEffectWithClass:(Class)aClass
+{
+    __block Effect *existingEffect = nil;
+    [self.caster.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
+        if ( [effect isKindOfClass:aClass] )
+        {
+            existingEffect = effect;
+            *stop = YES;
+            return;
+        }
+    }];
+    return existingEffect;
 }
 
 @end

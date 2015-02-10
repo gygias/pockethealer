@@ -23,6 +23,9 @@
     self.forceGygiasSwitch.on = self.state.forceGygias;
     self.forceSlyeriSwitch.on = self.state.forceSlyeri;
     self.forceLirealSwitch.on = self.state.forceLireal;
+    self.difficultySlider.value = self.state.difficulty;
+    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)(self.difficultySlider.value * 100)];
+    self.debugViewsSlider.on = self.state.debugViews;
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -99,6 +102,19 @@
     self.state.forceLireal = ((UISwitch *)sender).on;
     [self.state writeState];
     PHLogV(@"force lireal: %@",self.state.forceLireal?@"YES!":@"NO!");
+}
+
+- (IBAction)difficultySliderDidSomething:(id)sender
+{
+    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu%%",(NSUInteger)(self.difficultySlider.value * 100)];
+    
+    self.state.difficulty = self.difficultySlider.value;
+    [self.state writeState];
+}
+
+- (IBAction)debugViewsSliderDidSomething:(id)sender
+{
+    self.state.debugViews = self.debugViewsSlider.on;
 }
 
 @end

@@ -71,7 +71,7 @@
         PHLogV(@"there is no healer in this random raid!");
     }
     
-    Enemy *enemy = [Enemy randomEnemyWithRaid:raid];
+    Enemy *enemy = [Enemy randomEnemyWithRaid:raid difficulty:self.state.difficulty];
     self.enemyFrameView.enemy = enemy;
     
     Encounter *encounter = [Encounter new];
@@ -198,6 +198,18 @@
             });
         }
     };
+    
+    if ( ! self.state.debugViews )
+    {
+        [self.upLeftView setBackgroundColor:[UIColor clearColor]];
+        [self.bottomRightView setBackgroundColor:[UIColor clearColor]];
+        [self.enemyFrameView setBackgroundColor:[UIColor clearColor]];
+        [self.eventTimerView setBackgroundColor:[UIColor clearColor]];
+        [self.raidFramesView setBackgroundColor:[UIColor clearColor]];
+        [self.playerAndTargetView setBackgroundColor:[UIColor clearColor]];
+        [self.castBarView setBackgroundColor:[UIColor clearColor]];
+        [self.spellBarView setBackgroundColor:[UIColor clearColor]];
+    }
     
     [encounter start];
     

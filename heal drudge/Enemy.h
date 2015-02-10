@@ -20,9 +20,11 @@
     NSArray *_abilities;
 }
 
-- (id)initWithRaid:(Raid *)raid;
+@property float difficulty;
 
-+ (Enemy *)randomEnemyWithRaid:(Raid *)raid;
+- (id)initWithRaid:(Raid *)raid difficulty:(float)difficulty;
+
++ (Enemy *)randomEnemyWithRaid:(Raid *)raid difficulty:(float)difficulty;
 - (NSArray *)abilityNames;
 - (NSArray *)abilities;
 

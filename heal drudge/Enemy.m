@@ -14,13 +14,13 @@
 
 @implementation Enemy
 
-+ (Enemy *)randomEnemyWithRaid:(Raid *)raid
++ (Enemy *)randomEnemyWithRaid:(Raid *)raid difficulty:(float)difficulty
 {
     Class kargathClass = NSClassFromString(@"KargathBladefist"); // how to factory these?
-    return [[kargathClass alloc] initWithRaid:raid];
+    return [[kargathClass alloc] initWithRaid:raid difficulty:difficulty];
 }
 
-- (id)initWithRaid:(Raid *)raid
+- (id)initWithRaid:(Raid *)raid difficulty:(float)difficulty
 {
     if ( self = [super init] )
     {
@@ -29,6 +29,7 @@
         self.currentResources = @100;
         self.hdClass = [HDClass enemyClass];
         self.isEnemy = YES;
+        self.difficulty = difficulty;
         [self _initializeAbilities];
     }
     return self;

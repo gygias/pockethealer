@@ -224,7 +224,10 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             
             spell.target = aTarget;
             
-            [spell handleHitWithModifier:netMod];
+            if ( periodicTick )
+                [spell handleTickWithModifier:netMod firstTick:firstTick];
+            else
+                [spell handleHitWithModifier:netMod];
             
             [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
                 block(spell,cheatedDeath);

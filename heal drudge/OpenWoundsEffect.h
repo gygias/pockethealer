@@ -12,4 +12,6 @@
 
 @interface OpenWoundsEffect : Effect
 
+@property NSDate *ignoreCastsAtDate;
+
 @end

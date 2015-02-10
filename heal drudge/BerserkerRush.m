@@ -10,6 +10,8 @@
 
 #import "BerserkerRush.h"
 
+#import "Enemy.h"
+
 @implementation BerserkerRush
 
 - (id)initWithCaster:(Entity *)caster
@@ -25,7 +27,7 @@
         self.castTime = @1.5;
         //self.canTargetTanks = YES;
         self.affectsRandomRange = YES;
-        self.damage = @100000; // TODO making this not a oneshot until "player iq" is a thing
+        self.damage = @( 100000 * ( .5 + ((Enemy *)caster).difficulty ) ); // TODO making this not a oneshot until "player iq" is a thing
         self.targeted = YES;
         
         self.abilityLevel = CatastrophicAbility;
