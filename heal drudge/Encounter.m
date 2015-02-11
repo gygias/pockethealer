@@ -283,7 +283,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     
     if ( dispatch_get_current_queue() != self.encounterQueue )
     {
-        NSLog(@"yoyo dispatch");
+        //PHLogV(@"yoyo dispatch");
         dispatch_async(self.encounterQueue, ^{
             stuffBlock();
         });

@@ -18,6 +18,7 @@ void PHLog(id source,NSString *format, ...)
     if ( ! sPHLogApprovalBlock )
     {
         PHLogSetApprovalBlock(^BOOL(id source) {
+#if TARGET_IPHONE_SIMULATOR
             if ( [source isKindOfClass:[Entity class]] )
             {
                 if ( ((Entity *)source).isPlayingPlayer )
@@ -26,7 +27,7 @@ void PHLog(id source,NSString *format, ...)
 //                    return YES;
                 else if ( ((Entity *)source).hdClass.isTank )
                     return YES;
-            }
+            },
             else if ( [source isKindOfClass:[Spell class]] )
             {
                 if ( ((Spell *)source).caster.isPlayingPlayer )
@@ -36,7 +37,7 @@ void PHLog(id source,NSString *format, ...)
                 else if ( ((Spell *)source).target.hdClass.isTank )
                     return YES;
             }
-            
+#endif
             return NO;
         });
     }

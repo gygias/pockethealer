@@ -166,14 +166,12 @@
                 self.currentSpeechBubble = vc;
                 self.currentSpeechBubble.dismissHandler = ^(SpeechBubbleViewController *vc) {
                     NSTimeInterval shownInterval = [[NSDate date] timeIntervalSinceDate:showDate];
-                    NSLog(@"adding pause time: %0.2f",shownInterval);
+                    PHLogV(@"adding pause time: %0.2f",shownInterval);
                     [NSDate unpause];
                     [vc.view removeFromSuperview];
                     self.currentSpeechBubble = nil;
                 };
                 vc.bubbleOrigin = [self.raidFramesView originForEntity:e];
-                //[contentView removeFromSuperview];
-                //NSLog(@"forwarding (%f,%f),[%f,%f]",self.advisorGuideView.frame.origin.x,self.advisorGuideView.frame.origin.y,self.advisorGuideView.frame.size.width,self.advisorGuideView.frame.size.height);
                 vc.referenceView = self.advisorGuideView;
                 vc.view.frame = self.view.frame;
                 //[vc.speechBubbleContentView removeFromSuperview];

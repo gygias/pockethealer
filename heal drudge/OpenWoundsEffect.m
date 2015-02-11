@@ -40,7 +40,7 @@
         NSUInteger effectiveStacks = self.currentStacks.unsignedIntegerValue;
         if ( [spell.lastCastStartDate isEqual:self.ignoreCastsAtDate] )
             effectiveStacks--;
-        NSLog(@"EFFECTIVE STACKS %u vs %u",effectiveStacks,self.currentStacks.unsignedIntegerValue);
+        //PHLogV(@"EFFECTIVE STACKS %u vs %u",effectiveStacks,self.currentStacks.unsignedIntegerValue);
         if ( effectiveStacks > 0 )
         {
             EventModifier *mod = [EventModifier new];

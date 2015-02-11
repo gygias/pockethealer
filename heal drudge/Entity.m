@@ -514,7 +514,7 @@
     dispatch_source_set_event_handler(self.resourceGenerationSource, ^{
         NSNumber *regeneratedResources = [ItemLevelAndStatsConverter resourceGenerationWithEntity:self timeInterval:[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastResourceGenerationDate]];
         if ( regeneratedResources.doubleValue < 0 )
-            NSLog(@"wat");
+            [NSException raise:@"NegativeRegeneratedResources" format:@"%@ regenerated %@ resources since the last timer fire",self,regeneratedResources];
         double newResources = self.currentResources.doubleValue + regeneratedResources.doubleValue;
         if ( newResources > self.power.doubleValue )
             self.currentResources = self.power;

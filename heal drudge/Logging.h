@@ -17,7 +17,12 @@
 
 typedef BOOL (^PHLogApprovalBlock)(id source);
 
+#ifdef TARGET_IPHONE_SIMULATOR
 #define PHLogV NSLog
+#else
+#define PHLogV PHLog(self,
+#endif
+
 void PHLog(id source,NSString *format, ...) NS_FORMAT_FUNCTION(2,3);
 void PHLogSetApprovalBlock(PHLogApprovalBlock block);
 

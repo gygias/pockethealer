@@ -38,13 +38,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"DARK COMMAND!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
+    PHLog(self.caster,@"dark command: %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
     //modifier.newTarget = self.caster;
     self.target.target = self.caster; // lol
 }

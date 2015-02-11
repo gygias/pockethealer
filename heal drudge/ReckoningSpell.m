@@ -38,13 +38,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"RECKONING!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
+    PHLog(self,@"reckoning: %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
     //modifier.newTarget = self.caster;
     self.target.target = self.caster; // lol
 }

@@ -38,13 +38,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"TAUNT!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
+    PHLog(self,@"taunt: %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
     //modifier.newTarget = self.caster;
     self.target.target = self.caster; // lol
 }

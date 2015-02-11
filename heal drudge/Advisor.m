@@ -42,7 +42,6 @@
 {
     if ( ! self.didExplainTank && spell != BeneficialEffect && spell.caster.isEnemy && spell.target.hdClass.isTank )
     {
-        NSLog(@"something is damaging the tank!");
         self.didExplainTank = YES;
         if ( self.callback )
             dispatch_async(dispatch_get_main_queue(), ^{

@@ -38,13 +38,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"GROWL!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
+    PHLog(self.caster,@"growl: %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
     //modifier.newTarget = self.caster;
     self.target.target = self.caster; // lol
 }

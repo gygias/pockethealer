@@ -43,7 +43,7 @@
                     if ( aEffect.source.target == aTank &&
                         aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
                     {
-                        NSLog(@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
+                        PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
                         priorities |= CastWhenOtherTankNeedsTauntOff;
                         stopAll = YES;
                         *stop = YES;

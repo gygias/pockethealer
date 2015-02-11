@@ -38,13 +38,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
-    NSLog(@"PROVOKE!!!! %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
+    PHLog(self,@"provoke: %@ -> %@ instead of %@!",self.target,self.caster,self.target.target);
     //modifier.newTarget = self.caster;
     self.target.target = self.caster; // lol
 }
