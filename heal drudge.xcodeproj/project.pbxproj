@@ -264,6 +264,16 @@
 		6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645E1A74D61100D281B7 /* HolyNovaSpell.m */; };
 		637E8B461A89A2390002C9DC /* hand_spell_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B441A89A2390002C9DC /* hand_spell_hit.wav */; };
 		637E8B471A89A2390002C9DC /* lay_on_hands_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */; };
+		637E8B4A1A8AD82F0002C9DC /* ReckoningSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B491A8AD82F0002C9DC /* ReckoningSpell.m */; };
+		637E8B4C1A8AD8BD0002C9DC /* reckoning.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B4B1A8AD8BD0002C9DC /* reckoning.jpg */; };
+		637E8B4E1A8AD98E0002C9DC /* taunt_cast_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B4D1A8AD98E0002C9DC /* taunt_cast_hit.wav */; };
+		637E8B521A8AE4990002C9DC /* TauntSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B511A8AE4990002C9DC /* TauntSpell.m */; };
+		637E8B541A8AE4D30002C9DC /* taunt.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B531A8AE4D30002C9DC /* taunt.jpg */; };
+		637E8B581A8AE7FD0002C9DC /* DarkCommandSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B571A8AE7FD0002C9DC /* DarkCommandSpell.m */; };
+		637E8B5A1A8AE8320002C9DC /* dark_command.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B591A8AE8320002C9DC /* dark_command.jpg */; };
+		637E8B5D1A8AE8B20002C9DC /* growl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B5C1A8AE8B20002C9DC /* growl.jpg */; };
+		637E8B601A8AE8BF0002C9DC /* GrowlSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */; };
+		637E8B631A8AE9430002C9DC /* ProvokeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B621A8AE9430002C9DC /* ProvokeSpell.m */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
@@ -682,6 +692,21 @@
 		6378645E1A74D61100D281B7 /* HolyNovaSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HolyNovaSpell.m; sourceTree = "<group>"; };
 		637E8B441A89A2390002C9DC /* hand_spell_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hand_spell_hit.wav; sourceTree = "<group>"; };
 		637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = lay_on_hands_hit.wav; sourceTree = "<group>"; };
+		637E8B481A8AD82F0002C9DC /* ReckoningSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReckoningSpell.h; sourceTree = "<group>"; };
+		637E8B491A8AD82F0002C9DC /* ReckoningSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReckoningSpell.m; sourceTree = "<group>"; };
+		637E8B4B1A8AD8BD0002C9DC /* reckoning.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = reckoning.jpg; sourceTree = "<group>"; };
+		637E8B4D1A8AD98E0002C9DC /* taunt_cast_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = taunt_cast_hit.wav; sourceTree = "<group>"; };
+		637E8B501A8AE4990002C9DC /* TauntSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TauntSpell.h; sourceTree = "<group>"; };
+		637E8B511A8AE4990002C9DC /* TauntSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TauntSpell.m; sourceTree = "<group>"; };
+		637E8B531A8AE4D30002C9DC /* taunt.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = taunt.jpg; sourceTree = "<group>"; };
+		637E8B561A8AE7FD0002C9DC /* DarkCommandSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DarkCommandSpell.h; sourceTree = "<group>"; };
+		637E8B571A8AE7FD0002C9DC /* DarkCommandSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DarkCommandSpell.m; sourceTree = "<group>"; };
+		637E8B591A8AE8320002C9DC /* dark_command.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = dark_command.jpg; sourceTree = "<group>"; };
+		637E8B5C1A8AE8B20002C9DC /* growl.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = growl.jpg; sourceTree = "<group>"; };
+		637E8B5E1A8AE8BF0002C9DC /* GrowlSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowlSpell.h; sourceTree = "<group>"; };
+		637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlSpell.m; sourceTree = "<group>"; };
+		637E8B611A8AE9430002C9DC /* ProvokeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvokeSpell.h; sourceTree = "<group>"; };
+		637E8B621A8AE9430002C9DC /* ProvokeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvokeSpell.m; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
@@ -818,6 +843,8 @@
 				63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */,
 				63027B611A7B31490068E68A /* HandOfSacrificeEffect.h */,
 				63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */,
+				637E8B481A8AD82F0002C9DC /* ReckoningSpell.h */,
+				637E8B491A8AD82F0002C9DC /* ReckoningSpell.m */,
 				63027B391A7B0A1B0068E68A /* Holy */,
 				63027B381A7B09DF0068E68A /* Prot */,
 			);
@@ -918,6 +945,10 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B5C1A8AE8B20002C9DC /* growl.jpg */,
+				637E8B591A8AE8320002C9DC /* dark_command.jpg */,
+				637E8B531A8AE4D30002C9DC /* taunt.jpg */,
+				637E8B4B1A8AD8BD0002C9DC /* reckoning.jpg */,
 				63027B521A7B237D0068E68A /* devotion_aura.jpg */,
 				63027B461A7B0CF00068E68A /* light_of_dawn.jpg */,
 				63027B321A7ACE270068E68A /* evangelism.png */,
@@ -1066,6 +1097,10 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B641A8AE9570002C9DC /* Monk */,
+				637E8B5B1A8AE8730002C9DC /* Druid */,
+				637E8B551A8AE7D70002C9DC /* Death Knight */,
+				637E8B4F1A8AE48D0002C9DC /* Warrior */,
 				63027B351A7AF1B40068E68A /* Event.h */,
 				63027B361A7AF1B40068E68A /* Event.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
@@ -1175,9 +1210,46 @@
 			name = Shaman;
 			sourceTree = "<group>";
 		};
+		637E8B4F1A8AE48D0002C9DC /* Warrior */ = {
+			isa = PBXGroup;
+			children = (
+				637E8B501A8AE4990002C9DC /* TauntSpell.h */,
+				637E8B511A8AE4990002C9DC /* TauntSpell.m */,
+			);
+			name = Warrior;
+			sourceTree = "<group>";
+		};
+		637E8B551A8AE7D70002C9DC /* Death Knight */ = {
+			isa = PBXGroup;
+			children = (
+				637E8B561A8AE7FD0002C9DC /* DarkCommandSpell.h */,
+				637E8B571A8AE7FD0002C9DC /* DarkCommandSpell.m */,
+			);
+			name = "Death Knight";
+			sourceTree = "<group>";
+		};
+		637E8B5B1A8AE8730002C9DC /* Druid */ = {
+			isa = PBXGroup;
+			children = (
+				637E8B5E1A8AE8BF0002C9DC /* GrowlSpell.h */,
+				637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */,
+			);
+			name = Druid;
+			sourceTree = "<group>";
+		};
+		637E8B641A8AE9570002C9DC /* Monk */ = {
+			isa = PBXGroup;
+			children = (
+				637E8B611A8AE9430002C9DC /* ProvokeSpell.h */,
+				637E8B621A8AE9430002C9DC /* ProvokeSpell.m */,
+			);
+			name = Monk;
+			sourceTree = "<group>";
+		};
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B4D1A8AD98E0002C9DC /* taunt_cast_hit.wav */,
 				637E8B441A89A2390002C9DC /* hand_spell_hit.wav */,
 				637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */,
 				63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */,
@@ -1476,6 +1548,7 @@
 				63027ABA1A7869950068E68A /* hit_shadow.wav in Resources */,
 				63A37EF91A75ABE30036C9D0 /* 7.wav in Resources */,
 				632074711A70E93A00AA4416 /* feral_druid.png in Resources */,
+				637E8B4E1A8AD98E0002C9DC /* taunt_cast_hit.wav in Resources */,
 				632074271A7095B800AA4416 /* weakened_soul.png in Resources */,
 				632074181A7095B800AA4416 /* power_word_barrier.png in Resources */,
 				6320741D1A7095B800AA4416 /* priest.png in Resources */,
@@ -1539,6 +1612,7 @@
 				63A37ED01A75A1A80036C9D0 /* UR_Algalon_BHole01.wav in Resources */,
 				632074881A70E93A00AA4416 /* spirit_link_totem.png in Resources */,
 				63A37EF71A75ABE30036C9D0 /* 5.wav in Resources */,
+				637E8B5D1A8AE8B20002C9DC /* growl.jpg in Resources */,
 				63A37F0E1A75C6930036C9D0 /* spell_fizzle_frost.wav in Resources */,
 				6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */,
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
@@ -1564,6 +1638,7 @@
 				632074251A7095B800AA4416 /* warlock.png in Resources */,
 				6320748A1A70E93A00AA4416 /* stealth.png in Resources */,
 				63027B001A79AD350068E68A /* crusader_strike_hit.wav in Resources */,
+				637E8B5A1A8AE8320002C9DC /* dark_command.jpg in Resources */,
 				639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */,
 				632073F81A7095B800AA4416 /* divine_aegis.png in Resources */,
 				6320748B1A70E93A00AA4416 /* stone_bulwark.png in Resources */,
@@ -1573,6 +1648,7 @@
 				632074641A70E93A00AA4416 /* arcane.png in Resources */,
 				632074141A7095B800AA4416 /* pain_suppression.png in Resources */,
 				6320748F1A70E93A00AA4416 /* totem_relocation.png in Resources */,
+				637E8B4C1A8AD8BD0002C9DC /* reckoning.jpg in Resources */,
 				6320748D1A70E93A00AA4416 /* survival.jpg in Resources */,
 				632073FC1A7095B800AA4416 /* divine_shield.png in Resources */,
 				632074951A70E93A00AA4416 /* windwalker.png in Resources */,
@@ -1585,6 +1661,7 @@
 				63027B1F1A79E7990068E68A /* judgement_hit.wav in Resources */,
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				63027AEF1A79A47A0068E68A /* guardian_of_ancient_kings.png in Resources */,
+				637E8B541A8AE4D30002C9DC /* taunt.jpg in Resources */,
 				632074131A7095B800AA4416 /* monk.png in Resources */,
 				63027B471A7B0CF00068E68A /* light_of_dawn.jpg in Resources */,
 				63A37F0D1A75C6930036C9D0 /* spell_fizzle_fire.wav in Resources */,
@@ -1660,6 +1737,7 @@
 				634F48DE1A734B89008761C6 /* Effect.m in Sources */,
 				632074BF1A71A5CA00AA4416 /* Entity.m in Sources */,
 				6378645F1A74D61100D281B7 /* HolyNovaSpell.m in Sources */,
+				637E8B521A8AE4990002C9DC /* TauntSpell.m in Sources */,
 				63A37F281A75E3BF0036C9D0 /* PainSuppressionSpell.m in Sources */,
 				63A37F061A75BFA60036C9D0 /* AlertText.m in Sources */,
 				63027AFB1A79A7A60068E68A /* BastionOfGloryEffect.m in Sources */,
@@ -1672,6 +1750,7 @@
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
 				632074BC1A71A4E400AA4416 /* Encounter.m in Sources */,
 				632074B31A719DCC00AA4416 /* SmiteSpell.m in Sources */,
+				637E8B631A8AE9430002C9DC /* ProvokeSpell.m in Sources */,
 				63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */,
 				634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */,
 				63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */,
@@ -1686,9 +1765,11 @@
 				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */,
+				637E8B581A8AE7FD0002C9DC /* DarkCommandSpell.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
 				6364135B1A7D835100639007 /* EventTimerView.m in Sources */,
 				632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */,
+				637E8B601A8AE8BF0002C9DC /* GrowlSpell.m in Sources */,
 				63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */,
 				6328FB521A72F98900DF6B50 /* SoundManager.m in Sources */,
 				632074B01A71960400AA4416 /* Impale.m in Sources */,
@@ -1696,6 +1777,7 @@
 				63C5F4031A5243E900B9AE46 /* main.m in Sources */,
 				639E1DB91A702E290062E803 /* WoWRealm.m in Sources */,
 				634D18051A802D9E003CE395 /* Logging.m in Sources */,
+				637E8B4A1A8AD82F0002C9DC /* ReckoningSpell.m in Sources */,
 				63564D611A570C8C0025ACDE /* RaidFrameView.m in Sources */,
 				63027B221A79E85E0068E68A /* ArdentDefenderSpell.m in Sources */,
 				634F48EC1A7443F3008761C6 /* ArchangelEffect.m in Sources */,

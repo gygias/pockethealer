@@ -15,5 +15,6 @@
 @interface Entity (AI)
 
 - (AISpellPriority)currentSpellPriorities;
+- (BOOL)castHighestPrioritySpell;
 
 @end

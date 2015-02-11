@@ -14,7 +14,6 @@
 
 @interface Entity (ProtPaladin)
 
-- (BOOL)doProtPaladinAI;
 - (void)handleProtPallyIncomingDamageEvent:(Event *)damageEvent;
 
 @end

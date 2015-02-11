@@ -134,6 +134,9 @@ typedef enum
 - (BOOL)hasRole:(const NSString *)role;
 
 + (NSArray *)allClasses;
++ (NSArray *)allHealingClassSpecs;
++ (NSArray *)allCasterDPSClassSpecs;
++ (NSArray *)allMeleeClassSpecs;
 
 + (HDClass *)discPriest;
 + (HDClass *)holyPriest;

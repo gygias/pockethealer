@@ -48,7 +48,8 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     CastBeforeLargeHitPriority                              = 1 << 8,
     CastBeforeLargeMagicDamagePriority                      = CastBeforeLargeHitPriority,
     CastWhenInFearOfOtherPlayerDyingPriority                = 1 << 9,
-    CastWhenInFearOfDyingPriority                           = 1 << 10
+    CastWhenOtherTankNeedsTauntOff                          = 1 << 10,
+    CastWhenInFearOfDyingPriority                           = 1 << 11
 };
 
 @interface Spell : NSObject

@@ -852,4 +852,35 @@ const NSString *WoWAPIClassKey = @"class";
               ];
 }
 
++ (NSArray *)allHealingClassSpecs
+{
+    NSMutableArray *allHealingClassSpecs = [NSMutableArray new];
+    [[self allClasses] enumerateObjectsUsingBlock:^(HDClass *aClass, NSUInteger idx, BOOL *stop) {
+        if ( aClass.isHealerClass )
+            [allHealingClassSpecs addObject:aClass];
+    }];
+    return allHealingClassSpecs;
+}
+
++ (NSArray *)allCasterDPSClassSpecs
+{
+    NSMutableArray *allHealingClassSpecs = [NSMutableArray new];
+    [[self allClasses] enumerateObjectsUsingBlock:^(HDClass *aClass, NSUInteger idx, BOOL *stop) {
+        if ( aClass.isCasterDPS )
+            [allHealingClassSpecs addObject:aClass];
+    }];
+    return allHealingClassSpecs;
+}
+
++ (NSArray *)allMeleeClassSpecs
+{
+    NSMutableArray *allHealingClassSpecs = [NSMutableArray new];
+    [[self allClasses] enumerateObjectsUsingBlock:^(HDClass *aClass, NSUInteger idx, BOOL *stop) {
+        if ( aClass.isMeleeDPS || aClass.isTank )
+            [allHealingClassSpecs addObject:aClass];
+    }];
+    return allHealingClassSpecs;
+}
+
+
 @end

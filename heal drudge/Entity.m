@@ -9,6 +9,7 @@
 #import "PocketHealer.h"
 
 #import "Entity.h"
+#import "Entity+AI.h"
 
 #import "Encounter.h"
 #import "Effect.h"
@@ -536,11 +537,9 @@
     BOOL classSwitchHandled = NO;
     switch( self.hdClass.specID )
     {
-        case HDPROTPALADIN:
-            gcdTriggered = [self doProtPaladinAI];
-            classSwitchHandled = YES;
-            break;
         default:
+            gcdTriggered = [self castHighestPrioritySpell];
+            classSwitchHandled = YES;
             break;
     }
     

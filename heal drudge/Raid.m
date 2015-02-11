@@ -30,7 +30,7 @@
     NSUInteger randomSize = [names count] - arc4random() % 10;
     // XXX
     randomSize = size;
-    NSUInteger nHealers = healerRatio * randomSize;
+    NSUInteger nHealers = ceil(healerRatio * randomSize);
     NSUInteger idx = 0;
     for ( ; idx < size && idx < names.count; idx++ )
     {
@@ -80,7 +80,9 @@
     {
         nTanks = outSlyeri?1:2;
     }
-    Raid *raid = [self randomRaidWithSize:size - nForced tanks:nTanks healerRatio:0];
+    double nStandardHealers = (double)size * 0.2;
+    double nHealers = nStandardHealers - ( outGygias ? 1 : 0 ) - ( outLireal ? 1 : 0 );
+    Raid *raid = [self randomRaidWithSize:size - nForced tanks:nTanks healerRatio:( nHealers / (double)size)];
     
     Entity *gygias = nil;
     if ( outGygias )
@@ -128,25 +130,25 @@
     __block NSInteger gygiasIdx = -1;
     __block NSInteger slyIdx = -1;
     __block NSInteger lirealIdx = -1;
-    __block NSInteger someHealerIdx = -1;
-    [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-        if ( gygias && [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
-            gygiasIdx = idx;
-        else if ( obj.hdClass.isHealerClass )
-            someHealerIdx = idx;
-        else if ( slyeri && [obj.name compare:slyeri.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
-            slyIdx = idx;
-        else if ( lireal && [obj.name compare:lireal.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
-            lirealIdx = idx;
-    }];
+//    __block NSInteger someHealerIdx = -1;
+//    [raidCopy enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+//        if ( gygias && [obj.name compare:gygias.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+//            gygiasIdx = idx;
+//        else if ( obj.hdClass.isHealerClass )
+//            someHealerIdx = idx;
+//        else if ( slyeri && [obj.name compare:slyeri.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+//            slyIdx = idx;
+//        else if ( lireal && [obj.name compare:lireal.name options:NSCaseInsensitiveSearch] == NSOrderedSame )
+//            lirealIdx = idx;
+//    }];
     
     if ( slyeri )
     {
-        if ( slyIdx >= 0 )
-        {
-            PHLogV(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
-            [raidCopy removeObjectAtIndex:slyIdx];
-        }
+//        if ( slyIdx >= 0 )
+//        {
+//            PHLogV(@"removing %@",[raidCopy objectAtIndex:slyIdx]);
+//            [raidCopy removeObjectAtIndex:slyIdx];
+//        }
         slyIdx = raidCopy.count;
         PHLogV(@"adding %@",slyeri);
         [raidCopy insertObject:slyeri atIndex:slyIdx];
@@ -154,12 +156,12 @@
     
     if ( gygias )
     {
-        if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
-        {
-            NSInteger removeIndex = gygiasIdx >= 0 ? gygiasIdx : someHealerIdx;
-            PHLogV(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
-            [raidCopy removeObjectAtIndex:removeIndex];
-        }
+//        if ( gygiasIdx >= 0 || someHealerIdx >= 0 )
+//        {
+//            NSInteger removeIndex = gygiasIdx >= 0 ? gygiasIdx : someHealerIdx;
+//            PHLogV(@"removing %@",[raidCopy objectAtIndex:removeIndex]);
+//            [raidCopy removeObjectAtIndex:removeIndex];
+//        }
         gygiasIdx = raidCopy.count;
         PHLogV(@"adding %@",gygias);
         [raidCopy insertObject:gygias atIndex:gygiasIdx];
@@ -167,11 +169,11 @@
     
     if ( lireal )
     {
-        if ( lirealIdx >= 0 )
-        {
-            PHLogV(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
-            [raidCopy removeObjectAtIndex:lirealIdx];
-        }
+//        if ( lirealIdx >= 0 )
+//        {
+//            PHLogV(@"removing %@",[raidCopy objectAtIndex:lirealIdx]);
+//            [raidCopy removeObjectAtIndex:lirealIdx];
+//        }
         lirealIdx = raidCopy.count;
         PHLogV(@"adding %@",lireal);
         [raidCopy insertObject:lireal atIndex:lirealIdx];

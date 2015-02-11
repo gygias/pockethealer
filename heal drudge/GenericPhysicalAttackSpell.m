@@ -41,7 +41,12 @@
 
 - (NSArray *)hdClasses
 {
-    return [HDClass allClasses];
+    return [HDClass allMeleeClassSpecs];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriotity;
 }
 
 @end

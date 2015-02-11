@@ -45,7 +45,12 @@
 
 - (NSArray *)hdClasses
 {
-    return [HDClass allClasses];
+    return [HDClass allCasterDPSClassSpecs];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriotity;
 }
 
 @end

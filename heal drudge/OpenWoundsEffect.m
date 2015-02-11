@@ -25,6 +25,7 @@
         self.image = [ImageFactory imageNamed:@"recuperate"];
         self.drawsInFrame = YES;
         self.isEmphasized = YES;
+        self.tauntAtStacks = @1;
     }
     
     return self;
