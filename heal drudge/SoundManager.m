@@ -291,4 +291,10 @@ static SoundManager *sSoundManager;
     [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
 }
 
++ (void)playSpellQueueSound
+{
+    NSString *filePath = [self _pathForResourceNamed:@"spell_queue"];
+    [self playFileWithPath:filePath volume:HIGH_VOLUME duration:0 throttled:NO handler:NULL];
+}
+
 @end

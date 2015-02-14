@@ -298,7 +298,7 @@
     
     self.currentHealth = @(newHealth);
     
-    PHLog(self,@"%@ took %@ net damage from %@ (%@%@)",self,damageEvent.netDamage,damageEvent.spell.damage,
+    PHLog(self,@"%@ took %@ net damage from %@ (%@%@)",self,damageEvent.netDamage,damageEvent.spell.damage?damageEvent.spell.damage:damageEvent.spell.periodicDamage,
           damageEvent.netAbsorbed.doubleValue > 0 ?[NSString stringWithFormat:@"%@ absorbed",damageEvent.netAbsorbed]:@"",
             dodged?@", dodged":
                 blocked?@", blocked":
@@ -759,11 +759,13 @@
             double percentCast = timeSinceCast / self.castingSpell.lastCastEffectiveCastTime;
             if ( percentCast >= 0.66 )
             {
-                if ( ! self.isPlayingPlayer )
-                    [NSException raise:@"CastLeadTimeForAutomatedPlayer" format:@"%@",self];
-                self.enqueuedSpell = spell;
-                self.enqueuedSpell.target = target;
-                PHLog(self,@"player enqueued %@->%@",spell,target);
+                if ( self.isPlayingPlayer )
+                {
+                    self.enqueuedSpell = spell;
+                    self.enqueuedSpell.target = target;
+                    PHLog(self,@"player enqueued %@->%@",spell,target);
+                    [SoundManager playSpellQueueSound];
+                }
                 return nil;
             }
         }

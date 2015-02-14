@@ -54,7 +54,6 @@
     {
         CGRect targetRect = [self _targetOfTargetRectWithRect:rect];
         RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
-        //aFrame.scale = 0.5;
         aFrame.entity = self.target.target;
         aFrame.player = self.player;
         [aFrame drawRect:targetRect];

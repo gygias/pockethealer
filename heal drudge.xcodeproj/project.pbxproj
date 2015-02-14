@@ -274,6 +274,7 @@
 		637E8B5D1A8AE8B20002C9DC /* growl.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B5C1A8AE8B20002C9DC /* growl.jpg */; };
 		637E8B601A8AE8BF0002C9DC /* GrowlSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */; };
 		637E8B631A8AE9430002C9DC /* ProvokeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B621A8AE9430002C9DC /* ProvokeSpell.m */; };
+		637E8B661A8D57F60002C9DC /* spell_queue.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B651A8D57F60002C9DC /* spell_queue.wav */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
@@ -707,6 +708,7 @@
 		637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowlSpell.m; sourceTree = "<group>"; };
 		637E8B611A8AE9430002C9DC /* ProvokeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvokeSpell.h; sourceTree = "<group>"; };
 		637E8B621A8AE9430002C9DC /* ProvokeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvokeSpell.m; sourceTree = "<group>"; };
+		637E8B651A8D57F60002C9DC /* spell_queue.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_queue.wav; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
@@ -1097,10 +1099,6 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
-				637E8B641A8AE9570002C9DC /* Monk */,
-				637E8B5B1A8AE8730002C9DC /* Druid */,
-				637E8B551A8AE7D70002C9DC /* Death Knight */,
-				637E8B4F1A8AE48D0002C9DC /* Warrior */,
 				63027B351A7AF1B40068E68A /* Event.h */,
 				63027B361A7AF1B40068E68A /* Event.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
@@ -1116,6 +1114,10 @@
 				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
 				63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */,
 				63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */,
+				637E8B641A8AE9570002C9DC /* Monk */,
+				637E8B5B1A8AE8730002C9DC /* Druid */,
+				637E8B551A8AE7D70002C9DC /* Death Knight */,
+				637E8B4F1A8AE48D0002C9DC /* Warrior */,
 				63027AC91A7985240068E68A /* Paladin */,
 				6328FB651A732B5B00DF6B50 /* Shaman */,
 				6328FB641A732B5700DF6B50 /* Priest */,
@@ -1249,6 +1251,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B651A8D57F60002C9DC /* spell_queue.wav */,
 				637E8B4D1A8AD98E0002C9DC /* taunt_cast_hit.wav */,
 				637E8B441A89A2390002C9DC /* hand_spell_hit.wav */,
 				637E8B451A89A2390002C9DC /* lay_on_hands_hit.wav */,
@@ -1561,6 +1564,7 @@
 				63027B011A79AD350068E68A /* shield_of_the_righteous_hit.wav in Resources */,
 				632074901A70E93A00AA4416 /* tranquil_mind_totem.png in Resources */,
 				632074851A70E93A00AA4416 /* repulsion_totem.png in Resources */,
+				637E8B661A8D57F60002C9DC /* spell_queue.wav in Resources */,
 				632074261A7095B800AA4416 /* warrior.png in Resources */,
 				632073F51A7095B800AA4416 /* deathknight.png in Resources */,
 				632074791A70E93A00AA4416 /* heroism.png in Resources */,

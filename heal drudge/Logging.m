@@ -27,7 +27,7 @@ void PHLog(id source,NSString *format, ...)
 //                    return YES;
                 else if ( ((Entity *)source).hdClass.isTank )
                     return YES;
-            },
+            }
             else if ( [source isKindOfClass:[Spell class]] )
             {
                 if ( ((Spell *)source).caster.isPlayingPlayer )

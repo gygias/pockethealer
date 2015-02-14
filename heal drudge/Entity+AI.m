@@ -40,7 +40,7 @@
             if ( aTank != self )
             {
                 [aTank.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
-                    if ( aEffect.source.target == aTank &&
+                    if ( self.hdClass.isTank && aEffect.source.target == aTank &&
                         aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
                     {
                         PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
@@ -55,13 +55,13 @@
         }];
     }
     
-    // if ( someWayOfKnowing.heroIncomingOrInProgress )
+    //if ( someWayOfKnowing.heroIncomingOrInProgress )
     //{
     //    PHLog(self,@"%@: Hero is imminent, I should use my buffs",self);
     //    priorities |= CastWhenDamageDoneIncreasedPriority;
     //}
     
-    // if ( someWayOfKnowing.largeDamageIncoming )
+    //if ( someWayOfKnowing.largeDamageIncoming )
     //{
     //    PHLog(self,@"%@: I'm about to get hit with something big, I should use my mitigation!",self);
     //    priorities |= CastBeforeLargeHitPriority;
@@ -128,15 +128,19 @@
         //PHLog(self,@"  %@ is not currently a priority",spell);
     }];
     
-    // TODO
-    Entity *target = self;
-    if ( highestPrioritySpell.spellType == DetrimentalSpell )
-        target = [self.encounter.enemies randomObject];
-    
     if ( highestPrioritySpell )
     {
+        Entity *target = self;
+        if ( highestPrioritySpell.spellType == DetrimentalSpell )
+            target = [self.encounter.enemies randomObject];
+        self.target = target;
+    
+        if ( self.hdClass.isMeleeDPS && ! target.isEnemy )
+            NSLog(@"??");
+        
         if ( [NSStringFromClass([highestPrioritySpell class]) isEqualToString:@"WordOfGlorySpell"] && self.currentAuxiliaryResources.integerValue == 0 )
             [NSException raise:@"WordOfGloryNoHolyPower" format:@"%@ tried to cast %@ with %@/%@",self,highestPrioritySpell,self.currentAuxiliaryResources,self.maxAuxiliaryResources];
+        
         [self castSpell:highestPrioritySpell withTarget:target];
         PHLog(self,@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
     }

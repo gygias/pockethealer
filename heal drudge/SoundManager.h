@@ -36,6 +36,7 @@ typedef void(^StartedPlayingSoundBlock)(id sound);
 + (void)playHitSound:(Entity *)entity;
 + (void)playAggroSound:(Entity *)entity;
 + (void)playDeathSound;
++ (void)playSpellQueueSound;
 
 + (void)playCountdownWithStartIndex:(NSNumber *)startIndex;
 
