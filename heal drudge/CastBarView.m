@@ -21,7 +21,7 @@
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(UIViewNoIntrinsicMetric, 15);
+    return CGSizeMake(UIViewNoIntrinsicMetric, 20);
 }
 
 - (void)drawRect:(CGRect)rect {

@@ -597,9 +597,9 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-Ay-aNh" userLabel="up/left">
                                 <rect key="frame" x="16" y="20" width="568" height="578.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="0.0" width="568" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES">
@@ -609,7 +609,7 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEx-iR-Bfo" customClass="EventTimerView">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="578.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES">
                                             <rect key="frame" x="568" y="0.0" width="0.0" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
@@ -617,7 +617,7 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="380" width="568" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
@@ -681,7 +681,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
@@ -696,7 +696,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-RV-5T3" customClass="CastBarView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
@@ -709,7 +709,7 @@
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.935714830972322" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="372" width="0.0" height="0.0"/>
@@ -773,21 +773,21 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="2Ek-ex-7lB"/>
                                 <exclude reference="A1T-qE-Hq5"/>
                                 <exclude reference="M26-ko-bWb"/>
                                 <exclude reference="4I5-PU-ltC"/>
-                                <exclude reference="2Ek-ex-7lB"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
+                                <include reference="2Ek-ex-7lB"/>
+                                <exclude reference="6l8-CT-CPa"/>
+                                <exclude reference="j5Q-9i-jJZ"/>
                                 <exclude reference="A1T-qE-Hq5"/>
                                 <include reference="M26-ko-bWb"/>
                                 <exclude reference="W7m-ra-wvY"/>
                                 <include reference="4I5-PU-ltC"/>
-                                <include reference="2Ek-ex-7lB"/>
-                                <exclude reference="6l8-CT-CPa"/>
-                                <exclude reference="j5Q-9i-jJZ"/>
                             </mask>
                         </variation>
                     </view>
