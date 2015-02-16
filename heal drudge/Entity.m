@@ -911,4 +911,9 @@
     return @( self.currentHealth.doubleValue / self.health.doubleValue );
 }
 
+- (NSNumber *)currentResourcePercentage
+{
+    return @( self.currentResources.doubleValue / self.power.doubleValue );
+}
+
 @end

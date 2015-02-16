@@ -53,7 +53,9 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = FillerPriotity | CastWhenDamageDoneIncreasedPriority;
+    AISpellPriority defaultPriority = CastWhenDamageDoneIncreasedPriority;
+    if ( [self.caster.hdClass isEqual:[HDClass retPaladin]] )
+        defaultPriority |= FillerPriotity;
     return defaultPriority;
 }
 

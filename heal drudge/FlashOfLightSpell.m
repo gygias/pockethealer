@@ -46,11 +46,10 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriotity
-            // this situation is for holy light
-            //| CastWhenSomeoneNeedsHealingPriority
-            | CastWhenInFearOfOtherPlayerDyingPriority
-            | CastWhenInFearOfDyingPriority;
+    return  // this situation is for holy light
+            //CastWhenSomeoneNeedsHealingPriority
+            CastWhenAnyoneNeedsUrgentHealing
+            | CastWhenInFearOfAnyoneDyingPriority;
 }
 
 @end

@@ -26,5 +26,8 @@ typedef void (^AdvisorViewCallback)(Entity *,SpeechBubbleViewController *);
 
 @property BOOL didExplainTank;
 @property BOOL didExplainArchangel;
+//@property BOOL didExplainEmphasis;
+@property BOOL didExplainOOM;
+@property BOOL didExplainNeedsHealing;
 
 @end

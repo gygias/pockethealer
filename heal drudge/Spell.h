@@ -36,20 +36,29 @@ typedef NS_ENUM(NSInteger, SpellType) {
     BeneficialOrDeterimentalSpell
 };
 
+// "someone"/"anyone"
 typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
     FillerPriotity                                          = 1 << 1,
     CastWhenSomeoneNeedsHealingPriority                     = 1 << 2,
-    CastWhenTankNeedsHealingPriority                        = 1 << 3,
-    CastOnIdealAuxResourceAvailablePriority                 = 1 << 4,
-    CastWhenPartyNeedsHealing                               = 1 << 5,
-    CastWhenRaidNeedsHealing                                = 1 << 6,
-    CastWhenDamageDoneIncreasedPriority                     = 1 << 7, // during hero
-    CastBeforeLargeHitPriority                              = 1 << 8,
+    CastWhenSomeoneNeedsUrgentHealingPriority               = 1 << 3,
+    CastWhenTankNeedsHealingPriority                        = 1 << 4,
+    CastWhenTankNeedsUrgentHealingPriotity                  = 1 << 5,
+    CastWhenINeedHealingPriority                            = 1 << 6,
+    CastWhenINeedUrgentHealingPriority                      = 1 << 7,
+    CastWhenAnyoneNeedsUrgentHealing                        = CastWhenSomeoneNeedsUrgentHealingPriority | CastWhenINeedUrgentHealingPriority | CastWhenTankNeedsUrgentHealingPriotity,
+    CastOnIdealAuxResourceAvailablePriority                 = 1 << 8,
+    CastWhenPartyNeedsHealing                               = 1 << 9,
+    CastWhenRaidNeedsHealing                                = 1 << 10,
+    CastWhenDamageDoneIncreasedPriority                     = 1 << 11, // during hero
+    CastBeforeLargeHitPriority                              = 1 << 12,
     CastBeforeLargeMagicDamagePriority                      = CastBeforeLargeHitPriority,
-    CastWhenInFearOfOtherPlayerDyingPriority                = 1 << 9,
-    CastWhenOtherTankNeedsTauntOff                          = 1 << 10,
-    CastWhenInFearOfDyingPriority                           = 1 << 11
+    CastWhenOtherTankNeedsTauntOff                          = 1 << 13,
+    CastWhenInFearOfDPSDyingPriority                        = 1 << 14,
+    CastWhenInFearOfHealerDyingPriority                     = 1 << 15,
+    CastWhenInFearOfTankDyingPriority                       = 1 << 16,
+    CastWhenInFearOfSelfDyingPriority                       = 1 << 17,
+    CastWhenInFearOfAnyoneDyingPriority                     = CastWhenInFearOfDPSDyingPriority | CastWhenInFearOfHealerDyingPriority | CastWhenInFearOfTankDyingPriority | CastWhenInFearOfSelfDyingPriority
 };
 
 @interface Spell : NSObject

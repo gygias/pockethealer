@@ -11,49 +11,90 @@
 #import "Entity+AI.h"
 #import "Encounter.h"
 
+#define NEED_HEALING_THRESHOLD (1.0)
+#define FEAR_OF_DYING_THRESHOLD (0.2)
+#define FEAR_OF_DYING_DELTA (0.33)
+#define URGENT_HEALING_THRESHOLD (0.3)
+
 @implementation Entity (AI)
 
-- (AISpellPriority)currentSpellPriorities
+- (AISpellPriority)currentSpellPriorities:(NSDictionary **)outTargetMap
 {
+    __block NSMutableDictionary *targetMap = [NSMutableDictionary dictionary];
     __block AISpellPriority priorities = FillerPriotity;
     double healthPercentage = self.currentHealthPercentage.doubleValue;
     double healthDelta = ( self.currentHealth.doubleValue - self.lastHealth.doubleValue ) / self.health.doubleValue;
-    if ( healthDelta > 0.33 )
+    if ( healthDelta > FEAR_OF_DYING_DELTA )
     {
         PHLog(self,@"%@: I've taken a lot of damage since my last update, I'm in fear of dying",self);
-        priorities |= CastWhenInFearOfDyingPriority; // TODO "nervous, chance to mistakenly blow large cd?"
+        AISpellPriority thePriority = CastWhenInFearOfSelfDyingPriority;
+        priorities |= thePriority; // TODO "nervous, chance to mistakenly blow large cd?"
+        [targetMap setObject:self forKey:[NSNumber numberWithInteger:thePriority]];
     }
-    if ( healthPercentage <= 0.33 )
+    if ( healthPercentage <= FEAR_OF_DYING_THRESHOLD )
     {
         PHLog(self,@"%@: I'm at %0.0f%% health and am in fear of dying",self,healthPercentage*100);
-        priorities |= CastWhenInFearOfDyingPriority;
+        AISpellPriority thePriority = CastWhenInFearOfSelfDyingPriority;
+        priorities |= thePriority;
+        [targetMap setObject:self forKey:[NSNumber numberWithInteger:thePriority]];
     }
-    if ( healthPercentage < 1.0 )
+    if ( healthPercentage <= URGENT_HEALING_THRESHOLD )
+    {
+        PHLog(self,@"%@: I'm at %0.0f%% health and need urgent healing",self,healthPercentage*100);
+        AISpellPriority thePriority = CastWhenINeedHealingPriority;
+        priorities |= thePriority;
+        [targetMap setObject:self forKey:[NSNumber numberWithInteger:thePriority]];
+    }
+    if ( healthPercentage < NEED_HEALING_THRESHOLD )
     {
         PHLog(self,@"%@: I'm at %0.0f%% health so I need healing",self,healthPercentage*100);
-        priorities |= CastWhenTankNeedsHealingPriority;
+        AISpellPriority thePriority = CastWhenINeedHealingPriority;
+        priorities |= thePriority;
+        [targetMap setObject:self forKey:[NSNumber numberWithInteger:thePriority]];
     }
-    if ( self.hdClass.isTank )
-    {
-        __block BOOL stopAll = NO;
-        [self.encounter.raid.tankPlayers enumerateObjectsUsingBlock:^(Entity *aTank, NSUInteger idx, BOOL *stop) {
-            if ( aTank != self )
-            {
-                [aTank.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
-                    if ( self.hdClass.isTank && aEffect.source.target == aTank &&
-                        aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
-                    {
-                        PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
-                        priorities |= CastWhenOtherTankNeedsTauntOff;
-                        stopAll = YES;
-                        *stop = YES;
-                    }
-                }];
-                if ( stopAll )
+    
+    [self.encounter.raid.tankPlayers enumerateObjectsUsingBlock:^(Entity *aTank, NSUInteger idx, BOOL *stop) {
+        
+        if ( aTank.isDead )
+            return;
+        
+        if ( aTank.currentHealthPercentage.doubleValue < NEED_HEALING_THRESHOLD )
+        {
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = CastWhenTankNeedsHealingPriority;
+            priorities |= thePriority;
+            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+        }
+        if ( aTank.currentHealthPercentage.doubleValue < URGENT_HEALING_THRESHOLD )
+        {
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = CastWhenTankNeedsUrgentHealingPriotity;
+            priorities |= thePriority;
+            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+        }
+        if ( aTank.currentHealthPercentage.doubleValue < FEAR_OF_DYING_THRESHOLD )
+        {
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = CastWhenInFearOfTankDyingPriority;
+            priorities |= thePriority;
+            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+        }
+        
+        if ( aTank != self )
+        {
+            [aTank.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
+                if ( self.hdClass.isTank && aEffect.source.target == aTank &&
+                    aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
+                {
+                    PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
+                    AISpellPriority thePriority = CastWhenOtherTankNeedsTauntOff;
+                    priorities |= thePriority;
+                    [targetMap setObject:aEffect.source forKey:[NSNumber numberWithInteger:thePriority]];
                     *stop = YES;
-            }
-        }];
-    }
+                }
+            }];
+        }
+    }];
     
     //if ( someWayOfKnowing.heroIncomingOrInProgress )
     //{
@@ -67,13 +108,18 @@
     //    priorities |= CastBeforeLargeHitPriority;
     //}
     
+    if ( outTargetMap )
+        *outTargetMap = targetMap;
+    
     return priorities;
 }
 
 - (BOOL)castHighestPrioritySpell
 {
-    AISpellPriority currentPriorities = [self currentSpellPriorities];
+    NSDictionary *targetMap = nil;
+    AISpellPriority currentPriorities = [self currentSpellPriorities:&targetMap];
     
+    __block AISpellPriority highestPriority = NoPriority;
     __block Spell *highestPrioritySpell = nil;
     [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
         //PHLog(self,@"%@(%@,%@) is wondering if they should cast %@ (%@,%@)",self,self.currentResources,self.currentAuxiliaryResources,spell,spell.manaCost,spell.auxiliaryResourceCost);
@@ -98,7 +144,7 @@
                 return;
             }
             
-            if ( ! ( currentPriorities & CastWhenInFearOfOtherPlayerDyingPriority )
+            if ( ! ( currentPriorities & CastWhenInFearOfAnyoneDyingPriority )
                 && spell.auxiliaryResourceIdealCost.doubleValue > self.currentAuxiliaryResources.doubleValue )
             {
                 //PHLog(self,@"  %@ is waiting to cast %@ because they only have %@/%@ aux resources and no one is imminently dying",self,spell,self.currentAuxiliaryResources,spell.auxiliaryResourceIdealCost);
@@ -106,12 +152,15 @@
             }
         }
         
-        if ( spell.aiSpellPriority & currentPriorities )
+        AISpellPriority thisSpellMatchedPriority = spell.aiSpellPriority & currentPriorities;
+        if ( thisSpellMatchedPriority )
         {
-            if ( spell.aiSpellPriority > highestPrioritySpell.aiSpellPriority )
+            AISpellPriority highestMatchedPriority = 1 << (AISpellPriority)log2(thisSpellMatchedPriority);
+            if ( spell.aiSpellPriority > highestPriority )
             {
                 //PHLog(self,@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
                 highestPrioritySpell = spell;
+                highestPriority = highestMatchedPriority;
             }
             //else
             //    PHLog(self,@"%@'s %@ meets current priorities but isn't higher priority than %@",self,spell,highestPrioritySpell);
@@ -130,9 +179,14 @@
     
     if ( highestPrioritySpell )
     {
-        Entity *target = self;
-        if ( highestPrioritySpell.spellType == DetrimentalSpell )
-            target = [self.encounter.enemies randomObject];
+        Entity *target = [targetMap objectForKey:[NSNumber numberWithInteger:highestPriority]];
+        if ( ! target )
+        {
+            if ( highestPrioritySpell.spellType == DetrimentalSpell )
+                target = [self.encounter.enemies randomObject];
+            else
+                target = self;
+        }
         self.target = target;
     
         if ( self.hdClass.isMeleeDPS && ! target.isEnemy )

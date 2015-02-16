@@ -54,7 +54,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return CastWhenInFearOfDyingPriority | CastWhenInFearOfOtherPlayerDyingPriority;
+    return CastWhenInFearOfAnyoneDyingPriority;
 }
 
 @end

@@ -54,7 +54,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = CastBeforeLargeHitPriority | CastWhenInFearOfDyingPriority;
+    AISpellPriority defaultPriority = CastBeforeLargeHitPriority | CastWhenInFearOfSelfDyingPriority;
     return defaultPriority;
 }
 

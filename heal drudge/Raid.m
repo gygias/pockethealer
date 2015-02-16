@@ -76,13 +76,14 @@
 {
     NSUInteger nTanks = 0;
     NSUInteger nForced = (outGygias?1:0) + (outSlyeri?1:0) + (outLireal?1:0);
-    if ( size > 5 )
+    //if ( size > 5 )
     {
         nTanks = outSlyeri?1:2;
     }
     double nStandardHealers = (double)size * 0.2;
     double nHealers = nStandardHealers - ( outGygias ? 1 : 0 ) - ( outLireal ? 1 : 0 );
-    Raid *raid = [self randomRaidWithSize:size - nForced tanks:nTanks healerRatio:( nHealers / (double)size)];
+    NSUInteger nonForcedSize = ( size > nForced ) ? ( size - nForced ) : 0;
+    Raid *raid = [self randomRaidWithSize:nonForcedSize tanks:nTanks healerRatio:( nHealers / (double)size)];
     
     Entity *gygias = nil;
     if ( outGygias )

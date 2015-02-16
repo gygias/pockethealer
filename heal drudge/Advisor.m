@@ -23,19 +23,52 @@
 
 - (void)updateEncounter
 {
-    [self.encounter.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
-        if ( spell.isEmphasized && self.callback )
-        {
-            __block SpeechBubbleViewController *vc = nil;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                vc = [self _emphasisForSpell:spell];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        __block SpeechBubbleViewController *vc = nil;
+        [self.encounter.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+            if ( spell.isEmphasized && self.callback )
+            {
+                    vc = [self _emphasisForSpell:spell];
+                    if ( vc )
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(self.encounter.player,vc); });
+                        *stop = YES;
+                    }
+            }
+        }];
+        
+        if ( vc )
+            return;
+        
+        [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+            if ( aPlayer.isPlayingPlayer )
+                return;
+            if ( ! self.didExplainOOM && aPlayer.hdClass.isHealerClass  && aPlayer.currentResourcePercentage.doubleValue < 0.05 )
+            {
+                self.didExplainOOM = YES;
+                vc = [self _oom:aPlayer];
                 if ( vc )
-                    self.callback(self.encounter.player,vc);
-            });
-            if ( vc )
-                *stop = YES;
-        }
-    }];
+                {
+                    self.callback(aPlayer,vc);
+                    *stop = YES;
+                }
+            }
+            else if ( ! self.didExplainNeedsHealing && aPlayer.currentHealthPercentage.doubleValue < 0.5 )
+            {
+                self.didExplainNeedsHealing = YES;
+                vc = [self _needsHealing:aPlayer];
+                if ( vc )
+                {
+                    self.callback(aPlayer,vc);
+                    *stop = YES;
+                }
+            }
+        }];
+    
+        if ( vc )
+            return;
+    });
 }
 
 - (void)handleSpell:(Spell *)spell event:(Event *)event modifier:(EventModifier *)modifier
@@ -77,7 +110,22 @@
     vc.textLabel.text = @"This is a tank. Tanks take most of the damage, so focus on healing them up.";
     vc.imageView.image = [ImageFactory imageForRole:TankRole];
     return vc;
-    //return [[[NSBundle mainBundle] loadNibNamed:@"TankExplanationView" owner:tankExplanationView options:nil] firstObject];
+}
+
+- (SpeechBubbleViewController *)_oom:(Entity *)oomEntity
+{
+    SpeechBubbleViewController *vc = [self _speechBubble];
+    vc.textLabel.text = [NSString stringWithFormat:@"%@ is out of mana, pick up the pace!",oomEntity.name];;
+    vc.imageView.image = [ImageFactory imageForRole:HealerRole];
+    return vc;
+}
+
+- (SpeechBubbleViewController *)_needsHealing:(Entity *)entityInNeedOfHealing
+{
+    SpeechBubbleViewController *vc = [self _speechBubble];
+    vc.textLabel.text = [NSString stringWithFormat:@"%@ needs healing, heal them up!",entityInNeedOfHealing.name];;
+    vc.imageView.image = [ImageFactory imageForRole:HealerRole];
+    return vc;
 }
 
 @end

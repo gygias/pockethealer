@@ -36,6 +36,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property (readonly) NSNumber *currentHealthPercentage;
 @property (readonly) NSNumber *currentAbsorb; // synthesized from effects
 @property NSNumber *currentResources;
+@property (readonly) NSNumber *currentResourcePercentage;
 @property NSNumber *currentAuxiliaryResources;
 @property NSNumber *maxAuxiliaryResources;
 @property NSString *auxResourceName;

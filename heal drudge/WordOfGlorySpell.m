@@ -73,7 +73,7 @@
     AISpellPriority priority = CastWhenSomeoneNeedsHealingPriority |
                                 CastWhenTankNeedsHealingPriority |
                                 CastOnIdealAuxResourceAvailablePriority |
-                                CastWhenInFearOfDyingPriority;
+                                CastWhenInFearOfAnyoneDyingPriority;
     return priority;
 }
 

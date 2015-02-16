@@ -171,6 +171,10 @@
                     [vc.view removeFromSuperview];
                     self.currentSpeechBubble = nil;
                 };
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                    
+                    if ( self.currentSpeechBubble )
+                        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
+                });
                 vc.bubbleOrigin = [self.raidFramesView originForEntity:e];
                 vc.referenceView = self.advisorGuideView;
                 vc.view.frame = self.view.frame;
@@ -183,11 +187,9 @@
                 [vc.speechBubbleContentView.superview addConstraint:constraint];
                 [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                     if ( self.currentSpeechBubble )
-                    {
                         self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
-                        self.currentSpeechBubble = nil;
-                    }
                     [self.spellBarView invalidateIntrinsicContentSize];
+                    [self.raidFramesView invalidateIntrinsicContentSize];
                 }];
                 //[vc.speechBubbleContentView addConstraint:[NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.advisorGuideView attribute:NSLayoutAttributeLeading multiplier:0 constant:0]];
                 //vc.speechBubbleContentView.frame = self.advisorGuideView.frame;

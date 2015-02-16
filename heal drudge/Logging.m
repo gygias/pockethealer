@@ -23,14 +23,20 @@ void PHLog(id source,NSString *format, ...)
             {
                 if ( ((Entity *)source).isPlayingPlayer )
                     return YES;
-//                else if ( ((Entity *)source).hdClass.isHealerClass )
-//                    return YES;
                 else if ( ((Entity *)source).hdClass.isTank )
+                    return YES;
+                else if ( ((Entity *)source).hdClass.isHealerClass )
                     return YES;
             }
             else if ( [source isKindOfClass:[Spell class]] )
             {
                 if ( ((Spell *)source).caster.isPlayingPlayer )
+                    return YES;
+                if ( ((Spell *)source).target.isPlayingPlayer )
+                    return YES;
+                else if ( ((Spell *)source).caster.hdClass.isHealerClass )
+                    return YES;
+                else if ( ((Spell *)source).target.hdClass.isHealerClass )
                     return YES;
                 else if ( ((Spell *)source).caster.hdClass.isTank )
                     return YES;
