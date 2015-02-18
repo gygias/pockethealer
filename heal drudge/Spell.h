@@ -161,4 +161,10 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSDate *lastChannelStartDate;
 @property NSTimeInterval lastCastEffectiveCastTime;
 
+// is it spell or is it ability?
+@property BOOL isLargePhysicalHit;
+@property BOOL isLargeMagicHit;
+@property BOOL isLargePhysicalAOE;
+@property BOOL isLargeMagicAOE;
+
 @end

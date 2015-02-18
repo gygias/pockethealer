@@ -41,7 +41,7 @@
 
 - (NSArray *)hdClasses
 {
-    return [HDClass allHealingClassSpecs];
+    return [HDClass allGenericHealingClassSpecs];
 }
 
 - (AISpellPriority)aiSpellPriority

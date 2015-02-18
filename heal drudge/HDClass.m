@@ -800,7 +800,7 @@ const NSString *WoWAPIClassKey = @"class";
 + (HDClass *)protPaladin { return [HDClass classWithID:HDPALADIN spec:HDPROTPALADIN]; }
 + (HDClass *)retPaladin { return [HDClass classWithID:HDPALADIN spec:HDRETPALADIN]; }
 
-+ (HDClass *)restoShaman { return [HDClass classWithID:HDSHAMAN spec:HDRESTODRUID]; }
++ (HDClass *)restoShaman { return [HDClass classWithID:HDSHAMAN spec:HDRESTOSHAMAN]; }
 + (HDClass *)eleShaman { return [HDClass classWithID:HDSHAMAN spec:HDELESHAMAN]; }
 + (HDClass *)enhanceShaman { return [HDClass classWithID:HDSHAMAN spec:HDENHANCESHAMAN]; }
 
@@ -852,14 +852,33 @@ const NSString *WoWAPIClassKey = @"class";
               ];
 }
 
-+ (NSArray *)allHealingClassSpecs
++ (NSArray *)_allHealingClasSpecsExcluding:(BOOL)excluding
 {
     NSMutableArray *allHealingClassSpecs = [NSMutableArray new];
     [[self allClasses] enumerateObjectsUsingBlock:^(HDClass *aClass, NSUInteger idx, BOOL *stop) {
         if ( aClass.isHealerClass )
+        {
+            if ( excluding && (
+                                [aClass isEqual:[HDClass discPriest]] ||
+                                [aClass isEqual:[HDClass holyPaladin]]
+                               )
+                )
+                continue;
+            
             [allHealingClassSpecs addObject:aClass];
+        }
     }];
     return allHealingClassSpecs;
+}
+
++ (NSArray *)allHealingClassSpecs
+{
+    return [self _allHealingClassSpecsExcluding:NO];
+}
+
++ (NSArray *)allGenericHealingClassSpecs
+{
+    return [self _allHealingClassSpecsExcluding:YES];
 }
 
 + (NSArray *)allCasterDPSClassSpecs

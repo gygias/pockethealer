@@ -161,5 +161,10 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 
 - (void)_doAutomaticStuff;
 
+@property BOOL largePhysicalHitIncoming;
+@property BOOL largeMagicHitIncoming;
+@property BOOL largePhysicalAOEIncoming;
+@property BOOL largeMagicAOEIncoming;
+
 @end
 

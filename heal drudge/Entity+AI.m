@@ -109,6 +109,15 @@
     //    priorities |= CastBeforeLargeHitPriority;
     //}
     
+    if ( self.largePhysicalHitIncoming )
+        priorities |= CastBeforeLargePhysicalHitPriority;
+    if ( self.largeMagicHitIncoming )
+        priorities |= CastBeforeLargeMagicHitPriority;
+    if ( self.largePhysicalAOEIncoming )
+        priorities |= CastBeforeLargePhysicalAOEPriority;
+    if ( self.largeMagicAOEIncoming )
+        priorities |= CastBeforeLargeMagicAOEPriority;
+    
     if ( outTargetMap )
         *outTargetMap = targetMap;
     

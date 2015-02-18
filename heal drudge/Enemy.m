@@ -62,10 +62,10 @@
     if ( self.aggroSoundName )
         [SoundManager playAggroSound:self];
     
-    [_abilities enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        Ability *ability = (Ability *)obj;
+    [_abilities enumerateObjectsUsingBlock:^(Ability *ability, NSUInteger idx, BOOL *stop) {
         //PHLog(self,@"%@: %@",ability,ability.nextFireDate);
         ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
+        [self _notifyPlayersOfAbility:ability];
         PHLog(self,@"set next fire date for %@: %@ based on %f",ability,ability.nextFireDate,ability.cooldown.doubleValue);
         if ( self.scheduledSpellHandler && ability.abilityLevel > NormalAbility )
             self.scheduledSpellHandler(ability,ability.nextFireDate);
@@ -73,6 +73,54 @@
     
     // choose a tank target
     [self targetNextThreatWithEncounter:encounter];
+}
+
+- (void)_notifyPlayersOfAbility:(Ability *)ability
+{
+    if ( ! ability.isLargePhysicalHit
+        && ! ability.isLargeMagicHit
+        && ! ability.isLargePhysicalAOE
+        && ! ability.isLargeMagicAOE )
+        return;
+    
+    // notify entity 2 GCDS before fire date
+    double notifyDelay = ability.cooldown.doubleValue > 2 ? ( ability.cooldown.doubleValue - 2 ) : 0;
+    __block Entity *theTarget = nil;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notifyDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"------- ALERT %@ -------",ability);
+        theTarget = self.target;
+        if ( ability.isLargePhysicalHit )
+            theTarget.largePhysicalHitIncoming = YES;
+        if ( ability.isLargeMagicHit )
+            theTarget.largeMagicHitIncoming = YES;
+        if ( ability.isLargePhysicalAOE || ability.isLargeMagicAOE )
+        {
+            [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+                if ( ability.isLargePhysicalAOE )
+                    aPlayer.largePhysicalAOEIncoming = YES;
+                if ( ability.isLargeMagicAOE )
+                    aPlayer.largeMagicAOEIncoming = YES;
+            }];
+        }
+    });
+    
+    double unnotifyDelay = 5;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(unnotifyDelay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ( ability.isLargePhysicalHit )
+            theTarget.largePhysicalHitIncoming = NO;
+        if ( ability.isLargeMagicHit )
+            theTarget.largeMagicHitIncoming = NO;
+        if ( ability.isLargePhysicalAOE || ability.isLargeMagicAOE )
+        {
+            [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+                if ( ability.isLargePhysicalAOE )
+                    aPlayer.largePhysicalAOEIncoming = NO;
+                if ( ability.isLargeMagicAOE )
+                    aPlayer.largeMagicAOEIncoming = NO;
+            }];
+        }
+        NSLog(@"------- FINISH %@ -------",ability);
+    });
 }
 
 - (void)_initializeAbilities
@@ -107,6 +155,7 @@
             ability.nextFireDate = [NSDate distantFuture]; // XXX
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.periodicDuration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
                 ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
+                [self _notifyPlayersOfAbility:ability];
                 if ( self.scheduledSpellHandler && ability.abilityLevel > NormalAbility )
                     self.scheduledSpellHandler(ability,ability.nextFireDate);
             });
@@ -173,6 +222,7 @@
             dispatch_source_cancel(timer);
             
             ability.nextFireDate = [NSDate dateWithTimeIntervalSinceNow:ability.cooldown.doubleValue];
+            [self _notifyPlayersOfAbility:ability];
         });
     }
     else if ( ability.castTime.doubleValue > 0 )

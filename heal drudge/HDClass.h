@@ -135,6 +135,7 @@ typedef enum
 
 + (NSArray *)allClasses;
 + (NSArray *)allHealingClassSpecs;
++ (NSArray *)allGenericHealingClassSpecs;
 + (NSArray *)allCasterDPSClassSpecs;
 + (NSArray *)allMeleeClassSpecs;
 
