@@ -10,6 +10,7 @@
 
 #import "Entity+AI.h"
 #import "Encounter.h"
+#import "ItemLevelAndStatsConverter.h"
 
 #define NEED_HEALING_THRESHOLD (1.0)
 #define FEAR_OF_DYING_THRESHOLD (0.2)
@@ -21,7 +22,7 @@
 - (AISpellPriority)currentSpellPriorities:(NSDictionary **)outTargetMap
 {
     __block NSMutableDictionary *targetMap = [NSMutableDictionary dictionary];
-    __block AISpellPriority priorities = FillerPriotity;
+    __block AISpellPriority priorities = FillerPriority;
     double healthPercentage = self.currentHealthPercentage.doubleValue;
     double healthDelta = ( self.currentHealth.doubleValue - self.lastHealth.doubleValue ) / self.health.doubleValue;
     if ( healthDelta > FEAR_OF_DYING_DELTA )
@@ -53,40 +54,40 @@
         [targetMap setObject:self forKey:[NSNumber numberWithInteger:thePriority]];
     }
     
-    [self.encounter.raid.tankPlayers enumerateObjectsUsingBlock:^(Entity *aTank, NSUInteger idx, BOOL *stop) {
+    [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
         
-        if ( aTank.isDead )
+        if ( aPlayer.isDead )
             return;
         
-        if ( aTank.currentHealthPercentage.doubleValue < NEED_HEALING_THRESHOLD )
+        if ( aPlayer.currentHealthPercentage.doubleValue < NEED_HEALING_THRESHOLD )
         {
-            PHLog(self,@"%@: %@ is at %0.0f%% health and needs healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
-            AISpellPriority thePriority = CastWhenTankNeedsHealingPriority;
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs healing",self,aPlayer,aPlayer.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = aPlayer.hdClass.isTank ? CastWhenTankNeedsHealingPriority : CastWhenSomeoneNeedsHealingPriority;
             priorities |= thePriority;
-            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+            [targetMap setObject:aPlayer forKey:[NSNumber numberWithInteger:thePriority]];
         }
-        if ( aTank.currentHealthPercentage.doubleValue < URGENT_HEALING_THRESHOLD )
+        if ( aPlayer.currentHealthPercentage.doubleValue < URGENT_HEALING_THRESHOLD )
         {
-            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
-            AISpellPriority thePriority = CastWhenTankNeedsUrgentHealingPriotity;
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aPlayer,aPlayer.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = aPlayer.hdClass.isTank ? CastWhenTankNeedsUrgentHealingPriority : CastWhenSomeoneNeedsUrgentHealingPriority;
             priorities |= thePriority;
-            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+            [targetMap setObject:aPlayer forKey:[NSNumber numberWithInteger:thePriority]];
         }
-        if ( aTank.currentHealthPercentage.doubleValue < FEAR_OF_DYING_THRESHOLD )
+        if ( aPlayer.currentHealthPercentage.doubleValue < FEAR_OF_DYING_THRESHOLD )
         {
-            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aTank,aTank.currentHealthPercentage.doubleValue*100);
-            AISpellPriority thePriority = CastWhenInFearOfTankDyingPriority;
+            PHLog(self,@"%@: %@ is at %0.0f%% health and needs urgent healing",self,aPlayer,aPlayer.currentHealthPercentage.doubleValue*100);
+            AISpellPriority thePriority = aPlayer.hdClass.isTank ? CastWhenInFearOfTankDyingPriority : CastWhenInFearOfDPSDyingPriority;
             priorities |= thePriority;
-            [targetMap setObject:aTank forKey:[NSNumber numberWithInteger:thePriority]];
+            [targetMap setObject:aPlayer forKey:[NSNumber numberWithInteger:thePriority]];
         }
         
-        if ( aTank != self )
+        if ( aPlayer != self )
         {
-            [aTank.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
-                if ( self.hdClass.isTank && aEffect.source.target == aTank &&
+            [aPlayer.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
+                if ( self.hdClass.isTank && aPlayer.hdClass.isTank && aEffect.source.target == aPlayer &&
                     aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
                 {
-                    PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aTank,aEffect,aEffect.currentStacks);
+                    PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aPlayer,aEffect,aEffect.currentStacks);
                     AISpellPriority thePriority = CastWhenOtherTankNeedsTauntOff;
                     priorities |= thePriority;
                     [targetMap setObject:aEffect.source forKey:[NSNumber numberWithInteger:thePriority]];
@@ -158,7 +159,9 @@
             AISpellPriority highestMatchedPriority = 1 << (AISpellPriority)log2(thisSpellMatchedPriority);
             if ( spell.aiSpellPriority > highestPriority )
             {
-                //PHLog(self,@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
+                PHLog(self,@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);                
+                if ( self.hdClass.isHealerClass )
+                    NSLog(@"??");
                 highestPrioritySpell = spell;
                 highestPriority = highestMatchedPriority;
             }
@@ -177,6 +180,9 @@
         //PHLog(self,@"  %@ is not currently a priority",spell);
     }];
     
+    if ( self.hdClass.isHealerClass )
+        NSLog(@"??");
+    
     if ( highestPrioritySpell )
     {
         Entity *target = [targetMap objectForKey:[NSNumber numberWithInteger:highestPriority]];
@@ -184,6 +190,8 @@
         {
             if ( highestPrioritySpell.spellType == DetrimentalSpell )
                 target = [self.encounter.enemies randomObject];
+            else if ( self.target.isPlayer )
+                target = self.target;
             else
                 target = self;
         }
@@ -199,7 +207,14 @@
         PHLog(self,@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
     }
     else
+    {
         PHLog(self,@"%@ couldn't figure out anything to do on this update",self);
+        
+        NSTimeInterval effectiveGCD = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:0].doubleValue;;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+            [self _doAutomaticStuff];
+        });
+    }
     
     return ! highestPrioritySpell || highestPrioritySpell.triggersGCD;
 }

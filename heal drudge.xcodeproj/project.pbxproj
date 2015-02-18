@@ -275,6 +275,14 @@
 		637E8B601A8AE8BF0002C9DC /* GrowlSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B5F1A8AE8BF0002C9DC /* GrowlSpell.m */; };
 		637E8B631A8AE9430002C9DC /* ProvokeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B621A8AE9430002C9DC /* ProvokeSpell.m */; };
 		637E8B661A8D57F60002C9DC /* spell_queue.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B651A8D57F60002C9DC /* spell_queue.wav */; };
+		637E8B6A1A92A2C00002C9DC /* TemplarsVerdictSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B691A92A2C00002C9DC /* TemplarsVerdictSpell.m */; };
+		637E8B6C1A92A3080002C9DC /* templars_verdict.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B6B1A92A3080002C9DC /* templars_verdict.jpg */; };
+		637E8B6E1A92A4E50002C9DC /* templars_verdict_hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B6D1A92A4E50002C9DC /* templars_verdict_hit.wav */; };
+		637E8B711A952F610002C9DC /* IceboundFortitudeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B701A952F610002C9DC /* IceboundFortitudeSpell.m */; };
+		637E8B731A9530090002C9DC /* icebound_fortitude.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B721A9530090002C9DC /* icebound_fortitude.jpg */; };
+		637E8B751A9530150002C9DC /* icebound_fortitude_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B741A9530150002C9DC /* icebound_fortitude_cast.wav */; };
+		637E8B781A95302A0002C9DC /* IceboundFortitudeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B771A95302A0002C9DC /* IceboundFortitudeEffect.m */; };
+		637E8B7B1A9544170002C9DC /* GenericFastHealSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B7A1A9544170002C9DC /* GenericFastHealSpell.m */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
@@ -709,6 +717,18 @@
 		637E8B611A8AE9430002C9DC /* ProvokeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProvokeSpell.h; sourceTree = "<group>"; };
 		637E8B621A8AE9430002C9DC /* ProvokeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProvokeSpell.m; sourceTree = "<group>"; };
 		637E8B651A8D57F60002C9DC /* spell_queue.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spell_queue.wav; sourceTree = "<group>"; };
+		637E8B681A92A2C00002C9DC /* TemplarsVerdictSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplarsVerdictSpell.h; sourceTree = "<group>"; };
+		637E8B691A92A2C00002C9DC /* TemplarsVerdictSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplarsVerdictSpell.m; sourceTree = "<group>"; };
+		637E8B6B1A92A3080002C9DC /* templars_verdict.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = templars_verdict.jpg; sourceTree = "<group>"; };
+		637E8B6D1A92A4E50002C9DC /* templars_verdict_hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = templars_verdict_hit.wav; sourceTree = "<group>"; };
+		637E8B6F1A952F610002C9DC /* IceboundFortitudeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceboundFortitudeSpell.h; sourceTree = "<group>"; };
+		637E8B701A952F610002C9DC /* IceboundFortitudeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceboundFortitudeSpell.m; sourceTree = "<group>"; };
+		637E8B721A9530090002C9DC /* icebound_fortitude.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = icebound_fortitude.jpg; sourceTree = "<group>"; };
+		637E8B741A9530150002C9DC /* icebound_fortitude_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = icebound_fortitude_cast.wav; sourceTree = "<group>"; };
+		637E8B761A95302A0002C9DC /* IceboundFortitudeEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IceboundFortitudeEffect.h; sourceTree = "<group>"; };
+		637E8B771A95302A0002C9DC /* IceboundFortitudeEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IceboundFortitudeEffect.m; sourceTree = "<group>"; };
+		637E8B791A9544170002C9DC /* GenericFastHealSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericFastHealSpell.h; sourceTree = "<group>"; };
+		637E8B7A1A9544170002C9DC /* GenericFastHealSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericFastHealSpell.m; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
@@ -817,6 +837,7 @@
 		63027AC91A7985240068E68A /* Paladin */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B671A92A2B20002C9DC /* Ret */,
 				63027ACA1A7985790068E68A /* DivineProtectionSpell.h */,
 				63027ACB1A7985790068E68A /* DivineProtectionSpell.m */,
 				63027ACD1A7986580068E68A /* DivineProtectionEffect.h */,
@@ -947,6 +968,8 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B721A9530090002C9DC /* icebound_fortitude.jpg */,
+				637E8B6B1A92A3080002C9DC /* templars_verdict.jpg */,
 				637E8B5C1A8AE8B20002C9DC /* growl.jpg */,
 				637E8B591A8AE8320002C9DC /* dark_command.jpg */,
 				637E8B531A8AE4D30002C9DC /* taunt.jpg */,
@@ -1110,6 +1133,8 @@
 				634F490C1A748E1D008761C6 /* EventModifier.m */,
 				63027AB11A7849EA0068E68A /* GenericHealingSpell.h */,
 				63027AB21A7849EA0068E68A /* GenericHealingSpell.m */,
+				637E8B791A9544170002C9DC /* GenericFastHealSpell.h */,
+				637E8B7A1A9544170002C9DC /* GenericFastHealSpell.m */,
 				63027AB41A7849F60068E68A /* GenericDamageSpell.h */,
 				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
 				63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */,
@@ -1226,6 +1251,10 @@
 			children = (
 				637E8B561A8AE7FD0002C9DC /* DarkCommandSpell.h */,
 				637E8B571A8AE7FD0002C9DC /* DarkCommandSpell.m */,
+				637E8B6F1A952F610002C9DC /* IceboundFortitudeSpell.h */,
+				637E8B701A952F610002C9DC /* IceboundFortitudeSpell.m */,
+				637E8B761A95302A0002C9DC /* IceboundFortitudeEffect.h */,
+				637E8B771A95302A0002C9DC /* IceboundFortitudeEffect.m */,
 			);
 			name = "Death Knight";
 			sourceTree = "<group>";
@@ -1248,9 +1277,20 @@
 			name = Monk;
 			sourceTree = "<group>";
 		};
+		637E8B671A92A2B20002C9DC /* Ret */ = {
+			isa = PBXGroup;
+			children = (
+				637E8B681A92A2C00002C9DC /* TemplarsVerdictSpell.h */,
+				637E8B691A92A2C00002C9DC /* TemplarsVerdictSpell.m */,
+			);
+			name = Ret;
+			sourceTree = "<group>";
+		};
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B741A9530150002C9DC /* icebound_fortitude_cast.wav */,
+				637E8B6D1A92A4E50002C9DC /* templars_verdict_hit.wav */,
 				637E8B651A8D57F60002C9DC /* spell_queue.wav */,
 				637E8B4D1A8AD98E0002C9DC /* taunt_cast_hit.wav */,
 				637E8B441A89A2390002C9DC /* hand_spell_hit.wav */,
@@ -1663,6 +1703,7 @@
 				632074801A70E93A00AA4416 /* mistweaver.png in Resources */,
 				63A37F101A75C6930036C9D0 /* spell_fizzle_nature.wav in Resources */,
 				63027B1F1A79E7990068E68A /* judgement_hit.wav in Resources */,
+				637E8B731A9530090002C9DC /* icebound_fortitude.jpg in Resources */,
 				632073FD1A7095B800AA4416 /* druid.png in Resources */,
 				63027AEF1A79A47A0068E68A /* guardian_of_ancient_kings.png in Resources */,
 				637E8B541A8AE4D30002C9DC /* taunt.jpg in Resources */,
@@ -1697,6 +1738,7 @@
 				632074871A70E93A00AA4416 /* resto_shaman.jpg in Resources */,
 				632073EE1A7095B800AA4416 /* chakra.png in Resources */,
 				632074031A7095B800AA4416 /* hand_of_protection.png in Resources */,
+				637E8B6E1A92A4E50002C9DC /* templars_verdict_hit.wav in Resources */,
 				63A37F0F1A75C6930036C9D0 /* spell_fizzle_holy.wav in Resources */,
 				632073F11A7095B800AA4416 /* chakra_neutral.png in Resources */,
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
@@ -1705,6 +1747,7 @@
 				63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
 				637E8B461A89A2390002C9DC /* hand_spell_hit.wav in Resources */,
+				637E8B6C1A92A3080002C9DC /* templars_verdict.jpg in Resources */,
 				63027B311A79F4ED0068E68A /* kargath_hit.wav in Resources */,
 				63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */,
 				632073F41A7095B800AA4416 /* cleanse.png in Resources */,
@@ -1712,6 +1755,7 @@
 				637E8B471A89A2390002C9DC /* lay_on_hands_hit.wav in Resources */,
 				6320747F1A70E93A00AA4416 /* marksmanship.png in Resources */,
 				632073EB1A7095B800AA4416 /* binding_heal.png in Resources */,
+				637E8B751A9530150002C9DC /* icebound_fortitude_cast.wav in Resources */,
 				632073ED1A7095B800AA4416 /* cascade.png in Resources */,
 				63027B071A79AE640068E68A /* emancipate.png in Resources */,
 				6320747A1A70E93A00AA4416 /* lavalash.png in Resources */,
@@ -1776,6 +1820,7 @@
 				637E8B601A8AE8BF0002C9DC /* GrowlSpell.m in Sources */,
 				63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */,
 				6328FB521A72F98900DF6B50 /* SoundManager.m in Sources */,
+				637E8B6A1A92A2C00002C9DC /* TemplarsVerdictSpell.m in Sources */,
 				632074B01A71960400AA4416 /* Impale.m in Sources */,
 				634F49041A7489E9008761C6 /* PowerWordShieldEffect.m in Sources */,
 				63C5F4031A5243E900B9AE46 /* main.m in Sources */,
@@ -1823,6 +1868,8 @@
 				636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */,
 				632074A11A718E0700AA4416 /* PowerWordShieldSpell.m in Sources */,
 				63027AD51A798C0F0068E68A /* SacredShieldSpell.m in Sources */,
+				637E8B7B1A9544170002C9DC /* GenericFastHealSpell.m in Sources */,
+				637E8B711A952F610002C9DC /* IceboundFortitudeSpell.m in Sources */,
 				6328FB551A73156E00DF6B50 /* UIColor+Extensions.m in Sources */,
 				63027AB01A7614890068E68A /* PowerWordBarrierSpell.m in Sources */,
 				63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */,
@@ -1848,6 +1895,7 @@
 				632073A21A70912400AA4416 /* BaseViewController.m in Sources */,
 				6328FB681A732C1800DF6B50 /* DivineStarSpell.m in Sources */,
 				630B99801A86C51C00B186CA /* NSDate+Pause.m in Sources */,
+				637E8B781A95302A0002C9DC /* IceboundFortitudeEffect.m in Sources */,
 				63027ADF1A798DCF0068E68A /* SacredShieldAbsorbEffect.m in Sources */,
 				63C5F42B1A5247C400B9AE46 /* Healer.m in Sources */,
 				631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */,

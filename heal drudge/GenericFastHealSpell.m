@@ -1,26 +1,22 @@
 //
-//  GenericHealingSpell.m
+//  GenericFastHealSpell.m
 //  heal drudge
 //
-//  Created by david on 1/27/15.
+//  Created by david on 2/18/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "PocketHealer.h"
+#import "GenericFastHealSpell.h"
 
-#import "GenericHealingSpell.h"
-
-#import "Entity.h"
-
-@implementation GenericHealingSpell
+@implementation GenericFastHealSpell
 
 - (id)initWithCaster:(Entity *)caster
 {
     if ( self = [super initWithCaster:caster] )
     {
-        self.name = @"Heal";
+        self.name = @"Flash Heal";
         //self.image = [ImageFactory imageNamed:@"heal"];
-        self.tooltip = @"Generic healing.";
+        self.tooltip = @"Generic fast & inefficient healing.";
         self.triggersGCD = YES;
         self.targeted = YES;
         self.cooldown = @0;
@@ -28,8 +24,8 @@
         self.castableRange = @40;
         self.hitRange = @0;
         
-        self.castTime = @2.5;
-        self.manaCost = @( 0.02 * caster.baseMana.floatValue );
+        self.castTime = @1.5;
+        self.manaCost = @( 0.04 * caster.baseMana.floatValue );
         self.damage = @0;
         self.healing = @( [caster.spellPower floatValue] * 3.3264 );
         self.absorb = @0;
@@ -46,7 +42,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriority | CastWhenAnyoneNeedsHealing;
+    return CastWhenAnyoneNeedsUrgentHealing;
 }
 
 @end

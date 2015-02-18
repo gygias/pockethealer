@@ -31,17 +31,25 @@
 
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
-    if ( ! asEffectOfSource )
+    if ( [spell isKindOfClass:[LayOnHandsSpell class]] )
+        NSLog(@"??");
+    
+    if ( self.owner == spell.target &&  ( [spell isKindOfClass:[LayOnHandsSpell class]]
+        // || [spell isKindOfClass:[DivineShieldEffect class]]
+        // || [spell isKindOfClass:[BlessingOfProtectionEffect class]]
+        ) )
     {
-        if ( [spell isKindOfClass:[LayOnHandsSpell class]]
-            // || [spell isKindOfClass:[DivineShieldEffect class]]
-            // || [spell isKindOfClass:[BlessingOfProtectionEffect class]]
-            )
-        {
-            if ( message )
-                *message = [NSString stringWithFormat:@"Cannot cast that on target with %@",self.name];
-            return NO;
-        }
+        if ( message )
+            *message = [NSString stringWithFormat:@"Cannot cast that on target with %@",self.name];
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
+        return NO;
     }
     
     return YES;

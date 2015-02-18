@@ -56,7 +56,7 @@
 {
     AISpellPriority defaultPriority = CastBeforeLargeHitPriority | CastWhenInFearOfSelfDyingPriority;
     if ( self.caster.hdClass.specID == HDPROTPALADIN )
-        return defaultPriority | FillerPriotity;
+        return defaultPriority | FillerPriority;
     return defaultPriority;
 }
 

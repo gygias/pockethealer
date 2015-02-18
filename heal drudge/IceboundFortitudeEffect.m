@@ -1,26 +1,22 @@
 //
-//  GuardianOfAncientKingsEffect.m
+//  IceboundFortitudeEffect.m
 //  heal drudge
 //
-//  Created by david on 1/28/15.
+//  Created by david on 2/18/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
 //
 
-#import "PocketHealer.h"
+#import "IceboundFortitudeEffect.h"
 
-#import "GuardianOfAncientKingsEffect.h"
-
-#import "ImageFactory.h"
-
-@implementation GuardianOfAncientKingsEffect
+@implementation IceboundFortitudeEffect
 
 - (id)init
 {
     if ( self = [super init] )
     {
-        self.name = @"Guardian of Ancient Kings";
-        self.duration = 12;
-        self.image = [ImageFactory imageNamed:@"guardian_of_ancient_kings"];
+        self.name = @"Icebound Fortitude";
+        self.duration = 8;
+        self.image = [ImageFactory imageNamed:@"icebound_fortitude"];
         self.effectType = BeneficialEffect;
         self.drawsInFrame = YES;
     }
@@ -34,7 +30,7 @@
     if ( spell.caster.isEnemy && spell.target == self.owner )
     {
         EventModifier *mod = [EventModifier new];
-        mod.damageTakenDecreasePercentage = @0.5;
+        mod.damageTakenDecreasePercentage = @0.2;
         [modifiers addObject:mod];
         modded = YES;
     }

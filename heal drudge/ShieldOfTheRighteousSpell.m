@@ -47,9 +47,9 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    if ( self.caster.currentAuxiliaryResources.doubleValue < 1 )
+    if ( self.caster.currentAuxiliaryResources.doubleValue < 3 )
 #warning ss
-        [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
+        [NSException raise:@"SOTRHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
     NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
         resourcesToConsume = @3;
@@ -77,7 +77,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = FillerPriotity | CastBeforeLargeHitPriority;
+    AISpellPriority defaultPriority = FillerPriority | CastBeforeLargeHitPriority;
     return defaultPriority;
 }
 

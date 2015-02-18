@@ -53,7 +53,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = FillerPriotity;
+    AISpellPriority defaultPriority = FillerPriority;
     return defaultPriority;
 }
 

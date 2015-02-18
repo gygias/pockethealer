@@ -564,11 +564,11 @@
     
     self.lastHealth = self.currentHealth;
     
-    NSNumber *nextFireDate = gcdTriggered ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil] : @0;
-    //PHLog(self,@"%@ will act again in %@ seconds",self,nextFireDate);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(nextFireDate.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-        [self _doAutomaticStuff];
-    });
+//    NSNumber *nextFireDate = gcdTriggered ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:nil] : @0;
+//    //PHLog(self,@"%@ will act again in %@ seconds",self,nextFireDate);
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(nextFireDate.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+//        [self _doAutomaticStuff];
+//    });
 }
 
 - (BOOL)_doAutomaticTanking
@@ -807,9 +807,9 @@
     
     PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
+    NSTimeInterval effectiveGCD = spell.triggersGCD ? 0 : [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
     if ( spell.triggersGCD )
     {
-        NSTimeInterval effectiveGCD = [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
         self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
         self.currentGlobalCooldownDuration = effectiveGCD;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
@@ -850,6 +850,9 @@
                     PHLog(self,@"%@ has finished channeling",spell);
                     dispatch_source_cancel(timer);
                     self.castingSpell = nil;
+                    
+                    if ( ! self.isPlayingPlayer )
+                        [self _doAutomaticStuff];
                 }
             });
             dispatch_resume(timer);
@@ -873,6 +876,11 @@
                     self.enqueuedSpell = nil;
                     [self castSpell:dequeuedSpell withTarget:dequeuedSpell.target];
                 }
+                
+                if ( ! self.isPlayingPlayer )
+                {
+                    [self _doAutomaticStuff];
+                }
             });
         }
     }
@@ -881,6 +889,18 @@
         PHLog(self,@"%@ cast %@ (instant)",self,spell);
         [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO dyingEntitiesHandler:NULL];
         self.castingSpell = nil;
+        
+        if ( ! self.isPlayingPlayer )
+        {
+            if ( ! spell.triggersGCD )
+                [self _doAutomaticStuff];
+            else
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+                    [self _doAutomaticStuff];
+                });
+            }
+        }
     }
     
     return effectiveCastTime;

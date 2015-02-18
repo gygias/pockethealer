@@ -45,7 +45,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriotity;
+    return FillerPriority;
 }
 
 @end

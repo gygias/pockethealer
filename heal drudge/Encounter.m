@@ -139,7 +139,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     {
         NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
         spell.nextCooldownDate = thisNextCooldownDate;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), self.encounterQueue, ^{
             if ( spell.nextCooldownDate == thisNextCooldownDate )
             {
                 PHLog(spell,@"%@'s %@ has cooled down",spell.caster,spell);

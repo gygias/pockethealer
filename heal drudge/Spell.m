@@ -113,6 +113,8 @@ const NSString *SpellLevelHigh = @"high";
              @"AvengingWrathSpell",
              @"HandOfSacrificeSpell",
              
+             @"TemplarsVerdictSpell",
+             
              @"TauntSpell",
              
              @"GrowlSpell",
@@ -120,10 +122,12 @@ const NSString *SpellLevelHigh = @"high";
              @"ProvokeSpell",
              
              @"DarkCommandSpell",
+             @"IceboundFortitudeSpell",
              
              @"HealingTideTotemSpell",
              
              @"GenericHealingSpell",
+             @"GenericFastHealSpell",
              @"GenericDamageSpell",
              @"GenericPhysicalAttackSpell"
              ];

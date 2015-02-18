@@ -55,7 +55,7 @@
 {
     AISpellPriority defaultPriority = CastWhenDamageDoneIncreasedPriority;
     if ( [self.caster.hdClass isEqual:[HDClass retPaladin]] )
-        defaultPriority |= FillerPriotity;
+        defaultPriority |= FillerPriority;
     return defaultPriority;
 }
 

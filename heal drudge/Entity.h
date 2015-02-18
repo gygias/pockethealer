@@ -159,5 +159,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property (copy) ScheduledSpellBlock scheduledSpellHandler;
 @property (readonly) BOOL isOnGlobalCooldown;
 
+- (void)_doAutomaticStuff;
+
 @end
 

@@ -177,7 +177,7 @@
     }
     else if ( ability.castTime.doubleValue > 0 )
     {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.castTime.doubleValue * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.castTime.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
             [encounter handleSpell:ability periodicTick:NO isFirstTick:NO dyingEntitiesHandler:NULL];
         });
     }

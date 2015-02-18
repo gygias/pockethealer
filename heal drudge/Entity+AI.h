@@ -14,7 +14,7 @@
 
 @interface Entity (AI)
 
-- (AISpellPriority)currentSpellPriorities;
+- (AISpellPriority)currentSpellPriorities:(NSDictionary **)outTargetMap;
 - (BOOL)castHighestPrioritySpell;
 
 @end

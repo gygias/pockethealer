@@ -46,7 +46,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriotity
+    return FillerPriority
             | CastWhenSomeoneNeedsHealingPriority
             | CastWhenTankNeedsHealingPriority;
             // these situations are for flash heal

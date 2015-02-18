@@ -599,7 +599,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="0.0" width="568" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES">
@@ -609,7 +609,7 @@
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VEx-iR-Bfo" customClass="EventTimerView">
                                         <rect key="frame" x="0.0" y="0.0" width="568" height="578.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="568" y="0.0" width="0.0" height="380"/>
                                         </variation>
                                         <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
