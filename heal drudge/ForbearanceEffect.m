@@ -41,6 +41,7 @@
     {
         if ( message )
             *message = [NSString stringWithFormat:@"Cannot cast that on target with %@",self.name];
+        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
         return NO;
     }
     

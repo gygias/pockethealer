@@ -168,12 +168,12 @@
     }
 }
 
-- (void)handleIncomingDamageEvent:(Event *)damageEvent
+- (void)handleIncomingDamageEvent:(Event *)damageEvent modifier:(EventModifier *)modifier
 {
-    [self handleIncomingDamageEvent:damageEvent avoidable:YES];
+    [self handleIncomingDamageEvent:damageEvent modifier:modifier avoidable:YES];
 }
 
-- (void)handleIncomingDamageEvent:(Event *)damageEvent avoidable:(BOOL)avoidable
+- (void)handleIncomingDamageEvent:(Event *)damageEvent modifier:(EventModifier *)modifier avoidable:(BOOL)avoidable
 {
     if ( self.hitSoundName )
         [SoundManager playHitSound:self];
@@ -199,8 +199,9 @@
                 // sly      20.64% (634 adds 3.91%)
                 // analog   20.35% (986 adds 6.09%)
                 NSUInteger parryRoll = arc4random() % 100;
-                double parryChance = .2; // TODO armory numbers inconsistent
-                if ( parryRoll <= parryChance * 100 )
+                double defaultParryChance = .2; // TODO armory numbers inconsistent
+                double thisParryChance = defaultParryChance + modifier.parryIncreasePercentage.doubleValue;
+                if ( parryRoll <= thisParryChance * 100 )
                     parried = YES;
             }
         }

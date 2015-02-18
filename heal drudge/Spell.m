@@ -123,6 +123,9 @@ const NSString *SpellLevelHigh = @"high";
              
              @"DarkCommandSpell",
              @"IceboundFortitudeSpell",
+             @"BoneShieldSpell",
+             @"AntiMagicShellSpell",
+             @"DancingRuneWeaponSpell",
              
              @"HealingTideTotemSpell",
              

@@ -30,6 +30,7 @@ typedef void (^EventModifierBlock)(Spell * spell,BOOL cheatedDeath);
 @property BOOL      instantCast;
 @property NSNumber *cheatDeathAndApplyHealing;
 @property NSNumber *powerCostDecreasePercentage;
+@property NSNumber *parryIncreasePercentage;
 @property BOOL      crit;
 @property NSObject *source; // this isn't really necessary but helpful for debugging
 

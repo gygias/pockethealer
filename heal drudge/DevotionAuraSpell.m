@@ -57,7 +57,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return CastBeforeLargeMagicDamagePriority;
+    return CastBeforeLargeMagicAOEPriority;
 }
 
 @end

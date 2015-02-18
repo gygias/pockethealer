@@ -36,11 +36,13 @@
     if ( self.hasteIncreasePercentage )
         descriptionString = [NSString stringWithFormat:@"%@(increase haste by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.hasteIncreasePercentage.doubleValue];
     if ( self.damageTakenDecreasePercentage )
-        descriptionString = [NSString stringWithFormat:@"%@(decrease damage taken by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.damageTakenDecreasePercentage.doubleValue];
+        descriptionString = [NSString stringWithFormat:@"%@(decrease damage taken by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.damageTakenDecreasePercentage.doubleValue * 100];
     if ( self.cheatDeathAndApplyHealing )
         descriptionString = [NSString stringWithFormat:@"%@(cheat death and heal for %@)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.cheatDeathAndApplyHealing];
     if ( self.powerCostDecreasePercentage )
-        descriptionString = [NSString stringWithFormat:@"%@(reduce power cost by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.powerCostDecreasePercentage.doubleValue];
+        descriptionString = [NSString stringWithFormat:@"%@(reduce power cost by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.powerCostDecreasePercentage.doubleValue * 100];
+    if ( self.parryIncreasePercentage )
+        descriptionString = [NSString stringWithFormat:@"%@(increase parry by %0.2f%%)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@"",self.parryIncreasePercentage.doubleValue * 100];
     if ( self.crit )
         descriptionString = [NSString stringWithFormat:@"%@(crit)",descriptionString?[NSString stringWithFormat:@"%@ & ",descriptionString]:@""];
     if ( self.crit )
@@ -113,6 +115,8 @@
             netMod.cheatDeathAndApplyHealing = @( netMod.cheatDeathAndApplyHealing.doubleValue + mod.cheatDeathAndApplyHealing.doubleValue );
         if ( mod.powerCostDecreasePercentage )
             netMod.powerCostDecreasePercentage = @( netMod.powerCostDecreasePercentage.doubleValue + mod.powerCostDecreasePercentage.doubleValue );
+        if ( mod.parryIncreasePercentage )
+            netMod.parryIncreasePercentage = @( netMod.parryIncreasePercentage.doubleValue + mod.parryIncreasePercentage.doubleValue );
         if ( mod.crit )
             netMod.crit = YES;
         if ( mod.absorbedDamage )

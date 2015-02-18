@@ -73,8 +73,8 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 // called when a spell begins casting, to accumulate modifiers from effects, etc.
 - (BOOL)handleSpellStart:(Spell *)spell modifiers:(NSMutableArray *)modifiers;
 - (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier;
-- (void)handleIncomingDamageEvent:(Event *)damageEvent avoidable:(BOOL)avoidable;
-- (void)handleIncomingDamageEvent:(Event *)damageEvent;
+- (void)handleIncomingDamageEvent:(Event *)damageEvent modifier:(EventModifier *)modifier;
+- (void)handleIncomingDamageEvent:(Event *)damageEvent modifier:(EventModifier *)modifier avoidable:(BOOL)avoidable;
 - (void)handleSpellEnd:(Spell *)spell modifier:(EventModifier *)modifier;
 
 //- (NSNumber *)handleIncomingDamage:(NSNumber *)damage;

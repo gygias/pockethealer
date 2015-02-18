@@ -362,7 +362,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         }
     }
     
-    [target handleIncomingDamageEvent:damageEvent];
+    [target handleIncomingDamageEvent:damageEvent modifier:modifier];
     
     __block BOOL didCheatDeath = NO;
     if ( target.currentHealth.integerValue <= 0 )

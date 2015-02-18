@@ -77,7 +77,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = FillerPriority | CastBeforeLargeHitPriority;
+    AISpellPriority defaultPriority = FillerPriority | CastBeforeLargePhysicalHitPriority;
     return defaultPriority;
 }
 

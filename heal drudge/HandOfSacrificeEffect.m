@@ -60,7 +60,7 @@
     Event *transferredDamageEvent = [Event new];
     transferredDamageEvent.netDamage = thirtyPercentOfDamage;
     transferredDamageEvent.spell = spell;
-    [self.source handleIncomingDamageEvent:transferredDamageEvent avoidable:NO];
+    [self.source handleIncomingDamageEvent:transferredDamageEvent modifier:nil avoidable:NO];
     
     PHLog(spell,@"%@'s %@ transferred %@ of %@'s %@ to %@%@",self.owner,self,thirtyPercentOfDamage,spell.caster,spell,self.source,consumed?@" and will be consumed":@"");
     
