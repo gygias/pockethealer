@@ -105,7 +105,7 @@
         slyeri = [Entity new];
         slyeri.isPlayer = YES;
         slyeri.name = @"Slyeri";
-        slyeri.hdClass = [HDClass bloodDK];//[HDClass protPaladin];
+        slyeri.hdClass = [HDClass protPaladin];//[HDClass bloodDK];
         NSNumber *slyIlvl = @670;
         [ItemLevelAndStatsConverter assignStatsToEntity:slyeri
                         basedOnAverageEquippedItemLevel:slyIlvl];

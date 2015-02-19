@@ -757,7 +757,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ [%@,%@] (%@)",self.name,self.currentHealth,self.currentResources,self.hdClass];
+    return [NSString stringWithFormat:@"[%@,%@] (%@) %@",self.currentHealth,self.currentResources,self.hdClass,self.name];
 }
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target
@@ -819,7 +819,7 @@
     
     PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
-    NSTimeInterval effectiveGCD = spell.triggersGCD ? 0 : [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
+    NSTimeInterval effectiveGCD = spell.triggersGCD ? [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue : 0;
     if ( effectiveGCD )
     {
         self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
@@ -903,7 +903,7 @@
     }
     else
     {
-        PHLog(self,@"%@ cast %@ (instant)",self,spell);
+        PHLog(self,@"%@ cast %@ (instant, egcd %0.2f)",self,spell,effectiveCastTime.doubleValue);
         [self.encounter handleSpell:spell periodicTick:NO isFirstTick:NO dyingEntitiesHandler:NULL];
         self.castingSpell = nil;
         
