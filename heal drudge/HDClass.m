@@ -68,6 +68,7 @@ const NSString *TankRole = @"TANK";
 
 + (HDClass *)randomHealerClass
 {
+    return [HDClass discPriest];
     HDClass *randomClass = nil;
     do
     {
@@ -852,7 +853,7 @@ const NSString *WoWAPIClassKey = @"class";
               ];
 }
 
-+ (NSArray *)_allHealingClasSpecsExcluding:(BOOL)excluding
++ (NSArray *)_allHealingClassSpecsExcluding:(BOOL)excluding
 {
     NSMutableArray *allHealingClassSpecs = [NSMutableArray new];
     [[self allClasses] enumerateObjectsUsingBlock:^(HDClass *aClass, NSUInteger idx, BOOL *stop) {
@@ -863,7 +864,7 @@ const NSString *WoWAPIClassKey = @"class";
                                 [aClass isEqual:[HDClass holyPaladin]]
                                )
                 )
-                continue;
+                return;
             
             [allHealingClassSpecs addObject:aClass];
         }

@@ -46,7 +46,7 @@
 {
     if ( self.target.isEnemy )
     {
-        EvangelismEffect *currentEvangelism = [self _evangelismForEntity:self.caster];
+        EvangelismEffect *currentEvangelism = [PriestSpell _evangelismForEntity:self.caster];
         if ( ! currentEvangelism )
         {
             currentEvangelism = [EvangelismEffect new];
@@ -59,21 +59,14 @@
     return YES;
 }
 
-- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
-{
-    for ( Effect *effect in entity.statusEffects )
-    {
-        if ( [effect isKindOfClass:[EvangelismEffect class]] )
-        {
-            return (EvangelismEffect *)effect;
-        }
-    }
-    return nil;
-}
-
 - (NSArray *)hdClasses
 {
     return @[ [HDClass discPriest] ];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenAnyoneNeedsHealing | CastWhenAnyoneNeedsUrgentHealing;
 }
 
 @end

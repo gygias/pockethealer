@@ -425,4 +425,22 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 //    }
 }
 
+- (Entity *)currentMainTank
+{
+    // TODO
+    __block Entity *targetedEntity = nil;
+    [self.enemies enumerateObjectsUsingBlock:^(Enemy *enemy, NSUInteger idx, BOOL *stop) {
+        if ( enemy.target.hdClass.isTank )
+        {
+            targetedEntity = enemy.target;
+            *stop = YES;
+        }
+    }];
+    
+    if ( ! targetedEntity )
+        targetedEntity = [self.raid.tankPlayers randomObject];
+    
+    return targetedEntity;
+}
+
 @end

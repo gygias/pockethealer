@@ -13,6 +13,8 @@
 #import "PriestSpell.h"
 
 #import "DivineAegisEffect.h"
+#import "ArchangelEffect.h"
+#import "EvangelismEffect.h"
 
 @implementation PriestSpell
 
@@ -31,7 +33,7 @@
         NSNumber *effectiveHealing = ( self.isChanneled || self.isPeriodic ) ? self.periodicHeal : self.healing;
         if ( effectiveHealing )
         {
-            DivineAegisEffect *da = [PriestSpell _divineAegisEffectForEntity:self.target];
+            DivineAegisEffect *da = [PriestSpell _divineAegisForEntity:self.target];
             NSNumber *effectiveAbsorb = [DivineAegisEffect absorbWithExistingAbsorb:da.absorb healing:effectiveHealing masteryRating:self.caster.masteryRating sourceMaxHealth:self.caster.health];
             if ( ! da )
             {
@@ -44,7 +46,7 @@
     }
 }
 
-+ (DivineAegisEffect *)_divineAegisEffectForEntity:(Entity *)entity
++ (DivineAegisEffect *)_divineAegisForEntity:(Entity *)entity
 {
     __block DivineAegisEffect *theEffect = nil;
     [entity.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
@@ -57,5 +59,30 @@
     
     return theEffect;
 }
+
++ (ArchangelEffect *)_archangelForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[ArchangelEffect class]] )
+        {
+            return (ArchangelEffect *)effect;
+        }
+    }
+    return nil;
+}
+
++ (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
+{
+    for ( Effect *effect in entity.statusEffects )
+    {
+        if ( [effect isKindOfClass:[EvangelismEffect class]] )
+        {
+            return (EvangelismEffect *)effect;
+        }
+    }
+    return nil;
+}
+
 
 @end

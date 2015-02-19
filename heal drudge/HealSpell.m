@@ -42,4 +42,9 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenAnyoneNeedsHealing;
+}
+
 @end

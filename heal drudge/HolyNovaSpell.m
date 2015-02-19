@@ -42,4 +42,9 @@
     return @[ [HDClass discPriest] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenRaidNeedsHealing;
+}
+
 @end

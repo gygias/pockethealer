@@ -53,4 +53,9 @@
     return @[ [HDClass discPriest] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastBeforeLargeAOEPriority;
+}
+
 @end

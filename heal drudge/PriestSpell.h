@@ -10,6 +10,12 @@
 
 #import "Spell.h"
 
+@class DivineAegisEffect, EvangelismEffect, ArchangelEffect;
+
 @interface PriestSpell : Spell
+
++ (DivineAegisEffect *)_divineAegisForEntity:(Entity *)entity;
++ (EvangelismEffect *)_evangelismForEntity:(Entity *)entity;
++ (ArchangelEffect *)_archangelForEntity:(Entity *)entity;
 
 @end

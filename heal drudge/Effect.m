@@ -78,7 +78,7 @@
 
 - (void)addStacks:(NSUInteger)nStacks
 {
-    while ( nStacks-- > 0 )
+    while( nStacks-- > 0 )
         [self addStack];
 }
 

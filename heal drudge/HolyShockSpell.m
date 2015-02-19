@@ -48,7 +48,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriority |
+    return ChargePriority |
             CastWhenSomeoneNeedsHealingPriority |
             CastWhenTankNeedsHealingPriority;
 }

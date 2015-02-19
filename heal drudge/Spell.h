@@ -40,29 +40,55 @@ typedef NS_ENUM(NSInteger, SpellType) {
 typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     NoPriority = 0,
     FillerPriority                                          = 1 << 0,
-    CastWhenSomeoneNeedsHealingPriority                     = 1 << 1,
-    CastWhenINeedHealingPriority                            = 1 << 2,
-    CastWhenTankNeedsHealingPriority                        = 1 << 3,
+    
+    CastWhenSomeoneNotToppedOffPriority                     = 1 << 1,
+    CastWhenNotToppedOffPriority                            = 1 << 2,
+    CastWhenTankNotToppedOffPriority                        = 1 << 3,
+    CastWhenAnyoneNotToppedOff                              = CastWhenSomeoneNotToppedOffPriority | CastWhenNotToppedOffPriority | CastWhenTankNotToppedOffPriority,
+    
+    ChargePriority                                          = 1 << 4, // e.g. smite, crusader strike
+    ConsumeChargePriority                                   = 1 << 5, // e.g. evangelism
+    PrecastOnMainTankPriority                               = 1 << 6,
+    
+    CastWhenSomeoneNeedsHealingPriority                     = 1 << 7,
+    CastWhenINeedHealingPriority                            = 1 << 8,
+    CastWhenTankNeedsHealingPriority                        = 1 << 9,
     CastWhenAnyoneNeedsHealing                              = CastWhenSomeoneNeedsHealingPriority | CastWhenINeedHealingPriority | CastWhenTankNeedsHealingPriority,
-    CastWhenSomeoneNeedsUrgentHealingPriority               = 1 << 4,
-    CastWhenINeedUrgentHealingPriority                      = 1 << 5,
-    CastWhenTankNeedsUrgentHealingPriority                  = 1 << 6,
+    
+    CastWhenPartyNeedsHealing                               = 1 << 10,
+    CastOnIdealAuxResourceAvailablePriority                 = 1 << 11,
+    CastWhenDamageDoneIncreasedPriority                     = 1 << 12, // during hero
+    CastWhenRaidNeedsHealing                                = 1 << 13,
+    
+    CastWhenSomeoneNeedsUrgentHealingPriority               = 1 << 14,
+    CastWhenINeedUrgentHealingPriority                      = 1 << 15,
+    CastWhenTankNeedsUrgentHealingPriority                  = 1 << 16,
     CastWhenAnyoneNeedsUrgentHealing                        = CastWhenSomeoneNeedsUrgentHealingPriority | CastWhenINeedUrgentHealingPriority | CastWhenTankNeedsUrgentHealingPriority,
-    CastOnIdealAuxResourceAvailablePriority                 = 1 << 7,
-    CastWhenPartyNeedsHealing                               = 1 << 8,
-    CastWhenRaidNeedsHealing                                = 1 << 9,
-    CastWhenDamageDoneIncreasedPriority                     = 1 << 10, // during hero
-    CastBeforeLargePhysicalHitPriority                      = 1 << 11,
+    
+    CastWhenRaidUrgentlyNeedsHealing                        = 1 << 17,
+    
+    CastBeforeSomeoneTakesLargePhysicalHit                  = 1 << 18,
+    CastBeforeSomeoneTakesLargeMagicHit                     = 1 << CastBeforeSomeoneTakesLargePhysicalHit,
+    CastBeforeSomeoneTakesLargeHit                          = CastBeforeSomeoneTakesLargePhysicalHit | CastBeforeSomeoneTakesLargeMagicHit,
+    CastBeforeLargePhysicalHitPriority                      = 1 << 19,
     CastBeforeLargeMagicHitPriority                         = CastBeforeLargePhysicalHitPriority,
     CastBeforeLargeHitPriority                              = CastBeforeLargePhysicalHitPriority | CastBeforeLargeMagicHitPriority,
-    CastBeforeLargePhysicalAOEPriority                      = 1 << 11,
+    CastBeforeTankTakesLargePhysicalHit                     = 1 << 20,
+    CastBeforeTankTakesLargeMagicHit                        = CastBeforeTankTakesLargePhysicalHit,
+    CastBeforeTankTakesLargeHit                             = CastBeforeTankTakesLargePhysicalHit | CastBeforeTankTakesLargeMagicHit,
+    CastBeforeAnyoneTakesLargePhysicalHit                   = CastBeforeTankTakesLargePhysicalHit | CastBeforeLargePhysicalHitPriority | CastBeforeSomeoneTakesLargePhysicalHit,
+    CastBeforeAnyoneTakesLargeMagicHit                      = CastBeforeTankTakesLargeMagicHit | CastBeforeLargeMagicHitPriority | CastBeforeSomeoneTakesLargeMagicHit,
+    CastBeforeAnyoneTakesLargeHit                           = CastBeforeTankTakesLargeHit | CastBeforeLargeHitPriority | CastBeforeSomeoneTakesLargeHit,
+    CastBeforeLargePhysicalAOEPriority                      = 1 << 21,
     CastBeforeLargeMagicAOEPriority                         = CastBeforeLargePhysicalAOEPriority,
     CastBeforeLargeAOEPriority                              = CastBeforeLargePhysicalAOEPriority | CastBeforeLargeMagicAOEPriority,
-    CastWhenOtherTankNeedsTauntOff                          = 1 << 12,
-    CastWhenInFearOfDPSDyingPriority                        = 1 << 13,
-    CastWhenInFearOfHealerDyingPriority                     = 1 << 14,
-    CastWhenInFearOfTankDyingPriority                       = 1 << 15,
-    CastWhenInFearOfSelfDyingPriority                       = 1 << 16,
+    
+    CastWhenOtherTankNeedsTauntOff                          = 1 << 22,
+    
+    CastWhenInFearOfDPSDyingPriority                        = 1 << 23,
+    CastWhenInFearOfHealerDyingPriority                     = 1 << 24,
+    CastWhenInFearOfTankDyingPriority                       = 1 << 25,
+    CastWhenInFearOfSelfDyingPriority                       = 1 << 26,
     CastWhenInFearOfAnyoneDyingPriority                     = CastWhenInFearOfDPSDyingPriority | CastWhenInFearOfHealerDyingPriority | CastWhenInFearOfTankDyingPriority | CastWhenInFearOfSelfDyingPriority
 };
 

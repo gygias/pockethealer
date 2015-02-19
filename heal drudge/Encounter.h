@@ -49,6 +49,7 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
 - (void)doHealing:(Spell *)spell source:(Entity *)source target:(Entity *)target modifier:(EventModifier *)modifier periodic:(BOOL)periodic;
 
 - (BOOL)entityIsTargetedByEntity:(Entity *)entity;
+- (Entity *)currentMainTank;
 
 @end
 

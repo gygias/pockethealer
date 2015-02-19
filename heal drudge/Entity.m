@@ -111,13 +111,16 @@
         }
     }];
     
-    [target.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
-        if ( ! [obj validateSpell:spell asEffectOfSource:!asSource source:source target:target message:messagePtr] )
-        {
-            okay = NO;
-            *stop = YES;
-        }
-    }];
+    if ( source != target )
+    {
+        [target.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {
+            if ( ! [obj validateSpell:spell asEffectOfSource:!asSource source:source target:target message:messagePtr] )
+            {
+                okay = NO;
+                *stop = YES;
+            }
+        }];
+    }
     
     if ( okay )
     {
@@ -484,6 +487,14 @@
             
             [SoundManager playSpellFizzle:dyingEntity.castingSpell];
             self.castingSpell = nil;
+            
+            if ( ! self.isPlayingPlayer )
+            {
+                if ( ! self.isPlayingPlayer )
+                {
+                    dispatch_async(self.encounter.encounterQueue, ^{ [self _doAutomaticStuff]; });
+                }
+            }
         }
     }
 }
@@ -809,7 +820,7 @@
     PHLog(self,@"%@ started %@ %@ at %@",self,spell.isChanneled?@"channeling":@"casting",spell,target);
     
     NSTimeInterval effectiveGCD = spell.triggersGCD ? 0 : [ItemLevelAndStatsConverter globalCooldownWithEntity:self hasteBuffPercentage:hasteBuff].doubleValue;
-    if ( spell.triggersGCD )
+    if ( effectiveGCD )
     {
         self.nextGlobalCooldownDate = [NSDate dateWithTimeIntervalSinceNow:effectiveGCD];
         self.currentGlobalCooldownDuration = effectiveGCD;
@@ -853,7 +864,12 @@
                     self.castingSpell = nil;
                     
                     if ( ! self.isPlayingPlayer )
-                        [self _doAutomaticStuff];
+                    {
+                        if ( ! self.isPlayingPlayer )
+                        {
+                            dispatch_async(self.encounter.encounterQueue, ^{ [self _doAutomaticStuff]; });
+                        }
+                    }
                 }
             });
             dispatch_resume(timer);
@@ -880,7 +896,7 @@
                 
                 if ( ! self.isPlayingPlayer )
                 {
-                    [self _doAutomaticStuff];
+                    dispatch_async(self.encounter.encounterQueue, ^{ [self _doAutomaticStuff]; });
                 }
             });
         }
@@ -893,14 +909,10 @@
         
         if ( ! self.isPlayingPlayer )
         {
-            if ( ! spell.triggersGCD )
+            // GCD may be 0
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
                 [self _doAutomaticStuff];
-            else
-            {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-                    [self _doAutomaticStuff];
-                });
-            }
+            });
         }
     }
     

@@ -44,7 +44,7 @@
 }
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
-{    
+{
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
     [self.caster addStatusEffect:bt source:self.caster];
@@ -62,6 +62,11 @@
 - (NSArray *)hdClasses
 {
     return @[ [HDClass discPriest], [HDClass holyPriest], [HDClass shadowPriest] ];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenAnyoneNeedsHealing | CastWhenAnyoneNeedsUrgentHealing | PrecastOnMainTankPriority;
 }
 
 @end

@@ -54,7 +54,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = CastBeforeLargeHitPriority | CastWhenInFearOfAnyoneDyingPriority;
+    AISpellPriority defaultPriority = CastBeforeAnyoneTakesLargeHit | CastWhenInFearOfAnyoneDyingPriority;
     if ( self.caster.hdClass.specID == HDPROTPALADIN )
         return defaultPriority | FillerPriority;
     return defaultPriority;

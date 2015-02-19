@@ -53,4 +53,9 @@
     [self.target addStatusEffect:pom source:self.caster];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return FillerPriority | CastWhenAnyoneNeedsHealing;
+}
+
 @end

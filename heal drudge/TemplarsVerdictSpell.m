@@ -56,7 +56,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    return FillerPriority;
+    return ConsumeChargePriority;
 }
 
 @end

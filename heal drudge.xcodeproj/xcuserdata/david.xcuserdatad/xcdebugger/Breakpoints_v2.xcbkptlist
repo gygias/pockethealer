@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "heal drudge/Entity.m"
-            timestampString = "445992969.607576"
+            timestampString = "446003889.343024"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "-_doAutomaticHealing"
             landmarkType = "5">
          </BreakpointContent>
@@ -56,12 +56,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "heal drudge/Entity.m"
-            timestampString = "445992969.607576"
+            timestampString = "446003889.343024"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
+            startingLineNumber = "693"
+            endingLineNumber = "693"
             landmarkName = "-_doAutomaticHealing"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "heal drudge/Encounter.m"
+            timestampString = "445999485.611548"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-endEncounter"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

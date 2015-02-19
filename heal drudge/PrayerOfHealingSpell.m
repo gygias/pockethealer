@@ -44,4 +44,9 @@
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastWhenPartyNeedsHealing | CastWhenRaidNeedsHealing;
+}
+
 @end

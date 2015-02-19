@@ -46,6 +46,8 @@
 - (AISpellPriority)aiSpellPriority
 {
     AISpellPriority defaultPriority = FillerPriority;
+    if ( ! [self.caster.hdClass isEqual:[HDClass holyPaladin]] )
+        defaultPriority |= ChargePriority;
     return defaultPriority;
 }
 

@@ -40,21 +40,9 @@
     return self;
 }
 
-- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
-{
-    for ( Effect *effect in entity.statusEffects )
-    {
-        if ( [effect isKindOfClass:[EvangelismEffect class]] )
-        {
-            return (EvangelismEffect *)effect;
-        }
-    }
-    return nil;
-}
-
 - (BOOL)validateWithSource:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
-    EvangelismEffect *evangelism = [self _evangelismForEntity:source];
+    EvangelismEffect *evangelism = [PriestSpell _evangelismForEntity:source];
     
     if ( ! evangelism )
     {
@@ -66,8 +54,11 @@
 }
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
-{    
-    EvangelismEffect *evangelism = [self _evangelismForEntity:self.caster];
+{
+    EvangelismEffect *evangelism = [PriestSpell _evangelismForEntity:self.caster];
+    
+    if ( evangelism.currentStacks.integerValue <= 0 )
+        [NSException raise:@"ArchangelWithoutEvangelism" format:@"%@ only has %@!",self.caster,evangelism];
     
     ArchangelEffect *aa = [ArchangelEffect new];
     [aa addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
@@ -82,6 +73,15 @@
 - (NSArray *)hdClasses
 {
     return @[ [HDClass discPriest] ];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    AISpellPriority priority = NoPriority;
+    EvangelismEffect *evangelism = [PriestSpell _evangelismForEntity:self.caster];
+    if ( evangelism.currentStacks.integerValue >= 5 )
+        priority |= ConsumeChargePriority;
+    return priority;
 }
 
 @end

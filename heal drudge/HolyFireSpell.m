@@ -11,6 +11,7 @@
 #import "HolyFireSpell.h"
 
 #import "EvangelismEffect.h"
+#import "ArchangelEffect.h"
 
 @implementation HolyFireSpell
 
@@ -46,7 +47,7 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    EvangelismEffect *currentEvangelism = [self _evangelismForEntity:self.caster];
+    EvangelismEffect *currentEvangelism = [PriestSpell _evangelismForEntity:self.caster];
     if ( ! currentEvangelism )
     {
         currentEvangelism = [EvangelismEffect new];
@@ -56,21 +57,32 @@
         [currentEvangelism addStack];
 }
 
-- (EvangelismEffect *)_evangelismForEntity:(Entity *)entity
-{
-    for ( Effect *effect in entity.statusEffects )
-    {
-        if ( [effect isKindOfClass:[EvangelismEffect class]] )
-        {
-            return (EvangelismEffect *)effect;
-        }
-    }
-    return nil;
-}
-
 - (NSArray *)hdClasses
 {
     return @[ [HDClass discPriest], [HDClass holyPriest] ];
+}
+
+- (AISpellPriority)aiSpellPriority
+{
+    AISpellPriority priority = NoPriority;
+    EvangelismEffect *currentEvangelism = [PriestSpell _evangelismForEntity:self.caster];
+    ArchangelEffect *currentArchangel = [PriestSpell _archangelForEntity:self.caster];
+    if ( currentArchangel )
+    {
+        if ( .5 < ( [[NSDate date] timeIntervalSinceDate:currentArchangel.startDate] / currentArchangel.duration ) )
+            priority |= ChargePriority;
+    }
+    else if ( currentEvangelism )
+    {
+        if ( currentEvangelism.currentStacks.integerValue >= 5 )
+            ;
+        else
+            priority |= ChargePriority;
+    }
+    else
+        priority |= ChargePriority;
+    
+    return priority;
 }
 
 @end

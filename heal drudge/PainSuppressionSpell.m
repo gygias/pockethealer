@@ -52,4 +52,9 @@
     return @[ [HDClass discPriest] ];
 }
 
+- (AISpellPriority)aiSpellPriority
+{
+    return CastBeforeAnyoneTakesLargeHit;
+}
+
 @end

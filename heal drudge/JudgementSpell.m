@@ -54,6 +54,8 @@
 - (AISpellPriority)aiSpellPriority
 {
     AISpellPriority defaultPriority = FillerPriority;
+    if ( [self.caster.hdClass isEqual:[HDClass protPaladin]] )
+        defaultPriority |= ChargePriority;
     return defaultPriority;
 }
 

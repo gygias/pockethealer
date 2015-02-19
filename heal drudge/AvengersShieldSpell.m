@@ -25,7 +25,7 @@
         self.spellType = DetrimentalSpell;
         self.castableRange = @40;
         self.hitRange = @0;
-        self.grantsAuxResources = @1;
+        self.grantsAuxResources = @1; // TODO only on proc
         
         self.castTime = @0;
         self.manaCost = @(0.7 * caster.baseMana.floatValue);

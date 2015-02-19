@@ -59,7 +59,7 @@
 
 - (AISpellPriority)aiSpellPriority
 {
-    AISpellPriority defaultPriority = CastBeforeLargeHitPriority; // TODO don't have the right priority for this
+    AISpellPriority defaultPriority = CastBeforeAnyoneTakesLargeHit;
     return defaultPriority;
 }
 

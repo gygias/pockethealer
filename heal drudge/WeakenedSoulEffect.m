@@ -30,7 +30,7 @@
 
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {
-    if ( ! asEffectOfSource && [spell isKindOfClass:[PowerWordShieldSpell class]] )
+    if ( ( self.owner == target ) && [spell isKindOfClass:[PowerWordShieldSpell class]] )
     {
         if ( message )
             *message = @"You can't do that right now";
