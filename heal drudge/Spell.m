@@ -31,7 +31,7 @@ const NSString *SpellLevelHigh = @"high";
     {
         self.caster = caster;
         if ( [[self hdClasses] containsObject:caster.hdClass] )
-            PHLog(self,@"initializing %@'s %@",caster,self);
+            ;//PHLog(self,@"initializing %@'s %@",caster,self);
         else
             return nil;        
         self.level = @"low";

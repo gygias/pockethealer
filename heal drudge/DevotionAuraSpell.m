@@ -44,10 +44,8 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-    [self.caster.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
-        DevotionAuraEffect *da = [DevotionAuraEffect new];
-        [player addStatusEffect:da source:self.caster];
-    }];
+    DevotionAuraEffect *da = [DevotionAuraEffect new];
+    [self.target addStatusEffect:da source:self.caster];
 }
 
 - (NSArray *)hdClasses

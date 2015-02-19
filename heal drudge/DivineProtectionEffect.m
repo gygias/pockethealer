@@ -30,7 +30,11 @@
 
 - (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers
 {
-    if ( spell.target != self.source )
+    if ( ! spell.caster.isEnemy )
+        return NO;
+    if ( self.owner != spell.target )
+        return NO;
+    if ( ! ( spell.school & MagicSchool ) )
         return NO;
     
     EventModifier *mod = [EventModifier new];
