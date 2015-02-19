@@ -387,7 +387,7 @@ CGSize sRaidFrameSize = {0,0};
 {
     __block NSInteger maxVisibleStatusEffects = (rect.size.width - STATUS_EFFECT_ORIGIN_OFFSET_X) / STATUS_EFFECT_WIDTH;
     [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
-        if ( effect.drawsInFrame || ( effect.source == self.player ) )
+        //if ( effect.drawsInFrame || ( effect.source == self.player ) )
         {
             CGRect effectRect = CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + idx * STATUS_EFFECT_WIDTH,
                                            rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,
