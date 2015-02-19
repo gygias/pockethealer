@@ -9,6 +9,7 @@
 #import "PocketHealer.h"
 
 #import "PowerWordBarrierSpell.h"
+#import "PowerWordBarrierEffect.h"
 
 @implementation PowerWordBarrierSpell
 
@@ -20,13 +21,12 @@
         self.image = [ImageFactory imageNamed:@"power_word_barrier"];
         self.tooltip = @"Puts a bubble on it";
         self.triggersGCD = YES;
-#warning TODO
         // self.targetingCircle = YES;
         self.cooldown = @( 3 * 60 );
         self.spellType = BeneficialSpell;
         self.castableRange = @40;
-#warning TODO implement hitRange, and unclear from tooltip
         self.hitRange = @10;
+        self.cooldownType = CooldownTypeMajor;
         
         self.castTime = @0;
         self.manaCost = @(0.063 * caster.baseMana.floatValue);
@@ -36,7 +36,6 @@
         
         self.school = HolySchool;
         
-#warning TODO
         //self.hitSoundName = @"power_word_shield_hit";
     }
     return self;
@@ -44,8 +43,8 @@
 
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
-#warning TODO
-    // this smells like hitRange, but applies to targets currently within the range
+    PowerWordBarrierEffect *pwb = [PowerWordBarrierEffect new];
+    [self.target addStatusEffect:pwb source:self.caster];
 }
 
 - (NSArray *)hdClasses

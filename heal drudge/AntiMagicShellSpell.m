@@ -24,6 +24,7 @@
         self.spellType = BeneficialSpell;
         self.castableRange = @40;
         self.hitRange = @0;
+        self.cooldownType = CooldownTypeMinor;
         
         self.castTime = @0;
         self.manaCost = @0;

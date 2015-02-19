@@ -199,6 +199,24 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             if ( partyTargets )
                 [allTargets addObjectsFromArray:partyTargets];
         }
+        else if ( spell.hitRange.doubleValue > 0 )
+        {
+            NSArray *subTargets = nil;
+            Entity *reticleTarget = spell.caster.target ? spell.caster.target : spell.caster;
+            if ( reticleTarget.hdClass.isRanged )
+                subTargets = self.raid.rangePlayers;
+            else
+                subTargets = self.raid.meleePlayers;
+            if ( spell.hitRange.doubleValue >= 40 )
+                ;
+            else
+            {
+                double percentCovered = spell.hitRange.doubleValue / 15.0;
+                subTargets = [subTargets arrayByRandomlyRemovingNObjects:(NSUInteger)( ( 1 - percentCovered ) * subTargets.count )];
+            }
+            if ( subTargets )
+                [allTargets addObjectsFromArray:subTargets];
+        }
         else if ( spell.targeted )
             [allTargets addObject:spell.target];
         else

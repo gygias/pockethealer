@@ -92,6 +92,15 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     CastWhenInFearOfAnyoneDyingPriority                     = CastWhenInFearOfDPSDyingPriority | CastWhenInFearOfHealerDyingPriority | CastWhenInFearOfTankDyingPriority | CastWhenInFearOfSelfDyingPriority
 };
 
+typedef NS_ENUM(NSInteger, CooldownType) {
+    CooldownTypeNone = 0,
+    CooldownTypeMinor = 1,
+    CooldownTypeMajor = 2
+};
+
+#define AI_MAJOR_COOLDOWN_COOLDOWN ( self.hdClass.isTank ? 10.0 : 60.0 )
+#define AI_MINOR_COOLDOWN_COOLDOWN ( self.hdClass.isTank ? 5.0 : 20.0 )
+
 @interface Spell : NSObject
 
 // initialized with caster, but not target, so that base stats can be displayed based
@@ -122,6 +131,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 @property NSString *tooltip;
 @property BOOL triggersGCD;
 @property BOOL targeted;
+@property BOOL cannotSelfTarget;
 // instead of having damage(0) healing(+) denote beneficial,
 // in order to model spells like holy nova which damage enemies and
 // heal allies, this denotes which side of player/enemy the spell falls on
@@ -131,6 +141,7 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
 // range of spell at the point of impact, 0 for N/A
 @property NSNumber *hitRange;
 @property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
+@property CooldownType cooldownType;
 @property NSNumber *grantsAuxResources;
 @property BOOL isEmphasized; // draw glowing
 @property NSDate *emphasisStopDate;

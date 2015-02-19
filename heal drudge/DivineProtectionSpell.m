@@ -27,6 +27,7 @@
         self.castableRange = @40;
         self.hitRange = @0;
         self.school = MagicSchool;
+        self.cooldownType = CooldownTypeMinor;
         
         self.castTime = @0;
         self.manaCost = @(0.035 * caster.baseMana.floatValue);

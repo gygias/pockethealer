@@ -215,6 +215,11 @@ typedef NS_ENUM(NSInteger, EntityRange) {
 
 - (NSArray *)meleePlayers
 {
+    return [self _playersWithRole:nil range:MeleeRange];
+}
+
+- (NSArray *)meleeDPSPlayers
+{
     return [self _playersWithRole:DPSRole range:MeleeRange];
 }
 
@@ -244,7 +249,7 @@ typedef NS_ENUM(NSInteger, EntityRange) {
 {
     __block NSMutableArray *filteredPlayers = nil;
     [self.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
-        if ( [player.hdClass hasRole:role] &&
+        if ( ( !role || [player.hdClass hasRole:role] ) && // role can be nil meaning any
                 ( ( range == AnyRange )
                     || ( player.hdClass.isRanged && ( range == RangeRange ) )
                     || ( ! player.hdClass.isRanged && ( range == MeleeRange ) )

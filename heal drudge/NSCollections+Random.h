@@ -13,5 +13,6 @@
 @interface NSArray (NSCollectionsRandom)
 
 - (id)randomObject;
+- (NSArray *)arrayByRandomlyRemovingNObjects:(NSUInteger)nObjects;
 
 @end

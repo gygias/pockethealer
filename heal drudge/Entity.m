@@ -78,7 +78,8 @@
     }
     if ( spell.targeted )
     {
-        if ( ( spell.spellType == DetrimentalSpell ) && target.isPlayer )
+        if ( ( ( spell.spellType == DetrimentalSpell ) && ( !target || target.isPlayer ) )
+            || ( spell.cannotSelfTarget && target == spell.caster ) )
         {
             if ( messagePtr )
                 *messagePtr = @"Invalid target";

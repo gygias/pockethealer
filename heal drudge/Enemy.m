@@ -244,9 +244,9 @@
     {
         NSArray *orderedPlayers = nil;
         if ( ability.affectsRandomRange )
-            orderedPlayers = @[ raid.rangePlayers ? raid.rangePlayers : @[], raid.meleePlayers ? raid.meleePlayers : @[] ];
+            orderedPlayers = @[ raid.rangePlayers ? raid.rangePlayers : @[], raid.meleeDPSPlayers ? raid.meleeDPSPlayers : @[] ];
         else
-            orderedPlayers = @[ raid.meleePlayers ? raid.meleePlayers : @[], raid.rangePlayers ? raid.rangePlayers : @[] ];
+            orderedPlayers = @[ raid.meleeDPSPlayers ? raid.meleeDPSPlayers : @[], raid.rangePlayers ? raid.rangePlayers : @[] ];
         
         NSMutableArray *combinedPlayers = [NSMutableArray new];
         for ( NSArray *anOrderedPlayers in orderedPlayers )

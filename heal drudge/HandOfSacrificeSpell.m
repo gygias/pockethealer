@@ -26,10 +26,12 @@
             self.tooltip = @"Places a Hand on a party or raid member, transferring 30% of damage taken to the Paladin for 12 sec or until the Paladin has transferred 100% of their maximum health. Players may only have one Hand on them per Paladin at any one time.";
         self.triggersGCD = NO;
         self.targeted = YES;
+        self.cannotSelfTarget = YES;
         self.cooldown = @( 2 * 60 );
         self.spellType = BeneficialSpell;
         self.castableRange = @40;
         self.hitRange = @0;
+        self.cooldownType = CooldownTypeMinor;
         
         self.castTime = @0;
         self.manaCost = @(0.07 * caster.baseMana.floatValue);

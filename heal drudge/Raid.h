@@ -24,7 +24,8 @@
 @property (strong,retain) NSArray *players;
 @property (nonatomic,readonly) NSArray *tankPlayers;
 @property (nonatomic,readonly) NSArray *nonTankPlayers;
-@property (nonatomic,readonly) NSArray *meleePlayers;
+@property (nonatomic,readonly) NSArray *meleePlayers; // includes tanks
+@property (nonatomic,readonly) NSArray *meleeDPSPlayers;
 @property (nonatomic,readonly) NSArray *rangePlayers;
 @property (nonatomic,readonly) NSArray *healers;
 @property (nonatomic,readonly) NSArray *dpsPlayers;

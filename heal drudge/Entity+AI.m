@@ -113,7 +113,8 @@
         if ( aPlayer != self )
         {
             [aPlayer.statusEffects enumerateObjectsUsingBlock:^(Effect *aEffect, NSUInteger idx, BOOL *stop) {
-                if ( self.hdClass.isTank && aPlayer.hdClass.isTank && aEffect.source.target == aPlayer &&
+                if ( self.hdClass.isTank && aPlayer.hdClass.isTank && aEffect.source.target == aPlayer
+                    && ( aEffect.tauntAtStacks.integerValue > 0 ) &&
                     aEffect.currentStacks.integerValue >= aEffect.tauntAtStacks.integerValue )
                 {
                     PHLog(self,@"%@: %@'s %@ is at %@ stacks, I should taunt",self,aPlayer,aEffect,aEffect.currentStacks);
@@ -214,6 +215,19 @@
         {
             AISpellPriority highestMatchedPriority = 1 << (AISpellPriority)log2(thisSpellMatchedPriority);
             
+            if ( ( spell.cooldownType == CooldownTypeMajor )
+                && self.lastMajorCooldownUsedDate && [[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate] < AI_MAJOR_COOLDOWN_COOLDOWN )
+            {
+                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last major CD",spell,[[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate]);
+                return;
+            }
+            if ( ( spell.cooldownType == CooldownTypeMinor )
+                && self.lastMinorCooldownUsedDate && [[NSDate date] timeIntervalSinceDate:self.lastMinorCooldownUsedDate] < AI_MINOR_COOLDOWN_COOLDOWN )
+            {
+                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last minor CD",spell,[[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate]);
+                return;
+            }
+            
             Entity *target = [self _whoWouldICastThisOnWithSpell:spell highPriorityBit:highestMatchedPriority map:targetMap];
             if ( ! [self validateSpell:spell asSource:YES otherEntity:target message:NULL invalidDueToCooldown:NULL] )
                 return;
@@ -257,6 +271,11 @@
         
         [self castSpell:highestPrioritySpell withTarget:target];
         PHLog(self,@"%@ will%@ trigger gcd",highestPrioritySpell,highestPrioritySpell.triggersGCD?@"":@" NOT");
+        
+        if ( highestPrioritySpell.cooldownType == CooldownTypeMajor )
+            self.lastMajorCooldownUsedDate = [NSDate date];
+        else if ( highestPrioritySpell.cooldownType == CooldownTypeMinor )
+            self.lastMinorCooldownUsedDate = [NSDate date];
     }
     else
     {

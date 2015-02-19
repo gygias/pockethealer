@@ -52,6 +52,8 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL stopped;
 @property NSArray *spells;
 @property (readonly) BOOL hasAggro;
+@property NSDate *lastMinorCooldownUsedDate;
+@property NSDate *lastMajorCooldownUsedDate;
 
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;

@@ -19,4 +19,14 @@
     return nil;
 }
 
+- (NSArray *)arrayByRandomlyRemovingNObjects:(NSUInteger)nObjects
+{
+    NSMutableArray *mutableCopy = [self mutableCopy];
+    while (nObjects-- > 0 && mutableCopy.count > 0 )
+    {
+        [mutableCopy removeObject:[mutableCopy randomObject]];
+    }
+    return mutableCopy;
+}
+
 @end
