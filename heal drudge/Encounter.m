@@ -61,7 +61,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         
         // begin update timer
         _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
-        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.005 * NSEC_PER_SEC, 0.05 * NSEC_PER_SEC);
+        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.033 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(_encounterTimer, ^{
             [self updateEncounter];
         });

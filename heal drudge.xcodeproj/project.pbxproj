@@ -296,6 +296,8 @@
 		637E8B971A954BC80002C9DC /* dancing_rune_weapon_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B951A954BC80002C9DC /* dancing_rune_weapon_cast.wav */; };
 		637E8B9A1A954BE20002C9DC /* anti-magic_shell.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B981A954BE20002C9DC /* anti-magic_shell.jpg */; };
 		637E8B9B1A954BE20002C9DC /* provoke.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B991A954BE20002C9DC /* provoke.jpg */; };
+		637E8B9E1A959EEE0002C9DC /* MindBenderSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B9D1A959EEE0002C9DC /* MindBenderSpell.m */; };
+		637E8BA01A95A1180002C9DC /* mindbender.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B9F1A95A1180002C9DC /* mindbender.jpg */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
@@ -761,6 +763,9 @@
 		637E8B951A954BC80002C9DC /* dancing_rune_weapon_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dancing_rune_weapon_cast.wav; sourceTree = "<group>"; };
 		637E8B981A954BE20002C9DC /* anti-magic_shell.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "anti-magic_shell.jpg"; sourceTree = "<group>"; };
 		637E8B991A954BE20002C9DC /* provoke.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = provoke.jpg; sourceTree = "<group>"; };
+		637E8B9C1A959EEE0002C9DC /* MindBenderSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MindBenderSpell.h; sourceTree = "<group>"; };
+		637E8B9D1A959EEE0002C9DC /* MindBenderSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MindBenderSpell.m; sourceTree = "<group>"; };
+		637E8B9F1A95A1180002C9DC /* mindbender.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mindbender.jpg; sourceTree = "<group>"; };
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
@@ -1000,6 +1005,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				637E8B9F1A95A1180002C9DC /* mindbender.jpg */,
 				637E8B981A954BE20002C9DC /* anti-magic_shell.jpg */,
 				637E8B991A954BE20002C9DC /* provoke.jpg */,
 				637E8B921A954BB50002C9DC /* dancing_rune_weapon.jpg */,
@@ -1260,6 +1266,8 @@
 				63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */,
 				63027AAE1A7614890068E68A /* PowerWordBarrierSpell.h */,
 				63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */,
+				637E8B9C1A959EEE0002C9DC /* MindBenderSpell.h */,
+				637E8B9D1A959EEE0002C9DC /* MindBenderSpell.m */,
 			);
 			name = Priest;
 			sourceTree = "<group>";
@@ -1744,6 +1752,7 @@
 				632074891A70E93A00AA4416 /* starfall.png in Resources */,
 				63A37EFB1A75ABE30036C9D0 /* 9.wav in Resources */,
 				632074051A7095B800AA4416 /* hand_of_sacrifice.png in Resources */,
+				637E8BA01A95A1180002C9DC /* mindbender.jpg in Resources */,
 				632074641A70E93A00AA4416 /* arcane.png in Resources */,
 				632074141A7095B800AA4416 /* pain_suppression.png in Resources */,
 				6320748F1A70E93A00AA4416 /* totem_relocation.png in Resources */,
@@ -1926,6 +1935,7 @@
 				63027ABD1A786BEA0068E68A /* GenericPhysicalAttackSpell.m in Sources */,
 				639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */,
 				63C5F4281A52464300B9AE46 /* CreateHealerViewController.m in Sources */,
+				637E8B9E1A959EEE0002C9DC /* MindBenderSpell.m in Sources */,
 				632074C81A71D17600AA4416 /* Ability.m in Sources */,
 				630B99881A86CA5900B186CA /* SpeechBubbleViewController.m in Sources */,
 				636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */,
