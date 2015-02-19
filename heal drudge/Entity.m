@@ -949,4 +949,18 @@
     return @( self.currentResources.doubleValue / self.power.doubleValue );
 }
 
+- (BOOL)hasAggro
+{
+    __block BOOL hasAggro = NO;
+    [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
+        if ( enemy.target == self )
+        {
+            hasAggro = YES;
+            *stop = YES;
+        }
+    }];
+    
+    return hasAggro;
+}
+
 @end

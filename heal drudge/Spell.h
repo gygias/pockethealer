@@ -68,27 +68,27 @@ typedef NS_OPTIONS(NSInteger, AISpellPriority) {
     CastWhenRaidUrgentlyNeedsHealing                        = 1 << 17,
     
     CastBeforeSomeoneTakesLargePhysicalHit                  = 1 << 18,
-    CastBeforeSomeoneTakesLargeMagicHit                     = 1 << CastBeforeSomeoneTakesLargePhysicalHit,
+    CastBeforeSomeoneTakesLargeMagicHit                     = 1 << 19,
     CastBeforeSomeoneTakesLargeHit                          = CastBeforeSomeoneTakesLargePhysicalHit | CastBeforeSomeoneTakesLargeMagicHit,
-    CastBeforeLargePhysicalHitPriority                      = 1 << 19,
-    CastBeforeLargeMagicHitPriority                         = CastBeforeLargePhysicalHitPriority,
+    CastBeforeLargePhysicalHitPriority                      = 1 << 20,
+    CastBeforeLargeMagicHitPriority                         = 1 << 21,
     CastBeforeLargeHitPriority                              = CastBeforeLargePhysicalHitPriority | CastBeforeLargeMagicHitPriority,
-    CastBeforeTankTakesLargePhysicalHit                     = 1 << 20,
-    CastBeforeTankTakesLargeMagicHit                        = CastBeforeTankTakesLargePhysicalHit,
+    CastBeforeTankTakesLargePhysicalHit                     = 1 << 22,
+    CastBeforeTankTakesLargeMagicHit                        = 1 << 23,
     CastBeforeTankTakesLargeHit                             = CastBeforeTankTakesLargePhysicalHit | CastBeforeTankTakesLargeMagicHit,
     CastBeforeAnyoneTakesLargePhysicalHit                   = CastBeforeTankTakesLargePhysicalHit | CastBeforeLargePhysicalHitPriority | CastBeforeSomeoneTakesLargePhysicalHit,
     CastBeforeAnyoneTakesLargeMagicHit                      = CastBeforeTankTakesLargeMagicHit | CastBeforeLargeMagicHitPriority | CastBeforeSomeoneTakesLargeMagicHit,
     CastBeforeAnyoneTakesLargeHit                           = CastBeforeTankTakesLargeHit | CastBeforeLargeHitPriority | CastBeforeSomeoneTakesLargeHit,
-    CastBeforeLargePhysicalAOEPriority                      = 1 << 21,
+    CastBeforeLargePhysicalAOEPriority                      = 1 << 24,
     CastBeforeLargeMagicAOEPriority                         = CastBeforeLargePhysicalAOEPriority,
     CastBeforeLargeAOEPriority                              = CastBeforeLargePhysicalAOEPriority | CastBeforeLargeMagicAOEPriority,
     
-    CastWhenOtherTankNeedsTauntOff                          = 1 << 22,
+    CastWhenOtherTankNeedsTauntOff                          = 1 << 25,
     
-    CastWhenInFearOfDPSDyingPriority                        = 1 << 23,
-    CastWhenInFearOfHealerDyingPriority                     = 1 << 24,
-    CastWhenInFearOfTankDyingPriority                       = 1 << 25,
-    CastWhenInFearOfSelfDyingPriority                       = 1 << 26,
+    CastWhenInFearOfDPSDyingPriority                        = 1 << 26,
+    CastWhenInFearOfHealerDyingPriority                     = 1 << 27,
+    CastWhenInFearOfTankDyingPriority                       = 1 << 28,
+    CastWhenInFearOfSelfDyingPriority                       = 1 << 29,
     CastWhenInFearOfAnyoneDyingPriority                     = CastWhenInFearOfDPSDyingPriority | CastWhenInFearOfHealerDyingPriority | CastWhenInFearOfTankDyingPriority | CastWhenInFearOfSelfDyingPriority
 };
 

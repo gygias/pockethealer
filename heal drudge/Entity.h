@@ -51,6 +51,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
 @property NSArray *spells;
+@property (readonly) BOOL hasAggro;
 
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;

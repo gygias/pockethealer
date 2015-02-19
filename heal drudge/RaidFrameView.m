@@ -98,6 +98,7 @@ CGSize sRaidFrameSize = {0,0};
     [self _drawSpellCastingInRect:rect];
     [self _drawStatusEffectsInRect:rect];
     [self _drawAuxResourcesInRect:rect];
+    [self _drawAggroNubsInRect:rect];
 }
 
 - (void)_drawBackgroundInRect:(CGRect)rect
@@ -283,10 +284,11 @@ CGSize sRaidFrameSize = {0,0};
     shadow.shadowColor = [UIColor blackColor];
     shadow.shadowBlurRadius = 5;
     shadow.shadowOffset = CGSizeMake(1.5, 1.5);
+    BOOL nameIsAscii = [self.entity.name canBeConvertedToEncoding:NSASCIIStringEncoding];
     NSMutableDictionary *attributes =
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            [UIColor whiteColor], NSForegroundColorAttributeName,
-            shadow, NSShadowAttributeName,
+         nameIsAscii ? [UIColor whiteColor] : [UIColor blackColor], NSForegroundColorAttributeName,
+         nameIsAscii ? shadow : nil, NSShadowAttributeName,
          nil];
     
     
@@ -400,6 +402,16 @@ CGSize sRaidFrameSize = {0,0};
                 double percentage = [[NSDate date] timeIntervalSinceDateMinusPauseTime:effect.startDate] / effect.duration;
                 [self _drawCooldownClockInRect:effectRect withPercentage:percentage];
             }
+            if ( effect.currentStacks.integerValue > 1 )
+            {
+                static NSDictionary *sStacksAttributeDictionary = nil;
+                if ( ! sStacksAttributeDictionary )
+                    sStacksAttributeDictionary = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                    NSBackgroundColorAttributeName : [UIColor blackColor],
+                                                    NSFontAttributeName : [UIFont systemFontOfSize:5]
+                                                    };// TODO not scalable
+                [[effect.currentStacks stringValue] drawInRect:effectRect withAttributes:attributes];
+            }
             
             if ( --maxVisibleStatusEffects == 0 )
                 *stop = YES;
@@ -464,6 +476,31 @@ CGSize sRaidFrameSize = {0,0};
         CGContextAddArc(ctx,rect.origin.x + 5 * idx + 5,rect.origin.y + rect.size.height / 2,2,0.0,M_PI*2,YES);
         CGContextFillPath(ctx);
     }
+}
+
+#define AGGRO_NUB_LEG_LENGTH (rect.size.width / 5) // TODO not truly scalable
+- (void)_drawAggroNubsInRect:(CGRect)rect
+{
+    if ( ! self.entity.hasAggro )
+        return;
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(ctx, [UIColor redColor].CGColor);
+    CGFloat midX = rect.origin.x + rect.size.width / 2;
+    CGFloat halfLegLength = AGGRO_NUB_LEG_LENGTH / 2;
+    CGContextMoveToPoint(ctx, midX - halfLegLength, rect.origin.y);
+    CGContextAddLineToPoint(ctx, midX + halfLegLength, rect.origin.y);
+    CGContextAddLineToPoint(ctx, midX, rect.origin.y + halfLegLength);
+    CGContextClosePath(ctx);
+    CGContextFillPath(ctx);
+    
+    CGFloat lowY = rect.origin.y + rect.size.height;
+    CGContextMoveToPoint(ctx, midX - halfLegLength, lowY);
+    CGContextAddLineToPoint(ctx, midX + halfLegLength, lowY);
+    CGContextAddLineToPoint(ctx, midX, lowY - halfLegLength);
+    CGContextClosePath(ctx);
+    CGContextFillPath(ctx);
 }
 
 @end

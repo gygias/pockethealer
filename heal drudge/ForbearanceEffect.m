@@ -30,10 +30,7 @@
 }
 
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
-{
-    if ( [spell isKindOfClass:[LayOnHandsSpell class]] )
-        NSLog(@"??");
-    
+{    
     if ( self.owner == spell.target &&  ( [spell isKindOfClass:[LayOnHandsSpell class]]
         // || [spell isKindOfClass:[DivineShieldEffect class]]
         // || [spell isKindOfClass:[BlessingOfProtectionEffect class]]

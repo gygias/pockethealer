@@ -13,7 +13,7 @@
 #import "ItemLevelAndStatsConverter.h"
 
 #define NOT_TOPPED_OFF_THRESHOLD (1.0)
-#define NEED_HEALING_THRESHOLD (0.7)
+#define NEED_HEALING_THRESHOLD (0.9)
 #define FEAR_OF_DYING_THRESHOLD (0.2)
 #define FEAR_OF_DYING_DELTA (0.33)
 #define URGENT_HEALING_THRESHOLD (0.3)
@@ -222,9 +222,7 @@
             
             if ( highestMatchedPriority > highestPriority )
             {
-                PHLog(self,@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);                
-                if ( self.hdClass.isHealerClass )
-                    NSLog(@"??");
+                PHLog(self,@"%@'s %@ meets current priorities and is higher priority than %@",self,spell,highestPrioritySpell);
                 highestPrioritySpell = spell;
                 highestPriority = highestMatchedPriority;
             }

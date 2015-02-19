@@ -27,7 +27,7 @@
         self.hitRange = @0;
         
         self.castTime = @0;
-        self.manaCost = @( .0735 * caster.baseMana.floatValue );
+        self.manaCost = @( .02 * caster.baseMana.floatValue );
         self.damage = @0;
         self.healing = @( [caster.spellPower floatValue] * 1.4 );
         self.damage = @( [caster.spellPower floatValue] * 1.4 );

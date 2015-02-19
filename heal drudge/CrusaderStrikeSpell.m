@@ -28,7 +28,7 @@
         self.grantsAuxResources = @1;
         
         self.castTime = @0;
-        self.manaCost = @(0.1 * caster.baseMana.floatValue);
+        self.manaCost = @(0.02 * caster.baseMana.floatValue);
         self.damage = @( 0.92448 * caster.attackPower.floatValue );
         
         self.school = HolySchool;

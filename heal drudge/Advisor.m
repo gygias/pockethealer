@@ -115,7 +115,7 @@
 - (SpeechBubbleViewController *)_oom:(Entity *)oomEntity
 {
     SpeechBubbleViewController *vc = [self _speechBubble];
-    vc.textLabel.text = [NSString stringWithFormat:@"%@ is out of mana, pick up the pace!",oomEntity.name];;
+    vc.textLabel.text = [NSString stringWithFormat:@"%@ is out of mana, help them out by healing more!",oomEntity.name];;
     vc.imageView.image = [ImageFactory imageForRole:HealerRole];
     return vc;
 }
