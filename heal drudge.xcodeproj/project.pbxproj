@@ -299,6 +299,8 @@
 		637E8B9E1A959EEE0002C9DC /* MindBenderSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 637E8B9D1A959EEE0002C9DC /* MindBenderSpell.m */; };
 		637E8BA01A95A1180002C9DC /* mindbender.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 637E8B9F1A95A1180002C9DC /* mindbender.jpg */; };
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
+		638D90B81A969C7000960869 /* PassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90B71A969C7000960869 /* PassThroughView.m */; };
+		638D90BB1A96A67400960869 /* PowerWordBarrierEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -769,6 +771,10 @@
 		637F42711A84299500B27671 /* EmpoweredArchangelEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmpoweredArchangelEffect.h; sourceTree = "<group>"; };
 		637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmpoweredArchangelEffect.m; sourceTree = "<group>"; };
 		637F42741A84419600B27671 /* PocketHealer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = PocketHealer.h; sourceTree = "<group>"; };
+		638D90B61A969C7000960869 /* PassThroughView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassThroughView.h; sourceTree = "<group>"; };
+		638D90B71A969C7000960869 /* PassThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassThroughView.m; sourceTree = "<group>"; };
+		638D90B91A96A67400960869 /* PowerWordBarrierEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerWordBarrierEffect.h; sourceTree = "<group>"; };
+		638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerWordBarrierEffect.m; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -998,6 +1004,8 @@
 				630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */,
 				630B998F1A882B3000B186CA /* SpeechBubblePassThroughView.h */,
 				630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */,
+				638D90B61A969C7000960869 /* PassThroughView.h */,
+				638D90B71A969C7000960869 /* PassThroughView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1266,6 +1274,8 @@
 				63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */,
 				63027AAE1A7614890068E68A /* PowerWordBarrierSpell.h */,
 				63027AAF1A7614890068E68A /* PowerWordBarrierSpell.m */,
+				638D90B91A96A67400960869 /* PowerWordBarrierEffect.h */,
+				638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */,
 				637E8B9C1A959EEE0002C9DC /* MindBenderSpell.h */,
 				637E8B9D1A959EEE0002C9DC /* MindBenderSpell.m */,
 			);
@@ -1885,6 +1895,7 @@
 				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */,
+				638D90B81A969C7000960869 /* PassThroughView.m in Sources */,
 				637E8B581A8AE7FD0002C9DC /* DarkCommandSpell.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
 				6364135B1A7D835100639007 /* EventTimerView.m in Sources */,
@@ -1960,6 +1971,7 @@
 				63027AB31A7849EA0068E68A /* GenericHealingSpell.m in Sources */,
 				6328FB601A731E7F00DF6B50 /* HealingTideTotemSpell.m in Sources */,
 				634F48F81A7480D8008761C6 /* PrayerOfHealingSpell.m in Sources */,
+				638D90BB1A96A67400960869 /* PowerWordBarrierEffect.m in Sources */,
 				63C5F4371A524E8100B9AE46 /* QuickPlayViewController.m in Sources */,
 				63027AF31A79A5F60068E68A /* ShieldOfTheRighteousSpell.m in Sources */,
 				63564D671A5724AA0025ACDE /* Raid.m in Sources */,
