@@ -81,6 +81,8 @@ CGSize sSpellBarSpellSize = {0,0};
             spellTarget = self.player;
         BOOL invalidDueToCooldown = NO;
         BOOL canStartCastingSpell = [self.player validateSpell:spell asSource:YES otherEntity:spellTarget message:&message invalidDueToCooldown:&invalidDueToCooldown];
+        if ( canStartCastingSpell && spellTarget != self.player )
+            canStartCastingSpell = [spellTarget validateSpell:spell asSource:NO otherEntity:self.player message:&message invalidDueToCooldown:&invalidDueToCooldown];
         
         UIImage *spellImage = spell.image;
         //if ( ! canStartCastingSpell )

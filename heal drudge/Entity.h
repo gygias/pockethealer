@@ -68,6 +68,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 - (void)handleDeathOfEntity:(Entity *)dyingEntity fromSpell:(Spell *)spell;
 
 // called when a spell is in the process of "going off", to accumulate modifications from effects, etc.
+// COMBOBULATION: spell.target is UNSET and INVALID when this method is called, see Effect.h's validateSpell:
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown;
 
 - (NSNumber *)castSpell:(Spell *)spell withTarget:(Entity *)target;

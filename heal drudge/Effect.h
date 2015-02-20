@@ -63,6 +63,8 @@ typedef NS_ENUM(NSInteger, EffectType) {
 - (void)removeStack;
 
 // other spells
+// COMBOBULATION: spell.target is UNSET or INVALID when this method is called, use the target
+// AFAIK source is always spell.caster and is redundant, but hesitant to remove it yet.
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message;
 - (BOOL)addModifiersWithSpell:(Spell *)spell modifiers:(NSMutableArray *)modifiers;
 - (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier;

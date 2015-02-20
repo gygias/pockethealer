@@ -43,6 +43,14 @@
 
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
 {
+    spell.inTransientStateExplosionMode = YES;
+    BOOL validated = [self _validateSpell:spell asSource:asSource otherEntity:otherEntity message:messagePtr invalidDueToCooldown:invalidDueToCooldown];
+    spell.inTransientStateExplosionMode = NO;
+    return validated;
+}
+
+- (BOOL)_validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
+{
     Entity *source = asSource ? self : otherEntity;
     Entity *target = asSource ? otherEntity : self;
     
@@ -815,6 +823,25 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(effectiveGCD * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
             self.nextGlobalCooldownDate = nil;
             self.currentGlobalCooldownDuration = 0;
+        });
+    }
+    
+    // this was moved outside the dispatch_async to fix automated LoH (first spell w/o triggering gcd)
+    // from causing an infinite loop, since the code which would set the next cooldown wouldn't
+    // run until after that code had returned
+    // and was again moved up from handleSpell to here to fix next CD vs first tick of channeled spell (e.g. penance) going off
+    if ( spell.cooldown.doubleValue )
+    {
+        NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
+        spell.nextCooldownDate = thisNextCooldownDate;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+            if ( spell.nextCooldownDate == thisNextCooldownDate )
+            {
+                PHLog(spell,@"%@'s %@ has cooled down",spell.caster,spell);
+                spell.nextCooldownDate = nil;
+            }
+            else
+                PHLog(spell,@"Something else seems to have reset the cooldown on %@'s %@",spell.caster,spell);
         });
     }
     

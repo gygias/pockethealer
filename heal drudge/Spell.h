@@ -123,7 +123,8 @@ typedef NS_ENUM(NSInteger, CooldownType) {
 + (NSArray *)castableSpellsForCharacter:(Entity *)character;
 
 @property Entity *caster;
-@property Entity *target;
+@property (nonatomic,retain) Entity *target;
+@property BOOL inTransientStateExplosionMode; // see explanation in Effect/Entity validateSpell: definition
 
 // static properties
 @property NSString *name;

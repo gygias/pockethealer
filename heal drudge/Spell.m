@@ -19,6 +19,15 @@ const NSString *SpellLevelHigh = @"high";
 
 @implementation Spell
 
+@synthesize target = _target;
+
+- (Entity *)target
+{
+    if ( self.inTransientStateExplosionMode )
+        [NSException raise:@"TargetAccessedWhenNotInCastingState" format:@"%@",self];
+    return _target;
+}
+
 - (id)init
 {
     [NSException raise:@"SpellWithoutCasterException" format:@"Tried to initialize %@ without a caster",NSStringFromClass([self class])];

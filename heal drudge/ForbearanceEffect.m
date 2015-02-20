@@ -31,14 +31,13 @@
 
 - (BOOL)validateSpell:(Spell *)spell asEffectOfSource:(BOOL)asEffectOfSource source:(Entity *)source target:(Entity *)target message:(NSString * __strong *)message
 {    
-    if ( self.owner == spell.target &&  ( [spell isKindOfClass:[LayOnHandsSpell class]]
+    if ( self.owner == target &&  ( [spell isKindOfClass:[LayOnHandsSpell class]]
         // || [spell isKindOfClass:[DivineShieldEffect class]]
         // || [spell isKindOfClass:[BlessingOfProtectionEffect class]]
         ) )
     {
         if ( message )
             *message = [NSString stringWithFormat:@"Cannot cast that on target with %@",self.name];
-        NSLog(@"%@ WANTS TO LAY ON HANDS BUT CANT DUE TO FORBEARANCE ON %@",source,target);
         return NO;
     }
     
