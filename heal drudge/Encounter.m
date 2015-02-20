@@ -134,24 +134,6 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     {
     }
     
-    // this was moved outside the dispatch_async to fix automated LoH (first spell w/o triggering gcd)
-    // from causing an infinite loop, since the code which would set the next cooldown wouldn't
-    // run until after that code had returned
-    if ( spell.cooldown.doubleValue && ( ! periodicTick || firstTick ) )
-    {
-        NSDate *thisNextCooldownDate = [NSDate dateWithTimeIntervalSinceNow:spell.cooldown.doubleValue];
-        spell.nextCooldownDate = thisNextCooldownDate;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(spell.cooldown.doubleValue * NSEC_PER_SEC)), self.encounterQueue, ^{
-            if ( spell.nextCooldownDate == thisNextCooldownDate )
-            {
-                PHLog(spell,@"%@'s %@ has cooled down",spell.caster,spell);
-                spell.nextCooldownDate = nil;
-            }
-            else
-                PHLog(spell,@"Something else seems to have reset the cooldown on %@'s %@",spell.caster,spell);
-        });
-    }
-    
     PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick? (firstTick?@"'s channel is first-ticking":@"'s channel is ticking"):@" is casting",spell.name,spell.target);
     
     if ( spell.caster.isEnemy && self.enemyAbilityHandler )
