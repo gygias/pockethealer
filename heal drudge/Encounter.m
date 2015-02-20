@@ -162,15 +162,19 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     [spell.caster handleSpell:spell modifier:netMod];
     [spell.target handleSpell:spell modifier:netMod];
     
-    if ( spell.castSoundName )
-        [SoundManager playSpellHit:spell];
-    if ( spell.hitSoundName )
-        [SoundManager playSpellHit:spell];
+    if ( ! periodicTick || firstTick )
+    {
+        if ( spell.castSoundName )
+            [SoundManager playSpellHit:spell];
+        if ( spell.hitSoundName )
+            [SoundManager playSpellHit:spell];
+    }
     
     NSMutableArray *allTargets = [NSMutableArray new];
-    BOOL subHandled = YES;
+    BOOL subHandled = NO;
     if ( ! spell.caster.isEnemy ) // XXX TODO big kludge _dispatchAbility has its own "determine targets" logic
     {
+        subHandled = YES;
         if ( spell.isSmart )
         {
             NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
@@ -210,7 +214,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         else
             subHandled = NO;
     }
-    if ( spell.caster.isEnemy && !subHandled ) // Kludge fucking gross
+    if ( ! subHandled && spell.targeted ) // Kludge fucking gross
         [allTargets addObject:spell.target];
     else if ( !subHandled )
         [allTargets addObject:spell.caster];

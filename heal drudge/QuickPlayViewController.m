@@ -187,12 +187,12 @@
                 [vc.speechBubbleContentView.superview addConstraint:constraint];
                 constraint = [NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:vc.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
                 [vc.speechBubbleContentView.superview addConstraint:constraint];
-                [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+                /*[[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                     if ( self.currentSpeechBubble )
                         self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
                     [self.spellBarView invalidateIntrinsicContentSize];
                     [self.raidFramesView invalidateIntrinsicContentSize];
-                }];
+                }];*/
                 //[vc.speechBubbleContentView addConstraint:[NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.advisorGuideView attribute:NSLayoutAttributeLeading multiplier:0 constant:0]];
                 //vc.speechBubbleContentView.frame = self.advisorGuideView.frame;
                 //[self.advisorGuideView addSubview:contentView];

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -571,10 +572,10 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="664-60-9vG"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-Ay-aNh" userLabel="up/left" customClass="PassThroughView">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EHr-Ay-aNh" userLabel="up/left" customClass="PassThroughView">
                                 <rect key="frame" x="16" y="20" width="568" height="578.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ti6-cB-FxG" customClass="EnemyFrameView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="0.0" width="568" height="380"/>
@@ -593,7 +594,7 @@
                                             <rect key="frame" x="0.0" y="380" width="368" height="0.0"/>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
+                                    <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-7k-FWl" customClass="RaidFramesView">
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="380" width="568" height="0.0"/>
                                         </variation>
@@ -630,8 +631,13 @@
                                     <rect key="frame" x="16" y="20" width="368" height="380"/>
                                 </variation>
                             </view>
-                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4lg-59-kdb" userLabel="Advisor Guide View">
-                                <rect key="frame" x="16" y="20" width="568" height="580"/>
+                            <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4lg-59-kdb" userLabel="Advisor Guide View">
+                                <rect key="frame" x="16" y="20" width="285" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="4lg-59-kdb" secondAttribute="height" multiplier="19:6" id="1pM-eb-8iu"/>
+                                    <constraint firstAttribute="height" constant="90" id="MXb-sb-af4"/>
+                                    <constraint firstAttribute="width" constant="285" id="fkC-IK-tmP"/>
+                                </constraints>
                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="16" y="20" width="568" height="0.0"/>
                                 </variation>
@@ -642,9 +648,9 @@
                                     <rect key="frame" x="16" y="225" width="768" height="149"/>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEn-CO-azg" userLabel="bottom/right" customClass="PassThroughView">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEn-CO-azg" userLabel="bottom/right" customClass="PassThroughView">
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7dB-1C-e9a" customClass="PlayerAndTargetView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
@@ -659,7 +665,7 @@
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-RV-5T3" customClass="CastBarView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfD-RV-5T3" customClass="CastBarView">
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
@@ -674,9 +680,9 @@
                                             <rect key="frame" x="0.0" y="367" width="0.0" height="0.0"/>
                                         </variation>
                                     </view>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kxo-lk-dmB" customClass="SpellBarView">
                                         <color key="backgroundColor" red="1" green="0.0" blue="0.935714830972322" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                        <variation key="heightClass=compact" ambiguous="YES">
                                             <rect key="frame" x="0.0" y="372" width="0.0" height="0.0"/>
                                         </variation>
                                         <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
@@ -715,7 +721,7 @@
                             <constraint firstItem="FEn-CO-azg" firstAttribute="leading" secondItem="EHr-Ay-aNh" secondAttribute="trailing" constant="-240" id="2Ek-ex-7lB">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="54L-Yo-L69" firstAttribute="top" secondItem="EHr-Ay-aNh" secondAttribute="bottom" constant="1" id="4I5-PU-ltC">
+                            <constraint firstItem="54L-Yo-L69" firstAttribute="top" secondItem="EHr-Ay-aNh" secondAttribute="bottom" priority="900" constant="1" id="4I5-PU-ltC">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="FEn-CO-azg" secondAttribute="trailing" id="5dn-7u-QWf"/>
@@ -723,38 +729,36 @@
                             <constraint firstItem="Qp7-w4-T7V" firstAttribute="trailing" secondItem="9dJ-3D-5VX" secondAttribute="trailingMargin" constant="5" id="8uX-kL-X6Z"/>
                             <constraint firstItem="XIt-w5-6mp" firstAttribute="top" secondItem="FEn-CO-azg" secondAttribute="bottom" id="A1T-qE-Hq5"/>
                             <constraint firstItem="EHr-Ay-aNh" firstAttribute="top" secondItem="XIt-w5-6mp" secondAttribute="bottom" id="Da6-yC-GZg"/>
-                            <constraint firstItem="4lg-59-kdb" firstAttribute="top" secondItem="XIt-w5-6mp" secondAttribute="bottom" id="IkL-KA-A1M"/>
                             <constraint firstItem="XIt-w5-6mp" firstAttribute="bottom" secondItem="FEn-CO-azg" secondAttribute="top" id="M26-ko-bWb">
                                 <variation key="heightClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="Qp7-w4-T7V" firstAttribute="top" secondItem="XIt-w5-6mp" secondAttribute="bottom" id="Pj3-FA-OEz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EHr-Ay-aNh" secondAttribute="trailing" id="W7m-ra-wvY"/>
+                            <constraint firstItem="4lg-59-kdb" firstAttribute="top" secondItem="EHr-Ay-aNh" secondAttribute="bottom" id="aFz-c5-doI"/>
                             <constraint firstItem="VEx-iR-Bfo" firstAttribute="trailing" secondItem="Qp7-w4-T7V" secondAttribute="leading" id="d9F-0E-css"/>
                             <constraint firstItem="54L-Yo-L69" firstAttribute="top" secondItem="FEn-CO-azg" secondAttribute="bottom" id="gZn-Ot-c7Y"/>
                             <constraint firstItem="FEn-CO-azg" firstAttribute="top" secondItem="EHr-Ay-aNh" secondAttribute="bottom" constant="1" id="j5Q-9i-jJZ"/>
-                            <constraint firstItem="54L-Yo-L69" firstAttribute="top" secondItem="4lg-59-kdb" secondAttribute="bottom" id="jPk-jC-DbE"/>
-                            <constraint firstItem="4lg-59-kdb" firstAttribute="leading" secondItem="9dJ-3D-5VX" secondAttribute="leadingMargin" id="jdN-ix-yLf"/>
                             <constraint firstItem="EHr-Ay-aNh" firstAttribute="leading" secondItem="9dJ-3D-5VX" secondAttribute="leadingMargin" id="oCI-g9-hVR"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4lg-59-kdb" secondAttribute="trailing" id="yoj-1d-kuo"/>
+                            <constraint firstItem="4lg-59-kdb" firstAttribute="leading" secondItem="EHr-Ay-aNh" secondAttribute="leading" id="qb8-Q6-aeN"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="2Ek-ex-7lB"/>
                                 <exclude reference="A1T-qE-Hq5"/>
                                 <exclude reference="M26-ko-bWb"/>
                                 <exclude reference="4I5-PU-ltC"/>
+                                <exclude reference="2Ek-ex-7lB"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="2Ek-ex-7lB"/>
-                                <exclude reference="6l8-CT-CPa"/>
-                                <exclude reference="j5Q-9i-jJZ"/>
                                 <exclude reference="A1T-qE-Hq5"/>
                                 <include reference="M26-ko-bWb"/>
                                 <exclude reference="W7m-ra-wvY"/>
                                 <exclude reference="d9F-0E-css"/>
-                                <include reference="4I5-PU-ltC"/>
+                                <exclude reference="4I5-PU-ltC"/>
+                                <include reference="2Ek-ex-7lB"/>
+                                <exclude reference="6l8-CT-CPa"/>
+                                <exclude reference="j5Q-9i-jJZ"/>
                             </mask>
                         </variation>
                     </view>

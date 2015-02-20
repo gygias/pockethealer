@@ -45,8 +45,11 @@
     return self;
 }
 
-- (void)handleHitWithModifier:(EventModifier *)modifier
+- (void)handleTickWithModifier:(EventModifier *)modifier firstTick:(BOOL)firstTick
 {
+    if ( ! firstTick ) // TODO, "handleHit" not called for periodic spells, why isn't there an associated effect?
+        return;
+    
     EvangelismEffect *currentEvangelism = [PriestSpell _evangelismForEntity:self.caster];
     if ( ! currentEvangelism )
     {

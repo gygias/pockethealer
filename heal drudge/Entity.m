@@ -892,7 +892,7 @@
             __block NSInteger ticksRemaining = spell.periodicDuration / spell.period;
             __block BOOL firstTick = YES;
             dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
-            dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC), timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
+            dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, timeBetweenTicks * NSEC_PER_SEC, 0.01 * NSEC_PER_SEC);
             dispatch_source_set_event_handler(timer, ^{
                 
                 [self.encounter handleSpell:spell periodicTick:YES isFirstTick:firstTick dyingEntitiesHandler:^(NSArray *dyingEntities) {
