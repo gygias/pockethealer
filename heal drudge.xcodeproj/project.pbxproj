@@ -301,6 +301,7 @@
 		637F42731A84299500B27671 /* EmpoweredArchangelEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F42721A84299500B27671 /* EmpoweredArchangelEffect.m */; };
 		638D90B81A969C7000960869 /* PassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90B71A969C7000960869 /* PassThroughView.m */; };
 		638D90BB1A96A67400960869 /* PowerWordBarrierEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */; };
+		638D90BD1A96B91C00960869 /* power_word_barrier_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -775,6 +776,7 @@
 		638D90B71A969C7000960869 /* PassThroughView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassThroughView.m; sourceTree = "<group>"; };
 		638D90B91A96A67400960869 /* PowerWordBarrierEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerWordBarrierEffect.h; sourceTree = "<group>"; };
 		638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerWordBarrierEffect.m; sourceTree = "<group>"; };
+		638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = power_word_barrier_cast.wav; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -1355,6 +1357,7 @@
 		63A37EC81A75A15B0036C9D0 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */,
 				637E8B941A954BC80002C9DC /* anti-magic_shell_cast.wav */,
 				637E8B951A954BC80002C9DC /* dancing_rune_weapon_cast.wav */,
 				637E8B7F1A9547250002C9DC /* bone_shield_cast.wav */,
@@ -1822,6 +1825,7 @@
 				63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */,
 				632074691A70E93A00AA4416 /* blood.png in Resources */,
 				637E8B461A89A2390002C9DC /* hand_spell_hit.wav in Resources */,
+				638D90BD1A96B91C00960869 /* power_word_barrier_cast.wav in Resources */,
 				637E8B6C1A92A3080002C9DC /* templars_verdict.jpg in Resources */,
 				63027B311A79F4ED0068E68A /* kargath_hit.wav in Resources */,
 				63A37ECF1A75A1A80036C9D0 /* KILJAEDEN02.wav in Resources */,

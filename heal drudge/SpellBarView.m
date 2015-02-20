@@ -189,27 +189,58 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     CGPoint midPoint = CGPointMake(rect.origin.x + ( rect.size.width / 2 ), rect.origin.y + ( rect.size.height / 2 ));
     CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
     
-    CGPoint mysteryPoint = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
+    CGPoint unitPointScaled = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
+    CGFloat slope = ( unitPointScaled.y - midPoint.y ) / ( unitPointScaled.x - midPoint.x );
+    CGPoint endPoint = {0};
+    // y = mx + b
+    // y intercept  b = y - mx
+    //              b =
+    //              x = ( y - b ) / m
+    CGFloat b = midPoint.y - slope * midPoint.x;
+    double rotatedByDegrees = ( 360 - cooldownInDegress );
+    if ( rotatedByDegrees > 315 || rotatedByDegrees <= 45 ) // solve for x along the top
+    {
+        CGFloat x = ( rect.origin.y - b ) / slope;
+        endPoint = CGPointMake(x,rect.origin.y);
+    }
+    else if ( rotatedByDegrees > 45 && rotatedByDegrees <= 135 ) // solve for y along the right
+    {
+        CGFloat y = slope * ( rect.origin.x + rect.size.width ) + b;
+        endPoint = CGPointMake( rect.origin.x + rect.size.width, y );
+    }
+    else if ( rotatedByDegrees > 135 && rotatedByDegrees <= 225 ) // solve for x along the bottom
+    {
+        CGFloat x = ( ( rect.origin.y + rect.size.height ) - b ) / slope;
+        endPoint = CGPointMake( x, rect.origin.y + rect.size.height );
+    }
+    else // solve for y along the left
+    {
+        CGFloat y = slope * ( rect.origin.x ) + b;
+        endPoint = CGPointMake( rect.origin.x, y );
+    }
+    
     // TODO SIGABRT Assertion failed: (CGFloatIsValid(x) && CGFloatIsValid(y)), function void CGPathAddLineToPoint(CGMutablePathRef, const CGAffineTransform *, CGFloat, CGFloat), file Paths/CGPath.cc, line 265. \
     x	CGFloat	3.0858984037676233E-314	3.0858984037676233E-314 \
     y	CGFloat	3.0888696197011086E-314	3.0888696197011086E-314 \
     rect	CGRect	origin=(x=0, y=90) size=(width=45, height=45) \
     unitPoint	CGPoint	(x=NaN, y=0) \
     midPoint	CGPoint	(x=3.0852801497810434E-314, y=NaN)
-    if ( isnan(mysteryPoint.x) || isnan(mysteryPoint.y) )
+    if ( isnan(endPoint.x) || isnan(endPoint.y) )
     {
         PHLogV(@"cooldown clock nan bug happened");
         return;
     }
     
-    CGContextAddLineToPoint(context, mysteryPoint.x, mysteryPoint.y); // the mystery point
-    double rotatedByDegress = ( 360 - cooldownInDegress );
-    if ( rotatedByDegress <= 90 )
+    CGContextAddLineToPoint(context, endPoint.x, endPoint.y); // the mystery point
+    if ( rotatedByDegrees <= 45 ) // TOP RIGHT
         CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
-    if ( rotatedByDegress <= 180 )
+    if ( rotatedByDegrees <= 135 ) // BOTTOM RIGHT
         CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
-    if ( rotatedByDegress <= 270 )
+    if ( rotatedByDegrees <= 225 ) // BOTTOM LEFT
         CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
+    if ( rotatedByDegrees <= 315 ) // TOP LEFT
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y);
+    
     //if ( theta >= 180 && theta <= 90 )
     //    CGContextAddLineToPoint(context, spellRect.origin.x, spellRect.origin.y);
     //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);

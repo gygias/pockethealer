@@ -36,7 +36,7 @@
         
         self.school = HolySchool;
         
-        //self.hitSoundName = @"power_word_shield_hit";
+        self.castSoundName = @"power_word_shield_cast";
     }
     return self;
 }

@@ -82,6 +82,16 @@ CGSize sRaidFrameSize = {0,0};
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
+    
+    if ( _lastRect.origin.x != rect.origin.x
+        || _lastRect.origin.y != rect.origin.y
+        || _lastRect.size.width != rect.size.width
+        || _lastRect.size.height != rect.size.height )
+    {
+        _refreshCachedValues = YES;
+        _lastRect = rect;
+    }
+    
     //PHLogV(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
     double snapshottedHealthPercentage = self.entity.currentHealthPercentage.doubleValue;
     //if ( snapshottedHealthPercentage < 1.0 )
@@ -99,6 +109,8 @@ CGSize sRaidFrameSize = {0,0};
     [self _drawStatusEffectsInRect:rect];
     [self _drawAuxResourcesInRect:rect];
     [self _drawAggroNubsInRect:rect];
+    
+    _refreshCachedValues = NO;
 }
 
 - (void)_drawBackgroundInRect:(CGRect)rect
@@ -258,22 +270,22 @@ CGSize sRaidFrameSize = {0,0};
 
 - (void)_drawRoleIconInRect:(CGRect)rect
 {
-    UIImage *roleImage = [ImageFactory imageForRole:self.entity.hdClass.role];
-    
-    if ( ! roleImage && ! self.entity.isEnemy )
-    {
-        PHLogV(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
-        [NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
-    }
+//    UIImage *roleImage = [ImageFactory imageForRole:self.entity.hdClass.role];
+//    
+//    if ( ! roleImage && ! self.entity.isEnemy )
+//    {
+//        PHLogV(@"TODO: stressed mac out of disk space renders this intermittently returning nil");
+//        [NSException raise:@"RoleImageIsNilException" format:@"role image should not be nil!"];
+//    }
     CGRect imageRect = CGRectMake(rect.origin.x + ROLE_ICON_ORIGIN_X, rect.origin.y + ROLE_ICON_ORIGIN_Y, ROLE_ICON_SIZE, ROLE_ICON_SIZE);
-    [roleImage drawInRect:imageRect];
-//    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:10] };
-//    if ( self.entity.hdClass.isHealerClass )
-//        [@"H" drawInRect:imageRect withAttributes:attributes];
-//    else if ( self.entity.hdClass.isTank )
-//        [@"T" drawInRect:imageRect withAttributes:attributes];
-//    else if ( self.entity.hdClass.isDPS )
-//        [@"D" drawInRect:imageRect withAttributes:attributes];
+//    [roleImage drawInRect:imageRect];
+    NSDictionary *attributes = @{ NSFontAttributeName : [UIFont systemFontOfSize:10] };
+    if ( self.entity.hdClass.isHealerClass )
+        [@"⚕" drawInRect:imageRect withAttributes:attributes];
+    else if ( self.entity.hdClass.isTank )
+        [@"⚐" drawInRect:imageRect withAttributes:attributes];
+    else if ( self.entity.hdClass.isDPS )
+        [@"⚔" drawInRect:imageRect withAttributes:attributes];
 }
 
 - (void)_drawTextInRect:(CGRect)rect
@@ -285,43 +297,50 @@ CGSize sRaidFrameSize = {0,0};
     shadow.shadowBlurRadius = 5;
     shadow.shadowOffset = CGSizeMake(1.5, 1.5);
     BOOL nameIsAscii = [self.entity.name canBeConvertedToEncoding:NSASCIIStringEncoding];
-    NSMutableDictionary *attributes =
-        [NSMutableDictionary dictionaryWithObjectsAndKeys:
+    
+    if ( ! _textAttributes )
+        _textAttributes =
+        [NSDictionary dictionaryWithObjectsAndKeys:
          nameIsAscii ? [UIColor whiteColor] : [UIColor blackColor], NSForegroundColorAttributeName,
          nameIsAscii ? shadow : nil, NSShadowAttributeName,
          nil];
     
-    
-    BOOL truncated = NO;
-    NSString *textToDraw = self.entity.name;
-    CGSize stringSize = [textToDraw sizeWithAttributes:attributes];
-    stringSize.width += 20;
-    while ( stringSize.width > rect.size.width && [textToDraw length] > 0 )
+    NSString *textToDraw = _textString;
+    if ( ! textToDraw )
     {
-        // TODO because these are instantiated for each draw, this is extra inefficient
-        textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
-        stringSize = [textToDraw sizeWithAttributes:attributes];
+        BOOL truncated = NO;
+        textToDraw = self.entity.name;
+        CGSize stringSize = [textToDraw sizeWithAttributes:_textAttributes];
         stringSize.width += 20;
-        truncated = YES;
-    }
-    if ( truncated )
-    {
-        textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
-        textToDraw = [textToDraw stringByAppendingString:@"…"];
-        
-        // TODO all around here
-        stringSize = [textToDraw sizeWithAttributes:attributes];
-        while ( stringSize.width > rect.size.width && [textToDraw length] > 1 )
+        while ( stringSize.width > rect.size.width && [textToDraw length] > 0 )
         {
             // TODO because these are instantiated for each draw, this is extra inefficient
-            textToDraw = [textToDraw stringByReplacingCharactersInRange:NSMakeRange([textToDraw length] - 2, 1) withString:@""];
-            stringSize = [textToDraw sizeWithAttributes:attributes];
+            textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
+            stringSize = [textToDraw sizeWithAttributes:_textAttributes];
             stringSize.width += 20;
             truncated = YES;
         }
+        if ( truncated )
+        {
+            textToDraw = [textToDraw substringToIndex:[textToDraw length] - 2];
+            textToDraw = [textToDraw stringByAppendingString:@"…"];
+            
+            // TODO all around here
+            stringSize = [textToDraw sizeWithAttributes:_textAttributes];
+            while ( stringSize.width > rect.size.width && [textToDraw length] > 1 )
+            {
+                // TODO because these are instantiated for each draw, this is extra inefficient
+                textToDraw = [textToDraw stringByReplacingCharactersInRange:NSMakeRange([textToDraw length] - 2, 1) withString:@""];
+                stringSize = [textToDraw sizeWithAttributes:_textAttributes];
+                stringSize.width += 20;
+                truncated = YES;
+            }
+        }
+        
+        _textString = textToDraw;
     }
     
-    [textToDraw drawAtPoint:namePoint withAttributes:attributes];
+    [textToDraw drawAtPoint:namePoint withAttributes:_textAttributes];
 }
 
 - (void)_drawResourceBarInRect:(CGRect)rect
@@ -391,26 +410,34 @@ CGSize sRaidFrameSize = {0,0};
     [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
         //if ( effect.drawsInFrame || ( effect.source == self.player ) )
         {
-            CGRect effectRect = CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + idx * STATUS_EFFECT_WIDTH,
-                                           rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,
-                                           STATUS_EFFECT_WIDTH,
-                                           STATUS_EFFECT_HEIGHT);
-            [effect.image drawInRect:effectRect blendMode:kCGBlendModeNormal alpha:1.0];
+            if ( _refreshCachedValues || ! _statusEffectsRects )
+            {
+                _statusEffectsRects = [NSMutableArray new];
+                NSUInteger fillIdx = 0;
+                for ( ; fillIdx < idx; fillIdx++ )
+                    _statusEffectsRects[fillIdx] = [NSNull null];
+            }
+            if ( idx >= _statusEffectsRects.count || _statusEffectsRects[idx] == [NSNull null] )
+                _statusEffectsRects[idx] = [NSValue valueWithCGRect:CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + idx * STATUS_EFFECT_WIDTH,
+                                                                               rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,
+                                                                               STATUS_EFFECT_WIDTH,
+                                                                               STATUS_EFFECT_HEIGHT)];
+            CGRect thisEffectRect = ((NSValue *)_statusEffectsRects[idx]).CGRectValue;
+            [effect.image drawInRect:thisEffectRect blendMode:kCGBlendModeNormal alpha:1.0];
             
             if ( effect.duration )
             {
                 double percentage = [[NSDate date] timeIntervalSinceDateMinusPauseTime:effect.startDate] / effect.duration;
-                [self _drawCooldownClockInRect:effectRect withPercentage:percentage];
+                [self _drawCooldownClockInRect:thisEffectRect withPercentage:percentage];
             }
             if ( effect.currentStacks.integerValue > 1 )
             {
-                static NSDictionary *sStacksAttributeDictionary = nil;
-                if ( ! sStacksAttributeDictionary )
-                    sStacksAttributeDictionary = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
+                if ( ! _stacksTextAttributeDict )
+                    _stacksTextAttributeDict = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
                                                     NSBackgroundColorAttributeName : [UIColor blackColor],
                                                     NSFontAttributeName : [UIFont systemFontOfSize:5]
                                                     };// TODO not scalable
-                [[effect.currentStacks stringValue] drawInRect:effectRect withAttributes:attributes];
+                [[effect.currentStacks stringValue] drawInRect:thisEffectRect withAttributes:_stacksTextAttributeDict];
             }
             
             if ( --maxVisibleStatusEffects == 0 )
@@ -438,15 +465,58 @@ CGSize sRaidFrameSize = {0,0};
     CGPoint midPoint = CGPointMake(rect.origin.x + ( rect.size.width / 2 ), rect.origin.y + ( rect.size.height / 2 ));
     CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
     
-    CGPoint mysteryPoint = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
-    CGContextAddLineToPoint(context, mysteryPoint.x, mysteryPoint.y); // the mystery point
-    double rotatedByDegress = ( 360 - cooldownInDegress );
-    if ( rotatedByDegress <= 90 )
+    CGPoint unitPointScaled = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
+    CGFloat slope = ( unitPointScaled.y - midPoint.y ) / ( unitPointScaled.x - midPoint.x );
+    CGPoint endPoint = {0};
+    // y = mx + b
+    // y intercept  b = y - mx
+    //              b =
+    //              x = ( y - b ) / m
+    CGFloat b = midPoint.y - slope * midPoint.x;
+    double rotatedByDegrees = ( 360 - cooldownInDegress );
+    if ( rotatedByDegrees > 315 || rotatedByDegrees <= 45 ) // solve for x along the top
+    {
+        CGFloat x = ( rect.origin.y - b ) / slope;
+        endPoint = CGPointMake(x,rect.origin.y);
+    }
+    else if ( rotatedByDegrees > 45 && rotatedByDegrees <= 135 ) // solve for y along the right
+    {
+        CGFloat y = slope * ( rect.origin.x + rect.size.width ) + b;
+        endPoint = CGPointMake( rect.origin.x + rect.size.width, y );
+    }
+    else if ( rotatedByDegrees > 135 && rotatedByDegrees <= 225 ) // solve for x along the bottom
+    {
+        CGFloat x = ( ( rect.origin.y + rect.size.height ) - b ) / slope;
+        endPoint = CGPointMake( x, rect.origin.y + rect.size.height );
+    }
+    else // solve for y along the left
+    {
+        CGFloat y = slope * ( rect.origin.x ) + b;
+        endPoint = CGPointMake( rect.origin.x, y );
+    }
+    
+    // TODO SIGABRT Assertion failed: (CGFloatIsValid(x) && CGFloatIsValid(y)), function void CGPathAddLineToPoint(CGMutablePathRef, const CGAffineTransform *, CGFloat, CGFloat), file Paths/CGPath.cc, line 265. \
+    x	CGFloat	3.0858984037676233E-314	3.0858984037676233E-314 \
+    y	CGFloat	3.0888696197011086E-314	3.0888696197011086E-314 \
+    rect	CGRect	origin=(x=0, y=90) size=(width=45, height=45) \
+    unitPoint	CGPoint	(x=NaN, y=0) \
+    midPoint	CGPoint	(x=3.0852801497810434E-314, y=NaN)
+    if ( isnan(endPoint.x) || isnan(endPoint.y) )
+    {
+        PHLogV(@"cooldown clock nan bug happened");
+        return;
+    }
+    
+    CGContextAddLineToPoint(context, endPoint.x, endPoint.y); // the mystery point
+    if ( rotatedByDegrees <= 45 ) // TOP RIGHT
         CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
-    if ( rotatedByDegress <= 180 )
+    if ( rotatedByDegrees <= 135 ) // BOTTOM RIGHT
         CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
-    if ( rotatedByDegress <= 270 )
+    if ( rotatedByDegrees <= 225 ) // BOTTOM LEFT
         CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
+    if ( rotatedByDegrees <= 315 ) // TOP LEFT
+        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y);
+    
     //if ( theta >= 180 && theta <= 90 )
     //    CGContextAddLineToPoint(context, spellRect.origin.x, spellRect.origin.y);
     //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
