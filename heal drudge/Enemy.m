@@ -185,7 +185,7 @@
     if ( ability.isPeriodic )
     {
         __block BOOL isFirstTick = YES;
-        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.periodicEffectQueue);
+        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
         dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, ability.period * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
         dispatch_source_set_event_handler(timer, ^{
             if ( self.isDead || self.stopped )
@@ -217,7 +217,7 @@
         });
         dispatch_resume(timer);
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.periodicDuration * NSEC_PER_SEC)), self.periodicEffectQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ability.periodicDuration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
             PHLog(self,@"%@ has ended",ability);
             dispatch_source_cancel(timer);
             

@@ -1162,7 +1162,7 @@ const NSString *WoWAPIBlockRatingKey = @"blockRating";
     entity.leechRating = apiStatsDict[WoWAPILeechRatingKey];
     entity.armor = apiStatsDict[WoWAPIArmorRatingKey];
     entity.parryRating = apiStatsDict[WoWAPIParryRatingKey];
-#warning TODO
+    // TODO
     //entity.dodgeRating = apiStatsDict[WoWAPIDodgeRatingKey];
     //entity.blockRating = apiStatsDict[WoWAPIBlockRatingKey];
     

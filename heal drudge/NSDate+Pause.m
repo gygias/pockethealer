@@ -29,17 +29,17 @@ static NSTimeInterval sCumulativePausedTime = 0;
 - (NSTimeInterval)timeIntervalSinceDateMinusPauseTime:(NSDate *)anotherDate
 {
     return [self timeIntervalSinceDate:anotherDate];
-    if ( sNSDatePauseDate )
-    {
-        // if i am before the pause, return the time between me and the pause
-        if ( [self compare:sNSDatePauseDate] == NSOrderedAscending )
-            return [sNSDatePauseDate timeIntervalSinceDate:self];
-        // if i am on or after the pause, return 0
-        else
-            return 0;
-    }
-    NSTimeInterval realTimeInterval = [self timeIntervalSinceDate:anotherDate];
-    return realTimeInterval - sCumulativePausedTime;
+//    if ( sNSDatePauseDate )
+//    {
+//        // if i am before the pause, return the time between me and the pause
+//        if ( [self compare:sNSDatePauseDate] == NSOrderedAscending )
+//            return [sNSDatePauseDate timeIntervalSinceDate:self];
+//        // if i am on or after the pause, return 0
+//        else
+//            return 0;
+//    }
+//    NSTimeInterval realTimeInterval = [self timeIntervalSinceDate:anotherDate];
+//    return realTimeInterval - sCumulativePausedTime;
 }
 
 @end

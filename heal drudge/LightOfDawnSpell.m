@@ -48,7 +48,6 @@
 - (BOOL)addModifiers:(NSMutableArray *)modifiers
 {
     if ( self.caster.currentAuxiliaryResources.doubleValue < 1 )
-#warning ss
         [NSException raise:@"WordOfGloryHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
     NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )

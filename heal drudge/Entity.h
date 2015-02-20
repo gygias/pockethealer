@@ -48,7 +48,6 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL isPlayer;
 @property BOOL isPlayingPlayer;
 @property BOOL isEnemy;
-@property (nonatomic,retain) dispatch_queue_t periodicEffectQueue;
 @property BOOL stopped;
 @property NSArray *spells;
 @property (readonly) BOOL hasAggro;

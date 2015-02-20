@@ -17,11 +17,16 @@
 typedef void(^TargetedPlayerBlock)(Entity *);
 
 @interface RaidFramesView : UIView
+{
+    CGRect _lastRect;
+    BOOL _refreshCachedValues;
+    NSArray *_raidFrames;
+}
 
 @property (nonatomic,copy) TargetedPlayerBlock targetedPlayerBlock;
 
 @property Entity *player; // currently only for passing it to RaidFrame
-@property (strong,retain) Raid *raid;
+@property (nonatomic,retain) Raid *raid;
 @property NSUInteger selectedFrame;
 @property Encounter *encounter; // this is only necessary for ferrying encounter to RaidFrameView for isTargeted block
 

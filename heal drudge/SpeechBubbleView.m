@@ -18,7 +18,7 @@ static CGFloat sSpeechBubbleInset = 10;
 - (void)drawRect:(CGRect)rect {
     CGRect contentFrame = self.referenceView.frame;
     //contentFrame.size.width = 225;
-    NSArray *constraints = [self constraints];
+    //NSArray *constraints = [self constraints];
     
     // Drawing code
     CGContextRef context = UIGraphicsGetCurrentContext();

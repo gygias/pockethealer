@@ -16,7 +16,7 @@ typedef BOOL(^EnemyTouchedBlock)(Enemy *);
 
 @interface EnemyFrameView : UIView
 
-@property Enemy *enemy;
+@property (nonatomic,retain) Enemy *enemy;
 @property (nonatomic,copy) EnemyTouchedBlock enemyTouchedHandler;
 
 @end

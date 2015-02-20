@@ -190,7 +190,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
     
     CGPoint mysteryPoint = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
-#warning TODO SIGABRT Assertion failed: (CGFloatIsValid(x) && CGFloatIsValid(y)), function void CGPathAddLineToPoint(CGMutablePathRef, const CGAffineTransform *, CGFloat, CGFloat), file Paths/CGPath.cc, line 265. \
+    // TODO SIGABRT Assertion failed: (CGFloatIsValid(x) && CGFloatIsValid(y)), function void CGPathAddLineToPoint(CGMutablePathRef, const CGAffineTransform *, CGFloat, CGFloat), file Paths/CGPath.cc, line 265. \
     x	CGFloat	3.0858984037676233E-314	3.0858984037676233E-314 \
     y	CGFloat	3.0888696197011086E-314	3.0888696197011086E-314 \
     rect	CGRect	origin=(x=0, y=90) size=(width=45, height=45) \

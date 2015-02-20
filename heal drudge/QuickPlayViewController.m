@@ -135,7 +135,9 @@
         BOOL doCast = [encounter.player validateSpell:spell asSource:YES otherEntity:target message:&message invalidDueToCooldown:NULL];
         if ( doCast )
         {
-            [encounter.player castSpell:spell withTarget:target];
+            dispatch_async(self.encounter.encounterQueue, ^{
+                [encounter.player castSpell:spell withTarget:target];
+            });
         }
         else
             PHLogV(@"%@'s %@ failed: %@",encounter.player,spell,message);
@@ -164,7 +166,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSDate *showDate = [NSDate date];
                 self.currentSpeechBubble = vc;
-                self.currentSpeechBubble.dismissHandler = ^(SpeechBubbleViewController *vc) {
+                vc.dismissHandler = ^(SpeechBubbleViewController *vc) {
                     NSTimeInterval shownInterval = [[NSDate date] timeIntervalSinceDate:showDate];
                     PHLogV(@"adding pause time: %0.2f",shownInterval);
                     [NSDate unpause];

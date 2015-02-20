@@ -48,7 +48,6 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     if ( self.caster.currentAuxiliaryResources.doubleValue < 3 )
-#warning ss
         [NSException raise:@"SOTRHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
     NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
@@ -60,7 +59,7 @@
     sotr.holyPower = resourcesToConsume;
     [self.caster addStatusEffect:sotr source:self.caster];
     
-    BastionOfGloryEffect *bog = [self _existingEffectWithClass:[BastionOfGloryEffect class]];
+    BastionOfGloryEffect *bog = (BastionOfGloryEffect *)[self _existingEffectWithClass:[BastionOfGloryEffect class]];
     if ( bog )
         [bog addStack];
     else

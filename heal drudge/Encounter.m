@@ -119,9 +119,11 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 
 - (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler
 {
-    // while implementing cast bar, encounter isn't started
-    if ( ! _encounterQueue )
-        return;
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    if ( dispatch_get_current_queue() != self.encounterQueue )
+        [NSException raise:@"HandleSpellNotOnEncounterQueue" format:@"We're on some other queue!"];
+#pragma GCC diagnostic pop
     
     // is this ok for multitarget spells?
     NSMutableArray *modifiers = [NSMutableArray new];
@@ -150,43 +152,42 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         });
     }
     
-    void (^stuffBlock)();
-    stuffBlock = ^() {
+    PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick? (firstTick?@"'s channel is first-ticking":@"'s channel is ticking"):@" is casting",spell.name,spell.target);
     
-        PHLog(spell,@"%@%@ %@ on %@!",spell.caster,periodicTick? (firstTick?@"'s channel is first-ticking":@"'s channel is ticking"):@" is casting",spell.name,spell.target);
-        
-        if ( spell.caster.isEnemy && self.enemyAbilityHandler )
-            self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
-        
-#warning this flattens 'modifier blocks' to be executed once for all targets, even those \
-        they didn't originate from below, which will probably be problematic for something
-        EventModifier *netMod = [EventModifier netModifierWithSpell:spell modifiers:modifiers];
-        //PHLog(spell, @"MODIFIERS %@ -> %@",modifiers,netMod);
-        
-        // apply standard crit chance
-        if ( ! netMod.crit )
+    if ( spell.caster.isEnemy && self.enemyAbilityHandler )
+        self.enemyAbilityHandler((Enemy *)spell.caster,(Ability *)spell);
+    
+    // TODO this flattens 'modifier blocks' to be executed once for all targets, even those \
+    they didn't originate from below, which will probably be problematic for something
+    EventModifier *netMod = [EventModifier netModifierWithSpell:spell modifiers:modifiers];
+    //PHLog(spell, @"MODIFIERS %@ -> %@",modifiers,netMod);
+    
+    // apply standard crit chance
+    if ( ! netMod.crit )
+    {
+        NSNumber *critChance = [ItemLevelAndStatsConverter critChanceWithEntity:spell.caster];
+        NSUInteger critChance10000 = critChance.doubleValue * 10000.0;
+        // .05 -> 10000.05
+        NSUInteger critRoll = arc4random() % 10000;
+        BOOL standardCrit = ( critRoll <= critChance10000 );
+        if ( standardCrit )
         {
-            NSNumber *critChance = [ItemLevelAndStatsConverter critChanceWithEntity:spell.caster];
-            NSUInteger critChance10000 = critChance.doubleValue * 10000.0;
-            // .05 -> 10000.05
-            NSUInteger critRoll = arc4random() % 10000;
-            BOOL standardCrit = ( critRoll <= critChance10000 );
-            if ( standardCrit )
-            {
-                PHLog(spell,@"%@ gained a standard crit",spell);
-                netMod.crit = YES;
-            }
+            PHLog(spell,@"%@ gained a standard crit",spell);
+            netMod.crit = YES;
         }
-        
-        [spell.caster handleSpell:spell modifier:netMod];
-        [spell.target handleSpell:spell modifier:netMod];
-        
-        if ( spell.castSoundName )
-            [SoundManager playSpellHit:spell];
-        if ( spell.hitSoundName )
-            [SoundManager playSpellHit:spell];
-        
-        NSMutableArray *allTargets = [NSMutableArray new];
+    }
+    
+    [spell.caster handleSpell:spell modifier:netMod];
+    [spell.target handleSpell:spell modifier:netMod];
+    
+    if ( spell.castSoundName )
+        [SoundManager playSpellHit:spell];
+    if ( spell.hitSoundName )
+        [SoundManager playSpellHit:spell];
+    
+    NSMutableArray *allTargets = [NSMutableArray new];
+    if ( ! spell.caster.isEnemy ) // XXX TODO big kludge _dispatchAbility has its own "determine targets" logic
+    {
         if ( spell.isSmart )
         {
             NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
@@ -219,97 +220,87 @@ static Encounter *sYouAreATerribleProgrammer = nil;
             if ( subTargets.count )
                 [allTargets addObjectsFromArray:subTargets];
         }
-        else if ( spell.targeted )
-            [allTargets addObject:spell.target];
-        else
-            [allTargets addObject:spell.caster];
-        
-        Entity *originalTarget = spell.target;
-        [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
-            BOOL cheatedDeath = NO;
-            if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
-            {
-                if ( spell.spellType == BeneficialOrDeterimentalSpell )
-                {
-                    if ( spell.target.isPlayer )
-                        [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
-                    else
-                        cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
-                }
-                else if ( spell.spellType == DetrimentalSpell )
-                    cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
-                else // ( spell.spellType == BeneficialSpell )
-                    [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
-            }
-            
-            spell.target = aTarget;
-            
-            if ( periodicTick )
-                [spell handleTickWithModifier:netMod firstTick:firstTick];
-            else
-                [spell handleHitWithModifier:netMod];
-            
-            [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
-                block(spell,cheatedDeath);
-            }];
-            
-            [self.advisor handleSpell:spell event:nil modifier:netMod];
-        }];
-        spell.target = originalTarget;
-        
-        if ( spell.grantsAuxResources )
-            [spell.caster addAuxResources:spell.grantsAuxResources];
-        
-        if ( spell.target.currentHealth.integerValue <= 0 )
+    }
+    if ( spell.caster.isEnemy || ( allTargets.count == 0 && spell.targeted ) ) // Kludge fucking gross
+        [allTargets addObject:spell.target];
+    else
+        [allTargets addObject:spell.caster];
+    
+    Entity *originalTarget = spell.target;
+    [allTargets enumerateObjectsUsingBlock:^(Entity *aTarget, NSUInteger idx, BOOL *stop) {
+        BOOL cheatedDeath = NO;
+        if ( ! aTarget.isDead || spell.canBeCastOnDeadEntities )
         {
-            [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:spell.target fromSpell:spell];
-            }];
-            [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
-                [obj handleDeathOfEntity:spell.target fromSpell:spell];
-            }];
-            
-            if ( dyingEntitiesHandler )
-                dyingEntitiesHandler( @[ spell.target ] );
-            
-            // source has to choose a new target
-            if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
+            if ( spell.spellType == BeneficialOrDeterimentalSpell )
             {
-                PHLog(spell,@"the encounter is over because there are no targets for %@",spell.caster);
-                [self endEncounter];
+                if ( spell.target.isPlayer )
+                    [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
+                else
+                    cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
             }
-            else // TODO is there some ability by which players could kill themselves as the last one alive?
-            {
-                __block BOOL someEnemyIsAlive = NO;
-                [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
-                    if ( ! obj.isDead )
-                    {
-                        someEnemyIsAlive = YES;
-                        *stop = YES;
-                    }
-                }];
-                if ( ! someEnemyIsAlive )
-                {
-                    PHLog(spell,@"the encounter is over because all enemies are dead");
-                    [self endEncounter];
-                    return;
-                }
-            }
+            else if ( spell.spellType == DetrimentalSpell )
+                cheatedDeath = [self doDamage:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
+            else // ( spell.spellType == BeneficialSpell )
+                [self doHealing:spell source:spell.caster target:aTarget modifier:netMod periodic:periodicTick];
         }
         
-        if ( self.encounterUpdatedHandler )
-            self.encounterUpdatedHandler(self);
-    };
+        spell.target = aTarget;
+        
+        if ( periodicTick )
+            [spell handleTickWithModifier:netMod firstTick:firstTick];
+        else
+            [spell handleHitWithModifier:netMod];
+        
+        [netMod.blocks enumerateObjectsUsingBlock:^(EventModifierBlock block, NSUInteger idx, BOOL *stop) {
+            block(spell,cheatedDeath);
+        }];
+        
+        [self.advisor handleSpell:spell event:nil modifier:netMod];
+    }];
+    spell.target = originalTarget;
     
-    if ( dispatch_get_current_queue() != self.encounterQueue )
+    if ( spell.grantsAuxResources )
+        [spell.caster addAuxResources:spell.grantsAuxResources];
+    
+    if ( spell.target.currentHealth.integerValue <= 0 )
     {
-        //PHLogV(@"yoyo dispatch");
-        dispatch_async(self.encounterQueue, ^{
-            stuffBlock();
-        });
+        [self.raid.players enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+            [obj handleDeathOfEntity:spell.target fromSpell:spell];
+        }];
+        [self.enemies enumerateObjectsUsingBlock:^(Entity *obj, NSUInteger idx, BOOL *stop) {
+            [obj handleDeathOfEntity:spell.target fromSpell:spell];
+        }];
+        
+        if ( dyingEntitiesHandler )
+            dyingEntitiesHandler( @[ spell.target ] );
+        
+        // source has to choose a new target
+        if ( spell.caster.isEnemy && ! [(Enemy *)spell.caster targetNextThreatWithEncounter:self] )
+        {
+            PHLog(spell,@"the encounter is over because there are no targets for %@",spell.caster);
+            [self endEncounter];
+        }
+        else // TODO is there some ability by which players could kill themselves as the last one alive?
+        {
+            __block BOOL someEnemyIsAlive = NO;
+            [self.enemies enumerateObjectsUsingBlock:^(Enemy *obj, NSUInteger idx, BOOL *stop) {
+                if ( ! obj.isDead )
+                {
+                    someEnemyIsAlive = YES;
+                    *stop = YES;
+                }
+            }];
+            if ( ! someEnemyIsAlive )
+            {
+                PHLog(spell,@"the encounter is over because all enemies are dead");
+                [self endEncounter];
+                return;
+            }
+        }
     }
-    else
-        stuffBlock();
+    
+    if ( self.encounterUpdatedHandler )
+        self.encounterUpdatedHandler(self);
 }
 
 - (NSArray *)_smartTargetsForSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target

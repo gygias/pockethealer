@@ -29,7 +29,6 @@
 @synthesize currentHealth = _currentHealth,
             currentResources = _currentResources,
             statusEffects = _statusEffects,
-            periodicEffectQueue = _periodicEffectQueue,
             hdClass = _hdClass;
 
 - (void)setHdClass:(HDClass *)hdClass
@@ -40,17 +39,6 @@
 - (void)initializeSpells
 {
     self.spells = [Spell castableSpellsForCharacter:self];
-}
-
-- (dispatch_queue_t)periodicEffectQueue
-{
-    if ( ! _periodicEffectQueue )
-    {
-        NSString *queueName = [NSString stringWithFormat:@"%@-PeriodicEffectQueue",self];
-        _periodicEffectQueue = dispatch_queue_create([queueName UTF8String], 0);
-    }
-    
-    return _periodicEffectQueue;
 }
 
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
@@ -281,7 +269,6 @@
             }
         }];
         
-        #warning TODO, MAJOR TODO, this access is not safe, have crashed with index out of bounds exception
         [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
             Effect *effect = self.statusEffects[idx];
             [self consumeStatusEffect:effect];

@@ -39,7 +39,6 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     if ( self.caster.currentAuxiliaryResources.doubleValue < 3 )
-#warning tv
         [NSException raise:@"TVHasNoAuxResourcesException" format:@"%@ only has %@ aux resources!",self.caster,self.caster.currentAuxiliaryResources];
     NSNumber *resourcesToConsume = self.caster.currentAuxiliaryResources;
     if ( self.caster.currentAuxiliaryResources.doubleValue >= 3 )
