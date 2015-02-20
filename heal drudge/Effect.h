@@ -29,6 +29,8 @@ typedef NS_ENUM(NSInteger, EffectType) {
     BeneficialOrDetrimentalEffect
 };
 
+typedef void(^EffectTimeoutBlock)();
+
 @interface Effect : NSObject
 
 @property EffectSchool school;
@@ -37,6 +39,7 @@ typedef NS_ENUM(NSInteger, EffectType) {
 @property NSString *tooltip;
 @property Entity *owner;
 @property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
+@property (nonatomic,copy) EffectTimeoutBlock timeoutHandler;
 @property NSNumber *maxStacks;
 @property NSNumber *currentStacks;
 @property NSNumber *tauntAtStacks;
@@ -70,9 +73,10 @@ typedef NS_ENUM(NSInteger, EffectType) {
 - (void)handleSpell:(Spell *)spell modifier:(EventModifier *)modifier;
 
 // our own periodic tick
-- (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick;
+- (void)handleTick:(BOOL)isInitialTick;
 
-- (BOOL)handleAdditionWithOwner:(Entity *)owner;
+- (BOOL)validateOwner:(Entity *)owner;
+- (void)handleStart;
 - (void)handleConsumptionWithOwner:(Entity *)owner;
 - (void)handleRemovalWithOwner:(Entity *)owner;
 

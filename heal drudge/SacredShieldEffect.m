@@ -33,9 +33,9 @@
     return self;
 }
 
-- (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick
+- (void)handleTick:(BOOL)isInitialTick
 {
-    [super handleTickWithOwner:owner isInitialTick:isInitialTick];
+    [super handleTick:isInitialTick];
     
     // apply absorb
     SacredShieldAbsorbEffect *ssa = [SacredShieldAbsorbEffect new];
@@ -43,7 +43,7 @@
     if ( self.source.hdClass.specID == HDRETPALADIN )
         theAbsorb = theAbsorb * 0.7;
     ssa.absorb = @(theAbsorb);
-    [owner addStatusEffect:ssa source:owner];
+    [self.owner addStatusEffect:ssa source:self.owner];
 }
 
 @end

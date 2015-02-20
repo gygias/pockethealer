@@ -35,9 +35,9 @@
     return self;
 }
 
-- (BOOL)handleAdditionWithOwner:(Entity *)owner
+- (BOOL)validateOwner:(Entity *)owner
 {
-    if ( ! [super handleAdditionWithOwner:owner] )
+    if ( ! [super validateOwner:owner] )
         return NO;
     
     [owner.statusEffects enumerateObjectsUsingBlock:^(Effect *obj, NSUInteger idx, BOOL *stop) {

@@ -451,6 +451,13 @@ CGSize sRaidFrameSize = {0,0};
     //CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
     CGContextRef context = UIGraphicsGetCurrentContext();
     
+    if ( percentage < 0 || percentage > 1 )
+    {
+        //[NSException raise:@"PercentageOutOfBoundsException" format:@"%@",self.entity];
+        PHLogV(@"Bug: RaidFrameView cooldown clock percentage out of bounds, will correct: %0.5f, %@",percentage,self.entity);
+        percentage = percentage - ((int)percentage);
+    }
+    
     double cooldownInDegress = percentage * 360.0;
     double theta = ( cooldownInDegress + 90 );
     if ( theta > 360 )
@@ -474,24 +481,25 @@ CGSize sRaidFrameSize = {0,0};
     //              x = ( y - b ) / m
     CGFloat b = midPoint.y - slope * midPoint.x;
     double rotatedByDegrees = ( 360 - cooldownInDegress );
+    CGFloat x = 0, y = 0;
     if ( rotatedByDegrees > 315 || rotatedByDegrees <= 45 ) // solve for x along the top
     {
-        CGFloat x = ( rect.origin.y - b ) / slope;
+        x = ( rect.origin.y - b ) / slope;
         endPoint = CGPointMake(x,rect.origin.y);
     }
     else if ( rotatedByDegrees > 45 && rotatedByDegrees <= 135 ) // solve for y along the right
     {
-        CGFloat y = slope * ( rect.origin.x + rect.size.width ) + b;
+        y = slope * ( rect.origin.x + rect.size.width ) + b;
         endPoint = CGPointMake( rect.origin.x + rect.size.width, y );
     }
     else if ( rotatedByDegrees > 135 && rotatedByDegrees <= 225 ) // solve for x along the bottom
     {
-        CGFloat x = ( ( rect.origin.y + rect.size.height ) - b ) / slope;
+        x = ( ( rect.origin.y + rect.size.height ) - b ) / slope;
         endPoint = CGPointMake( x, rect.origin.y + rect.size.height );
     }
     else // solve for y along the left
     {
-        CGFloat y = slope * ( rect.origin.x ) + b;
+        y = slope * ( rect.origin.x ) + b;
         endPoint = CGPointMake( rect.origin.x, y );
     }
     

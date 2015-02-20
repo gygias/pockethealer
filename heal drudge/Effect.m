@@ -42,14 +42,59 @@
 {
 }
 
-- (void)handleTickWithOwner:(Entity *)owner isInitialTick:(BOOL)isInitialTick
+- (void)handleTick:(BOOL)isInitialTick
 {
 }
 
-- (BOOL)handleAdditionWithOwner:(Entity *)owner
+- (BOOL)validateOwner:(Entity *)owner
 {
-    [SoundManager playEffectHit:self];
     return YES;
+}
+
+- (void)handleStart
+{
+    if ( self.periodicTick.doubleValue > 0 )
+    {
+        [self schedulePeriodic];
+    }
+    else
+    {
+        [self refreshTimeout];
+    }
+}
+
+- (void)schedulePeriodic
+{
+    self.startDate = [NSDate date];
+    unsigned long totalTicks = self.duration / self.periodicTick.unsignedLongValue;
+    __block unsigned long thisTick = 1;
+    self.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.owner.encounter.encounterQueue);
+    dispatch_source_set_timer(self.periodicTickSource, DISPATCH_TIME_NOW, self.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(self.periodicTickSource, ^{
+        //unsigned long ticks = dispatch_source_get_data(statusEffect.periodicTickSource);
+        [self handleTick:( thisTick == 1 )];
+        if ( thisTick == totalTicks )
+        {
+            dispatch_source_cancel(self.periodicTickSource);
+            self.periodicTickSource = NULL;
+            self.timeoutHandler();
+        }
+        
+        thisTick++;
+    });
+    dispatch_resume(self.periodicTickSource);
+    PHLog(self,@"%@ will tick %lu times every %0.2f seconds and time out in %0.2f seconds",self,totalTicks,self.periodicTick.doubleValue,self.duration);
+}
+
+- (void)refreshTimeout
+{
+    PHLog(self,@"%@ will time out in %0.2f seconds",self,self.duration);
+    NSDate *thisStartDate = [NSDate date];
+    self.startDate = thisStartDate;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.duration * NSEC_PER_SEC)), self.owner.encounter.encounterQueue, ^{
+        if ( thisStartDate == self.startDate )
+            self.timeoutHandler();
+    });
 }
 
 - (void)handleConsumptionWithOwner:(Entity *)owner
@@ -66,7 +111,7 @@
 {
     if ( self.currentStacks.integerValue < self.maxStacks.integerValue )
         self.currentStacks = @(self.currentStacks.integerValue + 1);
-    self.startDate = [NSDate date];
+    [self refreshTimeout];
     PHLog(self.source,@"%@ has gained a stack -> %@",self,self.currentStacks);
 }
 

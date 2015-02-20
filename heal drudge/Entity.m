@@ -332,57 +332,28 @@
         _statusEffects = [NSMutableArray new];
     
     // TODO this callout should not exist merely to handle an effect which can't have multiple applications to the same target
-    if ( ! [statusEffect handleAdditionWithOwner:self] )
+    if ( ! [statusEffect validateOwner:self] )
     {
         PHLog(self,@"%@ says no to addition to %@ from %@",statusEffect,self,source);
         return;
     }
     
-    NSDate *thisStartDate = [NSDate date];
     statusEffect.owner = self;
-    statusEffect.startDate = thisStartDate;
     statusEffect.source = source;
+    statusEffect.timeoutHandler = ^{
+        if ( [_statusEffects containsObject:statusEffect] )
+        {
+            PHLog(self,@"%@'s %@ has timed out",self,statusEffect);
+            [(NSMutableArray *)_statusEffects removeObject:statusEffect];
+        }
+        else
+            PHLog(self,@"something else seems to have removed %@'s %@",self,statusEffect);
+    };
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
-    PHLog(self,@"%@ is affected by %@",self,statusEffect);
     
-    if ( statusEffect.periodicTick.doubleValue > 0 )
-    {
-        unsigned long totalTicks = statusEffect.duration / statusEffect.periodicTick.unsignedLongValue;
-        __block unsigned long thisTick = 1;
-        statusEffect.periodicTickSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
-        dispatch_source_set_timer(statusEffect.periodicTickSource, DISPATCH_TIME_NOW, statusEffect.periodicTick.doubleValue * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
-        dispatch_source_set_event_handler(statusEffect.periodicTickSource, ^{
-            //unsigned long ticks = dispatch_source_get_data(statusEffect.periodicTickSource);
-            [statusEffect handleTickWithOwner:self isInitialTick:( thisTick == 1 )];
-            if ( thisTick == totalTicks )
-            {
-                dispatch_source_cancel(statusEffect.periodicTickSource);
-                statusEffect.periodicTickSource = NULL;
-                
-                if ( [_statusEffects containsObject:statusEffect] )
-                {
-                    PHLog(self,@"%@ on %@ has timed out",statusEffect,self);
-                    [(NSMutableArray *)_statusEffects removeObject:statusEffect];
-                }
-                else
-                    PHLog(self,@"%@ on %@ was removed some other way",statusEffect,self);
-            }
-            
-            thisTick++;
-        });
-        dispatch_resume(statusEffect.periodicTickSource);
-        PHLog(self,@"%@ will tick %lu times every %0.2f seconds and time out in %0.2f seconds",statusEffect,totalTicks,statusEffect.periodicTick.doubleValue,statusEffect.duration);
-    }
-    else
-    {
-        PHLog(self,@"%@ will time out in %0.2f seconds",statusEffect,statusEffect.duration);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(statusEffect.duration * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-            if ( statusEffect.startDate == thisStartDate )
-                [(NSMutableArray *)_statusEffects removeObject:statusEffect];
-            else
-                PHLog(self,@"something else seems to have removed %@'s %@",self,statusEffect);
-        });
-    }
+    [statusEffect handleStart];
+    
+    PHLog(self,@"%@ is affected by %@",self,statusEffect);
 }
 
 - (void)consumeStatusEffect:(Effect *)effect absolute:(BOOL)absolute
