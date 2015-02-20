@@ -23,7 +23,7 @@
         self.cooldown = @15;
         self.spellType = BeneficialSpell;
         self.castableRange = @0;
-        self.hitRange = @0;
+        self.hitRange = @15;
         
         self.castTime = @0;
         self.manaCost = @( 0.02 * caster.baseMana.floatValue );

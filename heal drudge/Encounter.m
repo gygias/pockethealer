@@ -47,9 +47,9 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     NSInteger delay = 1;
     [SoundManager playCountdownWithStartIndex:@(delay)];
     
+    _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay + 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
         
         [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [(Entity *)obj beginEncounter:self];
@@ -168,6 +168,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         [SoundManager playSpellHit:spell];
     
     NSMutableArray *allTargets = [NSMutableArray new];
+    BOOL subHandled = YES;
     if ( ! spell.caster.isEnemy ) // XXX TODO big kludge _dispatchAbility has its own "determine targets" logic
     {
         if ( spell.isSmart )
@@ -186,26 +187,32 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         {
             NSArray *subTargets = nil;
             
-            if ( spell.hitRange.doubleValue >= 40 )
+            if ( spell.hitRange.doubleValue >= 30 )
                 subTargets = self.raid.players;
             else
             {
-                Entity *reticleTarget = spell.caster.target ? spell.caster.target : spell.caster;
-                if ( reticleTarget.hdClass.isRanged )
+                Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
+                if ( originEntity.hdClass.isRanged )
                     subTargets = self.raid.rangePlayers;
                 else
                     subTargets = self.raid.meleePlayers;
-                    ;
-                double percentCovered = spell.hitRange.doubleValue / 15.0;
-                subTargets = [subTargets arrayByRandomlyRemovingNObjects:(NSUInteger)( ( 1 - percentCovered ) * subTargets.count )];
+                double percentCovered = spell.hitRange.doubleValue / 10.0;
+                if ( percentCovered > 1 )
+                    percentCovered = 1;
+                NSUInteger nRemovedByRange = (NSUInteger)( ( 1 - percentCovered ) * subTargets.count );
+                subTargets = [subTargets arrayByRandomlyRemovingNObjects:nRemovedByRange];
+                if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
+                    subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
             }
             if ( subTargets.count )
                 [allTargets addObjectsFromArray:subTargets];
         }
+        else
+            subHandled = NO;
     }
-    if ( spell.caster.isEnemy || ( allTargets.count == 0 && spell.targeted ) ) // Kludge fucking gross
+    if ( spell.caster.isEnemy && !subHandled ) // Kludge fucking gross
         [allTargets addObject:spell.target];
-    else
+    else if ( !subHandled )
         [allTargets addObject:spell.caster];
     
     Entity *originalTarget = spell.target;

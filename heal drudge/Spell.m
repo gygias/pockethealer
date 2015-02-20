@@ -13,6 +13,8 @@
 
 #import "Entity.h"
 
+@import ObjectiveC.runtime;
+
 const NSString *SpellLevelLow = @"low";
 const NSString *SpellLevelMedium = @"medium";
 const NSString *SpellLevelHigh = @"high";
@@ -75,9 +77,8 @@ const NSString *SpellLevelHigh = @"high";
 + (NSArray *)castableSpellsForCharacter:(Entity *)player
 {
     NSMutableArray *castableSpells = [NSMutableArray new];
-    for ( NSString *spellName in [self _spellNames] )
+    for ( Class spellClass in [self _spellClasses] )
     {
-        Class spellClass = NSClassFromString(spellName);
         Spell *spell = [[spellClass alloc] initWithCaster:player];
         if ( spell )
             [castableSpells addObject:spell];
@@ -86,64 +87,105 @@ const NSString *SpellLevelHigh = @"high";
     return castableSpells;
 }
 
-+ (NSArray *)_spellNames
+static NSArray *gSpellClasses = nil;
++ (NSArray *)_spellClasses
 {
-    return @[
-             @"PowerWordShieldSpell",
-             @"HolyFireSpell",
-             @"SmiteSpell",
-             @"HealSpell",
-             @"FlashHealSpell",
-             @"ArchangelSpell",
-             @"DivineStarSpell",
-             @"PrayerOfMendingSpell",
-             @"PrayerOfHealingSpell",
-             @"PenanceSpell",
-             @"PainSuppressionSpell",
-             @"PowerWordBarrierSpell",
-             @"MindBenderSpell",
-             
-             @"DivineProtectionSpell",
-             @"SacredShieldSpell",
-             @"CrusaderStrikeSpell",
-             @"GuardianOfAncientKingsSpell",
-             @"ShieldOfTheRighteousSpell",
-             @"WordOfGlorySpell",
-             @"AvengersShieldSpell",
-             @"LayOnHandsSpell",
-             @"JudgementSpell",
-             @"ArdentDefenderSpell",
-             @"ReckoningSpell",
-             
-             @"HolyLightSpell",
-             @"FlashOfLightSpell",
-             @"HolyShockSpell",
-             @"LightOfDawnSpell",
-             @"DevotionAuraSpell",
-             @"AvengingWrathSpell",
-             @"HandOfSacrificeSpell",
-             
-             @"TemplarsVerdictSpell",
-             
-             @"TauntSpell",
-             
-             @"GrowlSpell",
-             
-             @"ProvokeSpell",
-             
-             @"DarkCommandSpell",
-             @"IceboundFortitudeSpell",
-             @"BoneShieldSpell",
-             @"AntiMagicShellSpell",
-             @"DancingRuneWeaponSpell",
-             
-             @"HealingTideTotemSpell",
-             
-             @"GenericHealingSpell",
-             @"GenericFastHealSpell",
-             @"GenericDamageSpell",
-             @"GenericPhysicalAttackSpell"
-             ];
+    // TODO not thread safe
+    if ( ! gSpellClasses )
+    {
+        NSMutableArray *mutableSpellClasses = [NSMutableArray new];
+        int numberOfClasses = objc_getClassList(NULL, 0);
+        Class *classList = (__unsafe_unretained Class *)malloc(numberOfClasses * sizeof(Class));
+        if ( classList )
+        {
+            numberOfClasses = objc_getClassList(classList, numberOfClasses);
+            for (int idx = 0; idx < numberOfClasses; idx++)
+            {
+                Class class = classList[idx];
+                if ( [NSStringFromClass(class) hasSuffix:@"Spell"] )
+                {
+                    Class superClassIter = class;
+                    BOOL isSpellClass = NO;
+                    while ( ( superClassIter = class_getSuperclass(superClassIter) ) )
+                    {
+                        if ( superClassIter == [Spell class] )
+                        {
+                            isSpellClass = YES;
+                            break;
+                        }
+                    }
+                    
+                    if ( isSpellClass )
+                        [mutableSpellClasses addObject:class];
+                }
+//                if ( [NSStringFromClass(class) hasSuffix:@"Spell"] &&
+//                    (class_getInstanceMethod(class, @selector(initWithCaster:))) )
+//                    [mutableSpellClasses addObject:class];
+            }
+            free(classList);
+        }
+        gSpellClasses = mutableSpellClasses;
+        PHLogV(@"Initialized %ld spell classes",gSpellClasses.count);
+    }
+    return gSpellClasses;
+    
+//    return @[
+//             @"PowerWordShieldSpell",
+//             @"HolyFireSpell",
+//             @"SmiteSpell",
+//             @"HealSpell",
+//             @"FlashHealSpell",
+//             @"ArchangelSpell",
+//             @"DivineStarSpell",
+//             @"PrayerOfMendingSpell",
+//             @"PrayerOfHealingSpell",
+//             @"PenanceSpell",
+//             @"PainSuppressionSpell",
+//             @"PowerWordBarrierSpell",
+//             @"MindBenderSpell",
+//             @"HolyNovaSpell",
+//             
+//             @"DivineProtectionSpell",
+//             @"SacredShieldSpell",
+//             @"CrusaderStrikeSpell",
+//             @"GuardianOfAncientKingsSpell",
+//             @"ShieldOfTheRighteousSpell",
+//             @"WordOfGlorySpell",
+//             @"AvengersShieldSpell",
+//             @"LayOnHandsSpell",
+//             @"JudgementSpell",
+//             @"ArdentDefenderSpell",
+//             @"ReckoningSpell",
+//             
+//             @"HolyLightSpell",
+//             @"FlashOfLightSpell",
+//             @"HolyShockSpell",
+//             @"LightOfDawnSpell",
+//             @"DevotionAuraSpell",
+//             @"AvengingWrathSpell",
+//             @"HandOfSacrificeSpell",
+//             
+//             @"TemplarsVerdictSpell",
+//             
+//             @"TauntSpell",
+//             
+//             @"GrowlSpell",
+//             
+//             @"ProvokeSpell",
+//             
+//             @"DarkCommandSpell",
+//             @"IceboundFortitudeSpell",
+//             @"BoneShieldSpell",
+//             @"AntiMagicShellSpell",
+//             @"DancingRuneWeaponSpell",
+//             
+//             @"HealingTideTotemSpell",
+//             
+//             @"GenericHealingSpell",
+//             @"GenericFastHealSpell",
+//             @"GenericDamageSpell",
+//             @"GenericPhysicalAttackSpell"
+//             ];
 }
 
 - (BOOL)isOnCooldown

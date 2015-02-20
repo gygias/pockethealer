@@ -142,6 +142,7 @@ typedef NS_ENUM(NSInteger, CooldownType) {
 // range of spell at the point of impact, 0 for N/A
 @property NSNumber *hitRange;
 @property NSNumber *maxHitTargets; // e.g. holy nova "up to 5 targets within 12 yards"
+@property BOOL hitRangeTargetable;
 @property CooldownType cooldownType;
 @property NSNumber *grantsAuxResources;
 @property BOOL isEmphasized; // draw glowing
