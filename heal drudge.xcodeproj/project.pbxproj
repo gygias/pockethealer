@@ -304,6 +304,8 @@
 		638D90BD1A96B91C00960869 /* power_word_barrier_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */; };
 		638D90C01A97ED0C00960869 /* UIView+SharedDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */; };
 		638D90C21A97F82000960869 /* Conveniences.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C11A97F82000960869 /* Conveniences.m */; };
+		638D90C51A98064200960869 /* PlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638D90C41A98064200960869 /* PlayView.xib */; };
+		638D90C81A98067A00960869 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C71A98067A00960869 /* PlayViewController.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -783,6 +785,9 @@
 		638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SharedDrawing.m"; sourceTree = "<group>"; };
 		638D90C11A97F82000960869 /* Conveniences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conveniences.m; sourceTree = "<group>"; };
 		638D90C31A97F82F00960869 /* Conveniences.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = Conveniences.h; sourceTree = "<group>"; };
+		638D90C41A98064200960869 /* PlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayView.xib; sourceTree = "<group>"; };
+		638D90C61A98067A00960869 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
+		638D90C71A98067A00960869 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -971,6 +976,9 @@
 			isa = PBXGroup;
 			children = (
 				63C5F40A1A5243E900B9AE46 /* Main.storyboard */,
+				638D90C41A98064200960869 /* PlayView.xib */,
+				638D90C61A98067A00960869 /* PlayViewController.h */,
+				638D90C71A98067A00960869 /* PlayViewController.m */,
 				632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */,
 				632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */,
 				6320739A1A708E2600AA4416 /* LoadCharacterOptionsViewController.h */,
@@ -1693,6 +1701,7 @@
 				632074791A70E93A00AA4416 /* heroism.png in Resources */,
 				63A37F151A75CAB80036C9D0 /* precast_holy_high.wav in Resources */,
 				632074191A7095B800AA4416 /* power_word_fortitude.png in Resources */,
+				638D90C51A98064200960869 /* PlayView.xib in Resources */,
 				632073FE1A7095B800AA4416 /* flash_heal.png in Resources */,
 				63027AB91A7869950068E68A /* cast_shadow.wav in Resources */,
 				632074651A70E93A00AA4416 /* arms.png in Resources */,
@@ -1901,6 +1910,7 @@
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
 				63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */,
 				634F490A1A748CB8008761C6 /* OpenWoundsEffect.m in Sources */,
+				638D90C81A98067A00960869 /* PlayViewController.m in Sources */,
 				637E8B7E1A95468E0002C9DC /* BoneShieldSpell.m in Sources */,
 				634F49071A748A65008761C6 /* BorrowedTimeEffect.m in Sources */,
 				63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */,
