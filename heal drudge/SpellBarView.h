@@ -26,4 +26,7 @@ typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 
 @property (nonatomic,retain) Entity *player;
 
+@property Spell *currentDragSpell;
+@property CGPoint currentDragPoint;
+
 @end

@@ -816,7 +816,7 @@
         double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:self.currentMoveStartDate] / self.currentMoveDuration;
         if ( currentMoveProgress > 1 )
         {
-            PHLogV(@"*** Bug during interpolatedLocation, move progress exceeds 100%% for %@",self);
+            //PHLogV(@"*** Bug during interpolatedLocation, move progress exceeds 100%% for %@",self);
             currentMoveProgress = 1;
         }
         

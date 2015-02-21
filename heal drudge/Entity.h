@@ -49,7 +49,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL isPlayingPlayer;
 @property BOOL isEnemy;
 @property BOOL stopped;
-@property NSArray *spells;
+@property NSMutableArray *spells;
 @property (readonly) BOOL hasAggro;
 @property NSDate *lastMinorCooldownUsedDate;
 @property NSDate *lastMajorCooldownUsedDate;

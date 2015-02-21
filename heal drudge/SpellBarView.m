@@ -12,6 +12,7 @@
 
 #import "Spell.h"
 #import "Entity.h"
+#import "Encounter.h"
 
 #define INTRINSIC_SPELL_HEIGHT ( [SpellBarView desiredSize].width )
 #define INTRINSIC_SPELL_WIDTH INTRINSIC_SPELL_HEIGHT
@@ -36,6 +37,49 @@
     _player = player;
     rows = ( self.player.spells.count <= 5 ? 1 : ( self.player.spells.count / SPELLS_PER_ROW + 1 ) );
     columns = SPELLS_PER_ROW;
+    
+    self.gestureRecognizers = @[ [self _startDragRecognizer] ];
+}
+
+- (UIGestureRecognizer *)_startDragRecognizer
+{
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(_longPress:)];
+    recognizer.minimumPressDuration = 1;
+    return recognizer;
+}
+
+- (void)_longPress:(UIGestureRecognizer *)recognizer
+{
+    CGPoint thePoint = [recognizer locationInView:self];
+    if ( recognizer.state == UIGestureRecognizerStateBegan )
+    {
+        self.currentDragSpell = [self _spellAtPoint:thePoint];
+        PHLogV(@"PICKED UP: %@: %@: %@",self.currentDragSpell,recognizer,PointString(thePoint));
+    }
+    else if ( recognizer.state == UIGestureRecognizerStateChanged )
+    {
+        PHLogV(@"DRAGGING: %@: %@: %@",self.currentDragSpell,recognizer,PointString(thePoint));
+        self.currentDragPoint = thePoint;
+    }
+    else if ( recognizer.state == UIGestureRecognizerStateEnded )
+    {
+        Spell *replacedSpell = [self _spellAtPoint:thePoint];
+        Spell *replacingSpell = self.currentDragSpell;
+        PHLogV(@"DROPPED: %@: %@",self,replacedSpell);
+        dispatch_async(self.player.encounter.encounterQueue, ^{
+            NSUInteger replacedIdx = [self.player.spells indexOfObject:replacedSpell];
+            NSUInteger replacingIdx = [self.player.spells indexOfObject:replacingSpell];
+            [self.player.spells removeObjectAtIndex:replacedIdx];
+            [self.player.spells insertObject:replacingSpell atIndex:replacedIdx];
+            [self.player.spells removeObjectAtIndex:replacingIdx];
+            [self.player.spells insertObject:replacedSpell atIndex:replacingIdx];
+        });
+        self.currentDragSpell = nil;
+    }
+    else
+    {
+        self.currentDragSpell = nil;
+    }
 }
 
 - (CGSize)intrinsicContentSize
@@ -133,6 +177,9 @@ CGSize sSpellBarSpellSize = {0,0};
 //#warning crashing here EXC_BAD_ACCESS objc_release (mystery object) when casting lay on hands
         // fixed http://stackoverflow.com/questions/8814718/handling-pointer-to-pointer-ownership-issues-in-arc
     }];
+    
+    if ( self.currentDragSpell )
+        [self.currentDragSpell.image drawAtPoint:self.currentDragPoint];
 }
 
 static CGFloat const kDashedBorderWidth     = (4.0f);
@@ -176,18 +223,8 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
 {
     NSSet *myTouches = [event touchesForView:self];
     UITouch *theTouch = [myTouches anyObject]; // XXX
-    
-    //NSUInteger spellIndex = ( ( [theTouch locationInView:self].x / SPELL_WIDTH );
-    CGRect rect = self.frame;
-    NSUInteger row = [theTouch locationInView:self].y / SPELL_HEIGHT;
-    NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
-    NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
-    Spell *theSpell = nil;
-    if ( spellIdx < self.player.spells.count )
-        theSpell = self.player.spells[spellIdx];
-    PHLogV(@"you began touching %@ (%lu,%lu)",theSpell,(unsigned long)row,(unsigned long)column);
-    
-    [self setNeedsDisplay];
+    Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
+    PHLogV(@"you began touching %@",theSpell);
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -199,19 +236,23 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
 {
     NSSet *myTouches = [event touchesForView:self];
     UITouch *theTouch = [myTouches anyObject]; // XXX
+    Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
+    PHLogV(@"you stopped touching %@",theSpell);
     
-    //NSUInteger spellIndex = ( ( [theTouch locationInView:self].x / SPELL_WIDTH );
+    if ( self.spellCastAttemptHandler )
+        self.spellCastAttemptHandler(theSpell);
+}
+
+- (Spell *)_spellAtPoint:(CGPoint)point
+{
     CGRect rect = self.frame;
-    NSUInteger row = [theTouch locationInView:self].y / SPELL_HEIGHT;
-    NSUInteger column = [theTouch locationInView:self].x / SPELL_WIDTH;
+    NSUInteger row = point.y / SPELL_HEIGHT;
+    NSUInteger column = point.x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
-    PHLogV(@"you stopped touching %@ (%lu,%lu)",theSpell,(unsigned long)row,(unsigned long)column);
-    
-    if ( self.spellCastAttemptHandler )
-        self.spellCastAttemptHandler(theSpell);
+    return theSpell;
 }
 
 @end
