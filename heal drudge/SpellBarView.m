@@ -121,12 +121,12 @@ CGSize sSpellBarSpellSize = {0,0};
         if ( spell.nextCooldownDate )
         {
             double cooldownPercentage = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.nextCooldownDate] / spell.cooldown.doubleValue;
-            [self _drawCooldownClockInRect:spellRect withPercentage:cooldownPercentage];
+            [self drawCooldownClockInRect:spellRect withPercentage:cooldownPercentage];
         }
         else if ( self.player.nextGlobalCooldownDate && self.player.currentGlobalCooldownDuration > 0 )
         {
             double gcdPercentage = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.player.nextGlobalCooldownDate] / self.player.currentGlobalCooldownDuration;
-            [self _drawCooldownClockInRect:spellRect withPercentage:gcdPercentage];
+            [self drawCooldownClockInRect:spellRect withPercentage:gcdPercentage];
         }
         
         idx++;
@@ -170,84 +170,6 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
                                      rect.size.height - ( kDashedBorderWidth ));
     CGContextAddRect(context, emphasisRect);
     CGContextStrokePath(context);
-}
-
-- (void)_drawCooldownClockInRect:(CGRect)rect withPercentage:(double)percentage
-{
-    //CGFloat offset = spellRect.size.height * ( 1 - cooldownPercentage );
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    double cooldownInDegress = percentage * 360.0;
-    double theta = ( cooldownInDegress + 90 );
-    if ( theta > 360 )
-        theta -= 360;
-    double thetaRadians = theta * ( M_PI / 180 );
-    CGPoint unitPoint = CGPointMake(cos(thetaRadians), sin(thetaRadians));
-    //PHLogV(@"%0.2f'->%0.2f' (%0.2f) (%0.1f,%0.1f)",cooldownInDegress,theta,thetaRadians,unitPoint.x,unitPoint.y);
-    
-    CGContextSetFillColorWithColor(context,[UIColor cooldownClockColor].CGColor);
-    CGContextMoveToPoint(context, rect.origin.x, rect.origin.y);
-    CGContextAddLineToPoint(context, rect.origin.x + ( rect.size.width / 2 ), rect.origin.y);
-    CGPoint midPoint = CGPointMake(rect.origin.x + ( rect.size.width / 2 ), rect.origin.y + ( rect.size.height / 2 ));
-    CGContextAddLineToPoint(context, midPoint.x, midPoint.y);
-    
-    CGPoint unitPointScaled = CGPointMake(midPoint.x + ( unitPoint.x * ( rect.size.width / 2 ) ), midPoint.y - ( unitPoint.y * ( rect.size.height / 2 )));
-    CGFloat slope = ( unitPointScaled.y - midPoint.y ) / ( unitPointScaled.x - midPoint.x );
-    CGPoint endPoint = {0};
-    // y = mx + b
-    // y intercept  b = y - mx
-    //              b =
-    //              x = ( y - b ) / m
-    CGFloat b = midPoint.y - slope * midPoint.x;
-    double rotatedByDegrees = ( 360 - cooldownInDegress );
-    if ( rotatedByDegrees > 315 || rotatedByDegrees <= 45 ) // solve for x along the top
-    {
-        CGFloat x = ( rect.origin.y - b ) / slope;
-        endPoint = CGPointMake(x,rect.origin.y);
-    }
-    else if ( rotatedByDegrees > 45 && rotatedByDegrees <= 135 ) // solve for y along the right
-    {
-        CGFloat y = slope * ( rect.origin.x + rect.size.width ) + b;
-        endPoint = CGPointMake( rect.origin.x + rect.size.width, y );
-    }
-    else if ( rotatedByDegrees > 135 && rotatedByDegrees <= 225 ) // solve for x along the bottom
-    {
-        CGFloat x = ( ( rect.origin.y + rect.size.height ) - b ) / slope;
-        endPoint = CGPointMake( x, rect.origin.y + rect.size.height );
-    }
-    else // solve for y along the left
-    {
-        CGFloat y = slope * ( rect.origin.x ) + b;
-        endPoint = CGPointMake( rect.origin.x, y );
-    }
-    
-    // TODO SIGABRT Assertion failed: (CGFloatIsValid(x) && CGFloatIsValid(y)), function void CGPathAddLineToPoint(CGMutablePathRef, const CGAffineTransform *, CGFloat, CGFloat), file Paths/CGPath.cc, line 265. \
-    x	CGFloat	3.0858984037676233E-314	3.0858984037676233E-314 \
-    y	CGFloat	3.0888696197011086E-314	3.0888696197011086E-314 \
-    rect	CGRect	origin=(x=0, y=90) size=(width=45, height=45) \
-    unitPoint	CGPoint	(x=NaN, y=0) \
-    midPoint	CGPoint	(x=3.0852801497810434E-314, y=NaN)
-    if ( isnan(endPoint.x) || isnan(endPoint.y) )
-    {
-        PHLogV(@"cooldown clock nan bug happened");
-        return;
-    }
-    
-    CGContextAddLineToPoint(context, endPoint.x, endPoint.y); // the mystery point
-    if ( rotatedByDegrees <= 45 ) // TOP RIGHT
-        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y);
-    if ( rotatedByDegrees <= 135 ) // BOTTOM RIGHT
-        CGContextAddLineToPoint(context, rect.origin.x + rect.size.width, rect.origin.y + rect.size.height);
-    if ( rotatedByDegrees <= 225 ) // BOTTOM LEFT
-        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y + rect.size.height);
-    if ( rotatedByDegrees <= 315 ) // TOP LEFT
-        CGContextAddLineToPoint(context, rect.origin.x, rect.origin.y);
-    
-    //if ( theta >= 180 && theta <= 90 )
-    //    CGContextAddLineToPoint(context, spellRect.origin.x, spellRect.origin.y);
-    //CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y + offset,spellRect.size.width,spellRect.size.height - offset);
-    //CGContextAddRect(context, rectangle);
-    CGContextFillPath(context);
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

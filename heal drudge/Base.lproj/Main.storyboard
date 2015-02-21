@@ -613,7 +613,6 @@
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="VEx-iR-Bfo" secondAttribute="trailing" id="5gz-hj-IOZ"/>
-                                    <constraint firstItem="ti6-cB-FxG" firstAttribute="trailing" secondItem="VEx-iR-Bfo" secondAttribute="leading" constant="5" id="GVu-ab-rKL"/>
                                     <constraint firstItem="bHk-7k-FWl" firstAttribute="top" secondItem="ti6-cB-FxG" secondAttribute="bottom" constant="5" id="K6t-V3-9rf">
                                         <variation key="heightClass=compact" constant="5"/>
                                     </constraint>

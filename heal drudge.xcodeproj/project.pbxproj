@@ -302,6 +302,8 @@
 		638D90B81A969C7000960869 /* PassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90B71A969C7000960869 /* PassThroughView.m */; };
 		638D90BB1A96A67400960869 /* PowerWordBarrierEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */; };
 		638D90BD1A96B91C00960869 /* power_word_barrier_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */; };
+		638D90C01A97ED0C00960869 /* UIView+SharedDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */; };
+		638D90C21A97F82000960869 /* Conveniences.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C11A97F82000960869 /* Conveniences.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -777,6 +779,10 @@
 		638D90B91A96A67400960869 /* PowerWordBarrierEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerWordBarrierEffect.h; sourceTree = "<group>"; };
 		638D90BA1A96A67400960869 /* PowerWordBarrierEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerWordBarrierEffect.m; sourceTree = "<group>"; };
 		638D90BC1A96B91C00960869 /* power_word_barrier_cast.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = power_word_barrier_cast.wav; sourceTree = "<group>"; };
+		638D90BE1A97ED0C00960869 /* UIView+SharedDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SharedDrawing.h"; sourceTree = "<group>"; };
+		638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SharedDrawing.m"; sourceTree = "<group>"; };
+		638D90C11A97F82000960869 /* Conveniences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conveniences.m; sourceTree = "<group>"; };
+		638D90C31A97F82F00960869 /* Conveniences.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; path = Conveniences.h; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -1008,6 +1014,8 @@
 				630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */,
 				638D90B61A969C7000960869 /* PassThroughView.h */,
 				638D90B71A969C7000960869 /* PassThroughView.m */,
+				638D90BE1A97ED0C00960869 /* UIView+SharedDrawing.h */,
+				638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1517,6 +1525,8 @@
 				630B997F1A86C51C00B186CA /* NSDate+Pause.m */,
 				630B99811A86C61C00B186CA /* Advisor.h */,
 				630B99821A86C61C00B186CA /* Advisor.m */,
+				638D90C31A97F82F00960869 /* Conveniences.h */,
+				638D90C11A97F82000960869 /* Conveniences.m */,
 			);
 			path = "heal drudge";
 			sourceTree = "<group>";
@@ -1927,12 +1937,14 @@
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
 				63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
+				638D90C01A97ED0C00960869 /* UIView+SharedDrawing.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,
 				634F48FE1A7480FB008761C6 /* PrayerOfMendingEffect.m in Sources */,
 				6320742A1A70D2EC00AA4416 /* LoadingFromArmoryViewController.m in Sources */,
 				63A37F031A75BE230036C9D0 /* AlertTextView.m in Sources */,
 				63027AD21A798A3C0068E68A /* Entity+AI.m in Sources */,
 				63027AD81A798C1C0068E68A /* SacredShieldEffect.m in Sources */,
+				638D90C21A97F82000960869 /* Conveniences.m in Sources */,
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				63027AC81A7984440068E68A /* Entity+ProtPaladin.m in Sources */,
 				63027B0D1A79C4AD0068E68A /* AvengersShieldSpell.m in Sources */,

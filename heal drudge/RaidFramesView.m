@@ -43,30 +43,58 @@ static CGSize sMyDesiredContentSize = {0,0};
     //if ( rect.size.width != sMyDesiredContentSize.width || rect.size.height != sMyDesiredContentSize.height )
     //    PHLogV(@"(%0.2f,%0.2f) [%0.2f,%0.2f] vs [%0.2f,%0.2f]",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height,sMyDesiredContentSize.width,sMyDesiredContentSize.height);
     
-    NSUInteger idx = 0;
-    NSUInteger partySize = 5;
-    CGSize frameSize = [RaidFrameView desiredSize];
-    for ( ; idx < self.raid.players.count; idx++ )
+    if ( ! CGRectEqualToRect(_lastRect, rect) )
     {
-        Entity *thisPlayer = self.raid.players[idx];
-        NSUInteger idxParty = idx / partySize;
-        NSUInteger partyPosition = idx % partySize;
-        //PHLogV(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
-        CGRect thisRect = CGRectMake( idxParty * frameSize.width, partyPosition * frameSize.height, frameSize.width, frameSize.height );
-        RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:thisRect];
-        
-        aFrame.encounter = self.encounter;
-        BOOL (^entityIsTargetedBlock)(Entity *);
-        entityIsTargetedBlock = ^(Entity *entity) {
-            return [self.encounter entityIsTargetedByEntity:entity];
-        };
-        
-        aFrame.entity = thisPlayer;
-        aFrame.player = self.player;
-        if ( idx == self.selectedFrame )
-            aFrame.selected = YES;
-        [aFrame drawRect:thisRect];
+        _lastRect = rect;
+        _refreshCachedValues = YES;
     }
+    
+    if ( _refreshCachedValues || ! _raidFrames )
+    {
+        NSUInteger idx = 0;
+        NSUInteger partySize = 5;
+        CGSize frameSize = [RaidFrameView desiredSize];
+        NSMutableArray *mutableFrames = [NSMutableArray new];
+        for ( ; idx < self.raid.players.count; idx++ )
+        {
+            Entity *thisPlayer = self.raid.players[idx];
+            NSUInteger idxParty = idx / partySize;
+            NSUInteger partyPosition = idx % partySize;
+            //PHLogV(@"%@: party: %lu, pos: %lu",thisPlayer,idxParty,partyPosition);
+            CGRect thisRect = CGRectMake( idxParty * frameSize.width, partyPosition * frameSize.height, frameSize.width, frameSize.height );
+            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:thisRect];
+            
+            aFrame.encounter = self.encounter;
+            BOOL (^entityIsTargetedBlock)(Entity *);
+            entityIsTargetedBlock = ^(Entity *entity) {
+                return [self.encounter entityIsTargetedByEntity:entity];
+            };
+            
+            aFrame.entity = thisPlayer;
+            aFrame.player = self.player;
+            [mutableFrames addObject:aFrame];
+        }
+        
+        _raidFrames = mutableFrames;
+    }
+    
+    [_raidFrames enumerateObjectsUsingBlock:^(RaidFrameView *aFrame, NSUInteger idx, BOOL *stop) {
+        [aFrame drawRect:aFrame.frame];
+    }];
+//#define DEBUG_ORIGIN
+#ifdef DEBUG_ORIGIN
+    [_raidFrames enumerateObjectsUsingBlock:^(RaidFrameView *aFrame, NSUInteger idx, BOOL *stop) {
+        CGPoint thePoint = [self originForEntity:aFrame.entity];
+        [aFrame.entity.name drawAtPoint:thePoint withAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(ctx,5);
+        CGContextSetFillColorWithColor(ctx, [UIColor purpleColor].CGColor);
+        CGContextAddArc(ctx,thePoint.x,thePoint.y,2,0.0,M_PI*2,YES);
+        CGContextFillPath(ctx);
+    }];
+#endif
+    
+    _refreshCachedValues = NO;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -91,14 +119,23 @@ static CGSize sMyDesiredContentSize = {0,0};
     [self setNeedsDisplay];
 }
 
+- (CGPoint)absoluteOriginForEntity:(Entity *)e
+{
+    return [self convertPoint:[self originForEntity:e] toView:nil];
+}
+
 - (CGPoint)originForEntity:(Entity *)e
 {
-    NSUInteger idx = [self.raid.players indexOfObject:e];
-    NSUInteger partySize = 5;
-    CGSize frameSize = [RaidFrameView desiredSize];
-    NSUInteger idxParty = idx / partySize;
-    NSUInteger partyPosition = idx % partySize;
-    return CGPointMake(self.frame.origin.x + idxParty * frameSize.width + frameSize.width / 2, self.frame.origin.y + partyPosition * frameSize.height + frameSize.height / 2);
+    __block CGPoint thePoint = {0};
+    [_raidFrames enumerateObjectsUsingBlock:^(RaidFrameView *aFrame, NSUInteger idx, BOOL *stop) {
+        if ( aFrame.entity == e )
+        {
+            thePoint = CGPointMake(aFrame.frame.origin.x + aFrame.frame.size.width / 2,
+                                   aFrame.frame.origin.y + aFrame.frame.size.height / 2);
+            *stop = YES;
+        }
+    }];
+    return thePoint;
 }
 
 @end

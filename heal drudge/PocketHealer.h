@@ -17,5 +17,7 @@
 #import "NSCollections+Random.h"
 #import "UIColor+Extensions.h"
 #import "NSDate+Pause.h"
+#import "UIView+SharedDrawing.h"
+#import "Conveniences.h"
 
 #endif
