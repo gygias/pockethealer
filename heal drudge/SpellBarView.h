@@ -14,6 +14,9 @@
 @class Entity;
 
 typedef BOOL(^SpellCastAttemptBlock)(Spell *);
+typedef void(^SpellBarViewDragBegan)(Spell *, CGPoint);
+typedef void(^SpellBarViewDragUpdated)(Spell *, CGPoint);
+typedef void(^SpellBarViewDragEnded)(Spell *, CGPoint);
 
 @interface SpellBarView : UIView
 {
@@ -27,6 +30,8 @@ typedef BOOL(^SpellCastAttemptBlock)(Spell *);
 @property (nonatomic,retain) Entity *player;
 
 @property Spell *currentDragSpell;
-@property CGPoint currentDragPoint;
+@property (nonatomic,copy) SpellBarViewDragBegan dragBeganHandler;
+@property (nonatomic,copy) SpellBarViewDragUpdated dragUpdatedHandler;
+@property (nonatomic,copy) SpellBarViewDragEnded dragEndedHandler;
 
 @end

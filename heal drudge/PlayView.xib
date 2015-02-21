@@ -24,7 +24,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PlayView">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -265,10 +265,10 @@
                     <exclude reference="EUn-ii-82d"/>
                     <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="hGN-0n-nty"/>
+                    <exclude reference="tck-vb-sEm"/>
                     <exclude reference="M5c-vc-HUs"/>
                     <exclude reference="OfZ-k5-WLh"/>
                     <exclude reference="esU-Sd-lLn"/>
-                    <exclude reference="tck-vb-sEm"/>
                 </mask>
             </variation>
             <variation key="heightClass=compact">
@@ -279,13 +279,13 @@
                     <exclude reference="b0e-PS-01f"/>
                     <exclude reference="f2i-uW-mPf"/>
                     <include reference="hGN-0n-nty"/>
+                    <exclude reference="OIH-H2-5cR"/>
+                    <exclude reference="ZZ2-18-Wea"/>
+                    <include reference="tck-vb-sEm"/>
                     <include reference="M5c-vc-HUs"/>
                     <include reference="OfZ-k5-WLh"/>
                     <include reference="esU-Sd-lLn"/>
                     <exclude reference="jDf-oJ-NN7"/>
-                    <exclude reference="OIH-H2-5cR"/>
-                    <exclude reference="ZZ2-18-Wea"/>
-                    <include reference="tck-vb-sEm"/>
                     <exclude reference="3Cu-Ay-qpg"/>
                 </mask>
             </variation>

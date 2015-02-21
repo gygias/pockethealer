@@ -257,6 +257,7 @@
 		63564D641A57233A0025ACDE /* RaidFramesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D631A57233A0025ACDE /* RaidFramesView.m */; };
 		63564D671A5724AA0025ACDE /* Raid.m in Sources */ = {isa = PBXBuildFile; fileRef = 63564D661A5724AA0025ACDE /* Raid.m */; };
 		63564D6C1A57260F0025ACDE /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63564D6B1A57260F0025ACDE /* Names.plist */; };
+		635906BE1A98830900E56764 /* PlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906BD1A98830900E56764 /* PlayView.m */; };
 		6364135B1A7D835100639007 /* EventTimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364135A1A7D835100639007 /* EventTimerView.m */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
@@ -715,6 +716,8 @@
 		63564D651A5724AA0025ACDE /* Raid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Raid.h; sourceTree = "<group>"; };
 		63564D661A5724AA0025ACDE /* Raid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Raid.m; sourceTree = "<group>"; };
 		63564D6B1A57260F0025ACDE /* Names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Names.plist; sourceTree = "<group>"; };
+		635906BC1A98830900E56764 /* PlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayView.h; sourceTree = "<group>"; };
+		635906BD1A98830900E56764 /* PlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayView.m; sourceTree = "<group>"; };
 		636413591A7D835100639007 /* EventTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTimerView.h; sourceTree = "<group>"; };
 		6364135A1A7D835100639007 /* EventTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTimerView.m; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
@@ -986,6 +989,8 @@
 				638D90C41A98064200960869 /* PlayView.xib */,
 				638D90C61A98067A00960869 /* PlayViewController.h */,
 				638D90C71A98067A00960869 /* PlayViewController.m */,
+				635906BC1A98830900E56764 /* PlayView.h */,
+				635906BD1A98830900E56764 /* PlayView.m */,
 				638D90CE1A98233200960869 /* MiniMapView.h */,
 				638D90CF1A98233200960869 /* MiniMapView.m */,
 				632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */,
@@ -2000,6 +2005,7 @@
 				63027B581A7B261D0068E68A /* AvengingWrathSpell.m in Sources */,
 				630B998E1A86E50800B186CA /* SpeechBubbleContentView.m in Sources */,
 				6320742D1A70E1D300AA4416 /* ModelBase.m in Sources */,
+				635906BE1A98830900E56764 /* PlayView.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
 				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,
 				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,

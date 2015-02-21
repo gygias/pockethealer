@@ -48,4 +48,6 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet UIView *upLeftView;
 @property IBOutlet UIView *bottomRightView;
 
+@property CGPoint castBarDragLastPoint;
+
 @end

@@ -17,7 +17,7 @@
 #define INTRINSIC_SPELL_HEIGHT ( [SpellBarView desiredSize].width )
 #define INTRINSIC_SPELL_WIDTH INTRINSIC_SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
-#define SPELL_WIDTH (( ( rect.size.height / rows ) < ( rect.size.width / SPELLS_PER_ROW ) ) ? ( rect.size.height / rows ) : ( rect.size.width / SPELLS_PER_ROW ))
+#define SPELL_WIDTH (( ( self.frame.size.height / rows ) < ( self.frame.size.width / SPELLS_PER_ROW ) ) ? ( self.frame.size.height / rows ) : ( self.frame.size.width / SPELLS_PER_ROW ))
 #define SPELL_HEIGHT SPELL_WIDTH
 
 @interface SpellBarView (PrivateProperties)
@@ -50,31 +50,51 @@
 
 - (void)_longPress:(UIGestureRecognizer *)recognizer
 {
-    CGPoint thePoint = [recognizer locationInView:self];
+    CGPoint myPoint = [recognizer locationInView:self];
+    CGPoint theirPoint = [recognizer locationInView:self.superview.superview];
+    CGPoint dragShiftedUpLeftByOneThumb = CGPointMake(theirPoint.x - SPELL_WIDTH, theirPoint.y - SPELL_HEIGHT);
+    
     if ( recognizer.state == UIGestureRecognizerStateBegan )
     {
-        self.currentDragSpell = [self _spellAtPoint:thePoint];
-        PHLogV(@"PICKED UP: %@: %@: %@",self.currentDragSpell,recognizer,PointString(thePoint));
+        self.currentDragSpell = [self _spellAtPoint:myPoint];
+        if ( self.currentDragSpell )
+        {
+            PHLogV(@"PICKED UP: %@: %@: %@",self.currentDragSpell,recognizer,PointString(theirPoint));
+            self.dragBeganHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
+        }
     }
     else if ( recognizer.state == UIGestureRecognizerStateChanged )
     {
-        PHLogV(@"DRAGGING: %@: %@: %@",self.currentDragSpell,recognizer,PointString(thePoint));
-        self.currentDragPoint = thePoint;
+        //PHLogV(@"DRAGGING: %@: %@: %@",self.currentDragSpell,recognizer,PointString(theirPoint));
+        self.dragUpdatedHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
     }
     else if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
-        Spell *replacedSpell = [self _spellAtPoint:thePoint];
-        Spell *replacingSpell = self.currentDragSpell;
-        PHLogV(@"DROPPED: %@: %@",self,replacedSpell);
-        dispatch_async(self.player.encounter.encounterQueue, ^{
-            NSUInteger replacedIdx = [self.player.spells indexOfObject:replacedSpell];
-            NSUInteger replacingIdx = [self.player.spells indexOfObject:replacingSpell];
-            [self.player.spells removeObjectAtIndex:replacedIdx];
-            [self.player.spells insertObject:replacingSpell atIndex:replacedIdx];
-            [self.player.spells removeObjectAtIndex:replacingIdx];
-            [self.player.spells insertObject:replacedSpell atIndex:replacingIdx];
-        });
+        Spell *replacedSpell = [self _spellAtPoint:myPoint];
+        if ( replacedSpell )
+        {
+            Spell *replacingSpell = self.currentDragSpell;
+            PHLogV(@"DROPPED: %@: %@ @ %@/%@ in %@",replacingSpell,replacedSpell,PointString(myPoint),PointString(theirPoint),RectString(self.frame));
+            //PHLogV(@"MY FUCKING FRAME IS %@",RectString(self.frame));
+            
+            if ( myPoint.x >= 0 && myPoint.x <= ( self.frame.origin.x + self.frame.size.width ) &&
+                myPoint.y >= 0 && myPoint.y <= ( self.frame.origin.y + self.frame.size.height ) )
+            {
+                if ( replacedSpell != replacingSpell )
+                {
+                    dispatch_async(self.player.encounter.encounterQueue, ^{
+                        NSUInteger replacedIdx = [self.player.spells indexOfObject:replacedSpell];
+                        NSUInteger replacingIdx = [self.player.spells indexOfObject:replacingSpell];
+                        [self.player.spells removeObjectAtIndex:replacedIdx];
+                        [self.player.spells insertObject:replacingSpell atIndex:replacedIdx];
+                        [self.player.spells removeObjectAtIndex:replacingIdx];
+                        [self.player.spells insertObject:replacedSpell atIndex:replacingIdx];
+                    });
+                }
+            }
+        }
         self.currentDragSpell = nil;
+        self.dragEndedHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
     }
     else
     {
@@ -177,9 +197,6 @@ CGSize sSpellBarSpellSize = {0,0};
 //#warning crashing here EXC_BAD_ACCESS objc_release (mystery object) when casting lay on hands
         // fixed http://stackoverflow.com/questions/8814718/handling-pointer-to-pointer-ownership-issues-in-arc
     }];
-    
-    if ( self.currentDragSpell )
-        [self.currentDragSpell.image drawAtPoint:self.currentDragPoint];
 }
 
 static CGFloat const kDashedBorderWidth     = (4.0f);

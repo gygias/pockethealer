@@ -47,7 +47,7 @@
 
 - (void)initializeSpells
 {
-    self.spells = [Spell castableSpellsForCharacter:self];
+    self.spells = [[Spell castableSpellsForCharacter:self] mutableCopy];
 }
 
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
