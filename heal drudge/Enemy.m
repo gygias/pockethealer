@@ -166,11 +166,9 @@
 - (BOOL)targetNextThreatWithEncounter:(Encounter *)encounter
 {
     Entity *newTarget = [self _randomLivingPlayerInRaid:encounter.raid fromRolePreferenceList:@[ TankRole, HealerRole, DPSRole]];
-    if ( ! self.target.isDead || self.target == newTarget )
-        PHLogV(@"wtf");
     PHLog(self,@"%@ is changing targets from %@ to %@",self,self.target,newTarget);
     self.target = newTarget; // should encounter be doing this?
-    return ( newTarget );
+    return ( newTarget != nil );
 }
 
 - (void)_dispatchAbility:(Ability *)ability toEncounter:(Encounter *)encounter withTarget:(Entity *)target

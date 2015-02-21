@@ -19,12 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.raidSizeSlider.value = self.state.raidSize;
-    self.raidSizeLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.raidSizeSlider.value];
+    self.raidSizeLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.raidSizeSlider.value];
     self.forceGygiasSwitch.on = self.state.forceGygias;
     self.forceSlyeriSwitch.on = self.state.forceSlyeri;
     self.forceLirealSwitch.on = self.state.forceLireal;
     self.difficultySlider.value = self.state.difficulty;
-    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)(self.difficultySlider.value * 100)];
+    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)(self.difficultySlider.value * 100)];
     self.debugViewsSlider.on = self.state.debugViews;
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -77,7 +77,7 @@
     
     NSUInteger rounded = self.raidSizeSlider.value;
     [sender setValue:rounded animated:NO];
-    self.raidSizeLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.raidSizeSlider.value];
+    self.raidSizeLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.raidSizeSlider.value];
     
     self.state.raidSize = self.raidSizeSlider.value;
     [self.state writeState];
@@ -106,7 +106,7 @@
 
 - (IBAction)difficultySliderDidSomething:(id)sender
 {
-    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu%%",(NSUInteger)(self.difficultySlider.value * 100)];
+    self.difficultyLabel.text = [NSString stringWithFormat:@"%lu%%",(unsigned long)(self.difficultySlider.value * 100)];
     
     self.state.difficulty = self.difficultySlider.value;
     [self.state writeState];

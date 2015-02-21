@@ -103,6 +103,8 @@ typedef NS_ENUM(NSInteger, CooldownType) {
 
 @interface Spell : NSObject
 
++ (void)prewarmSpellClasses;
+
 // initialized with caster, but not target, so that base stats can be displayed based
 // on character stats
 - (id)initWithCaster:(Entity *)caster;

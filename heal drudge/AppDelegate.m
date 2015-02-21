@@ -23,7 +23,7 @@
     // Override point for customization after application launch.
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        [Spell performSelector:@selector(_spellClasses)];
+        [Spell performSelector:@selector(prewarmSpellClasses)];
     });
     
     return YES;

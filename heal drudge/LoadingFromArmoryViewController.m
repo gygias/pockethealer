@@ -62,7 +62,7 @@
             
             NSInteger idx = 0, outOf = [resultDict[@"members"] count];
             
-            NSString *upperMessage = [NSString stringWithFormat:@"loading %ld guildies…",outOf];
+            NSString *upperMessage = [NSString stringWithFormat:@"loading %ld guildies…",(long)outOf];
             [self _updateProgress:-1 total:-1 upper:upperMessage lower:nil];
             
             for ( NSDictionary *guildieAPIDict in resultDict[@"members"] )
@@ -86,7 +86,7 @@
                         [self _admitPartialFailure];
                     }
                     
-                    PHLogV(@"guildie %@ request: %lu key/values",tempCharacter.name,[result count]);
+                    PHLogV(@"guildie %@ request: %lu key/values",tempCharacter.name,(unsigned long)[result count]);
                 }];
                 
                 idx++;

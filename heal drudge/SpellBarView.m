@@ -185,7 +185,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
-    PHLogV(@"you began touching %@ (%lu,%lu)",theSpell,row,column);
+    PHLogV(@"you began touching %@ (%lu,%lu)",theSpell,(unsigned long)row,(unsigned long)column);
     
     [self setNeedsDisplay];
 }
@@ -208,7 +208,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
-    PHLogV(@"you stopped touching %@ (%lu,%lu)",theSpell,row,column);
+    PHLogV(@"you stopped touching %@ (%lu,%lu)",theSpell,(unsigned long)row,(unsigned long)column);
     
     if ( self.spellCastAttemptHandler )
         self.spellCastAttemptHandler(theSpell);

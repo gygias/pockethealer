@@ -87,6 +87,11 @@ const NSString *SpellLevelHigh = @"high";
     return castableSpells;
 }
 
++ (void)prewarmSpellClasses
+{
+    [self _spellClasses];
+}
+
 static NSArray *gSpellClasses = nil;
 + (NSArray *)_spellClasses
 {
@@ -125,7 +130,7 @@ static NSArray *gSpellClasses = nil;
             free(classList);
         }
         gSpellClasses = mutableSpellClasses;
-        PHLogV(@"Initialized %ld spell classes",gSpellClasses.count);
+        PHLogV(@"Initialized %ld spell classes",(unsigned long)gSpellClasses.count);
     }
     return gSpellClasses;
     

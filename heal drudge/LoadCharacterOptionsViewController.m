@@ -55,7 +55,7 @@
     
     self.specView.image = [ImageFactory imageForSpec:self.state.player.hdClass];
     
-    self.guildTooSwitch.enabled = self.state.player.guild;
+    self.guildTooSwitch.enabled = ( self.state.player.guild != nil );
 }
 
 - (IBAction)ilvlSliderDidSomething:(id)sender
@@ -63,7 +63,7 @@
     //PHLogV(@"guild ilvl slider did something");
     NSUInteger rounded = self.minGuildiLvlSlider.value;
     [sender setValue:rounded animated:NO];
-    self.minGuildiLvlLabel.text = [NSString stringWithFormat:@"%lu",(NSUInteger)self.minGuildiLvlSlider.value];
+    self.minGuildiLvlLabel.text = [NSString stringWithFormat:@"%lu",(unsigned long)self.minGuildiLvlSlider.value];
 }
 
 - (IBAction)pressedGuildTooButton:(id)sender
