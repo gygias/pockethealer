@@ -118,9 +118,10 @@
     self.raidFramesView.raid = raid;
     self.raidFramesView.player = aHealer;
     self.raidFramesView.encounter = encounter;
+    __unsafe_unretained typeof(self) weakSelf = self;
     self.raidFramesView.targetedPlayerBlock = ^(Entity *target){
         encounter.player.target = target;
-        self.playerAndTargetView.target = target;
+        weakSelf.playerAndTargetView.target = target;
         //PHLogV(@"player targeted %@",target);
     };
     //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_forceDraw:) userInfo:nil repeats:YES];
@@ -128,7 +129,7 @@
     self.playerAndTargetView.player = aHealer;
     self.playerAndTargetView.entityTouchedHandler = ^(Entity *entity){
         encounter.player.target = entity;
-        self.playerAndTargetView.target = entity;
+        weakSelf.playerAndTargetView.target = entity;
     };
     
     self.spellBarView.player = aHealer;

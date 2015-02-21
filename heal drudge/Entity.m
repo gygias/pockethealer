@@ -340,14 +340,15 @@
     
     statusEffect.owner = self;
     statusEffect.source = source;
+    __unsafe_unretained typeof(statusEffect) weakStatusEffect = statusEffect;
     statusEffect.timeoutHandler = ^{
-        if ( [_statusEffects containsObject:statusEffect] )
+        if ( [_statusEffects containsObject:weakStatusEffect] )
         {
-            PHLog(self,@"%@'s %@ has timed out",self,statusEffect);
-            [(NSMutableArray *)_statusEffects removeObject:statusEffect];
+            PHLog(self,@"%@'s %@ has timed out",self,weakStatusEffect);
+            [(NSMutableArray *)_statusEffects removeObject:weakStatusEffect];
         }
         else
-            PHLog(self,@"something else seems to have removed %@'s %@",self,statusEffect);
+            PHLog(self,@"something else seems to have removed %@'s %@",self,weakStatusEffect);
     };
     [(NSMutableArray *)_statusEffects addObject:statusEffect];
     

@@ -23,9 +23,10 @@
     ((SpeechBubbleView *)self.view.subviews.firstObject).bubbleOrigin = bubbleOrigin;
     
     // XXX
+    __unsafe_unretained typeof(self) weakSelf = self;
     self.speechBubbleContentView.dismissHandler = ^(SpeechBubbleContentView *view){
-        if ( self.dismissHandler )
-            self.dismissHandler(self);
+        if ( weakSelf.dismissHandler )
+            weakSelf.dismissHandler(weakSelf);
     };
 }
 

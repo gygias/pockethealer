@@ -135,7 +135,6 @@
 		6320740C1A7095B800AA4416 /* holy_word_serenity.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073CC1A7095B800AA4416 /* holy_word_serenity.png */; };
 		6320740D1A7095B800AA4416 /* hunter.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073CD1A7095B800AA4416 /* hunter.png */; };
 		6320740E1A7095B800AA4416 /* inner_will.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073CE1A7095B800AA4416 /* inner_will.png */; };
-		6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073CF1A7095B800AA4416 /* lay_on_hands.png */; };
 		632074101A7095B800AA4416 /* leap_of_faith.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073D01A7095B800AA4416 /* leap_of_faith.png */; };
 		632074111A7095B800AA4416 /* lightwell.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073D11A7095B800AA4416 /* lightwell.png */; };
 		632074121A7095B800AA4416 /* mage.png in Resources */ = {isa = PBXBuildFile; fileRef = 632073D21A7095B800AA4416 /* mage.png */; };
@@ -1751,7 +1750,6 @@
 				63A37EF71A75ABE30036C9D0 /* 5.wav in Resources */,
 				637E8B5D1A8AE8B20002C9DC /* growl.jpg in Resources */,
 				63A37F0E1A75C6930036C9D0 /* spell_fizzle_frost.wav in Resources */,
-				6320740F1A7095B800AA4416 /* lay_on_hands.png in Resources */,
 				63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */,
 				632073F91A7095B800AA4416 /* divine_hymn.png in Resources */,
 				63027AE41A799FE90068E68A /* crusader_strike.png in Resources */,
