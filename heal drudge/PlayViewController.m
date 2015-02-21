@@ -36,6 +36,8 @@
 
 - (IBAction)menuTouched:(id)sender
 {
+    [self.encounter end];
+    self.encounter = nil;
     self.dismissHandler(self);
 }
 

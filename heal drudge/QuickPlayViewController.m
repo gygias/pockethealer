@@ -18,9 +18,12 @@
     
     self.playViewController = [PlayViewController playViewController];
     self.playViewController.state = self.state;
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
     self.playViewController.dismissHandler = ^(PlayViewController *vc){
-        NSLog(@"TODO: dismiss...");
+        [weakSelf performSegueWithIdentifier:@"quick-play-main-menu" sender:weakSelf];
     };
+    
     [self.contentView addSubview:self.playViewController.view];
     [self.playViewController.view setNeedsUpdateConstraints];
     [self.playViewController.view setNeedsLayout];

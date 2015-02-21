@@ -567,15 +567,16 @@
                     <connections>
                         <outlet property="contentView" destination="igj-cf-nnD" id="Vvt-aa-UHw"/>
                         <outlet property="view" destination="9dJ-3D-5VX" id="83R-Ut-qLX"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="quick-play-main-menu" id="g22-9d-4LI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G7q-dA-VvX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1237" y="1102"/>
+            <point key="canvasLocation" x="1295" y="1103"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="7FA-GT-fCE"/>
+        <segue reference="g22-9d-4LI"/>
         <segue reference="zgj-eD-NvH"/>
     </inferredMetricsTieBreakers>
 </document>

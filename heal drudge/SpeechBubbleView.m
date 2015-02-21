@@ -84,7 +84,7 @@ static CGFloat sSpeechBubbleInset = 10;
     CGContextFillPath(context);
     CGContextStrokePath(context);
     
-#define DRAW_CONTROL_POINTS
+//#define DRAW_CONTROL_POINTS
 #ifdef DRAW_CONTROL_POINTS
     CGContextAddArc(context, controlPointOne.x, controlPointOne.y, 3, 0, 2 * M_PI, NO);
     CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
