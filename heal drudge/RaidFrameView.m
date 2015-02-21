@@ -35,7 +35,7 @@
 CGSize sRaidFrameSize = {0,0};
 + (CGSize)desiredSize
 {
-    if ( sRaidFrameSize.width == 0 )
+    //if ( sRaidFrameSize.width == 0 )
     {
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = screenRect.size.width;
