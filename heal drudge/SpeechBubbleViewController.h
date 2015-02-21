@@ -13,6 +13,9 @@
 
 @interface SpeechBubbleViewController : UIViewController
 
++ (SpeechBubbleViewController *)speechBubbleViewControllerWithImage:(UIImage *)image text:(NSString *)text;
++ (SpeechBubbleViewController *)speechBubbleViewControllerWithCommands;
+
 @property IBOutlet SpeechBubbleView *speechBubbleView;
 @property IBOutlet SpeechBubbleContentView *speechBubbleContentView;
 @property IBOutlet UIImageView *imageView;
@@ -21,5 +24,9 @@
 @property (nonatomic,retain) UIView *referenceView;
 typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *);
 @property (copy) SpeechBubbleViewControllerDismissedHandler dismissHandler;
+
+- (IBAction)heroPressed:(id)sender;
+- (IBAction)stackPressed:(id)sender;
+- (IBAction)spreadPressed:(id)sender;
 
 @end

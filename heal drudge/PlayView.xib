@@ -12,6 +12,7 @@
                 <outlet property="alertTextView" destination="miB-i0-sdr" id="mav-K2-eB4"/>
                 <outlet property="bottomRightView" destination="ysW-b4-ce4" id="6gS-PI-Hco"/>
                 <outlet property="castBarView" destination="e6F-Qr-97V" id="Qoh-S7-Sbj"/>
+                <outlet property="commandButton" destination="RM5-Wq-0n2" id="H2Y-8c-dcH"/>
                 <outlet property="enemyFrameView" destination="Mo6-Aa-lM5" id="egK-xo-Fk8"/>
                 <outlet property="eventTimerView" destination="X2S-sx-J7y" id="Ggq-PG-efO"/>
                 <outlet property="miniMapView" destination="GYR-ws-HcJ" id="1Y4-Gu-K0V"/>
@@ -133,8 +134,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ysW-b4-ce4" userLabel="bottom/right" customClass="PassThroughView">
                     <rect key="frame" x="5" y="363" width="590" height="237"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RM5-Wq-0n2">
+                            <rect key="frame" x="10" y="0.0" width="30" height="48"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <state key="normal" title="💬">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="commandTouched:" destination="-1" eventType="touchUpInside" id="WfD-bh-Gtm"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qF9-7h-Zx1" customClass="PlayerAndTargetView">
-                            <rect key="frame" x="0.0" y="13" width="590" height="40"/>
+                            <rect key="frame" x="50" y="13" width="540" height="40"/>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" placeholder="YES" id="nGP-oI-ase"/>
@@ -195,12 +206,24 @@
                         <constraint firstItem="qF9-7h-Zx1" firstAttribute="leading" secondItem="ysW-b4-ce4" secondAttribute="leading" id="7EO-gs-ast"/>
                         <constraint firstItem="e6F-Qr-97V" firstAttribute="leading" secondItem="ysW-b4-ce4" secondAttribute="leading" id="7ZT-2P-tFl"/>
                         <constraint firstItem="2Ze-vX-Aty" firstAttribute="leading" secondItem="ysW-b4-ce4" secondAttribute="leading" id="9Nj-4i-wgw"/>
+                        <constraint firstItem="RM5-Wq-0n2" firstAttribute="leading" secondItem="ysW-b4-ce4" secondAttribute="leading" constant="10" id="D5z-SM-y7r"/>
+                        <constraint firstItem="qF9-7h-Zx1" firstAttribute="leading" secondItem="RM5-Wq-0n2" secondAttribute="trailing" constant="10" id="F40-H4-yYJ"/>
                         <constraint firstAttribute="height" constant="237" placeholder="YES" id="Fpp-je-eAk"/>
                         <constraint firstItem="2Ze-vX-Aty" firstAttribute="bottom" secondItem="ysW-b4-ce4" secondAttribute="bottomMargin" id="KGd-2d-X9a"/>
+                        <constraint firstItem="qF9-7h-Zx1" firstAttribute="bottom" secondItem="RM5-Wq-0n2" secondAttribute="bottom" constant="5" id="ZFc-hx-fBH"/>
                         <constraint firstAttribute="trailing" secondItem="e6F-Qr-97V" secondAttribute="trailing" id="ae1-Pt-MMj"/>
                         <constraint firstItem="e6F-Qr-97V" firstAttribute="top" secondItem="qF9-7h-Zx1" secondAttribute="bottom" constant="3" id="iFr-UQ-AK7"/>
+                        <constraint firstItem="RM5-Wq-0n2" firstAttribute="top" secondItem="ysW-b4-ce4" secondAttribute="top" id="qd4-fh-JYr"/>
                         <constraint firstItem="2Ze-vX-Aty" firstAttribute="top" secondItem="e6F-Qr-97V" secondAttribute="bottom" constant="3" id="wMK-Jm-E7i"/>
+                        <constraint firstItem="RM5-Wq-0n2" firstAttribute="top" secondItem="qF9-7h-Zx1" secondAttribute="bottom" constant="51" id="zeK-kh-Sl9"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="qd4-fh-JYr"/>
+                            <exclude reference="zeK-kh-Sl9"/>
+                            <exclude reference="7EO-gs-ast"/>
+                        </mask>
+                    </variation>
                     <variation key="heightClass=compact">
                         <mask key="constraints">
                             <exclude reference="Fpp-je-eAk"/>

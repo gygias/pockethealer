@@ -39,6 +39,64 @@
     self.dismissHandler(self);
 }
 
+- (IBAction)commandTouched:(id)sender
+{
+//    SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithCommands];
+//    [self _presentSpeechBubble:speechBubble locateBlock:^{
+//        return self.playerAndTargetView.playerOrigin;
+//    }];
+}
+
+- (void)_setOrigin:(id)originObject onSpeechBubble:(SpeechBubbleViewController *)speechBubble
+{
+    CGPoint origin;
+    if ( [originObject isKindOfClass:[Entity class]] )
+        origin = [self.raidFramesView absoluteOriginForEntity:originObject];
+    else // doesn't work
+    {
+        UIView *view = (UIView *)originObject;
+        origin = [self.view convertPoint:view.frame.origin fromView:view];
+    }
+    speechBubble.bubbleOrigin = origin;
+}
+
+typedef CGPoint (^LocateBlock)();
+- (void)_presentSpeechBubble:(SpeechBubbleViewController *)speechBubble locateBlock:(LocateBlock)locateBlock
+{
+    if ( self.currentSpeechBubble )
+        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
+    
+    speechBubble.bubbleOrigin = locateBlock();
+    speechBubble.referenceView = self.advisorGuideView;
+    speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc){
+        [vc.view removeFromSuperview];
+        self.currentSpeechBubble = nil;
+    };
+    speechBubble.view.frame = self.view.frame;
+    [self.view addSubview:speechBubble.view];
+    
+//#define AUTO_DISMISS_NOTIFICATIONS
+#ifdef AUTO_DISMISS_NOTIFICATIONS
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ( self.currentSpeechBubble )
+            self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
+    });
+#endif
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            speechBubble.bubbleOrigin = locateBlock();
+        }];
+    });
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
+    [speechBubble.speechBubbleContentView.superview addConstraint:constraint];
+    constraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
+    [speechBubble.speechBubbleContentView.superview addConstraint:constraint];
+    
+    self.currentSpeechBubble = speechBubble;
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -178,49 +236,18 @@
     encounter.advisor = [Advisor new];
     encounter.advisor.encounter = encounter;
     encounter.advisor.callback = ^(Entity *e, SpeechBubbleViewController *vc) {
-        if ( vc && e && ! self.currentSpeechBubble )
-        {
-            [NSDate pause];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSDate *showDate = [NSDate date];
-                self.currentSpeechBubble = vc;
-                vc.dismissHandler = ^(SpeechBubbleViewController *vc) {
-                    NSTimeInterval shownInterval = [[NSDate date] timeIntervalSinceDate:showDate];
-                    PHLogV(@"adding pause time: %0.2f",shownInterval);
-                    [NSDate unpause];
-                    [vc.view removeFromSuperview];
-                    self.currentSpeechBubble = nil;
-                };
-                //#define AUTO_DISMISS_NOTIFICATIONS
-#ifdef AUTO_DISMISS_NOTIFICATIONS
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if ( self.currentSpeechBubble )
-                        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
-                });
-#endif
-                vc.bubbleOrigin = [self.raidFramesView absoluteOriginForEntity:e];
-                vc.referenceView = self.advisorGuideView;
-                vc.view.frame = self.view.frame;
-                //[vc.speechBubbleContentView removeFromSuperview];
-                //[self.advisorGuideView addSubview:vc.speechBubbleContentView];
-                [self.view addSubview:vc.view];
-                NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:vc.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
-                [vc.speechBubbleContentView.superview addConstraint:constraint];
-                constraint = [NSLayoutConstraint constraintWithItem:vc.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:vc.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
-                [vc.speechBubbleContentView.superview addConstraint:constraint];
-                static dispatch_once_t onceToken;
-                dispatch_once(&onceToken, ^{
-                    [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-                        //if ( self.currentSpeechBubble )
-                        //    self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
-                        [self.spellBarView invalidateIntrinsicContentSize];
-                        [self.raidFramesView invalidateIntrinsicContentSize];
-                        self.currentSpeechBubble.bubbleOrigin = [self.raidFramesView absoluteOriginForEntity:e];
-                    }];
-                });
-            });
-        }
+        [self _presentSpeechBubble:vc locateBlock:^{
+            return [self.raidFramesView absoluteOriginForEntity:e];
+        }];
     };
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            [self.spellBarView invalidateIntrinsicContentSize];
+            [self.raidFramesView invalidateIntrinsicContentSize];
+        }];
+    });
     
     self.miniMapView.encounter = encounter;
     

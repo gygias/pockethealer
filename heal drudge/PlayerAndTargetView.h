@@ -20,6 +20,7 @@ typedef void(^EntityTouchedBlock)(Entity *);
 }
 
 @property (nonatomic,copy) EntityTouchedBlock entityTouchedHandler;
+@property (readonly) CGPoint playerOrigin;
 
 @property Entity *player;
 @property Entity *target;

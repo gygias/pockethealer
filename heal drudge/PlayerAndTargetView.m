@@ -21,6 +21,14 @@
     return CGSizeMake(3 * PLAYER_TARGET_OFFSET + 3 * [RaidFrameView desiredSize].width, [RaidFrameView desiredSize].height);
 }
 
+- (CGPoint)playerOrigin
+{
+    CGRect playerRect = [self _playerRectWithRect:_lastDrawnRect];
+    CGPoint origin = playerRect.origin;
+    origin.x += playerRect.size.width / 2;
+    origin.y += playerRect.size.height / 2;
+    return origin;    
+}
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

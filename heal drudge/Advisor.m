@@ -83,22 +83,14 @@
     }
 }
 
-- (SpeechBubbleViewController *)_speechBubble
-{
-    SpeechBubbleViewController *vc = [[SpeechBubbleViewController alloc] initWithNibName:@"SpeechBubbleView" bundle:nil];
-    [vc loadView];
-    return vc;
-}
-
 - (SpeechBubbleViewController *)_emphasisForSpell:(Spell *)spell
 {
     SpeechBubbleViewController *vc = nil;
     if ( [spell isKindOfClass:[ArchangelSpell class]] && ! self.didExplainArchangel )
     {
         self.didExplainArchangel = YES;
-        vc = [self _speechBubble];
-        vc.imageView.image = spell.image;
-        vc.textLabel.text = @"You have 5 stacks of Evangelism, use Archangel now to increase healing done by 25%!";
+        vc = [SpeechBubbleViewController speechBubbleViewControllerWithImage:spell.image
+                                                                        text:@"You have 5 stacks of Evangelism, use Archangel now to increase healing done by 25%!"];
     }
     
     return vc;
@@ -106,26 +98,20 @@
 
 - (SpeechBubbleViewController *)_tankExplanation
 {
-    SpeechBubbleViewController *vc = [self _speechBubble];
-    vc.textLabel.text = @"This is a tank. Tanks take most of the damage, so focus on healing them up.";
-    vc.imageView.image = [ImageFactory imageForRole:TankRole];
-    return vc;
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:TankRole]
+                                                                      text:@"This is a tank. Tanks take most of the damage, so focus on healing them up."];
 }
 
 - (SpeechBubbleViewController *)_oom:(Entity *)oomEntity
 {
-    SpeechBubbleViewController *vc = [self _speechBubble];
-    vc.textLabel.text = [NSString stringWithFormat:@"%@ is out of mana, help them out by healing more!",oomEntity.name];;
-    vc.imageView.image = [ImageFactory imageForRole:HealerRole];
-    return vc;
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:[NSString stringWithFormat:@"%@ is out of mana, help them out by healing more!",oomEntity.name]];
 }
 
 - (SpeechBubbleViewController *)_needsHealing:(Entity *)entityInNeedOfHealing
 {
-    SpeechBubbleViewController *vc = [self _speechBubble];
-    vc.textLabel.text = [NSString stringWithFormat:@"%@ needs healing, heal them up!",entityInNeedOfHealing.name];;
-    vc.imageView.image = [ImageFactory imageForRole:HealerRole];
-    return vc;
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:[NSString stringWithFormat:@"%@ needs healing, heal them up!",entityInNeedOfHealing.name]];
 }
 
 @end

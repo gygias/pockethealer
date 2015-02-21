@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SpeechBubbleViewController">
+            <connections>
+                <outlet property="speechBubbleContentView" destination="Aay-e7-bxH" id="8rc-fI-9Vi"/>
+                <outlet property="speechBubbleView" destination="2lR-1B-9mp" id="nB9-dw-JQW"/>
+                <outlet property="view" destination="iN0-l3-epB" id="GaH-I6-Z28"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view opaque="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="SpeechBubblePassThroughView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2lR-1B-9mp" customClass="SpeechBubbleView">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aay-e7-bxH" customClass="SpeechBubbleContentView">
+                            <rect key="frame" x="0.0" y="0.0" width="285" height="90"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aYy-WQ-40M">
+                                    <rect key="frame" x="48" y="8" width="46" height="30"/>
+                                    <state key="normal" title="Hero!">
+                                        <color key="titleColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="heroPressed:" destination="-1" eventType="touchUpInside" id="Xkx-1Q-Gw1"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Q6-2v-mHq">
+                                    <rect key="frame" x="184" y="8" width="46" height="30"/>
+                                    <state key="normal" title="Stack!">
+                                        <color key="titleColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="stackPressed:" destination="-1" eventType="touchUpInside" id="Ct1-qF-Ks4"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nb8-TT-dgi">
+                                    <rect key="frame" x="97" y="52" width="90" height="30"/>
+                                    <state key="normal" title="Spread Out!">
+                                        <color key="titleColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="spreadPressed:" destination="-1" eventType="touchUpInside" id="gWx-Fu-7AS"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="90" id="Q3i-7P-852"/>
+                                <constraint firstAttribute="width" constant="285" id="sZe-bd-qch"/>
+                                <constraint firstAttribute="width" secondItem="Aay-e7-bxH" secondAttribute="height" multiplier="19:6" id="yLm-0I-MhM"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="2lR-1B-9mp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="MpZ-np-yEr"/>
+                <constraint firstAttribute="trailing" secondItem="2lR-1B-9mp" secondAttribute="trailing" id="TR3-SK-vu9"/>
+                <constraint firstAttribute="bottom" secondItem="2lR-1B-9mp" secondAttribute="bottom" id="oNL-jJ-ulF"/>
+                <constraint firstItem="2lR-1B-9mp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="oqQ-DX-pMJ"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

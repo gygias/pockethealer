@@ -83,7 +83,7 @@
 		63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */; };
 		630B99801A86C51C00B186CA /* NSDate+Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B997F1A86C51C00B186CA /* NSDate+Pause.m */; };
 		630B99831A86C61C00B186CA /* Advisor.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99821A86C61C00B186CA /* Advisor.m */; };
-		630B99851A86C8C500B186CA /* SpeechBubbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630B99841A86C8C500B186CA /* SpeechBubbleView.xib */; };
+		630B99851A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */; };
 		630B99881A86CA5900B186CA /* SpeechBubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */; };
 		630B998B1A86CE9D00B186CA /* SpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */; };
 		630B998E1A86E50800B186CA /* SpeechBubbleContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */; };
@@ -306,6 +306,8 @@
 		638D90C51A98064200960869 /* PlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638D90C41A98064200960869 /* PlayView.xib */; };
 		638D90C81A98067A00960869 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C71A98067A00960869 /* PlayViewController.m */; };
 		638D90D01A98233200960869 /* MiniMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90CF1A98233200960869 /* MiniMapView.m */; };
+		638D90D31A982B5500960869 /* CommandButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90D21A982B5500960869 /* CommandButton.m */; };
+		638D90D51A98369600960869 /* SpeechBubbleCommandsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -485,7 +487,7 @@
 		630B997F1A86C51C00B186CA /* NSDate+Pause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Pause.m"; sourceTree = "<group>"; };
 		630B99811A86C61C00B186CA /* Advisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advisor.h; sourceTree = "<group>"; };
 		630B99821A86C61C00B186CA /* Advisor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Advisor.m; sourceTree = "<group>"; };
-		630B99841A86C8C500B186CA /* SpeechBubbleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpeechBubbleView.xib; sourceTree = "<group>"; };
+		630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpeechBubbleImageAndTextView.xib; sourceTree = "<group>"; };
 		630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubbleViewController.h; sourceTree = "<group>"; };
 		630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechBubbleViewController.m; sourceTree = "<group>"; };
 		630B99891A86CE9D00B186CA /* SpeechBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechBubbleView.h; sourceTree = "<group>"; };
@@ -790,6 +792,9 @@
 		638D90C71A98067A00960869 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
 		638D90CE1A98233200960869 /* MiniMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiniMapView.h; sourceTree = "<group>"; };
 		638D90CF1A98233200960869 /* MiniMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiniMapView.m; sourceTree = "<group>"; };
+		638D90D11A982B5500960869 /* CommandButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButton.h; sourceTree = "<group>"; };
+		638D90D21A982B5500960869 /* CommandButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButton.m; sourceTree = "<group>"; };
+		638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpeechBubbleCommandsView.xib; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -1015,7 +1020,8 @@
 				63A37F051A75BFA60036C9D0 /* AlertText.m */,
 				636413591A7D835100639007 /* EventTimerView.h */,
 				6364135A1A7D835100639007 /* EventTimerView.m */,
-				630B99841A86C8C500B186CA /* SpeechBubbleView.xib */,
+				630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */,
+				638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */,
 				630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */,
 				630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */,
 				630B99891A86CE9D00B186CA /* SpeechBubbleView.h */,
@@ -1028,6 +1034,8 @@
 				638D90B71A969C7000960869 /* PassThroughView.m */,
 				638D90BE1A97ED0C00960869 /* UIView+SharedDrawing.h */,
 				638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */,
+				638D90D11A982B5500960869 /* CommandButton.h */,
+				638D90D21A982B5500960869 /* CommandButton.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1711,7 +1719,7 @@
 				632074651A70E93A00AA4416 /* arms.png in Resources */,
 				632073F71A7095B800AA4416 /* devotion_aura.png in Resources */,
 				632074151A7095B800AA4416 /* paladin.png in Resources */,
-				630B99851A86C8C500B186CA /* SpeechBubbleView.xib in Resources */,
+				630B99851A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib in Resources */,
 				6320747D1A70E93A00AA4416 /* lightning_shield.jpg in Resources */,
 				63A37F111A75C6930036C9D0 /* spell_fizzle_shadow.wav in Resources */,
 				632074001A7095B800AA4416 /* guardian_spirit.png in Resources */,
@@ -1841,6 +1849,7 @@
 				637E8B6E1A92A4E50002C9DC /* templars_verdict_hit.wav in Resources */,
 				63A37F0F1A75C6930036C9D0 /* spell_fizzle_holy.wav in Resources */,
 				632073F11A7095B800AA4416 /* chakra_neutral.png in Resources */,
+				638D90D51A98369600960869 /* SpeechBubbleCommandsView.xib in Resources */,
 				632074911A70E93A00AA4416 /* treant_form.png in Resources */,
 				632074661A70E93A00AA4416 /* backstab.jpg in Resources */,
 				63027B4B1A7B1CA20068E68A /* light_of_dawn_cast.wav in Resources */,
@@ -1965,6 +1974,7 @@
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
+				638D90D31A982B5500960869 /* CommandButton.m in Sources */,
 				63027B251A79E8760068E68A /* ArdentDefenderEffect.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				63027B371A7AF1B40068E68A /* Event.m in Sources */,

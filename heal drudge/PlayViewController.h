@@ -30,6 +30,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property (nonatomic,copy) PlayViewControllerDismissBlock dismissHandler;
 
 - (IBAction)menuTouched:(id)sender;
+- (IBAction)commandTouched:(id)sender;
 
 @property IBOutlet EnemyFrameView *enemyFrameView;
 @property IBOutlet EventTimerView *eventTimerView;
@@ -37,6 +38,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet RaidFramesView *raidFramesView;
 @property IBOutlet MiniMapView *miniMapView;
 @property IBOutlet CastBarView *castBarView;
+@property IBOutlet UIButton *commandButton;
 @property IBOutlet PlayerAndTargetView *playerAndTargetView;
 @property IBOutlet SpellBarView *spellBarView;
 @property SpeechBubbleViewController *currentSpeechBubble;

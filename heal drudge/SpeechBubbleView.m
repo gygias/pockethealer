@@ -118,9 +118,11 @@ static CGFloat sSpeechBubbleInset = 10;
 //    CGContextFillPath(context);
 }
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    return nil;
-}
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    if ( ! self.isCommandView )
+//        return nil;
+//    return [super hitTest:point withEvent:event];
+//}
 
 @end

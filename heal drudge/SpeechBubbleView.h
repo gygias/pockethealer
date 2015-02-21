@@ -11,6 +11,7 @@
 
 @interface SpeechBubbleView : UIView
 
+@property BOOL isCommandView;
 @property CGPoint bubbleOrigin;
 @property UIView *referenceView;
 
