@@ -17,6 +17,7 @@
 #import "AlertTextView.h"
 #import "EventTimerView.h"
 #import "SpeechBubbleViewController.h"
+#import "MiniMapView.h"
 
 
 @interface PlayViewController : UIViewController
@@ -34,6 +35,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet EventTimerView *eventTimerView;
 @property IBOutlet AlertTextView *alertTextView;
 @property IBOutlet RaidFramesView *raidFramesView;
+@property IBOutlet MiniMapView *miniMapView;
 @property IBOutlet CastBarView *castBarView;
 @property IBOutlet PlayerAndTargetView *playerAndTargetView;
 @property IBOutlet SpellBarView *spellBarView;

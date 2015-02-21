@@ -21,12 +21,15 @@
 }
 
 @property float difficulty;
+@property CGSize roomSize;
 
 - (id)initWithRaid:(Raid *)raid difficulty:(float)difficulty;
 
 + (Enemy *)randomEnemyWithRaid:(Raid *)raid difficulty:(float)difficulty;
 - (NSArray *)abilityNames;
 - (NSArray *)abilities;
+
+- (UIBezierPath *)roomPathWithRect:(CGRect)rect;
 
 - (BOOL)targetNextThreatWithEncounter:(Encounter *)encounter;
 

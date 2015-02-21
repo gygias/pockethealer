@@ -35,6 +35,11 @@
     return self;
 }
 
+- (UIBezierPath *)roomPathWithRect:(CGRect)rect
+{
+    return [UIBezierPath bezierPathWithRect:rect];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ [%@,%@]",NSStringFromClass([self class]),self.currentHealth,self.currentResources];

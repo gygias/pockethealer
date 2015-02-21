@@ -168,6 +168,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL largeMagicHitIncoming;
 @property BOOL largePhysicalAOEIncoming;
 @property BOOL largeMagicAOEIncoming;
+@property CGPoint location;
 
 @end
 

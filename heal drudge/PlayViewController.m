@@ -222,6 +222,8 @@
         }
     };
     
+    self.miniMapView.encounter = encounter;
+    
     if ( ! self.state.debugViews )
     {
         [self.upLeftView setBackgroundColor:[UIColor clearColor]];
@@ -232,6 +234,7 @@
         [self.playerAndTargetView setBackgroundColor:[UIColor clearColor]];
         [self.castBarView setBackgroundColor:[UIColor clearColor]];
         [self.spellBarView setBackgroundColor:[UIColor clearColor]];
+        [self.miniMapView setBackgroundColor:[UIColor clearColor]];
     }
     
     [encounter start];

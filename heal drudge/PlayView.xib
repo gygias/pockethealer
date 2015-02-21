@@ -14,6 +14,7 @@
                 <outlet property="castBarView" destination="e6F-Qr-97V" id="Qoh-S7-Sbj"/>
                 <outlet property="enemyFrameView" destination="Mo6-Aa-lM5" id="egK-xo-Fk8"/>
                 <outlet property="eventTimerView" destination="X2S-sx-J7y" id="Ggq-PG-efO"/>
+                <outlet property="miniMapView" destination="GYR-ws-HcJ" id="1Y4-Gu-K0V"/>
                 <outlet property="playerAndTargetView" destination="qF9-7h-Zx1" id="dcj-1b-kBV"/>
                 <outlet property="raidFramesView" destination="Owv-Su-0Yk" id="t0u-xD-saP"/>
                 <outlet property="spellBarView" destination="2Ze-vX-Aty" id="hfT-ga-kvJ"/>
@@ -77,9 +78,18 @@
                                 <rect key="frame" x="0.0" y="397.5" width="768" height="0.0"/>
                             </variation>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYR-ws-HcJ" customClass="MiniMapView">
+                            <rect key="frame" x="490" y="243" width="100" height="100"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" placeholder="YES" id="IkN-Po-gbR"/>
+                                <constraint firstAttribute="width" constant="100" placeholder="YES" id="utC-Tm-dtZ"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="GYR-ws-HcJ" secondAttribute="bottom" id="7GW-iD-qbc"/>
                         <constraint firstAttribute="bottom" secondItem="Owv-Su-0Yk" secondAttribute="bottom" id="GZN-qi-NML"/>
                         <constraint firstItem="Mo6-Aa-lM5" firstAttribute="width" secondItem="X2S-sx-J7y" secondAttribute="width" id="Id2-40-WxZ"/>
                         <constraint firstItem="X2S-sx-J7y" firstAttribute="leading" secondItem="Mo6-Aa-lM5" secondAttribute="trailing" constant="5" id="JSw-Ei-7lN"/>
@@ -91,6 +101,7 @@
                             <variation key="heightClass=compact" constant="5"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="Owv-Su-0Yk" secondAttribute="trailing" id="rBB-qb-fcv"/>
+                        <constraint firstAttribute="trailing" secondItem="GYR-ws-HcJ" secondAttribute="trailing" id="tjn-gl-5p9"/>
                         <constraint firstAttribute="trailing" secondItem="X2S-sx-J7y" secondAttribute="trailing" constant="290" id="w3F-13-aVz">
                             <variation key="heightClass=compact" constant="0.0"/>
                         </constraint>

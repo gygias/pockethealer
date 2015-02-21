@@ -503,6 +503,8 @@
         self.lastResourceGenerationDate = [NSDate date];
     });
     dispatch_resume(self.resourceGenerationSource);
+    
+    [self _moveToRandomLocation];
 }
 
 - (void)_doAutomaticStuff
@@ -666,9 +668,26 @@
 
 - (void)updateEncounter:(Encounter *)encounter
 {
-    //PHLog(self,@"i, %@, should update encounter",self);
+    BOOL moveSomewhere = ( arc4random() % 100 ) == 0;
+    if ( moveSomewhere )
+        [self _moveToRandomLocation];
+}
+
+- (void)_moveToRandomLocation
+{
+    Enemy *theEnemy = self.encounter.enemies.firstObject;
+    CGSize enemyRoomSize = theEnemy.roomSize;
+    CGRect enemyRoomRect = CGRectMake(0, 0, enemyRoomSize.width, enemyRoomSize.height);
+    int x,y;
+    CGPoint aPoint;
+    do
+    {
+        x = arc4random() % (int)enemyRoomSize.width;
+        y = arc4random() % (int)enemyRoomSize.height;
+        aPoint = CGPointMake(x, y);
+    } while ( ! [[theEnemy roomPathWithRect:enemyRoomRect] containsPoint:CGPointMake(x, y)]);
     
-    // TODO enumerate and remove status effects
+    self.location = aPoint;
 }
 
 - (void)endEncounter:(Encounter *)encounter

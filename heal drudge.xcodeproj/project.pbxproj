@@ -305,6 +305,7 @@
 		638D90C21A97F82000960869 /* Conveniences.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C11A97F82000960869 /* Conveniences.m */; };
 		638D90C51A98064200960869 /* PlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 638D90C41A98064200960869 /* PlayView.xib */; };
 		638D90C81A98067A00960869 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90C71A98067A00960869 /* PlayViewController.m */; };
+		638D90D01A98233200960869 /* MiniMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638D90CF1A98233200960869 /* MiniMapView.m */; };
 		639E1DB61A702A4F0062E803 /* WoWAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */; };
 		639E1DB91A702E290062E803 /* WoWRealm.m in Sources */ = {isa = PBXBuildFile; fileRef = 639E1DB81A702E290062E803 /* WoWRealm.m */; };
 		639E1DBB1A702E4B0062E803 /* WoWRealms.plist in Resources */ = {isa = PBXBuildFile; fileRef = 639E1DBA1A702E4B0062E803 /* WoWRealms.plist */; };
@@ -787,6 +788,8 @@
 		638D90C41A98064200960869 /* PlayView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayView.xib; sourceTree = "<group>"; };
 		638D90C61A98067A00960869 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		638D90C71A98067A00960869 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
+		638D90CE1A98233200960869 /* MiniMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiniMapView.h; sourceTree = "<group>"; };
+		638D90CF1A98233200960869 /* MiniMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiniMapView.m; sourceTree = "<group>"; };
 		639E1DB41A702A4F0062E803 /* WoWAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWAPIRequest.h; sourceTree = "<group>"; };
 		639E1DB51A702A4F0062E803 /* WoWAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WoWAPIRequest.m; sourceTree = "<group>"; };
 		639E1DB71A702E290062E803 /* WoWRealm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WoWRealm.h; sourceTree = "<group>"; };
@@ -978,6 +981,8 @@
 				638D90C41A98064200960869 /* PlayView.xib */,
 				638D90C61A98067A00960869 /* PlayViewController.h */,
 				638D90C71A98067A00960869 /* PlayViewController.m */,
+				638D90CE1A98233200960869 /* MiniMapView.h */,
+				638D90CF1A98233200960869 /* MiniMapView.m */,
 				632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */,
 				632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */,
 				6320739A1A708E2600AA4416 /* LoadCharacterOptionsViewController.h */,
@@ -1894,6 +1899,7 @@
 				63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
 				6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */,
+				638D90D01A98233200960869 /* MiniMapView.m in Sources */,
 				637E8B911A954AEB0002C9DC /* DancingRuneWeaponEffect.m in Sources */,
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
 				632074BC1A71A4E400AA4416 /* Encounter.m in Sources */,
