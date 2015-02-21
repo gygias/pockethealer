@@ -37,10 +37,53 @@
     [@"☠" drawAtPoint:theEnemy.location withAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
-        UIBezierPath *arc = [UIBezierPath bezierPathWithArcCenter:raider.location radius:2 startAngle:0 endAngle:2*M_PI clockwise:NO];
+        
+        CGPoint effectiveLocation;
+        
+        if ( raider.currentMoveStartDate )
+        {
+            double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:raider.currentMoveStartDate] / raider.currentMoveDuration;
+            if ( currentMoveProgress > 1 )
+            {
+                PHLogV(@"*** Bug at MiniMapView draw time, move progress exceeds 100%% for %@",raider);
+                currentMoveProgress = 1;
+            }
+            
+            CGFloat xDelta = ( raider.currentMoveEndPoint.x - raider.location.x ) * currentMoveProgress;
+            CGFloat yDelta = ( raider.currentMoveEndPoint.y - raider.location.y ) * currentMoveProgress;
+            
+            effectiveLocation = CGPointMake(raider.location.x + xDelta, raider.location.y + yDelta);
+        }
+        else
+            effectiveLocation = raider.location;
+        
+        if ( self.encounter.player.target == raider )
+            [self _drawTargetingCrossAt:effectiveLocation];
+        
+        UIBezierPath *arc = [UIBezierPath bezierPathWithArcCenter:effectiveLocation radius:2 startAngle:0 endAngle:2*M_PI clockwise:NO];
         [raider.hdClass.classColor setFill];
         [arc fill];
     }];
+}
+
+#define TARGETING_CROSS_WIDTH 2
+#define TARGETING_CROSS_HEIGHT 6
+#define TARGETING_CROSS_WIDTH_OFFSET (TARGETING_CROSS_WIDTH / 2)
+#define TARGETING_CROSS_HEIGHT_OFFSET (TARGETING_CROSS_HEIGHT / 2)
+
+- (void)_drawTargetingCrossAt:(CGPoint)location
+{
+    [[UIColor yellowColor] setFill];
+    CGRect uprightRect = CGRectMake(location.x - TARGETING_CROSS_WIDTH_OFFSET,
+                                    location.y - TARGETING_CROSS_HEIGHT_OFFSET,
+                                    TARGETING_CROSS_WIDTH,
+                                    TARGETING_CROSS_HEIGHT);
+    [[UIBezierPath bezierPathWithRect:uprightRect] fill];
+    CGRect horizontalRect = CGRectMake(location.x - TARGETING_CROSS_HEIGHT_OFFSET,
+                                       location.y - TARGETING_CROSS_WIDTH_OFFSET,
+                                       TARGETING_CROSS_HEIGHT,
+                                       TARGETING_CROSS_WIDTH);
+    [[UIBezierPath bezierPathWithRect:horizontalRect] fill];
 }
 
 @end

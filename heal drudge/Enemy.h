@@ -30,6 +30,9 @@
 - (NSArray *)abilities;
 
 - (UIBezierPath *)roomPathWithRect:(CGRect)rect;
+- (UIBezierPath *)tankAreaWithRect:(CGRect)rect;
+- (UIBezierPath *)meleeAreaWithRect:(CGRect)rect;
+- (UIBezierPath *)rangeAreaWithRect:(CGRect)rect;
 
 - (BOOL)targetNextThreatWithEncounter:(Encounter *)encounter;
 

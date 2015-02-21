@@ -169,6 +169,9 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL largePhysicalAOEIncoming;
 @property BOOL largeMagicAOEIncoming;
 @property CGPoint location;
+@property CGPoint currentMoveEndPoint;
+@property NSDate *currentMoveStartDate;
+@property NSTimeInterval currentMoveDuration;
 
 @end
 

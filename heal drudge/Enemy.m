@@ -40,6 +40,21 @@
     return [UIBezierPath bezierPathWithRect:rect];
 }
 
+- (UIBezierPath *)tankAreaWithRect:(CGRect)rect
+{
+    return [self roomPathWithRect:rect];
+}
+
+- (UIBezierPath *)meleeAreaWithRect:(CGRect)rect
+{
+    return [self roomPathWithRect:rect];
+}
+
+- (UIBezierPath *)rangeAreaWithRect:(CGRect)rect
+{
+    return [self roomPathWithRect:rect];
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"%@ [%@,%@]",NSStringFromClass([self class]),self.currentHealth,self.currentResources];

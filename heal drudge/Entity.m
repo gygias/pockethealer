@@ -473,6 +473,8 @@
     self.currentResources = self.power;
     self.lastHealth = self.health;
     self.encounter = encounter;
+    if ( self.isPlayer )
+        [self _moveToRandomLocation:NO];
 }
 
 - (void)beginEncounter:(Encounter *)encounter
@@ -503,8 +505,6 @@
         self.lastResourceGenerationDate = [NSDate date];
     });
     dispatch_resume(self.resourceGenerationSource);
-    
-    [self _moveToRandomLocation];
 }
 
 - (void)_doAutomaticStuff
@@ -668,26 +668,101 @@
 
 - (void)updateEncounter:(Encounter *)encounter
 {
+    if ( self.currentMoveStartDate )
+        return;
+    
     BOOL moveSomewhere = ( arc4random() % 100 ) == 0;
     if ( moveSomewhere )
-        [self _moveToRandomLocation];
+        [self _moveToRandomLocation:YES];
 }
 
-- (void)_moveToRandomLocation
+- (void)_moveToRandomLocation:(BOOL)animated
 {
     Enemy *theEnemy = self.encounter.enemies.firstObject;
     CGSize enemyRoomSize = theEnemy.roomSize;
     CGRect enemyRoomRect = CGRectMake(0, 0, enemyRoomSize.width, enemyRoomSize.height);
-    int x,y;
-    CGPoint aPoint;
-    do
-    {
-        x = arc4random() % (int)enemyRoomSize.width;
-        y = arc4random() % (int)enemyRoomSize.height;
-        aPoint = CGPointMake(x, y);
-    } while ( ! [[theEnemy roomPathWithRect:enemyRoomRect] containsPoint:CGPointMake(x, y)]);
+    UIBezierPath *myPath = nil;
     
-    self.location = aPoint;
+    NSMutableArray *badAreas = [NSMutableArray new];
+    NSMutableArray *locationCache = nil;
+    
+    if ( self.hdClass.isTank )
+    {
+        locationCache = self.encounter.cachedTankLocations;
+        if ( locationCache.count < LOCATION_CACHE_MAX )
+            myPath = [theEnemy tankAreaWithRect:enemyRoomRect];
+    }
+    else if ( self.hdClass.isMeleeDPS )
+    {
+        locationCache = self.encounter.cachedMeleeLocations;
+        if ( locationCache.count < LOCATION_CACHE_MAX )
+            myPath = [theEnemy meleeAreaWithRect:enemyRoomRect];
+    }
+    else
+    {
+        locationCache = self.encounter.cachedRangeLocations;
+        if ( locationCache.count < LOCATION_CACHE_MAX )
+        {
+            myPath = [theEnemy rangeAreaWithRect:enemyRoomRect];
+            [badAreas addObject:[theEnemy tankAreaWithRect:enemyRoomRect]];
+            [badAreas addObject:[theEnemy meleeAreaWithRect:enemyRoomRect]];
+        }
+    }
+    
+    CGPoint aPoint;
+    
+    if ( ! myPath )
+        aPoint = ((NSValue *)locationCache.randomObject).CGPointValue;
+    else
+    {
+        int x,y;
+        CGRect myRect = myPath.bounds;
+        do
+        {
+            x = arc4random() % (int)myRect.size.width;
+            y = arc4random() % (int)myRect.size.height;
+            aPoint = CGPointMake(myRect.origin.x + x, myRect.origin.y + y);
+            
+            __block BOOL Continue = NO;
+            [badAreas enumerateObjectsUsingBlock:^(UIBezierPath *badArea, NSUInteger idx, BOOL *stop) {
+                if ( [badArea containsPoint:aPoint] )
+                {
+                    Continue = YES;
+                    *stop = YES;
+                }
+            }];
+            if ( Continue )
+                continue;
+            
+        } while ( ! [myPath containsPoint:aPoint] );
+        
+        __block BOOL addPoint = YES;
+        [locationCache enumerateObjectsUsingBlock:^(NSValue *somePointValue, NSUInteger idx, BOOL *stop) {
+            CGPoint somePoint = somePointValue.CGPointValue;
+            if ( CGPointEqualToPoint(aPoint, somePoint) )
+            {
+                addPoint = NO;
+                *stop = YES;
+            }
+        }];
+        if ( addPoint )
+            [locationCache addObject:[NSValue valueWithCGPoint:aPoint]];
+    }
+    
+    if ( animated )
+    {
+        NSTimeInterval moveTime = 2;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(moveTime * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+            self.location = aPoint;
+            self.currentMoveStartDate = nil;
+        });
+        
+        self.currentMoveStartDate = [NSDate date];
+        self.currentMoveDuration = moveTime;
+        self.currentMoveEndPoint = aPoint;
+    }
+    else
+        self.location = aPoint;
 }
 
 - (void)endEncounter:(Encounter *)encounter

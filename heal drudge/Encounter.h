@@ -26,8 +26,6 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
     dispatch_source_t _encounterTimer;
 }
 
-+ (Encounter *)currentEncounter; // XXXXXXXXXXXXX done lazily to remove five bajillion instances of encounter being passed up and down the object graph to handle events
-
 @property Entity *player;
 @property Raid *raid;
 @property NSArray *enemies;
@@ -37,6 +35,11 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
 @property (nonatomic,readonly) dispatch_queue_t encounterQueue;
+
+#define LOCATION_CACHE_MAX 50
+@property NSMutableArray *cachedTankLocations;
+@property NSMutableArray *cachedMeleeLocations;
+@property NSMutableArray *cachedRangeLocations;
 
 - (void)start;
 - (void)pause;

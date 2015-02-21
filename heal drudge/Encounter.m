@@ -23,15 +23,12 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 {
     if ( self = [super init] )
     {
-        sYouAreATerribleProgrammer = self;
+        self.cachedTankLocations = [NSMutableArray new];
+        self.cachedRangeLocations = [NSMutableArray new];
+        self.cachedMeleeLocations = [NSMutableArray new];
     }
     
     return self;
-}
-
-+ (Encounter *)currentEncounter
-{
-    return sYouAreATerribleProgrammer;
 }
 
 - (void)start
