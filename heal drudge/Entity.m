@@ -9,6 +9,7 @@
 #import "PocketHealer.h"
 
 #import "Entity.h"
+#import "EntityPriv.h"
 #import "Entity+AI.h"
 
 #import "Encounter.h"
@@ -800,7 +801,7 @@
         {
             NSTimeInterval moveTime = (double)(( arc4random() % 100 ) + 100 ) / 200.0;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(moveTime * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-                self.location = location;
+                self.lastRealLocation = location;
                 self.currentMoveStartDate = nil;
             });
             
@@ -809,18 +810,18 @@
             self.currentMoveEndPoint = location;
         }
         else
-            self.location = location;
+            self.lastRealLocation = location;
     });
 }
 
 - (void)stopCurrentMove
 {
-    self.location = [self interpolatedLocation];
+    self.lastRealLocation = [self location];
 }
 
-- (CGPoint)interpolatedLocation
+- (CGPoint)location
 {
-    CGPoint interpolatedLocation = self.location;
+    CGPoint interpolatedLocation = self.lastRealLocation;
     if ( self.currentMoveStartDate )
     {
         double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:self.currentMoveStartDate] / self.currentMoveDuration;
@@ -830,10 +831,10 @@
             currentMoveProgress = 1;
         }
         
-        CGFloat xDelta = ( self.currentMoveEndPoint.x - self.location.x ) * currentMoveProgress;
-        CGFloat yDelta = ( self.currentMoveEndPoint.y - self.location.y ) * currentMoveProgress;
+        CGFloat xDelta = ( self.currentMoveEndPoint.x - self.lastRealLocation.x ) * currentMoveProgress;
+        CGFloat yDelta = ( self.currentMoveEndPoint.y - self.lastRealLocation.y ) * currentMoveProgress;
         
-        interpolatedLocation = CGPointMake(self.location.x + xDelta, self.location.y + yDelta);
+        interpolatedLocation = CGPointMake(self.lastRealLocation.x + xDelta, self.lastRealLocation.y + yDelta);
     }
     
     return interpolatedLocation;
@@ -1167,9 +1168,41 @@
         }];
         [State sharedState].spellOrdersBySpecID[[@(self.hdClass.specID) stringValue]] = spellNames;
         [[State sharedState] writeState];
-        
-        NSLog(@"OUTGOING SPELL ORDER: %@",spellNames);
     }
+}
+
+- (NSArray *)entitiesInRange:(CGFloat)rangeRadius players:(BOOL)players enemies:(BOOL)enemies includingSelf:(BOOL)includingSelf
+{
+    NSMutableArray *entitiesInRange = [NSMutableArray new];
+    
+    if ( ! players && ! enemies )
+        return entitiesInRange;
+    
+    UIBezierPath *pathAroundMe = [UIBezierPath bezierPathWithArcCenter:self.location radius:rangeRadius startAngle:0 endAngle:2*M_PI clockwise:NO];
+    
+    if ( players )
+    {
+        [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+            if ( aPlayer == self )
+            {
+                if ( ! includingSelf )
+                    return;
+                [entitiesInRange addObject:aPlayer];
+            }
+            else if ( [pathAroundMe containsPoint:aPlayer.location] )
+                [entitiesInRange addObject:aPlayer];
+        }];
+    }
+    
+    if ( enemies )
+    {
+        [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *aEnemy, NSUInteger idx, BOOL *stop) {
+            if ( [pathAroundMe containsPoint:aEnemy.location] )
+                [entitiesInRange addObject:aEnemy];
+        }];
+    }
+    
+    return entitiesInRange;
 }
 
 @end

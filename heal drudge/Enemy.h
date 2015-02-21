@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 
 #import "Entity.h"
+#import "EntityPriv.h"
 
 @class Encounter;
 @class Raid;

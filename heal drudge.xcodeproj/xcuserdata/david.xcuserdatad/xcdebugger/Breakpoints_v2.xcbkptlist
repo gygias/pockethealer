@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "heal drudge/Entity.m"
-            timestampString = "446249220.347105"
+            timestampString = "446253356.995272"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "670"
-            endingLineNumber = "670"
+            startingLineNumber = "656"
+            endingLineNumber = "656"
             landmarkName = "-_doAutomaticHealing"
             landmarkType = "5">
          </BreakpointContent>
@@ -56,11 +56,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "heal drudge/RaidFrameView.m"
-            timestampString = "446196314.130164"
+            timestampString = "446252157.848791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "-_drawBorderInRect:"
             landmarkType = "5">
          </BreakpointContent>

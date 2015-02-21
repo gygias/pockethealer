@@ -109,6 +109,7 @@ CGSize sRaidFrameSize = {0,0};
     [self _drawStatusEffectsInRect:rect];
     [self _drawAuxResourcesInRect:rect];
     [self _drawAggroNubsInRect:rect];
+    [self _drawLastHealInRect:rect];
     
     _refreshCachedValues = NO;
 }
@@ -493,6 +494,25 @@ CGSize sRaidFrameSize = {0,0};
     CGContextAddLineToPoint(ctx, midX, lowY - halfLegLength);
     CGContextClosePath(ctx);
     CGContextFillPath(ctx);
+}
+
+
+#define LAST_HEAL_DURATION 1.0
+#define LAST_HEAL_Y_OFFSET_TODO 5
+- (void)_drawLastHealInRect:(CGRect)rect
+{
+    if ( ! self.entity.lastHealDate )
+        return;
+    
+    NSTimeInterval timeSinceLastHeal = [[NSDate date] timeIntervalSinceDate:self.entity.lastHealDate];
+    if ( timeSinceLastHeal >= LAST_HEAL_DURATION )
+        return;
+    
+    double percentage = 1 - timeSinceLastHeal / LAST_HEAL_DURATION;
+    
+    CGPoint healPoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO + LAST_HEAL_Y_OFFSET_TODO);
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [[UIColor greenColor] colorWithAlphaComponent:percentage] };
+    [[self.entity.lastHealAmount stringValue] drawAtPoint:healPoint withAttributes:attributes];
 }
 
 @end

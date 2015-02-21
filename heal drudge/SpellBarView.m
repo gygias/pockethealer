@@ -177,7 +177,7 @@ CGSize sSpellBarSpellSize = {0,0};
             [self _drawEmphasisInRect:spellRect spell:spell];
         }
         
-        if ( self.depressedSpell )
+        if ( spell == self.depressedSpell )
             return;
         
         // cooldown clock

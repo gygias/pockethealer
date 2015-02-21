@@ -721,6 +721,7 @@
 		635906BD1A98830900E56764 /* PlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayView.m; sourceTree = "<group>"; };
 		635906BF1A992C6800E56764 /* SpellDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellDragView.h; sourceTree = "<group>"; };
 		635906C01A992C6800E56764 /* SpellDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellDragView.m; sourceTree = "<group>"; };
+		635906C21A9948D100E56764 /* EntityPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntityPriv.h; sourceTree = "<group>"; };
 		636413591A7D835100639007 /* EventTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTimerView.h; sourceTree = "<group>"; };
 		6364135A1A7D835100639007 /* EventTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTimerView.m; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
@@ -1504,6 +1505,7 @@
 				632074BA1A71A4E400AA4416 /* Encounter.h */,
 				632074BB1A71A4E400AA4416 /* Encounter.m */,
 				632074BD1A71A5CA00AA4416 /* Entity.h */,
+				635906C21A9948D100E56764 /* EntityPriv.h */,
 				632074BE1A71A5CA00AA4416 /* Entity.m */,
 				632074C01A71A65B00AA4416 /* Enemy.h */,
 				632074C11A71A65B00AA4416 /* Enemy.m */,

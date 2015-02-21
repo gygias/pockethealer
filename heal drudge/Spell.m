@@ -106,6 +106,17 @@ const NSString *SpellLevelHigh = @"high";
         }
     }
     
+    NSUInteger idx = 0;
+    for ( ; idx < castableSpells.count ; idx ++ )
+    {
+        id object = [castableSpells objectAtIndex:idx];
+        if ( [object isEqual:[NSNull null]] )
+        {
+            [castableSpells removeObjectAtIndex:idx];
+            PHLogV(@"Bug in spell ordering: %@'s castable spells contains NSNull at %lu",player,(unsigned long)idx);
+        }
+    }
+    
     return castableSpells;
 }
 

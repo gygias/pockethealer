@@ -38,12 +38,7 @@
     
     [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
         
-        CGPoint effectiveLocation;
-        
-        if ( raider.currentMoveStartDate )
-            effectiveLocation = [raider interpolatedLocation];
-        else
-            effectiveLocation = raider.location;
+        CGPoint effectiveLocation = raider.location;
         
         NSString *enemyText = @"☠";
         CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [enemyText sizeWithAttributes:attributes].width / 2,
@@ -53,12 +48,7 @@
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
         
-        CGPoint effectiveLocation;
-        
-        if ( raider.currentMoveStartDate )
-            effectiveLocation = [raider interpolatedLocation];
-        else
-            effectiveLocation = raider.location;
+        CGPoint effectiveLocation = raider.location;
         
         if ( self.encounter.player.target == raider )
             [self _drawTargetingCrossAt:effectiveLocation];

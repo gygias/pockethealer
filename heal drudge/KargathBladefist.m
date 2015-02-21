@@ -25,7 +25,7 @@
         self.hitSoundName = @"kargath_hit";
         self.deathSoundName = @"kargath_death";
         self.roomSize = CGSizeMake(150, 100);
-        self.location = CGPointMake(self.roomSize.width / 2, self.roomSize.height / 2);
+        self.lastRealLocation = CGPointMake(self.roomSize.width / 2, self.roomSize.height / 2);
     }    
     return self;
 }

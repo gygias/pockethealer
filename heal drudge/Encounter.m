@@ -184,27 +184,32 @@
         }
         else if ( spell.hitRange.doubleValue > 0 )
         {
-            NSArray *subTargets = nil;
-            
-            if ( spell.hitRange.doubleValue >= 30 )
-                subTargets = self.raid.players;
-            else
-            {
-                Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
-                if ( originEntity.hdClass.isRanged )
-                    subTargets = self.raid.rangePlayers;
-                else
-                    subTargets = self.raid.meleePlayers;
-                double percentCovered = spell.hitRange.doubleValue / 10.0;
-                if ( percentCovered > 1 )
-                    percentCovered = 1;
-                NSUInteger nRemovedByRange = (NSUInteger)( ( 1 - percentCovered ) * subTargets.count );
-                subTargets = [subTargets arrayByRandomlyRemovingNObjects:nRemovedByRange];
-                if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
-                    subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
-            }
+            Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
+            BOOL hitPlayers = spell.spellType != DetrimentalEffect;
+            BOOL hitEnemies = spell.spellType != BeneficialEffect;
+            NSArray *subTargets = [originEntity entitiesInRange:spell.hitRange.doubleValue players:hitPlayers enemies:hitEnemies includingSelf:hitPlayers];
             if ( subTargets.count )
                 [allTargets addObjectsFromArray:subTargets];
+            
+//            if ( spell.hitRange.doubleValue >= 30 )
+//                subTargets = self.raid.players;
+//            else
+//            {
+//                Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
+//                if ( originEntity.hdClass.isRanged )
+//                    subTargets = self.raid.rangePlayers;
+//                else
+//                    subTargets = self.raid.meleePlayers;
+//                double percentCovered = spell.hitRange.doubleValue / 10.0;
+//                if ( percentCovered > 1 )
+//                    percentCovered = 1;
+//                NSUInteger nRemovedByRange = (NSUInteger)( ( 1 - percentCovered ) * subTargets.count );
+//                subTargets = [subTargets arrayByRandomlyRemovingNObjects:nRemovedByRange];
+//                if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
+//                    subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
+//            }
+//            if ( subTargets.count )
+//                [allTargets addObjectsFromArray:subTargets];
         }
         else
             subHandled = NO;
@@ -400,28 +405,14 @@
         
         target.currentHealth = @(newHealth);
         
+        if ( source.isPlayingPlayer )
+        {
+            target.lastHealAmount = healingValue;
+            target.lastHealDate = [NSDate date];
+        }
+        
         PHLog(spell,@"%@ was healed for %@",target,healingValue);
     }
-    
-    // TODO how can modifiers buff absorbs as constituent effects?
-//    NSNumber *absorbValue = periodic ? spell.periodicAbsorb : spell.absorb;
-//    
-//    if ( absorbValue.doubleValue > 0 )
-//    {
-//        PHLog(spell,@"considering %@ for absorb of %@",obj,spell);
-//        if ( modifier.healingIncrease )
-//            absorbValue = @( absorbValue.unsignedIntegerValue + modifier.healingIncrease.unsignedIntegerValue );
-//        else if ( modifier.healingIncreasePercentage )
-//            absorbValue = @( absorbValue.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
-//        
-////        NSInteger newAbsorb = target.currentAbsorb.doubleValue + absorbValue.doubleValue;
-////        //if ( newAbsorb > someAbsorbCeilingLikePercentageOfHealersHealth ) TODO
-////        //  newAbsorb = someAbsorbCeilingLikePercentageOfHealersHealth;
-////        
-////        target.currentAbsorb = @(newAbsorb);
-//        
-//        PHLog(spell,@"%@ received a %@ absorb",target,absorbValue);
-//    }
 }
 
 - (Entity *)currentMainTank

@@ -55,6 +55,9 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property NSDate *lastMajorCooldownUsedDate;
 @property double intelligence;
 
+@property NSNumber *lastHealAmount;
+@property NSDate *lastHealDate;
+
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;
 
@@ -169,7 +172,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL largeMagicHitIncoming;
 @property BOOL largePhysicalAOEIncoming;
 @property BOOL largeMagicAOEIncoming;
-@property CGPoint location;
+//@property CGPoint location;
 @property CGPoint currentMoveEndPoint;
 @property NSDate *currentMoveStartDate;
 @property NSTimeInterval currentMoveDuration;
@@ -178,8 +181,10 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 - (void)moveToRandomLocation:(BOOL)animated;
 - (void)moveToEntity:(Entity *)entity;
 - (void)moveToLocation:(CGPoint)location;
-- (CGPoint)interpolatedLocation;
+- (CGPoint)location; // interpolated
 - (void)stopCurrentMove;
+
+- (NSArray *)entitiesInRange:(CGFloat)rangeRadius players:(BOOL)players enemies:(BOOL)enemies includingSelf:(BOOL)includingSelf;
 
 //
 - (void)replaceSpell:(Spell *)replacedSpell withSpell:(Spell *)replacingSpell persist:(BOOL)persist;

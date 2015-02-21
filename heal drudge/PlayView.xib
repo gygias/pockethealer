@@ -32,7 +32,7 @@
                 <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuA-qW-UeL" userLabel="Full View Reference">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miB-i0-sdr" customClass="AlertTextView">
+                <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miB-i0-sdr" customClass="AlertTextView">
                     <rect key="frame" x="76" y="-27" width="31" height="61"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
