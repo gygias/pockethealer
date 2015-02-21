@@ -10,12 +10,4 @@
 
 @implementation PlayView
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    
-    //[[UIColor blackColor] setFill];
-    //[[UIBezierPath bezierPathWithRect:self.frame] fill];
-}
-
 @end

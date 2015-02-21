@@ -18,7 +18,7 @@
     if ( percentage < 0 || percentage > 1 )
     {
         //[NSException raise:@"PercentageOutOfBoundsException" format:@"%@",self.entity];
-        PHLogV(@"Bug: %@: Cooldown clock percentage out of bounds, will correct: %0.5f",self,percentage);
+        //PHLogV(@"Bug: %@: Cooldown clock percentage out of bounds, will correct: %0.5f",self,percentage);
         percentage = percentage - ((int)percentage);
     }
     

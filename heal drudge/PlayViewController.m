@@ -298,9 +298,6 @@ typedef CGPoint (^LocateBlock)();
             [view setNeedsDisplay];
             for ( UIView *subview in view.subviews )
                 [subview setNeedsDisplay];
-            
-            //if ( ((PlayView *)self.view).auxiliaryDrawHandler )
-                [self.view setNeedsDisplay];
         }
         
     });

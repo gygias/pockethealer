@@ -251,7 +251,11 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+    NSSet *myTouches = [event touchesForView:self];
+    UITouch *theTouch = [myTouches anyObject]; // XXX
+    Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
+    if ( theSpell != self.depressedSpell )
+        self.depressedSpell = theSpell;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
