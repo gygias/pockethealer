@@ -685,6 +685,9 @@
     if ( self.lastCommandedMoveDate && [[NSDate date] timeIntervalSinceDate:self.lastCommandedMoveDate] > DONT_MOVE_RANDOMLY_THRESHOLD )
         return;
     
+    if ( self.isPlayingPlayer )
+        return;
+    
     BOOL moveSomewhere = ( arc4random() % 200 ) == 0;
     if ( moveSomewhere )
         [self _moveToRandomLocation:YES commanded:NO];

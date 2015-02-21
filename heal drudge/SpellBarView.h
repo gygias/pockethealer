@@ -30,6 +30,7 @@ typedef void(^SpellBarViewDragEnded)(Spell *, CGPoint);
 @property (nonatomic,retain) Entity *player;
 
 @property Spell *currentDragSpell;
+@property Spell *depressedSpell;
 @property (nonatomic,copy) SpellBarViewDragBegan dragBeganHandler;
 @property (nonatomic,copy) SpellBarViewDragUpdated dragUpdatedHandler;
 @property (nonatomic,copy) SpellBarViewDragEnded dragEndedHandler;

@@ -11,6 +11,7 @@
 #import "Encounter.h"
 #import "AlertText.h"
 #import "PlayView.h"
+#import "SpellDragView.h"
 
 @interface PlayViewController ()
 
@@ -230,17 +231,17 @@ typedef CGPoint (^LocateBlock)();
     
     self.spellBarView.spellCastAttemptHandler = castBlock;
     self.spellBarView.dragBeganHandler = ^(Spell *spell, CGPoint thePoint) {
-        ((PlayView *)weakSelf.view).auxiliaryDrawHandler = ^{
+        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
             [spell.image drawAtPoint:thePoint];
         };
     };
     self.spellBarView.dragUpdatedHandler = ^(Spell *spell, CGPoint thePoint) {
-        ((PlayView *)weakSelf.view).auxiliaryDrawHandler = ^{
+        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
             [spell.image drawAtPoint:thePoint];
         };
     };
     self.spellBarView.dragEndedHandler = ^(Spell *spell, CGPoint thePoint) {
-        ((PlayView *)weakSelf.view).auxiliaryDrawHandler = NULL;
+        weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
     };
     
     self.castBarView.entity = encounter.player;

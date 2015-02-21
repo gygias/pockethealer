@@ -61,6 +61,7 @@
         {
             PHLogV(@"PICKED UP: %@: %@: %@",self.currentDragSpell,recognizer,PointString(theirPoint));
             self.dragBeganHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
+            self.depressedSpell = nil;
         }
     }
     else if ( recognizer.state == UIGestureRecognizerStateChanged )
@@ -168,7 +169,7 @@ CGSize sSpellBarSpellSize = {0,0};
         [spellImage drawInRect:spellRect];
                 
         // disabled mask
-        if ( ! canStartCastingSpell && ! invalidDueToCooldown )
+        if ( ( ! canStartCastingSpell && ! invalidDueToCooldown ) || spell == self.depressedSpell )
         {
             CGContextSetFillColorWithColor(context,[UIColor disabledSpellColor].CGColor);
             CGRect rectangle = CGRectMake(spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
@@ -180,6 +181,9 @@ CGSize sSpellBarSpellSize = {0,0};
         {
             [self _drawEmphasisInRect:spellRect spell:spell];
         }
+        
+        if ( self.depressedSpell )
+            return;
         
         // cooldown clock
         if ( spell.nextCooldownDate )
@@ -242,6 +246,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     UITouch *theTouch = [myTouches anyObject]; // XXX
     Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
     PHLogV(@"you began touching %@",theSpell);
+    self.depressedSpell = theSpell;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -256,13 +261,17 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
     PHLogV(@"you stopped touching %@",theSpell);
     
-    if ( self.spellCastAttemptHandler )
-        self.spellCastAttemptHandler(theSpell);
+    if ( ! self.currentDragSpell )
+    {
+        if ( self.spellCastAttemptHandler )
+            self.spellCastAttemptHandler(theSpell);
+    }
+    
+    self.depressedSpell = nil;
 }
 
 - (Spell *)_spellAtPoint:(CGPoint)point
 {
-    CGRect rect = self.frame;
     NSUInteger row = point.y / SPELL_HEIGHT;
     NSUInteger column = point.x / SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;

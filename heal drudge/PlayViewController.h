@@ -18,7 +18,7 @@
 #import "EventTimerView.h"
 #import "SpeechBubbleViewController.h"
 #import "MiniMapView.h"
-
+#import "SpellDragView.h"
 
 @interface PlayViewController : UIViewController
 
@@ -43,6 +43,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet SpellBarView *spellBarView;
 @property SpeechBubbleViewController *currentSpeechBubble;
 @property IBOutlet UIView *advisorGuideView;
+@property IBOutlet SpellDragView *spellDragView;
 
 // debug
 @property IBOutlet UIView *upLeftView;

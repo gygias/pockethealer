@@ -10,7 +10,4 @@
 
 @interface PlayView : UIView
 
-typedef void (^PlayViewAuxiliaryDrawBlock)();
-@property (nonatomic,copy) PlayViewAuxiliaryDrawBlock auxiliaryDrawHandler;
-
 @end
