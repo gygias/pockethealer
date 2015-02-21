@@ -73,7 +73,10 @@ static SoundManager *sSoundManager;
 {
     if ( ! path )
         return;
-    
+#define SOUND_ENABLED
+#ifndef SOUND_ENABLED
+    return;
+#endif
     dispatch_async(sSoundManager.soundQueue, ^{
         
         NSDictionary *existingSoundEvent = [sSoundManager.audioPlayers objectForKey:path];

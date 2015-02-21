@@ -14,6 +14,14 @@
 @class Entity;
 
 @interface CastBarView : UIView
+{
+    CGRect _lastRect;
+    BOOL _refreshCachedValues;
+    CGRect _imageRect;
+    CGRect _textRect;
+    CGRect _remainingTimeRect;
+    NSDictionary *_textAttributes;
+}
 
 @property Entity *entity;
 

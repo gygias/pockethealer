@@ -14,6 +14,14 @@
 @class Encounter;
 
 @interface RaidFrameView : UIView
+{
+    BOOL _refreshCachedValues;
+    CGRect _lastRect;
+    NSString *_textString;
+    NSDictionary *_textAttributes;
+    NSMutableArray *_statusEffectsRects;
+    NSDictionary *_stacksTextAttributeDict;
+}
 
 + (CGSize)desiredSize;
 

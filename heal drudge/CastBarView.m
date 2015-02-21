@@ -39,6 +39,9 @@
     if ( self.entity.castingSpell == nil )
         return;
     
+    if ( ! CGRectEqualToRect(_lastRect, rect) )
+        _refreshCachedValues = YES;
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     // fill bar
@@ -58,19 +61,25 @@
                                      [UIColor whiteColor].CGColor);
     CGContextStrokePath(context);
     
-    CGRect imageRect = CGRectMake(rect.origin.x + CAST_BAR_LEFT_MARGIN,rect.origin.y + CAST_BAR_TOP_MARGIN,CAST_BAR_IMAGE_SQUARE,CAST_BAR_IMAGE_SQUARE);
-    [spell.image drawInRect:imageRect blendMode:kCGBlendModeNormal alpha:0.5];
-    CGRect textRect = CGRectMake(imageRect.origin.x + CAST_BAR_LEFT_MARGIN + CAST_BAR_IMAGE_SQUARE,rect.origin.y + CAST_BAR_TOP_MARGIN,rect.size.width, rect.size.height);
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
-    [spell.name drawInRect:textRect withAttributes:attributes];
+    if ( _refreshCachedValues )
+        _imageRect = CGRectMake(rect.origin.x + CAST_BAR_LEFT_MARGIN,rect.origin.y + CAST_BAR_TOP_MARGIN,CAST_BAR_IMAGE_SQUARE,CAST_BAR_IMAGE_SQUARE);
+    [spell.image drawInRect:_imageRect blendMode:kCGBlendModeNormal alpha:0.5];
+    if ( _refreshCachedValues )
+        _textRect = CGRectMake(_imageRect.origin.x + CAST_BAR_LEFT_MARGIN + CAST_BAR_IMAGE_SQUARE,rect.origin.y + CAST_BAR_TOP_MARGIN,rect.size.width, rect.size.height);
+    if ( ! _textAttributes )
+        _textAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+    [spell.name drawInRect:_textRect withAttributes:_textAttributes];
     
     NSString *remainingTime = [NSString stringWithFormat:@"-%0.1fs",spell.lastCastEffectiveCastTime - [[NSDate date] timeIntervalSinceDateMinusPauseTime:spell.lastCastStartDate]];
-    CGSize remainingTimeSize = [remainingTime sizeWithAttributes:attributes];
+    CGSize remainingTimeSize = [remainingTime sizeWithAttributes:_textAttributes];
     CGFloat rightMargin = remainingTimeSize.width + 5;
-    CGRect remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y + CAST_BAR_TOP_MARGIN, rightMargin, rect.size.height);
-    [remainingTime drawInRect:remainingTimeRect withAttributes:attributes];
+    if ( _refreshCachedValues )
+        _remainingTimeRect = CGRectMake(rect.origin.x + rect.size.width - rightMargin, rect.origin.y + CAST_BAR_TOP_MARGIN, rightMargin, rect.size.height);
+    [remainingTime drawInRect:_remainingTimeRect withAttributes:_textAttributes];
     
     [self _drawGCDThingInRect:rect];
+    
+    _refreshCachedValues = NO;
 }
 
 #define GCD_TICK_SIZE 3
