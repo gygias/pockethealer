@@ -31,6 +31,15 @@
             statusEffects = _statusEffects,
             hdClass = _hdClass;
 
+- (id)init
+{
+    if ( self = [super init] )
+    {
+        self.intelligence = 1.0;
+    }
+    return self;
+}
+
 - (void)setHdClass:(HDClass *)hdClass
 {
     _hdClass = hdClass;
@@ -474,7 +483,7 @@
     self.lastHealth = self.health;
     self.encounter = encounter;
     if ( self.isPlayer )
-        [self _moveToRandomLocation:NO];
+        [self moveToRandomLocation:NO];
 }
 
 - (void)beginEncounter:(Encounter *)encounter
@@ -666,17 +675,27 @@
     return spellToCast.triggersGCD;
 }
 
+#define DONT_MOVE_RANDOMLY_THRESHOLD ( 15.0 * self.intelligence )
+
 - (void)updateEncounter:(Encounter *)encounter
 {
     if ( self.currentMoveStartDate )
         return;
     
-    BOOL moveSomewhere = ( arc4random() % 100 ) == 0;
+    if ( self.lastCommandedMoveDate && [[NSDate date] timeIntervalSinceDate:self.lastCommandedMoveDate] > DONT_MOVE_RANDOMLY_THRESHOLD )
+        return;
+    
+    BOOL moveSomewhere = ( arc4random() % 200 ) == 0;
     if ( moveSomewhere )
-        [self _moveToRandomLocation:YES];
+        [self _moveToRandomLocation:YES commanded:NO];
 }
 
-- (void)_moveToRandomLocation:(BOOL)animated
+- (void)moveToRandomLocation:(BOOL)animated
+{
+    [self _moveToRandomLocation:animated commanded:YES];
+}
+
+- (void)_moveToRandomLocation:(BOOL)animated commanded:(BOOL)commanded
 {
     Enemy *theEnemy = self.encounter.enemies.firstObject;
     CGSize enemyRoomSize = theEnemy.roomSize;
@@ -749,20 +768,65 @@
             [locationCache addObject:[NSValue valueWithCGPoint:aPoint]];
     }
     
-    if ( animated )
-    {
-        NSTimeInterval moveTime = 2;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(moveTime * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
-            self.location = aPoint;
-            self.currentMoveStartDate = nil;
-        });
+    double delay = commanded ? ( 1 - self.intelligence ) * 5 : 0;
+    [self _moveToLocation:aPoint animated:animated withDelay:delay];
+}
+
+- (void)moveToEntity:(Entity *)entity
+{
+    double delay = ( 1 - self.intelligence ) * 5;
+    [self _moveToLocation:entity.location animated:YES withDelay:delay];
+}
+
+- (void)_moveToLocation:(CGPoint)location animated:(BOOL)animated withDelay:(NSTimeInterval)delay
+{
+    self.lastCommandedMoveDate = [NSDate date];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         
-        self.currentMoveStartDate = [NSDate date];
-        self.currentMoveDuration = moveTime;
-        self.currentMoveEndPoint = aPoint;
+        [self stopCurrentMove];
+        
+        if ( animated )
+        {
+            NSTimeInterval moveTime = (double)(( arc4random() % 100 ) + 100 ) / 200.0;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(moveTime * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
+                self.location = location;
+                self.currentMoveStartDate = nil;
+            });
+            
+            self.currentMoveStartDate = [NSDate date];
+            self.currentMoveDuration = moveTime;
+            self.currentMoveEndPoint = location;
+        }
+        else
+            self.location = location;
+    });
+}
+
+- (void)stopCurrentMove
+{
+    self.location = [self interpolatedLocation];
+}
+
+- (CGPoint)interpolatedLocation
+{
+    CGPoint interpolatedLocation = self.location;
+    if ( self.currentMoveStartDate )
+    {
+        double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:self.currentMoveStartDate] / self.currentMoveDuration;
+        if ( currentMoveProgress > 1 )
+        {
+            PHLogV(@"*** Bug during interpolatedLocation, move progress exceeds 100%% for %@",self);
+            currentMoveProgress = 1;
+        }
+        
+        CGFloat xDelta = ( self.currentMoveEndPoint.x - self.location.x ) * currentMoveProgress;
+        CGFloat yDelta = ( self.currentMoveEndPoint.y - self.location.y ) * currentMoveProgress;
+        
+        interpolatedLocation = CGPointMake(self.location.x + xDelta, self.location.y + yDelta);
     }
-    else
-        self.location = aPoint;
+    
+    return interpolatedLocation;
 }
 
 - (void)endEncounter:(Encounter *)encounter

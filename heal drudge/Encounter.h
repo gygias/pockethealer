@@ -20,6 +20,16 @@ typedef void(^EncounterUpdatedBlock)(Encounter *);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 typedef void(^DyingEntitiesBlock)(NSArray *);
 
+typedef NS_ENUM(NSUInteger,PlayerCommand)
+{
+    NoCommand = 0,
+    HeroCommand,
+    StackInMeleeCommand,
+    StackOnMeCommand,
+    SpreadCommand,
+    IdiotsCommand
+};
+
 @interface Encounter : NSObject
 {
     dispatch_queue_t _encounterQueue;
@@ -53,6 +63,8 @@ typedef void(^DyingEntitiesBlock)(NSArray *);
 
 - (BOOL)entityIsTargetedByEntity:(Entity *)entity;
 - (Entity *)currentMainTank;
+
+- (void)handleCommand:(PlayerCommand)command;
 
 @end
 

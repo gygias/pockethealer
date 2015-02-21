@@ -10,6 +10,7 @@
 
 #import "SpeechBubbleView.h"
 #import "SpeechBubbleContentView.h"
+#import "Encounter.h"
 
 @interface SpeechBubbleViewController : UIViewController
 
@@ -22,11 +23,13 @@
 @property IBOutlet UILabel *textLabel;
 @property CGPoint bubbleOrigin;
 @property (nonatomic,retain) UIView *referenceView;
-typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *);
+typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *,PlayerCommand);
 @property (copy) SpeechBubbleViewControllerDismissedHandler dismissHandler;
 
 - (IBAction)heroPressed:(id)sender;
-- (IBAction)stackPressed:(id)sender;
+- (IBAction)stackInMeleePressed:(id)sender;
+- (IBAction)stackOnMePressed:(id)sender;
 - (IBAction)spreadPressed:(id)sender;
+- (IBAction)idiotsPressed:(id)sender;
 
 @end

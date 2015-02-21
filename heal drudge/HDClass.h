@@ -132,6 +132,7 @@ typedef enum
 - (BOOL)isDPS;
 - (const NSString *)role;
 - (BOOL)hasRole:(const NSString *)role;
+- (BOOL)isHeroCapable;
 
 + (NSArray *)allClasses;
 + (NSArray *)allHealingClassSpecs;

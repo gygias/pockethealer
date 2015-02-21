@@ -53,6 +53,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property (readonly) BOOL hasAggro;
 @property NSDate *lastMinorCooldownUsedDate;
 @property NSDate *lastMajorCooldownUsedDate;
+@property double intelligence;
 
 @property dispatch_source_t resourceGenerationSource;
 @property NSDate *lastResourceGenerationDate;
@@ -172,6 +173,12 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property CGPoint currentMoveEndPoint;
 @property NSDate *currentMoveStartDate;
 @property NSTimeInterval currentMoveDuration;
+@property NSDate *lastCommandedMoveDate;
+
+- (void)moveToRandomLocation:(BOOL)animated;
+- (void)moveToEntity:(Entity *)entity;
+- (CGPoint)interpolatedLocation;
+- (void)stopCurrentMove;
 
 @end
 

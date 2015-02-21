@@ -29,5 +29,6 @@
 @property (nonatomic,readonly) NSArray *rangePlayers;
 @property (nonatomic,readonly) NSArray *healers;
 @property (nonatomic,readonly) NSArray *dpsPlayers;
+@property (readonly) Entity *randomHeroCapablePlayer;
 
 @end

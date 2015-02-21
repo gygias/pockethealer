@@ -43,10 +43,10 @@
 
 - (IBAction)commandTouched:(id)sender
 {
-//    SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithCommands];
-//    [self _presentSpeechBubble:speechBubble locateBlock:^{
-//        return self.playerAndTargetView.playerOrigin;
-//    }];
+    SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithCommands];
+    [self _presentSpeechBubble:speechBubble locateBlock:^{
+        return self.playerAndTargetView.playerOrigin;
+    }];
 }
 
 - (void)_setOrigin:(id)originObject onSpeechBubble:(SpeechBubbleViewController *)speechBubble
@@ -66,13 +66,17 @@ typedef CGPoint (^LocateBlock)();
 - (void)_presentSpeechBubble:(SpeechBubbleViewController *)speechBubble locateBlock:(LocateBlock)locateBlock
 {
     if ( self.currentSpeechBubble )
-        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble);
+        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble, NoCommand);
     
     speechBubble.bubbleOrigin = locateBlock();
     speechBubble.referenceView = self.advisorGuideView;
-    speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc){
+    speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc, PlayerCommand command){
         [vc.view removeFromSuperview];
         self.currentSpeechBubble = nil;
+        
+        if ( command != NoCommand )
+            [self.encounter handleCommand:command];
+            
     };
     speechBubble.view.frame = self.view.frame;
     [self.view addSubview:speechBubble.view];

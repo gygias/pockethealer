@@ -57,7 +57,7 @@
         if ( weakSelf.speechBubbleView.isCommandView )
             return;
         if ( weakSelf.dismissHandler )
-            weakSelf.dismissHandler(weakSelf);
+            weakSelf.dismissHandler(weakSelf, NoCommand);
     };
 }
 
@@ -75,19 +75,31 @@
 - (IBAction)heroPressed:(id)sender
 {
     NSLog(@"HERO!!!");
-    self.dismissHandler(self);
+    self.dismissHandler(self, HeroCommand);
 }
 
-- (IBAction)stackPressed:(id)sender
+- (IBAction)stackInMeleePressed:(id)sender
 {
-    NSLog(@"STACK!!!");
-    self.dismissHandler(self);
+    NSLog(@"STACK IN MELEE!!!");
+    self.dismissHandler(self, StackInMeleeCommand);
+}
+
+- (IBAction)stackOnMePressed:(id)sender
+{
+    NSLog(@"STACK ON ME!!!");
+    self.dismissHandler(self, StackOnMeCommand);
 }
 
 - (IBAction)spreadPressed:(id)sender
 {
     NSLog(@"SPREAD!!!");
-    self.dismissHandler(self);
+    self.dismissHandler(self, SpreadCommand);
+}
+
+- (IBAction)idiotsPressed:(id)sender
+{
+    NSLog(@"IDIOTS!!!");
+    self.dismissHandler(self, IdiotsCommand);
 }
 
 @end

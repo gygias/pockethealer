@@ -32,7 +32,9 @@ static Encounter *sYouAreATerribleProgrammer = nil;
 }
 
 - (void)start
-{    
+{
+    _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
+    
     [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [(Entity *)obj prepareForEncounter:self];
     }];
@@ -42,9 +44,7 @@ static Encounter *sYouAreATerribleProgrammer = nil;
     }];
     
     NSInteger delay = 1;
-    [SoundManager playCountdownWithStartIndex:@(delay)];
-    
-    _encounterQueue = dispatch_queue_create("EncounterQueue", 0);
+    [SoundManager playCountdownWithStartIndex:@(delay)];    
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay + 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
@@ -442,6 +442,73 @@ static Encounter *sYouAreATerribleProgrammer = nil;
         targetedEntity = [self.raid.tankPlayers randomObject];
     
     return targetedEntity;
+}
+
+- (void)handleCommand:(PlayerCommand)command
+{
+    switch (command) {
+        case HeroCommand:
+            [self _handleHeroCommand];
+            break;
+        case StackOnMeCommand:
+            [self _handleStackOnMeCommand];
+            break;
+        case StackInMeleeCommand:
+            [self _handleStackInMeleeCommand];
+            break;
+        case IdiotsCommand:
+            [self _handleIdiotsCommand];
+            break;
+        case SpreadCommand:
+            [self _handleSpreadCommand];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)_handleHeroCommand
+{
+    Entity *heroableEntity = self.raid.randomHeroCapablePlayer;
+    
+    if ( ! heroableEntity )
+    {
+        NSLog(@"can't hero");
+        return;
+    }
+    
+    NSLog(@"TODO: %@: implement hero!",heroableEntity);
+}
+
+- (void)_handleStackOnMeCommand
+{
+    [self.raid.rangePlayers enumerateObjectsUsingBlock:^(Entity *rangePlayer, NSUInteger idx, BOOL *stop) {
+        [rangePlayer stopCurrentMove];
+        [rangePlayer moveToEntity:self.player];
+    }];
+}
+
+- (void)_handleStackInMeleeCommand
+{
+    Entity *someTank = self.raid.tankPlayers.randomObject;
+    NSLog(@"stacking on %@",someTank);
+    [self.raid.nonTankPlayers enumerateObjectsUsingBlock:^(Entity *nonTankPlayer, NSUInteger idx, BOOL *stop) {
+        [nonTankPlayer stopCurrentMove];
+        [nonTankPlayer moveToEntity:someTank];
+    }];
+}
+
+- (void)_handleIdiotsCommand
+{
+    NSLog(@"IDIOTS!");
+}
+
+- (void)_handleSpreadCommand
+{
+    [self.raid.nonTankPlayers enumerateObjectsUsingBlock:^(Entity *nonTankPlayer, NSUInteger idx, BOOL *stop) {
+        [nonTankPlayer stopCurrentMove];
+        [nonTankPlayer moveToRandomLocation:YES];
+    }];
 }
 
 @end

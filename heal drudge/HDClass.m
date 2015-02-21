@@ -902,5 +902,26 @@ const NSString *WoWAPIClassKey = @"class";
     return allHealingClassSpecs;
 }
 
+- (BOOL)isHeroCapable
+{
+    switch (_classID)
+    {
+        case HDSHAMAN:
+        case HDMAGE:
+            return YES;
+        default:
+            break;
+    }
+    
+    switch (_specID)
+    {
+        case HDBEASTMASTERHUNTER:
+            return YES;
+        default:
+            break;
+    }
+    
+    return NO;
+}
 
 @end

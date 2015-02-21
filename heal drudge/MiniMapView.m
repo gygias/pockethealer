@@ -41,19 +41,7 @@
         CGPoint effectiveLocation;
         
         if ( raider.currentMoveStartDate )
-        {
-            double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:raider.currentMoveStartDate] / raider.currentMoveDuration;
-            if ( currentMoveProgress > 1 )
-            {
-                PHLogV(@"*** Bug at MiniMapView draw time, move progress exceeds 100%% for %@",raider);
-                currentMoveProgress = 1;
-            }
-            
-            CGFloat xDelta = ( raider.currentMoveEndPoint.x - raider.location.x ) * currentMoveProgress;
-            CGFloat yDelta = ( raider.currentMoveEndPoint.y - raider.location.y ) * currentMoveProgress;
-            
-            effectiveLocation = CGPointMake(raider.location.x + xDelta, raider.location.y + yDelta);
-        }
+            effectiveLocation = [raider interpolatedLocation];
         else
             effectiveLocation = raider.location;
         

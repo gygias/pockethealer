@@ -39,6 +39,7 @@
         aPlayer.name = names[idx];
         aPlayer.averageItemLevelEquipped = @630;
         aPlayer.hdClass = [HDClass randomClass];
+        aPlayer.intelligence = (double)(arc4random() % 100) / 100.0;
         
         if ( idx < tanks )
             aPlayer.hdClass = [HDClass randomTankClass];
@@ -286,6 +287,17 @@ typedef NS_ENUM(NSInteger, EntityRange) {
     }
     
     return players;
+}
+
+- (Entity *)randomHeroCapablePlayer
+{
+    NSMutableArray *heroCapablePlayers = [NSMutableArray new];
+    [self.players enumerateObjectsUsingBlock:^(Entity *aPlayer, NSUInteger idx, BOOL *stop) {
+        if ( aPlayer.hdClass.isHeroCapable )
+            [heroCapablePlayers addObject:aPlayer];
+    }];
+    
+    return heroCapablePlayers.randomObject;
 }
 
 @end

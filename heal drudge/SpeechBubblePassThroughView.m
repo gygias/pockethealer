@@ -8,6 +8,7 @@
 
 #import "SpeechBubblePassThroughView.h"
 
+#import "SpeechBubbleView.h"
 #import "SpeechBubbleContentView.h"
 
 @implementation SpeechBubblePassThroughView
@@ -22,7 +23,12 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    SpeechBubbleContentView *cv = ((SpeechBubbleContentView *)self.subviews.firstObject).subviews.firstObject;
+    SpeechBubbleView *bv = self.subviews.firstObject;
+    
+    if ( bv.isCommandView )
+        return [super hitTest:point withEvent:event];
+    
+    SpeechBubbleContentView *cv = bv.subviews.firstObject;
     if ( CGRectContainsPoint(cv.frame, point) )
         return cv;
     return nil;

@@ -23,10 +23,10 @@ void PHLog(id source,NSString *format, ...)
             {
 //                if ( ((Entity *)source).isPlayingPlayer )
 //                    return YES;
-                if ( ((Entity *)source).hdClass.isTank )
-                    return YES;
-                if ( ((Entity *)source).hdClass.isHealerClass )
-                    return YES;
+//                if ( ((Entity *)source).hdClass.isTank )
+//                    return YES;
+//                if ( ((Entity *)source).hdClass.isHealerClass )
+//                    return YES;
             }
             else if ( [source isKindOfClass:[Spell class]] )
             {
@@ -34,12 +34,12 @@ void PHLog(id source,NSString *format, ...)
 //                    return YES;
 //                if ( ((Spell *)source).target.isPlayingPlayer )
 //                    return YES;
-                if ( ((Spell *)source).caster.hdClass.isHealerClass )
-                    return YES;
+//                if ( ((Spell *)source).caster.hdClass.isHealerClass )
+//                    return YES;
 //                if ( ((Spell *)source).target.hdClass.isHealerClass )
 //                    return YES;
-                if ( ((Spell *)source).caster.hdClass.isTank )
-                    return YES;
+//                if ( ((Spell *)source).caster.hdClass.isTank )
+//                    return YES;
 //                if ( ((Spell *)source).target.hdClass.isTank )
 //                    return YES;
             }
