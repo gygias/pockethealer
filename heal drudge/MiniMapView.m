@@ -34,7 +34,22 @@
     [[UIColor whiteColor] setStroke];
     [path stroke];
     
-    [@"☠" drawAtPoint:theEnemy.location withAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    
+    [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
+        
+        CGPoint effectiveLocation;
+        
+        if ( raider.currentMoveStartDate )
+            effectiveLocation = [raider interpolatedLocation];
+        else
+            effectiveLocation = raider.location;
+        
+        NSString *enemyText = @"☠";
+        CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [enemyText sizeWithAttributes:attributes].width / 2,
+                                                   effectiveLocation.y - [enemyText sizeWithAttributes:attributes].height / 2);
+        [enemyText drawAtPoint:centeredTextLocation withAttributes:attributes];
+    }];
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
         
@@ -48,9 +63,19 @@
         if ( self.encounter.player.target == raider )
             [self _drawTargetingCrossAt:effectiveLocation];
         
-        UIBezierPath *arc = [UIBezierPath bezierPathWithArcCenter:effectiveLocation radius:2 startAngle:0 endAngle:2*M_PI clockwise:NO];
-        [raider.hdClass.classColor setFill];
-        [arc fill];
+        if ( raider == self.encounter.player )
+        {
+            NSString *playerText = @"☺";
+            CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [playerText sizeWithAttributes:attributes].width / 2,
+                                                       effectiveLocation.y - [playerText sizeWithAttributes:attributes].height / 2);
+            [playerText drawAtPoint:centeredTextLocation withAttributes:attributes];
+        }
+        else
+        {
+            UIBezierPath *arc = [UIBezierPath bezierPathWithArcCenter:effectiveLocation radius:2 startAngle:0 endAngle:2*M_PI clockwise:NO];
+            [raider.hdClass.classColor setFill];
+            [arc fill];
+        }
     }];
 }
 
@@ -72,6 +97,16 @@
                                        TARGETING_CROSS_HEIGHT,
                                        TARGETING_CROSS_WIDTH);
     [[UIBezierPath bezierPathWithRect:horizontalRect] fill];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+    NSSet *myTouches = [event touchesForView:self];
+    UITouch *theTouch = [myTouches anyObject]; // XXX
+    CGPoint thePoint = [theTouch locationInView:self];
+    
+    [self.encounter.player moveToLocation:thePoint];
 }
 
 @end

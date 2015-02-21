@@ -778,6 +778,11 @@
     [self _moveToLocation:entity.location animated:YES withDelay:delay];
 }
 
+- (void)moveToLocation:(CGPoint)location
+{
+    [self _moveToLocation:location animated:YES withDelay:0];
+}
+
 - (void)_moveToLocation:(CGPoint)location animated:(BOOL)animated withDelay:(NSTimeInterval)delay
 {
     self.lastCommandedMoveDate = [NSDate date];

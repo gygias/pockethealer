@@ -177,6 +177,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 
 - (void)moveToRandomLocation:(BOOL)animated;
 - (void)moveToEntity:(Entity *)entity;
+- (void)moveToLocation:(CGPoint)location;
 - (CGPoint)interpolatedLocation;
 - (void)stopCurrentMove;
 

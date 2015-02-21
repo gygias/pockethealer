@@ -46,7 +46,7 @@
 {
     SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithCommands];
     [self _presentSpeechBubble:speechBubble locateBlock:^{
-        return self.playerAndTargetView.playerOrigin;
+        return CGPointMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height);
     }];
 }
 
