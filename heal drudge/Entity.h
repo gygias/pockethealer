@@ -49,7 +49,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property BOOL isPlayingPlayer;
 @property BOOL isEnemy;
 @property BOOL stopped;
-@property NSMutableArray *spells;
+@property (readonly) NSArray *spells;
 @property (readonly) BOOL hasAggro;
 @property NSDate *lastMinorCooldownUsedDate;
 @property NSDate *lastMajorCooldownUsedDate;
@@ -180,6 +180,9 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 - (void)moveToLocation:(CGPoint)location;
 - (CGPoint)interpolatedLocation;
 - (void)stopCurrentMove;
+
+//
+- (void)replaceSpell:(Spell *)replacedSpell withSpell:(Spell *)replacingSpell persist:(BOOL)persist;
 
 @end
 

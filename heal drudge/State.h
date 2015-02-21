@@ -14,6 +14,8 @@
 
 @interface State : NSObject
 
++ (State *)sharedState;
+
 @property Entity *player;
 @property NSString *playerName; // XXX
 @property NSUInteger raidSize; // XXX
@@ -22,6 +24,7 @@
 @property BOOL forceLireal;
 @property float difficulty;
 @property BOOL debugViews;
+@property NSMutableDictionary *spellOrdersBySpecID;
 
 // setup
 @property BOOL saveGuildToo;

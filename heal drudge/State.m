@@ -12,6 +12,17 @@
 
 @implementation State
 
+static State *sSharedState = nil;
++ (State *)sharedState
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sSharedState = [State readState];
+    });
+    
+    return sSharedState;
+}
+
 + (State *)readState
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -22,6 +33,9 @@
     state.raidSize = [defaults integerForKey:@"raidSize"];
     state.difficulty = [defaults floatForKey:@"difficulty"];
     state.debugViews = [defaults boolForKey:@"debugViws"];
+    state.spellOrdersBySpecID = [[defaults dictionaryForKey:@"spellOrdersBySpecID"] mutableCopy];
+    if ( ! state.spellOrdersBySpecID )
+        state.spellOrdersBySpecID = [NSMutableDictionary new];
     return state;
 }
 
@@ -34,6 +48,8 @@
     [defaults setInteger:self.raidSize forKey:@"raidSize"];
     [defaults setFloat:self.difficulty forKey:@"difficulty"];
     [defaults setBool:self.debugViews forKey:@"debugViews"];
+    [defaults setObject:self.spellOrdersBySpecID forKey:@"spellOrdersBySpecID"];
+    [defaults synchronize];
 }
 
 @end

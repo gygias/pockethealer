@@ -122,7 +122,7 @@ typedef NS_ENUM(NSInteger, CooldownType) {
 //- (void)endSpell:(id)entity;
 
 // character, not class, because glyphs can add/remove spells
-+ (NSArray *)castableSpellsForCharacter:(Entity *)character;
++ (NSArray *)castableSpellsForCharacter:(Entity *)player orderedByNames:(NSArray *)orderedByNames;
 
 @property Entity *caster;
 @property (nonatomic,retain) Entity *target;

@@ -17,8 +17,6 @@
 
 @synthesize encounterQueue = _encounterQueue;
 
-static Encounter *sYouAreATerribleProgrammer = nil;
-
 - (id)init
 {
     if ( self = [super init] )

@@ -84,12 +84,7 @@
                 if ( replacedSpell != replacingSpell )
                 {
                     dispatch_async(self.player.encounter.encounterQueue, ^{
-                        NSUInteger replacedIdx = [self.player.spells indexOfObject:replacedSpell];
-                        NSUInteger replacingIdx = [self.player.spells indexOfObject:replacingSpell];
-                        [self.player.spells removeObjectAtIndex:replacedIdx];
-                        [self.player.spells insertObject:replacingSpell atIndex:replacedIdx];
-                        [self.player.spells removeObjectAtIndex:replacingIdx];
-                        [self.player.spells insertObject:replacedSpell atIndex:replacingIdx];
+                        [self.player replaceSpell:replacedSpell withSpell:replacingSpell persist:YES];
                     });
                 }
             }

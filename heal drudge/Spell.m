@@ -77,14 +77,33 @@ const NSString *SpellLevelHigh = @"high";
 {
 }
 
-+ (NSArray *)castableSpellsForCharacter:(Entity *)player
++ (NSArray *)castableSpellsForCharacter:(Entity *)player orderedByNames:(NSArray *)orderedByNames
 {
     NSMutableArray *castableSpells = [NSMutableArray new];
-    for ( Class spellClass in [self _spellClasses] )
+    NSArray *spellClasses = [self _spellClasses];
+    
+    if ( orderedByNames )
+    {
+        NSUInteger idx = 0;
+        for( ; idx < orderedByNames.count; idx++ )
+            [castableSpells addObject:[NSNull null]];
+    }
+    
+    for ( Class spellClass in spellClasses )
     {
         Spell *spell = [[spellClass alloc] initWithCaster:player];
         if ( spell )
-            [castableSpells addObject:spell];
+        {
+            if ( orderedByNames && spell.name )
+            {
+                NSUInteger idx = [orderedByNames indexOfObject:spell.name];
+                if ( idx == NSNotFound )
+                    [castableSpells addObject:spell];
+                [castableSpells replaceObjectAtIndex:idx withObject:spell];
+            }
+            else
+                [castableSpells addObject:spell];
+        }
     }
     
     return castableSpells;

@@ -15,6 +15,7 @@
 #import "Raid.h"
 #import "Ability.h"
 #import "Advisor.h"
+#import "State.h"
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);

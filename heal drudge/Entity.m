@@ -29,7 +29,8 @@
 @synthesize currentHealth = _currentHealth,
             currentResources = _currentResources,
             statusEffects = _statusEffects,
-            hdClass = _hdClass;
+            hdClass = _hdClass,
+            spells = _spells;
 
 - (id)init
 {
@@ -46,8 +47,9 @@
 }
 
 - (void)initializeSpells
-{
-    self.spells = [[Spell castableSpellsForCharacter:self] mutableCopy];
+{    
+    NSArray *spellOrder = [State sharedState].spellOrdersBySpecID[[@(self.hdClass.specID) stringValue]];
+    _spells = [[Spell castableSpellsForCharacter:self orderedByNames:spellOrder] mutableCopy];
 }
 
 - (BOOL)validateSpell:(Spell *)spell asSource:(BOOL)asSource otherEntity:(Entity *)otherEntity message:(NSString * __strong *)messagePtr invalidDueToCooldown:(BOOL *)invalidDueToCooldown
@@ -1145,6 +1147,29 @@
     }];
     
     return hasAggro;
+}
+
+- (void)replaceSpell:(Spell *)replacedSpell withSpell:(Spell *)replacingSpell persist:(BOOL)persist
+{
+    NSUInteger replacedIdx = [self.spells indexOfObject:replacedSpell];
+    NSUInteger replacingIdx = [self.spells indexOfObject:replacingSpell];
+    [(NSMutableArray *)self.spells removeObjectAtIndex:replacedIdx];
+    [(NSMutableArray *)self.spells insertObject:replacingSpell atIndex:replacedIdx];
+    [(NSMutableArray *)self.spells removeObjectAtIndex:replacingIdx];
+    [(NSMutableArray *)self.spells insertObject:replacedSpell atIndex:replacingIdx];
+    
+    if ( persist )
+    {
+        // TODO this won't work for multiple "player player" classes
+        NSMutableArray *spellNames = [NSMutableArray new];
+        [self.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
+            [spellNames addObject:spell.name];
+        }];
+        [State sharedState].spellOrdersBySpecID[[@(self.hdClass.specID) stringValue]] = spellNames;
+        [[State sharedState] writeState];
+        
+        NSLog(@"OUTGOING SPELL ORDER: %@",spellNames);
+    }
 }
 
 @end
