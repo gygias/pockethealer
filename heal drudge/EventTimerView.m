@@ -40,10 +40,10 @@
         double percentFill = timeUntilEvent / timeBetweenScheduleAndEvent;
         
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGRect rectangle = CGRectMake( rect.origin.x,
-                                      rect.origin.y + yOffset,
-                                      rect.size.width * percentFill,
-                                      size.height);
+        CGRect rectangle = CGRectMake( rect.origin.x + 1,
+                                      rect.origin.y + yOffset + 1,
+                                      rect.size.width * percentFill - 2,
+                                      size.height - 2);
         CGContextAddRect(context, rectangle);
         CGContextSetStrokeColorWithColor(context,
                                          [UIColor whiteColor].CGColor);
@@ -52,7 +52,7 @@
                                        [UIColor redColor].CGColor);
         CGContextFillRect(context, rectangle);
         
-        CGRect aRect = CGRectMake(rect.origin.x, rect.origin.y + yOffset, size.width, size.height);
+        CGRect aRect = CGRectMake(rect.origin.x + 1, rect.origin.y + yOffset, size.width, size.height);
         [spell.name drawInRect:aRect withAttributes:attributes];
         yOffset += size.height;
     }];

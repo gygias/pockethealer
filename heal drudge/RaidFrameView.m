@@ -498,7 +498,7 @@ CGSize sRaidFrameSize = {0,0};
 
 
 #define LAST_HEAL_DURATION 1.0
-#define LAST_HEAL_Y_OFFSET_TODO 5
+#define LAST_HEAL_Y_OFFSET_TODO 10
 - (void)_drawLastHealInRect:(CGRect)rect
 {
     if ( ! self.entity.lastHealDate )
@@ -512,7 +512,7 @@ CGSize sRaidFrameSize = {0,0};
     
     CGPoint healPoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO + LAST_HEAL_Y_OFFSET_TODO);
     NSDictionary *attributes = @{ NSForegroundColorAttributeName : [[UIColor greenColor] colorWithAlphaComponent:percentage] };
-    [[self.entity.lastHealAmount stringValue] drawAtPoint:healPoint withAttributes:attributes];
+    [[NSString stringWithFormat:@"+%u",self.entity.lastHealAmount.unsignedIntValue] drawAtPoint:healPoint withAttributes:attributes];
 }
 
 @end
