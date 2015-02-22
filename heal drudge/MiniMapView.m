@@ -61,22 +61,22 @@
             [arc fill];
         }
         
-        if ( raider.lastHitAOEDate )
+        if ( raider.lastHitDate && raider.lastHitSpell.hitRange.integerValue > 0 )
         {
-            NSTimeInterval timeSinceLastAOE = [[NSDate date] timeIntervalSinceDate:raider.lastHitAOEDate];
+            NSTimeInterval timeSinceLastAOE = [[NSDate date] timeIntervalSinceDate:raider.lastHitDate];
             if ( timeSinceLastAOE >= LAST_AOE_DRAW_THRESHOLD )
             {
-                raider.lastHitAOESpell = nil;
+                raider.lastHitSpell = nil;
                 return;
             }
             
             double percentage = 1 - timeSinceLastAOE / LAST_AOE_DRAW_THRESHOLD;
-            double radius = ( 1 - percentage ) * raider.lastHitAOESpell.hitRange.doubleValue;
+            double radius = ( 1 - percentage ) * raider.lastHitSpell.hitRange.doubleValue;
             
-            UIColor *emanationColor = ( raider.lastHitAOESpell.spellType != DetrimentalEffect ? [UIColor greenColor] : [UIColor redColor] );
+            UIColor *emanationColor = ( raider.lastHitSpell.spellType != DetrimentalEffect ? [UIColor greenColor] : [UIColor redColor] );
             UIColor *emanationColorAlpha = [emanationColor colorWithAlphaComponent:percentage];
             [emanationColorAlpha setStroke];
-            [[UIBezierPath bezierPathWithArcCenter:raider.location radius:raider.lastHitAOESpell.hitRange.doubleValue startAngle:0 endAngle:2*M_PI clockwise:NO] stroke];
+            [[UIBezierPath bezierPathWithArcCenter:raider.location radius:raider.lastHitSpell.hitRange.doubleValue startAngle:0 endAngle:2*M_PI clockwise:NO] stroke];
             [emanationColorAlpha setFill];
             [[UIBezierPath bezierPathWithArcCenter:raider.location radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO] fill];
         }

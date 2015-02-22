@@ -240,7 +240,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     NSSet *myTouches = [event touchesForView:self];
     UITouch *theTouch = [myTouches anyObject]; // XXX
     Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
-    PHLogV(@"you began touching %@",theSpell);
+    //PHLogV(@"you began touching %@",theSpell);
     self.depressedSpell = theSpell;
 }
 
@@ -258,7 +258,7 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     NSSet *myTouches = [event touchesForView:self];
     UITouch *theTouch = [myTouches anyObject]; // XXX
     Spell *theSpell = [self _spellAtPoint:[theTouch locationInView:self]];
-    PHLogV(@"you stopped touching %@",theSpell);
+    //PHLogV(@"you stopped touching %@",theSpell);
     
     if ( ! self.currentDragSpell )
     {

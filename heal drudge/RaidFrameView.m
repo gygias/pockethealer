@@ -110,6 +110,7 @@ CGSize sRaidFrameSize = {0,0};
     [self _drawAuxResourcesInRect:rect];
     [self _drawAggroNubsInRect:rect];
     [self _drawLastHealInRect:rect];
+    [self _drawLastHitSpellInRect:rect];
     
     _refreshCachedValues = NO;
 }
@@ -499,6 +500,7 @@ CGSize sRaidFrameSize = {0,0};
 
 #define LAST_HEAL_DURATION 1.0
 #define LAST_HEAL_Y_OFFSET_TODO 10
+#define LAST_HEAL_X_OFFSET_TODO -5
 - (void)_drawLastHealInRect:(CGRect)rect
 {
     if ( ! self.entity.lastHealDate )
@@ -509,10 +511,30 @@ CGSize sRaidFrameSize = {0,0};
         return;
     
     double percentage = 1 - timeSinceLastHeal / LAST_HEAL_DURATION;
-    
-    CGPoint healPoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO + LAST_HEAL_Y_OFFSET_TODO);
-    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [[UIColor greenColor] colorWithAlphaComponent:percentage] };
+    CGPoint healPoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X + LAST_HEAL_X_OFFSET_TODO, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO + LAST_HEAL_Y_OFFSET_TODO);
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [[UIColor greenColor] colorWithAlphaComponent:percentage],
+                                  NSFontAttributeName : [UIFont systemFontOfSize:8] };
     [[NSString stringWithFormat:@"+%u",self.entity.lastHealAmount.unsignedIntValue] drawAtPoint:healPoint withAttributes:attributes];
+}
+
+#define LAST_HIT_DRAW_DURATION 2.0
+#define LAST_HIT_Y_OFFSET_TODO ( LAST_HEAL_Y_OFFSET_TODO * 2 )
+
+- (void)_drawLastHitSpellInRect:(CGRect)rect
+{
+    if ( ! self.entity.lastHitDate )
+        return;
+    
+    NSTimeInterval timeSinceLastHit = [[NSDate date] timeIntervalSinceDate:self.entity.lastHitDate];
+    if ( timeSinceLastHit >= LAST_HIT_DRAW_DURATION )
+        return;
+    
+    double percentage = 1 - timeSinceLastHit / LAST_HIT_DRAW_DURATION;
+    CGPoint hitPoint = CGPointMake(rect.origin.x + RAID_FRAME_NAME_INSET_X, rect.origin.y + ROLE_ICON_ORIGIN_Y + ROLE_ICON_ORIGIN_Y_OFFSET_FOR_NAME_DRAWING_TODO + LAST_HIT_Y_OFFSET_TODO);
+    UIColor *drawColor = ( self.entity.lastHitSpell.spellType == DetrimentalEffect ? [UIColor redColor] : [UIColor greenColor] );
+    NSDictionary *attributes = @{ NSForegroundColorAttributeName : [drawColor colorWithAlphaComponent:percentage],
+                                  NSFontAttributeName : [UIFont systemFontOfSize:6] };
+    [self.entity.lastHitSpell.name drawAtPoint:hitPoint withAttributes:attributes];
 }
 
 @end

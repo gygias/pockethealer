@@ -170,6 +170,7 @@
     
     NSMutableArray *allTargets = [NSMutableArray new];
 
+    __block Entity *aoeOriginEntity = nil;
     if ( spell.isSmart )
     {
         NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
@@ -184,18 +185,14 @@
     }
     else if ( spell.hitRange.doubleValue > 0 )
     {
-        Entity *originEntity = spell.targeted ? ( spell.target ? spell.target : spell.caster ) : spell.caster;
+        aoeOriginEntity = spell.targeted ? ( spell.target ? spell.target : spell.caster ) : spell.caster;
         BOOL hitPlayers = spell.caster.isEnemy ? ( spell.spellType != BeneficialEffect ) : ( spell.spellType != DetrimentalEffect );
         BOOL hitEnemies = spell.caster.isEnemy ? ( spell.spellType != DetrimentalEffect ) : ( spell.spellType != BeneficialEffect );
-        NSArray *subTargets = [originEntity entitiesInRange:spell.hitRange.doubleValue players:hitPlayers enemies:hitEnemies includingSelf:hitPlayers];
+        NSArray *subTargets = [aoeOriginEntity entitiesInRange:spell.hitRange.doubleValue players:hitPlayers enemies:hitEnemies includingSelf:hitPlayers];
         if ( subTargets.count )
             [allTargets addObjectsFromArray:subTargets];
         if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
             subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
-        
-        originEntity.lastHitAOESpell = spell;
-        originEntity.lastHitAOEDate = [NSDate date];
-        
         PHLog(spell.caster,@"targets of aoe spell %@: %@",spell,subTargets);
     }
     else if ( spell.targeted )
@@ -233,8 +230,19 @@
         }];
         
         [self.advisor handleSpell:spell event:nil modifier:netMod];
+        
+        if ( aTarget != aoeOriginEntity && aTarget != originalTarget )
+        {
+            aTarget.lastMultitargetHitSpell = spell;
+            aTarget.lastMultitargetHitDate = [NSDate date];
+        }
     }];
     spell.target = originalTarget;
+    
+    Entity *assignHitEntity = ( aoeOriginEntity ? aoeOriginEntity : spell.target );
+    assignHitEntity.lastHitSpell = spell;
+    assignHitEntity.lastHitDate = [NSDate date];
+    
     
     if ( spell.grantsAuxResources )
         [spell.caster addAuxResources:spell.grantsAuxResources];
