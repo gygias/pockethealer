@@ -166,57 +166,38 @@
     }
     
     NSMutableArray *allTargets = [NSMutableArray new];
-    BOOL subHandled = NO;
-    if ( ! spell.caster.isEnemy ) // XXX TODO big kludge _dispatchAbility has its own "determine targets" logic
+
+    if ( spell.isSmart )
     {
-        subHandled = YES;
-        if ( spell.isSmart )
-        {
-            NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
-            if ( smartTargets )
-                [allTargets addObjectsFromArray:smartTargets];
-        }
-        else if ( spell.affectsPartyOfTarget )
-        {
-            NSArray *partyTargets = [self.raid partyForEntity:spell.target includingEntity:YES];
-            if ( partyTargets )
-                [allTargets addObjectsFromArray:partyTargets];
-        }
-        else if ( spell.hitRange.doubleValue > 0 )
-        {
-            Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
-            BOOL hitPlayers = spell.spellType != DetrimentalEffect;
-            BOOL hitEnemies = spell.spellType != BeneficialEffect;
-            NSArray *subTargets = [originEntity entitiesInRange:spell.hitRange.doubleValue players:hitPlayers enemies:hitEnemies includingSelf:hitPlayers];
-            if ( subTargets.count )
-                [allTargets addObjectsFromArray:subTargets];
-            
-//            if ( spell.hitRange.doubleValue >= 30 )
-//                subTargets = self.raid.players;
-//            else
-//            {
-//                Entity *originEntity = spell.hitRangeTargetable ? ( spell.caster.target ? spell.caster.target : spell.caster ) : spell.caster;
-//                if ( originEntity.hdClass.isRanged )
-//                    subTargets = self.raid.rangePlayers;
-//                else
-//                    subTargets = self.raid.meleePlayers;
-//                double percentCovered = spell.hitRange.doubleValue / 10.0;
-//                if ( percentCovered > 1 )
-//                    percentCovered = 1;
-//                NSUInteger nRemovedByRange = (NSUInteger)( ( 1 - percentCovered ) * subTargets.count );
-//                subTargets = [subTargets arrayByRandomlyRemovingNObjects:nRemovedByRange];
-//                if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
-//                    subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
-//            }
-//            if ( subTargets.count )
-//                [allTargets addObjectsFromArray:subTargets];
-        }
-        else
-            subHandled = NO;
+        NSArray *smartTargets = [self _smartTargetsForSpell:spell source:spell.caster target:spell.target];
+        if ( smartTargets )
+            [allTargets addObjectsFromArray:smartTargets];
     }
-    if ( ! subHandled && spell.targeted ) // Kludge fucking gross
+    else if ( spell.affectsPartyOfTarget )
+    {
+        NSArray *partyTargets = [self.raid partyForEntity:spell.target includingEntity:YES];
+        if ( partyTargets )
+            [allTargets addObjectsFromArray:partyTargets];
+    }
+    else if ( spell.hitRange.doubleValue > 0 )
+    {
+        Entity *originEntity = spell.targeted ? ( spell.target ? spell.target : spell.caster ) : spell.caster;
+        BOOL hitPlayers = spell.caster.isEnemy ? ( spell.spellType != BeneficialEffect ) : ( spell.spellType != DetrimentalEffect );
+        BOOL hitEnemies = spell.caster.isEnemy ? ( spell.spellType != DetrimentalEffect ) : ( spell.spellType != BeneficialEffect );
+        NSArray *subTargets = [originEntity entitiesInRange:spell.hitRange.doubleValue players:hitPlayers enemies:hitEnemies includingSelf:hitPlayers];
+        if ( subTargets.count )
+            [allTargets addObjectsFromArray:subTargets];
+        if ( spell.maxHitTargets.integerValue && subTargets.count > spell.maxHitTargets.integerValue )
+            subTargets = [subTargets arrayByRandomlyRemovingNObjects:( subTargets.count - spell.maxHitTargets.integerValue )];
+        
+        originEntity.lastHitAOESpell = spell;
+        originEntity.lastHitAOEDate = [NSDate date];
+        
+        PHLog(spell.caster,@"targets of aoe spell %@: %@",spell,subTargets);
+    }
+    else if ( spell.targeted )
         [allTargets addObject:spell.target];
-    else if ( !subHandled )
+    else
         [allTargets addObject:spell.caster];
     
     Entity *originalTarget = spell.target;

@@ -26,6 +26,8 @@
     return theEnemy.roomSize;
 }
 
+#define LAST_AOE_DRAW_THRESHOLD 2.0
+
 - (void)drawRect:(CGRect)rect {
     
     Enemy *theEnemy = self.encounter.enemies.firstObject;
@@ -34,17 +36,9 @@
     [[UIColor whiteColor] setStroke];
     [path stroke];
     
-    NSDictionary *attributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    
-    [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
-        
-        CGPoint effectiveLocation = raider.location;
-        
-        NSString *enemyText = @"☠";
-        CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [enemyText sizeWithAttributes:attributes].width / 2,
-                                                   effectiveLocation.y - [enemyText sizeWithAttributes:attributes].height / 2);
-        [enemyText drawAtPoint:centeredTextLocation withAttributes:attributes];
-    }];
+    NSDictionary *enemyAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    NSDictionary *playerAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor],
+                                      NSFontAttributeName : [UIFont systemFontOfSize:5]};
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
         
@@ -56,9 +50,9 @@
         if ( raider == self.encounter.player )
         {
             NSString *playerText = @"☺";
-            CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [playerText sizeWithAttributes:attributes].width / 2,
-                                                       effectiveLocation.y - [playerText sizeWithAttributes:attributes].height / 2);
-            [playerText drawAtPoint:centeredTextLocation withAttributes:attributes];
+            CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [playerText sizeWithAttributes:playerAttributes].width / 2,
+                                                       effectiveLocation.y - [playerText sizeWithAttributes:playerAttributes].height / 2);
+            [playerText drawAtPoint:centeredTextLocation withAttributes:playerAttributes];
         }
         else
         {
@@ -66,6 +60,36 @@
             [raider.hdClass.classColor setFill];
             [arc fill];
         }
+        
+        if ( raider.lastHitAOEDate )
+        {
+            NSTimeInterval timeSinceLastAOE = [[NSDate date] timeIntervalSinceDate:raider.lastHitAOEDate];
+            if ( timeSinceLastAOE >= LAST_AOE_DRAW_THRESHOLD )
+            {
+                raider.lastHitAOESpell = nil;
+                return;
+            }
+            
+            double percentage = 1 - timeSinceLastAOE / LAST_AOE_DRAW_THRESHOLD;
+            double radius = ( 1 - percentage ) * raider.lastHitAOESpell.hitRange.doubleValue;
+            
+            UIColor *emanationColor = ( raider.lastHitAOESpell.spellType != DetrimentalEffect ? [UIColor greenColor] : [UIColor redColor] );
+            UIColor *emanationColorAlpha = [emanationColor colorWithAlphaComponent:percentage];
+            [emanationColorAlpha setStroke];
+            [[UIBezierPath bezierPathWithArcCenter:raider.location radius:raider.lastHitAOESpell.hitRange.doubleValue startAngle:0 endAngle:2*M_PI clockwise:NO] stroke];
+            [emanationColorAlpha setFill];
+            [[UIBezierPath bezierPathWithArcCenter:raider.location radius:radius startAngle:0 endAngle:2*M_PI clockwise:NO] fill];
+        }
+    }];
+    
+    [self.encounter.enemies enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
+        
+        CGPoint effectiveLocation = raider.location;
+        
+        NSString *enemyText = @"☠";
+        CGPoint centeredTextLocation = CGPointMake(effectiveLocation.x - [enemyText sizeWithAttributes:enemyAttributes].width / 2,
+                                                   effectiveLocation.y - [enemyText sizeWithAttributes:enemyAttributes].height / 2);
+        [enemyText drawAtPoint:centeredTextLocation withAttributes:enemyAttributes];
     }];
 }
 

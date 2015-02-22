@@ -189,5 +189,8 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 //
 - (void)replaceSpell:(Spell *)replacedSpell withSpell:(Spell *)replacingSpell persist:(BOOL)persist;
 
+@property Spell *lastHitAOESpell;
+@property NSDate *lastHitAOEDate;
+
 @end
 
