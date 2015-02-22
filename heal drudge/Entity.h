@@ -178,7 +178,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property NSTimeInterval currentMoveDuration;
 @property NSDate *lastCommandedMoveDate;
 
-- (void)moveToRandomLocation:(BOOL)animated;
+- (void)moveToRandomLocation:(BOOL)animated commanded:(BOOL)commanded;
 - (void)moveToEntity:(Entity *)entity;
 - (void)moveToLocation:(CGPoint)location;
 - (CGPoint)location; // interpolated

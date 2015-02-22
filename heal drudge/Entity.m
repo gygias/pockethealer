@@ -486,7 +486,7 @@
     self.lastHealth = self.health;
     self.encounter = encounter;
     if ( self.isPlayer )
-        [self moveToRandomLocation:NO];
+        [self moveToRandomLocation:NO commanded:NO];
 }
 
 - (void)beginEncounter:(Encounter *)encounter
@@ -693,15 +693,10 @@
     
     BOOL moveSomewhere = ( arc4random() % 200 ) == 0;
     if ( moveSomewhere )
-        [self _moveToRandomLocation:YES commanded:NO];
+        [self moveToRandomLocation:YES commanded:NO];
 }
 
-- (void)moveToRandomLocation:(BOOL)animated
-{
-    [self _moveToRandomLocation:animated commanded:YES];
-}
-
-- (void)_moveToRandomLocation:(BOOL)animated commanded:(BOOL)commanded
+- (void)moveToRandomLocation:(BOOL)animated commanded:(BOOL)commanded
 {
     Enemy *theEnemy = self.encounter.enemies.firstObject;
     CGSize enemyRoomSize = theEnemy.roomSize;

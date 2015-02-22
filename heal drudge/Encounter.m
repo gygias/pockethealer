@@ -41,6 +41,9 @@
         [(Entity *)obj prepareForEncounter:self];
     }];
     
+    if ( self.encounterUpdatedHandler )
+        self.encounterUpdatedHandler(self);
+    
     NSInteger delay = 1;
     [SoundManager playCountdownWithStartIndex:@(delay)];    
     
@@ -477,7 +480,7 @@
 {
     [self.raid.nonTankPlayers enumerateObjectsUsingBlock:^(Entity *nonTankPlayer, NSUInteger idx, BOOL *stop) {
         [nonTankPlayer stopCurrentMove];
-        [nonTankPlayer moveToRandomLocation:YES];
+        [nonTankPlayer moveToRandomLocation:YES commanded:YES];
     }];
 }
 
