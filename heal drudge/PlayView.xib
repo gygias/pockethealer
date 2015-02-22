@@ -15,6 +15,7 @@
                 <outlet property="commandButton" destination="RM5-Wq-0n2" id="H2Y-8c-dcH"/>
                 <outlet property="enemyFrameView" destination="Mo6-Aa-lM5" id="egK-xo-Fk8"/>
                 <outlet property="eventTimerView" destination="X2S-sx-J7y" id="Ggq-PG-efO"/>
+                <outlet property="meterView" destination="r4C-PU-cpF" id="IHt-2B-opY"/>
                 <outlet property="miniMapView" destination="GYR-ws-HcJ" id="1Y4-Gu-K0V"/>
                 <outlet property="playerAndTargetView" destination="qF9-7h-Zx1" id="dcj-1b-kBV"/>
                 <outlet property="raidFramesView" destination="Owv-Su-0Yk" id="t0u-xD-saP"/>
@@ -33,7 +34,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miB-i0-sdr" customClass="AlertTextView">
-                    <rect key="frame" x="76" y="-27" width="31" height="61"/>
+                    <rect key="frame" x="-93" y="-80" width="59" height="53"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -75,7 +76,7 @@
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Owv-Su-0Yk" customClass="RaidFramesView">
-                            <rect key="frame" x="0.0" y="45" width="590" height="298"/>
+                            <rect key="frame" x="0.0" y="45" width="590" height="195"/>
                             <color key="backgroundColor" red="0.0" green="1" blue="0.086479052200066242" alpha="1" colorSpace="calibratedRGB"/>
                             <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                 <rect key="frame" x="0.0" y="397.5" width="368" height="0.0"/>
@@ -92,6 +93,10 @@
                                 <constraint firstAttribute="width" constant="100" placeholder="YES" id="utC-Tm-dtZ"/>
                             </constraints>
                         </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4C-PU-cpF" customClass="MeterView">
+                            <rect key="frame" x="0.0" y="243" width="482" height="100"/>
+                            <color key="backgroundColor" red="1" green="0.89954377691493992" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -101,13 +106,19 @@
                         <constraint firstItem="X2S-sx-J7y" firstAttribute="leading" secondItem="Mo6-Aa-lM5" secondAttribute="trailing" constant="5" id="JSw-Ei-7lN"/>
                         <constraint firstItem="Owv-Su-0Yk" firstAttribute="leading" secondItem="usy-Eb-IUP" secondAttribute="leading" id="MEg-sv-NZc"/>
                         <constraint firstItem="Mo6-Aa-lM5" firstAttribute="leading" secondItem="usy-Eb-IUP" secondAttribute="leading" id="U7Y-hk-pry"/>
+                        <constraint firstItem="r4C-PU-cpF" firstAttribute="top" secondItem="GYR-ws-HcJ" secondAttribute="top" id="aQp-1j-Fb2"/>
+                        <constraint firstItem="r4C-PU-cpF" firstAttribute="bottom" secondItem="GYR-ws-HcJ" secondAttribute="bottom" id="b3N-sR-F7H"/>
+                        <constraint firstItem="r4C-PU-cpF" firstAttribute="leading" secondItem="usy-Eb-IUP" secondAttribute="leading" id="bxW-vb-PdY"/>
                         <constraint firstItem="X2S-sx-J7y" firstAttribute="bottom" secondItem="Mo6-Aa-lM5" secondAttribute="bottom" id="eam-ly-zok"/>
+                        <constraint firstItem="GYR-ws-HcJ" firstAttribute="leading" secondItem="r4C-PU-cpF" secondAttribute="trailing" constant="8" id="eij-6U-rfA"/>
                         <constraint firstItem="X2S-sx-J7y" firstAttribute="top" secondItem="Mo6-Aa-lM5" secondAttribute="top" id="elG-RJ-VWt"/>
+                        <constraint firstItem="r4C-PU-cpF" firstAttribute="top" secondItem="Owv-Su-0Yk" secondAttribute="bottom" constant="3" id="fX1-DG-fpO"/>
                         <constraint firstItem="Owv-Su-0Yk" firstAttribute="top" secondItem="Mo6-Aa-lM5" secondAttribute="bottom" constant="5" id="nJp-jI-IoO">
                             <variation key="heightClass=compact" constant="5"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="Owv-Su-0Yk" secondAttribute="trailing" id="rBB-qb-fcv"/>
                         <constraint firstAttribute="trailing" secondItem="GYR-ws-HcJ" secondAttribute="trailing" id="tjn-gl-5p9"/>
+                        <constraint firstAttribute="bottom" secondItem="r4C-PU-cpF" secondAttribute="bottom" id="ueC-Hz-pDr"/>
                         <constraint firstAttribute="trailing" secondItem="X2S-sx-J7y" secondAttribute="trailing" constant="290" id="w3F-13-aVz">
                             <variation key="heightClass=compact" constant="0.0"/>
                         </constraint>
@@ -115,6 +126,7 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="GZN-qi-NML"/>
                             <exclude reference="w3F-13-aVz"/>
                         </mask>
                     </variation>
@@ -193,7 +205,7 @@
                             </variation>
                         </view>
                         <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-ho-WK3" userLabel="Spell Drag View" customClass="SpellDragView">
-                            <rect key="frame" x="-23" y="-5" width="600" height="600"/>
+                            <rect key="frame" x="-44" y="-36" width="600" height="600"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

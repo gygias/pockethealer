@@ -52,7 +52,7 @@
 {
     Entity *someOtherPlayer = [self _randomLivingPlayerFrom:owner.encounter.raid.players excludingPlayer:owner];
     if ( someOtherPlayer )
-        [someOtherPlayer addStatusEffect:self source:self.source];
+        [someOtherPlayer addStatusEffect:self source:self.sourceSpell];
     [owner consumeStatusEffect:self absolute:YES];
 }
 

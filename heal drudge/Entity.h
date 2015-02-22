@@ -88,7 +88,7 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 
 // now takes source as a reminder that it's a required property in this
 // ios style of +new, set all the properties..
-- (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source;
+- (void)addStatusEffect:(Effect *)statusEffect source:(Spell *)sourceSpell;
 - (void)consumeStatusEffect:(Effect *)effect absolute:(BOOL)absolute;
 - (void)consumeStatusEffect:(Effect *)effect;
 - (void)consumeStatusEffectNamed:(NSString *)statusEffectName;

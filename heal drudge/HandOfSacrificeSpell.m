@@ -51,7 +51,7 @@
     HandOfSacrificeEffect *hos = [HandOfSacrificeEffect new];
     // TODO ret also dispels, apparently
     hos.healthTransferRemaining = self.caster.health;
-    [self.target addStatusEffect:hos source:self.caster];
+    [self.target addStatusEffect:hos source:self];
 }
 
 - (NSArray *)hdClasses

@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     ForbearanceEffect *f = [ForbearanceEffect new];
-    [self.target addStatusEffect:f source:self.caster];
+    [self.target addStatusEffect:f source:self];
 }
 
 - (NSArray *)hdClasses

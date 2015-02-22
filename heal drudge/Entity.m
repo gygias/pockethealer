@@ -247,6 +247,8 @@
                 return;
             }
             
+            NSMutableDictionary *healingDoneByEffects = [NSMutableDictionary new];
+            
             if ( effect.absorb )
             {
                 if ( damageEvent.netDamage.doubleValue >= effect.absorb.doubleValue )
@@ -255,6 +257,7 @@
                     [consumedEffects addIndex:idx];
                     damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + effect.absorb.doubleValue );
                     damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.absorb.doubleValue );
+                    [healingDoneByEffects setObject:effect.absorb forKey:[NSValue valueWithPointer:(__bridge const void *)(effect)]];
                 }
                 else
                 {
@@ -263,6 +266,7 @@
                     effect.absorb = thisAbsorbRemaining;
                     damageEvent.netAbsorbed = @( damageEvent.netAbsorbed.doubleValue + damageEvent.netDamage.doubleValue );
                     damageEvent.netDamage = @0;
+                    [healingDoneByEffects setObject:effect.absorb forKey:[NSValue valueWithPointer:(__bridge const void *)(effect)]];
                 }
             }
             else if ( effect.healingOnDamage )
@@ -273,6 +277,7 @@
                     damageEvent.netDamage = @( damageEvent.netDamage.doubleValue - effect.healingOnDamage.doubleValue );
                     damageEvent.netHealedOnDamage = effect.healingOnDamage;
                     [consumedEffects addIndex:idx];
+                    [healingDoneByEffects setObject:effect.healingOnDamage forKey:[NSValue valueWithPointer:(__bridge const void *)(effect)]];
                 }
                 else
                 {
@@ -285,8 +290,15 @@
                         effect.healingOnDamage = @( effect.healingOnDamage.doubleValue - damageEvent.netDamage.doubleValue );
                     damageEvent.netHealedOnDamage = damageEvent.netDamage;
                     damageEvent.netDamage = @0;
+                    [healingDoneByEffects setObject:effect.healingOnDamage forKey:[NSValue valueWithPointer:(__bridge const void *)(effect)]];
                 }
             }
+            
+            // TODO: this doesn't factor overheal
+            [healingDoneByEffects enumerateKeysAndObjectsUsingBlock:^(NSValue *effectPtr, NSNumber *healing, BOOL *stop) {
+                Effect *theEffect = (Effect *)[effectPtr pointerValue];
+                [self.encounter.combatLog addSpellEvent:theEffect.sourceSpell target:self effectiveDamage:nil effectiveHealing:healing effectiveOverheal:nil];
+            }];
         }];
         
         [consumedEffects enumerateIndexesWithOptions:NSEnumerationReverse usingBlock:^(NSUInteger idx, BOOL *stop) {
@@ -307,6 +319,8 @@
     NSInteger newHealth = self.currentHealth.doubleValue - damageEvent.netDamage.doubleValue;
     if ( newHealth < 0 )
         newHealth = 0;
+    
+    [self.encounter.combatLog addSpellEvent:damageEvent.spell target:self effectiveDamage:damageEvent.netDamage effectiveHealing:nil effectiveOverheal:nil];
     
     self.currentHealth = @(newHealth);
     
@@ -335,7 +349,7 @@
     return;
 }
 
-- (void)addStatusEffect:(Effect *)statusEffect source:(Entity *)source
+- (void)addStatusEffect:(Effect *)statusEffect source:(Spell *)sourceSpell
 {
     if ( self.isDead )
         return;
@@ -346,12 +360,13 @@
     // TODO this callout should not exist merely to handle an effect which can't have multiple applications to the same target
     if ( ! [statusEffect validateOwner:self] )
     {
-        PHLog(self,@"%@ says no to addition to %@ from %@",statusEffect,self,source);
+        PHLog(self,@"%@ says no to addition to %@ from %@",statusEffect,self,sourceSpell);
         return;
     }
     
     statusEffect.owner = self;
-    statusEffect.source = source;
+    statusEffect.sourceSpell = sourceSpell;
+    statusEffect.source = sourceSpell.caster;
     __unsafe_unretained typeof(statusEffect) weakStatusEffect = statusEffect;
     statusEffect.timeoutHandler = ^{
         if ( [_statusEffects containsObject:weakStatusEffect] )

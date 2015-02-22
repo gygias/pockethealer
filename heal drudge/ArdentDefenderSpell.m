@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     ArdentDefenderEffect *ad = [ArdentDefenderEffect new];
-    [self.caster addStatusEffect:ad source:self.caster];
+    [self.caster addStatusEffect:ad source:self];
 }
 
 - (NSArray *)hdClasses

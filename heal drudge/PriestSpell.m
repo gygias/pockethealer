@@ -38,7 +38,7 @@
             if ( ! da )
             {
                 da = [DivineAegisEffect new];
-                [self.target addStatusEffect:da source:self.caster];
+                [self.target addStatusEffect:da source:self];
             } else
                 PHLog(self,@"%@'s existing %@ is going from %@ to %@!",self.target,da.absorb,da.absorb,effectiveAbsorb);
             da.absorb = effectiveAbsorb;

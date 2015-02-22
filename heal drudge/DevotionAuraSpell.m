@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     DevotionAuraEffect *da = [DevotionAuraEffect new];
-    [self.target addStatusEffect:da source:self.caster];
+    [self.target addStatusEffect:da source:self];
 }
 
 - (NSArray *)hdClasses

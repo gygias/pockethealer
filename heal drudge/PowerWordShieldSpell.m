@@ -47,16 +47,16 @@
 {
     // borrowed time
     BorrowedTimeEffect *bt = [BorrowedTimeEffect new];
-    [self.caster addStatusEffect:bt source:self.caster];
+    [self.caster addStatusEffect:bt source:self];
     
     // weakened soul
     WeakenedSoulEffect *weakenedSoul = [WeakenedSoulEffect new];
-    [self.target addStatusEffect:weakenedSoul source:self.caster];
+    [self.target addStatusEffect:weakenedSoul source:self];
     
     // power word shield
     PowerWordShieldEffect *pws = [PowerWordShieldEffect new];
     pws.absorb = @( self.absorb.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
-    [self.target addStatusEffect:pws source:self.caster];
+    [self.target addStatusEffect:pws source:self];
 }
 
 - (NSArray *)hdClasses

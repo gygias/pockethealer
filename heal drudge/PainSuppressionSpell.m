@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     PainSuppressionEffect *effect = [PainSuppressionEffect new];
-    [self.target addStatusEffect:effect source:self.caster];
+    [self.target addStatusEffect:effect source:self];
 }
 
 - (NSArray *)hdClasses

@@ -259,6 +259,8 @@
 		63564D6C1A57260F0025ACDE /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63564D6B1A57260F0025ACDE /* Names.plist */; };
 		635906BE1A98830900E56764 /* PlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906BD1A98830900E56764 /* PlayView.m */; };
 		635906C11A992C6800E56764 /* SpellDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C01A992C6800E56764 /* SpellDragView.m */; };
+		635906C51A9A87B500E56764 /* CombatLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C41A9A87B500E56764 /* CombatLog.m */; };
+		635906C81A9A8D1700E56764 /* MeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C71A9A8D1700E56764 /* MeterView.m */; };
 		6364135B1A7D835100639007 /* EventTimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364135A1A7D835100639007 /* EventTimerView.m */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
@@ -722,6 +724,10 @@
 		635906BF1A992C6800E56764 /* SpellDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpellDragView.h; sourceTree = "<group>"; };
 		635906C01A992C6800E56764 /* SpellDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpellDragView.m; sourceTree = "<group>"; };
 		635906C21A9948D100E56764 /* EntityPriv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntityPriv.h; sourceTree = "<group>"; };
+		635906C31A9A87B500E56764 /* CombatLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CombatLog.h; sourceTree = "<group>"; };
+		635906C41A9A87B500E56764 /* CombatLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CombatLog.m; sourceTree = "<group>"; };
+		635906C61A9A8D1700E56764 /* MeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeterView.h; sourceTree = "<group>"; };
+		635906C71A9A8D1700E56764 /* MeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeterView.m; sourceTree = "<group>"; };
 		636413591A7D835100639007 /* EventTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTimerView.h; sourceTree = "<group>"; };
 		6364135A1A7D835100639007 /* EventTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTimerView.m; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
@@ -1047,6 +1053,8 @@
 				638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */,
 				638D90D11A982B5500960869 /* CommandButton.h */,
 				638D90D21A982B5500960869 /* CommandButton.m */,
+				635906C61A9A8D1700E56764 /* MeterView.h */,
+				635906C71A9A8D1700E56764 /* MeterView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1559,6 +1567,8 @@
 				630B99821A86C61C00B186CA /* Advisor.m */,
 				638D90C31A97F82F00960869 /* Conveniences.h */,
 				638D90C11A97F82000960869 /* Conveniences.m */,
+				635906C31A9A87B500E56764 /* CombatLog.h */,
+				635906C41A9A87B500E56764 /* CombatLog.m */,
 			);
 			path = "heal drudge";
 			sourceTree = "<group>";
@@ -1989,9 +1999,11 @@
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				638D90D31A982B5500960869 /* CommandButton.m in Sources */,
 				63027B251A79E8760068E68A /* ArdentDefenderEffect.m in Sources */,
+				635906C81A9A8D1700E56764 /* MeterView.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				63027B371A7AF1B40068E68A /* Event.m in Sources */,
 				63027ACF1A7986580068E68A /* DivineProtectionEffect.m in Sources */,
+				635906C51A9A87B500E56764 /* CombatLog.m in Sources */,
 				632074AC1A71951800AA4416 /* BladeDance.m in Sources */,
 				63027AC41A788D7B0068E68A /* PriestSpell.m in Sources */,
 				634F48F21A744AEA008761C6 /* EnemyFrameView.m in Sources */,

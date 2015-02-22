@@ -43,7 +43,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     GuardianOfAncientKingsEffect *goak = [GuardianOfAncientKingsEffect new];
-    [self.target addStatusEffect:goak source:self.caster];
+    [self.target addStatusEffect:goak source:self];
 }
 
 - (NSArray *)hdClasses

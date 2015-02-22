@@ -19,6 +19,7 @@
 #import "SpeechBubbleViewController.h"
 #import "MiniMapView.h"
 #import "SpellDragView.h"
+#import "MeterView.h"
 
 @interface PlayViewController : UIViewController
 
@@ -44,6 +45,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property SpeechBubbleViewController *currentSpeechBubble;
 @property IBOutlet UIView *advisorGuideView;
 @property IBOutlet SpellDragView *spellDragView;
+@property IBOutlet MeterView *meterView;
 
 // debug
 @property IBOutlet UIView *upLeftView;

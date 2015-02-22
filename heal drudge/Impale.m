@@ -59,7 +59,7 @@
         {
             OpenWoundsEffect *ow = [OpenWoundsEffect new];
             ow.ignoreCastsAtDate = self.lastCastStartDate; // TODO this is working around the fact that the effect is applied when impale goes off, but there's no way to avoid having this OW buff damage from this impale
-            [self.target addStatusEffect:ow source:self.caster];
+            [self.target addStatusEffect:ow source:self];
         }
     }
 }

@@ -16,6 +16,7 @@
 #import "Ability.h"
 #import "Advisor.h"
 #import "State.h"
+#import "CombatLog.h"
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSUInteger,PlayerCommand)
 @property NSArray *enemies;
 @property NSDate *startDate;
 @property Advisor *advisor;
+@property CombatLog *combatLog;
 @property (nonatomic,copy) EncounterUpdatedBlock encounterUpdatedHandler;
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 

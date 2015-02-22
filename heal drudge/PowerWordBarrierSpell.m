@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     PowerWordBarrierEffect *pwb = [PowerWordBarrierEffect new];
-    [self.target addStatusEffect:pwb source:self.caster];
+    [self.target addStatusEffect:pwb source:self];
 }
 
 - (NSArray *)hdClasses

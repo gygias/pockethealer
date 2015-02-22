@@ -62,10 +62,10 @@
     
     ArchangelEffect *aa = [ArchangelEffect new];
     [aa addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
-    [self.caster addStatusEffect:aa source:self.caster];
+    [self.caster addStatusEffect:aa source:self];
     
     EmpoweredArchangelEffect *eaa = [EmpoweredArchangelEffect new];
-    [self.caster addStatusEffect:eaa source:self.caster];
+    [self.caster addStatusEffect:eaa source:self];
     
     [self.caster consumeStatusEffect:evangelism absolute:YES];
 }

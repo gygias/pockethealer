@@ -57,7 +57,7 @@
     
     ShieldOfTheRighteousEffect *sotr = [ShieldOfTheRighteousEffect new];
     sotr.holyPower = resourcesToConsume;
-    [self.caster addStatusEffect:sotr source:self.caster];
+    [self.caster addStatusEffect:sotr source:self];
     
     BastionOfGloryEffect *bog = (BastionOfGloryEffect *)[self _existingEffectWithClass:[BastionOfGloryEffect class]];
     if ( bog )
@@ -65,7 +65,7 @@
     else
     {
         bog = [BastionOfGloryEffect new];
-        [self.caster addStatusEffect:bog source:self.caster];
+        [self.caster addStatusEffect:bog source:self];
     }
 }
 

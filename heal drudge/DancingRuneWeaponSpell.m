@@ -42,7 +42,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     DancingRuneWeaponEffect *drw = [DancingRuneWeaponEffect new];
-    [self.target addStatusEffect:drw source:self.caster];
+    [self.target addStatusEffect:drw source:self];
 }
 
 - (NSArray *)hdClasses

@@ -50,7 +50,7 @@
 {    
     PrayerOfMendingEffect *pom = [PrayerOfMendingEffect new];
     pom.healingOnDamage = self.healing;
-    [self.target addStatusEffect:pom source:self.caster];
+    [self.target addStatusEffect:pom source:self];
 }
 
 - (AISpellPriority)aiSpellPriority

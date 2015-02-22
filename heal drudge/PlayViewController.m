@@ -271,6 +271,7 @@ typedef CGPoint (^LocateBlock)();
     });
     
     self.miniMapView.encounter = encounter;
+    self.meterView.encounter = encounter;
     
     if ( ! self.state.debugViews )
     {
@@ -283,6 +284,7 @@ typedef CGPoint (^LocateBlock)();
         [self.castBarView setBackgroundColor:[UIColor clearColor]];
         [self.spellBarView setBackgroundColor:[UIColor clearColor]];
         [self.miniMapView setBackgroundColor:[UIColor clearColor]];
+        [self.meterView setBackgroundColor:[UIColor clearColor]];
     }
     
     [encounter start];

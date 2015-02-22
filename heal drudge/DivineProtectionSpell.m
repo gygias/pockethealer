@@ -45,7 +45,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     DivineProtectionEffect *dp = [DivineProtectionEffect new];
-    [self.caster addStatusEffect:dp source:self.caster];
+    [self.caster addStatusEffect:dp source:self];
 }
 
 - (NSArray *)hdClasses

@@ -54,7 +54,7 @@
     if ( ! currentEvangelism )
     {
         currentEvangelism = [EvangelismEffect new];
-        [self.caster addStatusEffect:currentEvangelism source:self.caster];
+        [self.caster addStatusEffect:currentEvangelism source:self];
     }
     else
         [currentEvangelism addStack];

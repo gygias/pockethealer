@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "heal drudge/Entity.m"
-            timestampString = "446253356.995272"
+            timestampString = "446341639.695725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "656"
-            endingLineNumber = "656"
+            startingLineNumber = "671"
+            endingLineNumber = "671"
             landmarkName = "-_doAutomaticHealing"
             landmarkType = "5">
          </BreakpointContent>

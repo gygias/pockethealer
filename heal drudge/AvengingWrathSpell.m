@@ -44,7 +44,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     AvengingWrathEffect *aw = [AvengingWrathEffect new];
-    [self.caster addStatusEffect:aw source:self.caster];
+    [self.caster addStatusEffect:aw source:self];
 }
 
 - (NSArray *)hdClasses

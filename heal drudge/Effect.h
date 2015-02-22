@@ -39,6 +39,7 @@ typedef void(^EffectTimeoutBlock)();
 @property NSString *tooltip;
 @property Entity *owner;
 @property Entity *source; // e.g., priests may reduce weakened soul duration with glyphs
+@property Spell *sourceSpell;
 @property (nonatomic,copy) EffectTimeoutBlock timeoutHandler;
 @property NSNumber *maxStacks;
 @property NSNumber *currentStacks;

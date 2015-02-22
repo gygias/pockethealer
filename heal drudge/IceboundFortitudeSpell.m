@@ -42,7 +42,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     IceboundFortitudeEffect *ibf = [IceboundFortitudeEffect new];
-    [self.target addStatusEffect:ibf source:self.caster];
+    [self.target addStatusEffect:ibf source:self];
 }
 
 - (NSArray *)hdClasses

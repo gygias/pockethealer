@@ -44,7 +44,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     SacredShieldEffect *ss = [SacredShieldEffect new];
-    [self.caster addStatusEffect:ss source:self.caster];
+    [self.caster addStatusEffect:ss source:self];
 }
 
 - (NSArray *)hdClasses

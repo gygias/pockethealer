@@ -42,7 +42,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     AntiMagicShellEffect *ams = [AntiMagicShellEffect new];
-    [self.target addStatusEffect:ams source:self.caster];
+    [self.target addStatusEffect:ams source:self];
 }
 
 - (NSArray *)hdClasses

@@ -24,6 +24,7 @@
         self.cachedTankLocations = [NSMutableArray new];
         self.cachedRangeLocations = [NSMutableArray new];
         self.cachedMeleeLocations = [NSMutableArray new];
+        self.combatLog = [CombatLog new];
     }
     
     return self;
@@ -392,8 +393,12 @@
             healingValue = @( healingValue.doubleValue * ( 1 + modifier.healingIncreasePercentage.doubleValue ) );
         
         NSInteger newHealth = target.currentHealth.doubleValue + healingValue.doubleValue;
+        NSNumber *overheal = nil;
         if ( newHealth > target.health.integerValue )
+        {
+            overheal = @(newHealth - target.health.integerValue);
             newHealth = target.health.integerValue;
+        }
         
         target.currentHealth = @(newHealth);
         
@@ -402,6 +407,8 @@
             target.lastHealAmount = healingValue;
             target.lastHealDate = [NSDate date];
         }
+        
+        [self.combatLog addSpellEvent:spell target:target effectiveDamage:nil effectiveHealing:healingValue effectiveOverheal:overheal];
         
         PHLog(spell,@"%@ was healed for %@",target,healingValue);
     }

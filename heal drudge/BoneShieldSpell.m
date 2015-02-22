@@ -41,7 +41,7 @@
 - (void)handleHitWithModifier:(EventModifier *)modifier
 {
     BoneShieldEffect *bs = [BoneShieldEffect new];
-    [self.target addStatusEffect:bs source:self.caster];
+    [self.target addStatusEffect:bs source:self];
 }
 
 - (NSArray *)hdClasses

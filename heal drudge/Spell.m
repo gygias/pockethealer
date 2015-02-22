@@ -28,7 +28,8 @@ const NSString *SpellLevelHigh = @"high";
     if ( self.inTransientStateExplosionMode )
     {
         if ( ! [NSThread isMainThread] )
-            [NSException raise:@"TargetAccessedWhenNotInCastingState" format:@"%@",self];
+            //[NSException raise:@"TargetAccessedWhenNotInCastingState" format:@"%@",self];
+            NSLog(@"*** TargetAccessedWhenNotInCastingState");
     }
     return _target;
 }

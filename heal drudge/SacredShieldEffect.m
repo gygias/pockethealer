@@ -43,7 +43,7 @@
     if ( self.source.hdClass.specID == HDRETPALADIN )
         theAbsorb = theAbsorb * 0.7;
     ssa.absorb = @(theAbsorb);
-    [self.owner addStatusEffect:ssa source:self.owner];
+    [self.owner addStatusEffect:ssa source:self.sourceSpell];
 }
 
 @end
