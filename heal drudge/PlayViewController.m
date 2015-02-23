@@ -96,15 +96,27 @@ typedef CGPoint (^LocateBlock)();
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [[NSNotificationCenter defaultCenter] addObserverForName:UIDeviceOrientationDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            speechBubble.bubbleOrigin = locateBlock();
+            self.currentSpeechBubble.bubbleOrigin = locateBlock();
+            [self _addConstraintsToSpeechBubble:speechBubble];
+            [self.currentSpeechBubble.speechBubbleContentView setNeedsLayout];
+            [self.currentSpeechBubble.speechBubbleContentView setNeedsDisplay];
         }];
     });
-    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
-    [speechBubble.speechBubbleContentView.superview addConstraint:constraint];
-    constraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
-    [speechBubble.speechBubbleContentView.superview addConstraint:constraint];
+    [self _addConstraintsToSpeechBubble:speechBubble];
     
     self.currentSpeechBubble = speechBubble;
+}
+
+- (void)_addConstraintsToSpeechBubble:(SpeechBubbleViewController *)speechBubble
+{
+    [speechBubble.speechBubbleContentView.superview removeConstraints:self.lastAddedConstraints];
+    
+    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
+    [speechBubble.speechBubbleContentView.superview addConstraint:leadingConstraint];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
+    [speechBubble.speechBubbleContentView.superview addConstraint:topConstraint];
+    
+    self.lastAddedConstraints = @[ leadingConstraint, topConstraint ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

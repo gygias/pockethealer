@@ -37,7 +37,7 @@
                     <rect key="frame" x="-93" y="-80" width="59" height="53"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                        <rect key="frame" x="-99" y="-59" width="69" height="95"/>
                     </variation>
                     <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -206,6 +206,9 @@
                         </view>
                         <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-ho-WK3" userLabel="Spell Drag View" customClass="SpellDragView">
                             <rect key="frame" x="-44" y="-36" width="600" height="600"/>
+                            <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                <rect key="frame" x="-51" y="65" width="600" height="400"/>
+                            </variation>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -255,6 +258,9 @@
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="width" secondItem="Lme-ho-WK3" secondAttribute="width" id="1m9-kz-hL3"/>
                 <constraint firstItem="zQa-aP-GOC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="2g8-c9-bhh"/>
                 <constraint firstItem="zQa-aP-GOC" firstAttribute="leading" secondItem="X2S-sx-J7y" secondAttribute="trailing" id="3Cu-Ay-qpg"/>
+                <constraint firstItem="Hx1-3N-KRn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="310" id="3fY-yw-CM6">
+                    <variation key="heightClass=compact" constant="20"/>
+                </constraint>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="5Rh-1G-slw"/>
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Wr-kS-kmz"/>
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BXv-Tp-0Nr"/>
@@ -269,6 +275,9 @@
                     <variation key="heightClass=compact" constant="5"/>
                 </constraint>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="leading" secondItem="ysW-b4-ce4" secondAttribute="leading" id="TKL-D1-cQC"/>
+                <constraint firstAttribute="trailing" secondItem="Hx1-3N-KRn" secondAttribute="trailing" constant="310" id="Tzt-R9-VFz">
+                    <variation key="heightClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="centerY" secondItem="Hx1-3N-KRn" secondAttribute="centerY" id="ZZ2-18-Wea"/>
                 <constraint firstAttribute="trailing" secondItem="usy-Eb-IUP" secondAttribute="trailing" constant="5" id="b0e-PS-01f"/>
                 <constraint firstItem="ysW-b4-ce4" firstAttribute="leading" secondItem="usy-Eb-IUP" secondAttribute="trailing" id="esU-Sd-lLn">
@@ -291,27 +300,31 @@
                     <exclude reference="EUn-ii-82d"/>
                     <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="hGN-0n-nty"/>
-                    <exclude reference="tck-vb-sEm"/>
                     <exclude reference="M5c-vc-HUs"/>
                     <exclude reference="OfZ-k5-WLh"/>
                     <exclude reference="esU-Sd-lLn"/>
+                    <exclude reference="3fY-yw-CM6"/>
+                    <exclude reference="Tzt-R9-VFz"/>
+                    <exclude reference="tck-vb-sEm"/>
                 </mask>
             </variation>
             <variation key="heightClass=compact">
                 <mask key="constraints">
                     <include reference="EUn-ii-82d"/>
-                    <include reference="Fi0-nQ-zQS"/>
+                    <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="TKL-D1-cQC"/>
                     <exclude reference="b0e-PS-01f"/>
                     <exclude reference="f2i-uW-mPf"/>
                     <include reference="hGN-0n-nty"/>
-                    <exclude reference="OIH-H2-5cR"/>
-                    <exclude reference="ZZ2-18-Wea"/>
-                    <include reference="tck-vb-sEm"/>
                     <include reference="M5c-vc-HUs"/>
                     <include reference="OfZ-k5-WLh"/>
                     <include reference="esU-Sd-lLn"/>
                     <exclude reference="jDf-oJ-NN7"/>
+                    <include reference="3fY-yw-CM6"/>
+                    <exclude reference="OIH-H2-5cR"/>
+                    <include reference="Tzt-R9-VFz"/>
+                    <exclude reference="ZZ2-18-Wea"/>
+                    <exclude reference="tck-vb-sEm"/>
                     <exclude reference="3Cu-Ay-qpg"/>
                 </mask>
             </variation>

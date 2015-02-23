@@ -71,7 +71,6 @@
 - (void)setReferenceView:(UIView *)referenceView
 {
     ((SpeechBubbleView *)self.view.subviews.firstObject).referenceView = referenceView;
-    
 }
 
 - (CGPoint)bubbleOrigin

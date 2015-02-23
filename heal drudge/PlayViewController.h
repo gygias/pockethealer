@@ -53,4 +53,6 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 
 @property CGPoint castBarDragLastPoint;
 
+@property NSArray *lastAddedConstraints;
+
 @end
