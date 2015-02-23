@@ -261,6 +261,7 @@
 		635906C11A992C6800E56764 /* SpellDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C01A992C6800E56764 /* SpellDragView.m */; };
 		635906C51A9A87B500E56764 /* CombatLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C41A9A87B500E56764 /* CombatLog.m */; };
 		635906C81A9A8D1700E56764 /* MeterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635906C71A9A8D1700E56764 /* MeterView.m */; };
+		635906CA1A9AA39900E56764 /* SpeechBubbleMeterModeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635906C91A9AA39900E56764 /* SpeechBubbleMeterModeView.xib */; };
 		6364135B1A7D835100639007 /* EventTimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364135A1A7D835100639007 /* EventTimerView.m */; };
 		636E649D1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E649C1A579D5C00D914C8 /* ItemLevelAndStatsConverter.m */; };
 		6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6378645B1A74D22700D281B7 /* PenanceSpell.m */; };
@@ -728,6 +729,7 @@
 		635906C41A9A87B500E56764 /* CombatLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CombatLog.m; sourceTree = "<group>"; };
 		635906C61A9A8D1700E56764 /* MeterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeterView.h; sourceTree = "<group>"; };
 		635906C71A9A8D1700E56764 /* MeterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeterView.m; sourceTree = "<group>"; };
+		635906C91A9AA39900E56764 /* SpeechBubbleMeterModeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SpeechBubbleMeterModeView.xib; sourceTree = "<group>"; };
 		636413591A7D835100639007 /* EventTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTimerView.h; sourceTree = "<group>"; };
 		6364135A1A7D835100639007 /* EventTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTimerView.m; sourceTree = "<group>"; };
 		636E649B1A579D5C00D914C8 /* ItemLevelAndStatsConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemLevelAndStatsConverter.h; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 				6364135A1A7D835100639007 /* EventTimerView.m */,
 				630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */,
 				638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */,
+				635906C91A9AA39900E56764 /* SpeechBubbleMeterModeView.xib */,
 				630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */,
 				630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */,
 				630B99891A86CE9D00B186CA /* SpeechBubbleView.h */,
@@ -1707,6 +1710,7 @@
 				632074061A7095B800AA4416 /* hand_of_salvation.png in Resources */,
 				6320740C1A7095B800AA4416 /* holy_word_serenity.png in Resources */,
 				63A37F251A75D6650036C9D0 /* prayer_of_mending_hit.wav in Resources */,
+				635906CA1A9AA39900E56764 /* SpeechBubbleMeterModeView.xib in Resources */,
 				63027B341A7AD1320068E68A /* judgement.png in Resources */,
 				632074111A7095B800AA4416 /* lightwell.png in Resources */,
 				632074701A70E93A00AA4416 /* eviscerate.jpg in Resources */,

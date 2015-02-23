@@ -31,6 +31,8 @@
         selector = @selector(totalHealingTakenForEntity:);
     else if ( self.mode == DamageDoneMode )
         selector = @selector(totalDamageForEntity:);
+    else if ( self.mode == DamageTakenMode )
+        selector = @selector(totalDamageTakenForEntity:);
     else
         return;
     
@@ -47,8 +49,8 @@
             }
             [entitiesToDraw insertObject:@{@"e":player,@"v":value} atIndex:insertIdx];
         }
-        if ( entitiesToDraw.count == METER_DEFAULT_LINES )
-            *stop = YES;
+        //if ( entitiesToDraw.count == METER_DEFAULT_LINES )
+        //    *stop = YES;
     }];
     
     NSNumber *highestValue = nil;
@@ -60,7 +62,7 @@
     }
     
     NSUInteger idx = 0;
-    for ( ; idx == 0 || ( idx < entitiesToDraw.count && idx < METER_DEFAULT_LINES ); idx++ )
+    for ( ; ( idx < entitiesToDraw.count + 1 && idx < METER_DEFAULT_LINES ); idx++ )
     {
         CGRect myRect;
         if ( idx == 0 )
@@ -85,6 +87,10 @@
                 modeDescription = @"Healing Taken";
             else if ( self.mode == DamageDoneMode )
                 modeDescription = @"Damage Done";
+            else if ( self.mode == DamageTakenMode )
+                modeDescription = @"Damage Taken";
+            else
+                modeDescription = @"???";
             NSDictionary *titleAttributes = @{NSFontAttributeName : textFont,
                                               NSForegroundColorAttributeName : [UIColor whiteColor]};
             CGSize textSize = [modeDescription sizeWithAttributes:titleAttributes];
@@ -129,6 +135,13 @@
                                         lineHeight);
         [valueString drawInRect:myValueRect withAttributes:@{NSFontAttributeName : textFont}];
     }
+}
+
+-(id)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    id hitView = [super hitTest:point withEvent:event];
+    if (hitView == self && self.touchedHandler)
+        self.touchedHandler();
+    return hitView;
 }
 
 @end

@@ -31,6 +31,7 @@
         _totalHealingBySource = [NSMutableDictionary new];
         _totalHealingTakenByTarget = [NSMutableDictionary new];
         _totalDamageBySource = [NSMutableDictionary new];
+        _totalDamageTakenByTarget = [NSMutableDictionary new];
         _totalOverhealBySource = [NSMutableDictionary new];
     }
     return self;
@@ -80,6 +81,10 @@
         totalDamage = @( totalDamage.doubleValue + effectiveDamage.doubleValue );
         [_totalDamageBySource setObject:totalDamage forKey:spell.caster.name];
         
+        NSNumber *totalDamageTaken = [_totalDamageTakenByTarget objectForKey:target.name];
+        totalDamageTaken = @( totalDamageTaken.doubleValue + effectiveDamage.doubleValue );
+        [_totalDamageTakenByTarget setObject:totalDamageTaken forKey:target.name];
+        
         if ( spell.caster.isPlayer )
             _totalDamageForRaid = @( _totalDamageForRaid.doubleValue + effectiveDamage.doubleValue );
     }
@@ -103,6 +108,11 @@
 - (NSNumber *)totalDamageForEntity:(Entity *)entity
 {
     return [_totalDamageBySource objectForKey:entity.name];
+}
+
+- (NSNumber *)totalDamageTakenForEntity:(Entity *)entity
+{
+    return [_totalDamageTakenByTarget objectForKey:entity.name];
 }
 
 - (NSNumber *)totalHealingForRaid

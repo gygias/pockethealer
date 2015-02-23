@@ -41,6 +41,13 @@
     return vc;
 }
 
++ (SpeechBubbleViewController *)speechBubbleViewControllerWithMeterModes
+{
+    SpeechBubbleViewController *vc = [self _speechBubbleViewControllerWithNib:@"SpeechBubbleMeterModeView"];
+    vc.speechBubbleView.isMeterModeView = YES;
+    return vc;
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -57,7 +64,7 @@
         if ( weakSelf.speechBubbleView.isCommandView )
             return;
         if ( weakSelf.dismissHandler )
-            weakSelf.dismissHandler(weakSelf, NoCommand);
+            weakSelf.dismissHandler(weakSelf, NoCommand, NoMode);
     };
 }
 
@@ -75,31 +82,57 @@
 - (IBAction)heroPressed:(id)sender
 {
     NSLog(@"HERO!!!");
-    self.dismissHandler(self, HeroCommand);
+    self.dismissHandler(self, HeroCommand, NoMode);
 }
 
 - (IBAction)stackInMeleePressed:(id)sender
 {
     NSLog(@"STACK IN MELEE!!!");
-    self.dismissHandler(self, StackInMeleeCommand);
+    self.dismissHandler(self, StackInMeleeCommand, NoMode);
 }
 
 - (IBAction)stackOnMePressed:(id)sender
 {
     NSLog(@"STACK ON ME!!!");
-    self.dismissHandler(self, StackOnMeCommand);
+    self.dismissHandler(self, StackOnMeCommand, NoMode);
 }
 
 - (IBAction)spreadPressed:(id)sender
 {
     NSLog(@"SPREAD!!!");
-    self.dismissHandler(self, SpreadCommand);
+    self.dismissHandler(self, SpreadCommand, NoMode);
 }
 
 - (IBAction)idiotsPressed:(id)sender
 {
     NSLog(@"IDIOTS!!!");
-    self.dismissHandler(self, IdiotsCommand);
+    self.dismissHandler(self, IdiotsCommand, NoMode);
+}
+
+- (IBAction)showHealingPressed:(id)sender
+{
+    NSLog(@"show healing done");
+    self.dismissHandler(self, NoCommand, HealingDoneMode);
+}
+- (IBAction)showOverhealingPressed:(id)sender
+{
+    NSLog(@"show overhealing");
+    self.dismissHandler(self, NoCommand, OverhealingMode);
+}
+- (IBAction)showHealingTakenPressed:(id)sender
+{
+    NSLog(@"show healing taken");
+    self.dismissHandler(self, NoCommand, HealingTakenMode);
+}
+- (IBAction)showDamagePressed:(id)sender
+{
+    NSLog(@"show damage done");
+    self.dismissHandler(self, NoCommand, DamageDoneMode);
+}
+- (IBAction)showDamageTakenPressed:(id)sender
+{
+    NSLog(@"show damage taken");
+    self.dismissHandler(self, NoCommand, DamageTakenMode);
 }
 
 @end

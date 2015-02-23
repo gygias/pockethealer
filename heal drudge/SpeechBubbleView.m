@@ -120,7 +120,7 @@ static CGFloat sSpeechBubbleInset = 10;
 
 //- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 //{
-//    if ( ! self.isCommandView )
+//    if ( ! self.isCommandView && ! self.isMeterModeView )
 //        return nil;
 //    return [super hitTest:point withEvent:event];
 //}

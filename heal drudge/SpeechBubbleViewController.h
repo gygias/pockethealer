@@ -11,11 +11,13 @@
 #import "SpeechBubbleView.h"
 #import "SpeechBubbleContentView.h"
 #import "Encounter.h"
+#import "MeterView.h"
 
 @interface SpeechBubbleViewController : UIViewController
 
 + (SpeechBubbleViewController *)speechBubbleViewControllerWithImage:(UIImage *)image text:(NSString *)text;
 + (SpeechBubbleViewController *)speechBubbleViewControllerWithCommands;
++ (SpeechBubbleViewController *)speechBubbleViewControllerWithMeterModes;
 
 @property IBOutlet SpeechBubbleView *speechBubbleView;
 @property IBOutlet SpeechBubbleContentView *speechBubbleContentView;
@@ -23,7 +25,7 @@
 @property IBOutlet UILabel *textLabel;
 @property CGPoint bubbleOrigin;
 @property (nonatomic,retain) UIView *referenceView;
-typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *,PlayerCommand);
+typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *,PlayerCommand,MeterMode);
 @property (copy) SpeechBubbleViewControllerDismissedHandler dismissHandler;
 
 - (IBAction)heroPressed:(id)sender;

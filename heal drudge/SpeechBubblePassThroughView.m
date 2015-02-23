@@ -25,7 +25,7 @@
 {
     SpeechBubbleView *bv = self.subviews.firstObject;
     
-    if ( bv.isCommandView )
+    if ( bv.isCommandView || bv.isMeterModeView )
         return [super hitTest:point withEvent:event];
     
     SpeechBubbleContentView *cv = bv.subviews.firstObject;

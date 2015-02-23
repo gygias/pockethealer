@@ -68,16 +68,18 @@ typedef CGPoint (^LocateBlock)();
 - (void)_presentSpeechBubble:(SpeechBubbleViewController *)speechBubble locateBlock:(LocateBlock)locateBlock
 {
     if ( self.currentSpeechBubble )
-        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble, NoCommand);
+        self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble, NoCommand, NoMode);
     
     speechBubble.bubbleOrigin = locateBlock();
     speechBubble.referenceView = self.advisorGuideView;
-    speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc, PlayerCommand command){
+    speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc, PlayerCommand command, MeterMode meterMode){
         [vc.view removeFromSuperview];
         self.currentSpeechBubble = nil;
         
         if ( command != NoCommand )
             [self.encounter handleCommand:command];
+        if ( meterMode != NoMode )
+            self.meterView.mode = meterMode;
             
     };
     speechBubble.view.frame = self.view.frame;
@@ -272,6 +274,13 @@ typedef CGPoint (^LocateBlock)();
     
     self.miniMapView.encounter = encounter;
     self.meterView.encounter = encounter;
+    self.meterView.mode = HealingDoneMode;
+    self.meterView.touchedHandler = ^{
+        SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithMeterModes];
+        [weakSelf _presentSpeechBubble:speechBubble locateBlock:^{
+            return CGPointMake(weakSelf.view.frame.origin.x, weakSelf.view.frame.origin.y + weakSelf.view.frame.size.height);
+        }];
+    };
     
     if ( ! self.state.debugViews )
     {

@@ -19,6 +19,7 @@
     NSMutableDictionary *_totalHealingBySource;
     NSMutableDictionary *_totalHealingTakenByTarget;
     NSMutableDictionary *_totalDamageBySource;
+    NSMutableDictionary *_totalDamageTakenByTarget;
     NSMutableDictionary *_totalOverhealBySource;
     NSNumber *_totalHealingForRaid;
     NSNumber *_totalDamageForRaid;
@@ -30,6 +31,7 @@
 - (NSNumber *)totalHealingTakenForEntity:(Entity *)entity;
 - (NSNumber *)totalOverhealForEntity:(Entity *)entity;
 - (NSNumber *)totalDamageForEntity:(Entity *)entity;
+- (NSNumber *)totalDamageTakenForEntity:(Entity *)entity;
 - (NSNumber *)totalHealingForRaid;
 
 @end

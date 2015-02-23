@@ -14,10 +14,12 @@
 
 typedef NS_ENUM(NSUInteger,MeterMode)
 {
-    HealingDoneMode = 0,
+    NoMode = 0,
+    HealingDoneMode,
+    HealingTakenMode,
     OverhealingMode,
     DamageDoneMode,
-    HealingTakenMode
+    DamageTakenMode
 };
 
 typedef void (^MeterViewTouchedBlock)();
