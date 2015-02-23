@@ -25,6 +25,7 @@
 @property float difficulty;
 @property BOOL debugViews;
 @property NSMutableDictionary *spellOrdersBySpecID;
+@property NSInteger meterMode;
 
 // setup
 @property BOOL saveGuildToo;

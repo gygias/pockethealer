@@ -27,7 +27,7 @@ typedef void (^MeterViewTouchedBlock)();
 @interface MeterView : UIView
 
 @property Encounter *encounter;
-@property MeterMode mode;
+@property (nonatomic) MeterMode mode;
 @property (nonatomic,copy) MeterViewTouchedBlock touchedHandler;
 
 @end

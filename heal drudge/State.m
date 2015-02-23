@@ -36,6 +36,7 @@ static State *sSharedState = nil;
     state.spellOrdersBySpecID = [[defaults dictionaryForKey:@"spellOrdersBySpecID"] mutableCopy];
     if ( ! state.spellOrdersBySpecID )
         state.spellOrdersBySpecID = [NSMutableDictionary new];
+    state.meterMode = [defaults integerForKey:@"meterMode"];
     return state;
 }
 
@@ -49,6 +50,7 @@ static State *sSharedState = nil;
     [defaults setFloat:self.difficulty forKey:@"difficulty"];
     [defaults setBool:self.debugViews forKey:@"debugViews"];
     [defaults setObject:self.spellOrdersBySpecID forKey:@"spellOrdersBySpecID"];
+    [defaults setInteger:self.meterMode forKey:@"meterMode"];
     [defaults synchronize];
 }
 

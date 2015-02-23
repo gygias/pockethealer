@@ -266,7 +266,7 @@ typedef CGPoint (^LocateBlock)();
         CGRect returnPoint = [weakSelf.spellBarView rectForSpell:spell];
         returnPoint.origin = [weakSelf.view convertPoint:returnPoint.origin fromView:weakSelf.spellBarView];
         NSDate *flyBackStartDate = [NSDate date];
-        NSTimeInterval flyBackDuration = 0.15;
+        NSTimeInterval flyBackDuration = 0.25;
         weakSelf.spellDragView.auxiliaryDrawHandler = ^{
             double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:flyBackStartDate] / flyBackDuration;
             if ( currentMoveProgress > 1 )
@@ -310,7 +310,8 @@ typedef CGPoint (^LocateBlock)();
     
     self.miniMapView.encounter = encounter;
     self.meterView.encounter = encounter;
-    self.meterView.mode = HealingDoneMode;
+    NSInteger stateMode = [State sharedState].meterMode;
+    self.meterView.mode = stateMode != NoMode ? stateMode : HealingDoneMode;
     self.meterView.touchedHandler = ^{
         SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithMeterModes];
         [weakSelf _presentSpeechBubble:speechBubble locateBlock:^{

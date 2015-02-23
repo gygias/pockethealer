@@ -14,6 +14,16 @@
 #define METER_LINE_HEIGHT 12.0
 #define METER_INSET 1.0
 
+@synthesize mode = _mode;
+
+- (void)setMode:(MeterMode)mode
+{
+    _mode = mode;
+    State *state = [State sharedState];
+    state.meterMode = mode;
+    [state writeState];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     CGFloat lineHeight = METER_LINE_HEIGHT;
