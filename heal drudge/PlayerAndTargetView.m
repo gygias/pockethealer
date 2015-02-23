@@ -48,12 +48,7 @@
         if ( ( imageCache = self.raidFramesView.playerFrame.imageCache ) )
             [imageCache drawInRect:playerRect];
         else
-        {
-            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:playerRect];
-            aFrame.entity = self.player;
-            aFrame.player = self.player;
-            [aFrame drawRect:playerRect];
-        }
+            [self.raidFramesView.playerFrame drawRect:playerRect];
     }
     
     // target
@@ -63,28 +58,36 @@
         
         if ( ( imageCache = self.raidFramesView.playerTargetFrame.imageCache ) )
             [imageCache drawInRect:targetRect];
+        else if ( self.raidFramesView.playerTargetFrame )
+            [self.raidFramesView.playerTargetFrame drawRect:targetRect];
+        else if ( self.lastTargetFrame.entity == self.target )
+            [self.lastTargetFrame drawRect:targetRect];
         else
         {
-            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
-            aFrame.entity = self.target;
-            aFrame.player = self.player;
-            [aFrame drawRect:targetRect];
-        }
+            self.lastTargetFrame = [RaidFrameView new];
+            self.lastTargetFrame.entity = self.target;
+            self.lastTargetFrame.player = self.player;
+            [self.lastTargetFrame drawRect:targetRect];
+        }            
     }
     
     // target
     if ( self.target.target )
     {
-        CGRect targetRect = [self _targetOfTargetRectWithRect:rect];
+        CGRect targetTargetRect = [self _targetOfTargetRectWithRect:rect];
         
         if ( ( imageCache = self.raidFramesView.playerTargetTargetFrame.imageCache ) )
-            [imageCache drawInRect:targetRect];
+            [imageCache drawInRect:targetTargetRect];
+        else if ( self.raidFramesView.playerTargetTargetFrame )
+            [self.raidFramesView.playerTargetTargetFrame drawRect:targetTargetRect];
+        else if ( self.lastTargetTargetFrame.entity == self.target.target )
+            [self.lastTargetTargetFrame drawRect:targetTargetRect];
         else
         {
-            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
-            aFrame.entity = self.target.target;
-            aFrame.player = self.player;
-            [aFrame drawRect:targetRect];
+            self.lastTargetTargetFrame = [RaidFrameView new];
+            self.lastTargetTargetFrame.entity = self.target.target;
+            self.lastTargetTargetFrame.player = self.player;
+            [self.lastTargetTargetFrame drawRect:targetTargetRect];
         }
     }
 }

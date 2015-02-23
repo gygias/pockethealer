@@ -37,7 +37,7 @@
                     <rect key="frame" x="-93" y="-80" width="59" height="53"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <variation key="heightClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="-99" y="-59" width="69" height="95"/>
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                     </variation>
                     <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -206,9 +206,6 @@
                         </view>
                         <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lme-ho-WK3" userLabel="Spell Drag View" customClass="SpellDragView">
                             <rect key="frame" x="-44" y="-36" width="600" height="600"/>
-                            <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
-                                <rect key="frame" x="-51" y="65" width="600" height="400"/>
-                            </variation>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.1001500993" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -265,6 +262,9 @@
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8Wr-kS-kmz"/>
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BXv-Tp-0Nr"/>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="width" secondItem="ysW-b4-ce4" secondAttribute="width" id="EUn-ii-82d"/>
+                <constraint firstItem="OuA-qW-UeL" firstAttribute="trailing" secondItem="Lme-ho-WK3" secondAttribute="trailing" constant="-250.5" id="EWS-sV-0Dt">
+                    <variation key="heightClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="leading" secondItem="Hx1-3N-KRn" secondAttribute="leading" constant="-152.5" id="Fi0-nQ-zQS">
                     <variation key="heightClass=compact" constant="0.0"/>
                 </constraint>
@@ -280,12 +280,18 @@
                 </constraint>
                 <constraint firstAttribute="centerY" secondItem="Hx1-3N-KRn" secondAttribute="centerY" id="ZZ2-18-Wea"/>
                 <constraint firstAttribute="trailing" secondItem="usy-Eb-IUP" secondAttribute="trailing" constant="5" id="b0e-PS-01f"/>
+                <constraint firstItem="OuA-qW-UeL" firstAttribute="bottom" secondItem="Lme-ho-WK3" secondAttribute="bottom" constant="-85" id="eej-sA-jfa">
+                    <variation key="heightClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="ysW-b4-ce4" firstAttribute="leading" secondItem="usy-Eb-IUP" secondAttribute="trailing" id="esU-Sd-lLn">
                     <variation key="heightClass=compact" constant="3"/>
                 </constraint>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="trailing" secondItem="ysW-b4-ce4" secondAttribute="trailing" id="f2i-uW-mPf"/>
                 <constraint firstAttribute="bottom" secondItem="usy-Eb-IUP" secondAttribute="bottom" id="hGN-0n-nty"/>
                 <constraint firstItem="ysW-b4-ce4" firstAttribute="top" secondItem="usy-Eb-IUP" secondAttribute="bottom" id="jDf-oJ-NN7"/>
+                <constraint firstItem="OuA-qW-UeL" firstAttribute="leading" secondItem="Lme-ho-WK3" secondAttribute="leading" constant="-250.5" id="o09-ir-V9w">
+                    <variation key="heightClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="OuA-qW-UeL" secondAttribute="trailing" id="oMn-KM-ND7"/>
                 <constraint firstAttribute="bottom" secondItem="ysW-b4-ce4" secondAttribute="bottom" id="oVx-Xe-H4b"/>
                 <constraint firstItem="usy-Eb-IUP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="tHj-Gh-K68"/>
@@ -293,10 +299,17 @@
                     <variation key="heightClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="OuA-qW-UeL" firstAttribute="height" secondItem="Lme-ho-WK3" secondAttribute="height" id="uIK-ev-8k9"/>
+                <constraint firstItem="OuA-qW-UeL" firstAttribute="top" secondItem="Lme-ho-WK3" secondAttribute="top" constant="-85" id="uZg-zk-Wzd">
+                    <variation key="heightClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="zQa-aP-GOC" secondAttribute="trailing" id="vvi-FV-jTR"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="EWS-sV-0Dt"/>
+                    <exclude reference="eej-sA-jfa"/>
+                    <exclude reference="o09-ir-V9w"/>
+                    <exclude reference="uZg-zk-Wzd"/>
                     <exclude reference="EUn-ii-82d"/>
                     <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="hGN-0n-nty"/>
@@ -310,6 +323,10 @@
             </variation>
             <variation key="heightClass=compact">
                 <mask key="constraints">
+                    <include reference="EWS-sV-0Dt"/>
+                    <include reference="eej-sA-jfa"/>
+                    <include reference="o09-ir-V9w"/>
+                    <include reference="uZg-zk-Wzd"/>
                     <include reference="EUn-ii-82d"/>
                     <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="TKL-D1-cQC"/>

@@ -52,14 +52,14 @@ static CGSize sMyDesiredContentSize = {0,0};
     if ( _refreshCachedValues || ! _raidFrames )
         [self _initRaidFrames];
     
+    self.playerTargetTargetFrame = nil;
+    self.playerTargetFrame = nil;
     [_raidFrames enumerateObjectsUsingBlock:^(RaidFrameView *aFrame, NSUInteger idx, BOOL *stop) {
         [aFrame drawRect:aFrame.frame];
         
-        if ( aFrame.entity.isPlayingPlayer )
-            self.playerFrame = aFrame;
-        else if ( self.encounter.player.target == aFrame.entity )
+        if ( self.encounter.player.target == aFrame.entity )
             self.playerTargetFrame = aFrame;
-        else if ( self.encounter.player.target.target == aFrame.entity )
+        if ( self.encounter.player.target.target == aFrame.entity )
             self.playerTargetTargetFrame = aFrame;
     }];
 //#define DEBUG_ORIGIN
@@ -102,6 +102,9 @@ static CGSize sMyDesiredContentSize = {0,0};
         aFrame.entity = thisPlayer;
         aFrame.player = self.player;
         [mutableFrames addObject:aFrame];
+        
+        if ( thisPlayer.isPlayingPlayer )
+            self.playerFrame = aFrame;
     }
     
     _raidFrames = mutableFrames;

@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class Entity, RaidFramesView;
+@class Entity, RaidFramesView, RaidFrameView;
 
 typedef void(^EntityTouchedBlock)(Entity *);
 
@@ -25,5 +25,7 @@ typedef void(^EntityTouchedBlock)(Entity *);
 @property Entity *player;
 @property Entity *target;
 @property RaidFramesView *raidFramesView;
+@property RaidFrameView *lastTargetTargetFrame;
+@property RaidFrameView *lastTargetFrame;
 
 @end

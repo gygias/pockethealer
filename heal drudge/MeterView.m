@@ -37,7 +37,11 @@
         return;
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
-        NSNumber *value = [self.encounter.combatLog performSelector:selector withObject:player];
+        // performselector throws a 'may leak' warning under ARC
+        // http://stackoverflow.com/questions/7017281/performselector-may-cause-a-leak-because-its-selector-is-unknown
+        IMP imp = [self.encounter.combatLog methodForSelector:selector];
+        NSNumber *(*function)(id, SEL, Entity*) = (void *)imp;
+        NSNumber *value = function(self.encounter.combatLog,selector,player);
         if ( value.doubleValue ) // TODO this sorting should probably be done on encounter queue
         {
             NSUInteger insertIdx = 0;
