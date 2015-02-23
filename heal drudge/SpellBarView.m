@@ -89,7 +89,7 @@
                 }
             }
         }
-        self.dragEndedHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
+        self.dragEndedHandler( replacedSpell ? nil : self.currentDragSpell,dragShiftedUpLeftByOneThumb );
         self.currentDragSpell = nil;
     }
     else

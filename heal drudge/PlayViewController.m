@@ -256,6 +256,13 @@ typedef CGPoint (^LocateBlock)();
         };
     };
     self.spellBarView.dragEndedHandler = ^(Spell *spell, CGPoint thePoint) {
+        if ( ! spell )
+        {
+            weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
+            return;
+        }
+        
+        // fly back to origin
         CGRect returnPoint = [weakSelf.spellBarView rectForSpell:spell];
         returnPoint.origin = [weakSelf.view convertPoint:returnPoint.origin fromView:weakSelf.spellBarView];
         NSDate *flyBackStartDate = [NSDate date];
