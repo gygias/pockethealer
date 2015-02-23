@@ -17,8 +17,8 @@
 #define INTRINSIC_SPELL_HEIGHT ( [SpellBarView desiredSize].width )
 #define INTRINSIC_SPELL_WIDTH INTRINSIC_SPELL_HEIGHT
 #define SPELLS_PER_ROW 5
-#define SPELL_WIDTH (( ( self.frame.size.height / rows ) < ( self.frame.size.width / SPELLS_PER_ROW ) ) ? ( self.frame.size.height / rows ) : ( self.frame.size.width / SPELLS_PER_ROW ))
-#define SPELL_HEIGHT SPELL_WIDTH
+#define CURRENT_SPELL_WIDTH (( ( _lastRect.size.height / rows ) < ( _lastRect.size.width / SPELLS_PER_ROW ) ) ? ( _lastRect.size.height / rows ) : ( _lastRect.size.width / SPELLS_PER_ROW ))
+#define CURRENT_SPELL_HEIGHT CURRENT_SPELL_WIDTH
 
 @interface SpellBarView (PrivateProperties)
 // It is not possible to add members and properties to an existing class via a category — only methods.
@@ -52,7 +52,7 @@
 {
     CGPoint myPoint = [recognizer locationInView:self];
     CGPoint theirPoint = [recognizer locationInView:self.superview.superview];
-    CGPoint dragShiftedUpLeftByOneThumb = CGPointMake(theirPoint.x - SPELL_WIDTH, theirPoint.y - SPELL_HEIGHT);
+    CGPoint dragShiftedUpLeftByOneThumb = CGPointMake(theirPoint.x - CURRENT_SPELL_WIDTH, theirPoint.y - CURRENT_SPELL_HEIGHT);
     
     if ( recognizer.state == UIGestureRecognizerStateBegan )
     {
@@ -89,8 +89,8 @@
                 }
             }
         }
-        self.currentDragSpell = nil;
         self.dragEndedHandler(self.currentDragSpell,dragShiftedUpLeftByOneThumb);
+        self.currentDragSpell = nil;
     }
     else
     {
@@ -128,8 +128,7 @@ CGSize sSpellBarSpellSize = {0,0};
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    CGFloat spellWidth = SPELL_WIDTH;
-    CGFloat spellHeight = SPELL_HEIGHT;
+    _lastRect = rect;
     [self.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
         
         NSString *message = nil;
@@ -147,11 +146,6 @@ CGSize sSpellBarSpellSize = {0,0};
         UIImage *spellImage = spell.image;
         //if ( ! canStartCastingSpell )
         //   spellImage = [ImageFactory questionMark];
-        
-        NSInteger row = idx / SPELLS_PER_ROW;
-        NSInteger column = idx % SPELLS_PER_ROW;
-        CGRect spellRect = CGRectMake(rect.origin.x + ( spellWidth * column ),
-                                      rect.origin.y + ( spellHeight * row ), spellWidth, spellHeight);
         //PHLogV(@"drawing %@ in %f %f %f %f",spellImage,spellRect.origin.x,spellRect.origin.y,spellRect.size.width,spellRect.size.height);
         
 //#warning this is here due to emphasis yellow leaving traces when it stops drawing
@@ -161,6 +155,7 @@ CGSize sSpellBarSpellSize = {0,0};
         //CGContextFillPath(context);
         // nvm drawing outside specified rect lol
         
+        CGRect spellRect = [self _rectForSpell:spell];
         [spellImage drawInRect:spellRect];
                 
         // disabled mask
@@ -271,13 +266,39 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
 
 - (Spell *)_spellAtPoint:(CGPoint)point
 {
-    NSUInteger row = point.y / SPELL_HEIGHT;
-    NSUInteger column = point.x / SPELL_WIDTH;
+    NSUInteger row = point.y / CURRENT_SPELL_HEIGHT;
+    NSUInteger column = point.x / CURRENT_SPELL_WIDTH;
     NSUInteger spellIdx = ( row * SPELLS_PER_ROW ) + column;
     Spell *theSpell = nil;
     if ( spellIdx < self.player.spells.count )
         theSpell = self.player.spells[spellIdx];
     return theSpell;
+}
+
+- (CGRect)rectForSpell:(Spell *)spell
+{
+    if ( ! [self.player.spells containsObject:spell] )
+    {
+        PHLogV(@"*** %@ has no %@ spell",self.player,spell);
+        return CGRectMake(0,0,0,0);
+    }
+    
+    return [self _rectForSpell:spell];
+}
+
+- (CGRect)_rectForSpell:(Spell *)spell
+{
+    // TODO this is probably not safe, spell order is mutated on the encounter queue, this method called on the main queue
+    NSUInteger idx = [self.player.spells indexOfObject:spell];
+    
+    NSInteger row = idx / SPELLS_PER_ROW;
+    NSInteger column = idx % SPELLS_PER_ROW;
+    CGFloat spellWidth = CURRENT_SPELL_WIDTH;
+    CGFloat spellHeight = CURRENT_SPELL_HEIGHT;
+    CGRect spellRect = CGRectMake(_lastRect.origin.x + ( spellWidth * column ),
+                                  _lastRect.origin.y + ( spellHeight * row ), spellWidth, spellHeight);
+    
+    return spellRect;
 }
 
 @end

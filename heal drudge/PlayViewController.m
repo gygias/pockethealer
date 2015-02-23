@@ -256,7 +256,23 @@ typedef CGPoint (^LocateBlock)();
         };
     };
     self.spellBarView.dragEndedHandler = ^(Spell *spell, CGPoint thePoint) {
-        weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
+        CGRect returnPoint = [weakSelf.spellBarView rectForSpell:spell];
+        returnPoint.origin = [weakSelf.view convertPoint:returnPoint.origin fromView:weakSelf.spellBarView];
+        NSDate *flyBackStartDate = [NSDate date];
+        NSTimeInterval flyBackDuration = 0.15;
+        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
+            double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:flyBackStartDate] / flyBackDuration;
+            if ( currentMoveProgress > 1 )
+            {
+                weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
+                return;
+            }
+            CGFloat xDelta = ( returnPoint.origin.x - thePoint.x ) * currentMoveProgress;
+            CGFloat yDelta = ( returnPoint.origin.y - thePoint.y ) * currentMoveProgress;
+            
+            CGRect interpolatedRect = CGRectMake(thePoint.x + xDelta, thePoint.y + yDelta,returnPoint.size.width,returnPoint.size.height);
+            [spell.image drawInRect:interpolatedRect blendMode:kCGBlendModeNormal alpha:0.5];
+        };
     };
     
     self.castBarView.entity = encounter.player;

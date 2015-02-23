@@ -23,6 +23,7 @@ typedef void(^SpellBarViewDragEnded)(Spell *, CGPoint);
     NSDate *_emphasisReferenceDate;
     NSUInteger rows;
     NSUInteger columns;
+    CGRect _lastRect;
 }
 
 @property (nonatomic,copy) SpellCastAttemptBlock spellCastAttemptHandler;
@@ -34,5 +35,7 @@ typedef void(^SpellBarViewDragEnded)(Spell *, CGPoint);
 @property (nonatomic,copy) SpellBarViewDragBegan dragBeganHandler;
 @property (nonatomic,copy) SpellBarViewDragUpdated dragUpdatedHandler;
 @property (nonatomic,copy) SpellBarViewDragEnded dragEndedHandler;
+
+- (CGRect)rectForSpell:(Spell *)spell;
 
 @end
