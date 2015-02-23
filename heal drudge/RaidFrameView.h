@@ -34,4 +34,6 @@ typedef BOOL(^EntityIsTargetedBlock)(Entity * entity);
 @property BOOL selected;
 @property Encounter *encounter;
 
+@property UIImage *imageCache;
+
 @end

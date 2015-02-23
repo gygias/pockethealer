@@ -13,6 +13,7 @@
 
 @class Entity;
 @class Encounter;
+@class RaidFrameView;
 
 typedef void(^TargetedPlayerBlock)(Entity *);
 
@@ -29,6 +30,11 @@ typedef void(^TargetedPlayerBlock)(Entity *);
 @property (nonatomic,retain) Raid *raid;
 @property NSUInteger selectedFrame;
 @property Encounter *encounter; // this is only necessary for ferrying encounter to RaidFrameView for isTargeted block
+
+// optimization?
+@property RaidFrameView *playerFrame;
+@property RaidFrameView *playerTargetFrame;
+@property RaidFrameView *playerTargetTargetFrame;
 
 - (CGPoint)absoluteOriginForEntity:(Entity *)e;
 

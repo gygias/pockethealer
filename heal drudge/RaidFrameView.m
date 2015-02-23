@@ -91,6 +91,19 @@ CGSize sRaidFrameSize = {0,0};
         _refreshCachedValues = YES;
         _lastRect = rect;
     }
+
+//#define USE_BROKEN_IMAGE_CACHING
+#ifdef USE_BROKEN_IMAGE_CACHING
+    BOOL cacheMyDrawing = NO;
+    if ( self.entity.isPlayingPlayer
+        || self.encounter.player.target == self.entity
+        || self.encounter.player.target.target == self.entity )
+    {
+        cacheMyDrawing = YES;
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSaveGState(context);
+    }
+#endif
     
     //PHLogV(@"%@: drawRect: %f %f %f %f",[self class],rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
     double snapshottedHealthPercentage = self.entity.currentHealthPercentage.doubleValue;
@@ -111,6 +124,19 @@ CGSize sRaidFrameSize = {0,0};
     [self _drawAggroNubsInRect:rect];
     [self _drawLastHealInRect:rect];
     [self _drawLastHitSpellInRect:rect];
+    
+#ifdef USE_BROKEN_IMAGE_CACHING
+    if ( cacheMyDrawing )
+    {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGImageRef imgRef = CGBitmapContextCreateImage(context);
+        UIImage* img = [UIImage imageWithCGImage:imgRef];
+        CGImageRelease(imgRef);
+        //[UIImagePNGRepresentation(img) writeToFile:[NSString stringWithFormat:@"/tmp/%@",self.entity.name] atomically:NO];
+        CGContextRestoreGState(context);
+        self.imageCache = img;
+    }
+#endif
     
     _refreshCachedValues = NO;
 }

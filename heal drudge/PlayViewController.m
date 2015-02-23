@@ -211,6 +211,7 @@ typedef CGPoint (^LocateBlock)();
         encounter.player.target = entity;
         weakSelf.playerAndTargetView.target = entity;
     };
+    self.playerAndTargetView.raidFramesView = self.raidFramesView;
     
     self.spellBarView.player = aHealer;
     BOOL (^castBlock)(Spell *);
@@ -246,12 +247,12 @@ typedef CGPoint (^LocateBlock)();
     self.spellBarView.spellCastAttemptHandler = castBlock;
     self.spellBarView.dragBeganHandler = ^(Spell *spell, CGPoint thePoint) {
         weakSelf.spellDragView.auxiliaryDrawHandler = ^{
-            [spell.image drawAtPoint:thePoint];
+            [spell.image drawAtPoint:thePoint blendMode:kCGBlendModeNormal alpha:0.5];
         };
     };
     self.spellBarView.dragUpdatedHandler = ^(Spell *spell, CGPoint thePoint) {
         weakSelf.spellDragView.auxiliaryDrawHandler = ^{
-            [spell.image drawAtPoint:thePoint];
+            [spell.image drawAtPoint:thePoint blendMode:kCGBlendModeNormal alpha:0.5];
         };
     };
     self.spellBarView.dragEndedHandler = ^(Spell *spell, CGPoint thePoint) {

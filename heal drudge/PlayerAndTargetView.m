@@ -10,6 +10,7 @@
 
 #import "PlayerAndTargetView.h"
 
+#import "RaidFramesView.h"
 #import "RaidFrameView.h"
 #import "Entity.h"
 
@@ -37,34 +38,54 @@
     
     _lastDrawnRect = rect;
     
+    UIImage *imageCache = nil;
+    
     // player
     if ( self.player )
     {
         CGRect playerRect = [self _playerRectWithRect:rect];
-        RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:playerRect];
-        aFrame.entity = self.player;
-        aFrame.player = self.player;
-        [aFrame drawRect:playerRect];
+        
+        if ( ( imageCache = self.raidFramesView.playerFrame.imageCache ) )
+            [imageCache drawInRect:playerRect];
+        else
+        {
+            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:playerRect];
+            aFrame.entity = self.player;
+            aFrame.player = self.player;
+            [aFrame drawRect:playerRect];
+        }
     }
     
     // target
     if ( self.target )
     {
         CGRect targetRect = [self _targetRectWithRect:rect];
-        RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
-        aFrame.entity = self.target;
-        aFrame.player = self.player;
-        [aFrame drawRect:targetRect];
+        
+        if ( ( imageCache = self.raidFramesView.playerTargetFrame.imageCache ) )
+            [imageCache drawInRect:targetRect];
+        else
+        {
+            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
+            aFrame.entity = self.target;
+            aFrame.player = self.player;
+            [aFrame drawRect:targetRect];
+        }
     }
     
     // target
     if ( self.target.target )
     {
         CGRect targetRect = [self _targetOfTargetRectWithRect:rect];
-        RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
-        aFrame.entity = self.target.target;
-        aFrame.player = self.player;
-        [aFrame drawRect:targetRect];
+        
+        if ( ( imageCache = self.raidFramesView.playerTargetTargetFrame.imageCache ) )
+            [imageCache drawInRect:targetRect];
+        else
+        {
+            RaidFrameView *aFrame = [[RaidFrameView alloc] initWithFrame:targetRect];
+            aFrame.entity = self.target.target;
+            aFrame.player = self.player;
+            [aFrame drawRect:targetRect];
+        }
     }
 }
 

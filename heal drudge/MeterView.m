@@ -62,7 +62,8 @@
     }
     
     NSUInteger idx = 0;
-    for ( ; ( idx < entitiesToDraw.count + 1 && idx < METER_DEFAULT_LINES ); idx++ )
+    NSUInteger nLines = rect.size.height / lineHeight;
+    for ( ; ( idx < entitiesToDraw.count + 1 && idx < nLines ); idx++ )
     {
         CGRect myRect;
         if ( idx == 0 )
