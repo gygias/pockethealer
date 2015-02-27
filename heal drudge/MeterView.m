@@ -8,9 +8,16 @@
 
 #import "MeterView.h"
 
+@interface MeterView ()
+
+@property NSUInteger currentTopLine;
+@property NSUInteger currentLines;
+
+@end
+
 @implementation MeterView
 
-#define METER_DEFAULT_LINES 5.0
+//#define METER_DEFAULT_LINES 5.0
 #define METER_LINE_HEIGHT 12.0
 #define METER_INSET 1.0
 
@@ -22,10 +29,102 @@
     State *state = [State sharedState];
     state.meterMode = mode;
     [state writeState];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        UIPanGestureRecognizer *swipe = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_swipe:)];
+        //swipe.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tap:)];
+        self.gestureRecognizers = @[ swipe, tap ];
+    });
+}
+
+- (void)_swipe:(UIGestureRecognizer *)recognizer
+{
+    if ( [recognizer isKindOfClass:[UIPanGestureRecognizer class]] )
+    {
+        UIPanGestureRecognizer *panRecognizer = (UIPanGestureRecognizer *)recognizer;
+        CGPoint translation =[panRecognizer translationInView:self];
+        if ( panRecognizer.state == UIGestureRecognizerStateBegan )
+        {
+            //PHLogV(@"swipe began: %@: %@",recognizer,PointString(translation));
+        }
+        else if ( panRecognizer.state == UIGestureRecognizerStateChanged )
+        {
+            //PHLogV(@"swipe changed: %@: %@",recognizer,PointString(translation));
+            CGFloat delta = translation.y / METER_LINE_HEIGHT;
+            if ( delta > self.lastRect.size.height / METER_LINE_HEIGHT )
+                delta = self.lastRect.size.height / METER_LINE_HEIGHT;
+            if ( self.currentTopLine + delta < 0 )
+            {
+                //PHLogV(@"-- 1");
+                self.currentTopLine = 0;
+            }
+            else if ( self.currentTopLine + delta > self.currentLines - ( self.lastRect.size.height / METER_LINE_HEIGHT - 1 ) )
+            {
+                //PHLogV(@"-- 2");
+                self.currentTopLine = self.currentLines - self.currentTopLine;
+            }
+            else if ( self.currentTopLine + delta > self.currentLines )
+            {
+                //PHLogV(@"-- 4");
+                if ( self.currentLines >= self.lastRect.size.height / METER_LINE_HEIGHT )
+                {
+                    //PHLogV(@"top line = %u = %u - %u",self.currentLines - self.currentTopLine,self.currentLines,self.currentTopLine);
+                    self.currentTopLine = self.currentLines - self.currentTopLine;
+                }
+                else
+                {
+                    //PHLogV(@"top line = 0");
+                    self.currentTopLine = 0;
+                }
+            }
+            else
+            {
+                //PHLogV(@"-- 3");
+                self.currentTopLine += delta;
+            }
+        }
+        else if ( panRecognizer.state == UIGestureRecognizerStateEnded )
+        {
+            //PHLogV(@"swipe ended: %@: %@",recognizer,PointString(translation));
+        }
+        else
+        {
+            //PHLogV(@"swipe ???: %@",recognizer);
+        }
+    }
+}
+
+- (void)_tap:(UIGestureRecognizer *)recognizer
+{
+    if ( [recognizer isKindOfClass:[UITapGestureRecognizer class]] )
+    {
+        UITapGestureRecognizer *panRecognizer = (UITapGestureRecognizer *)recognizer;
+        if ( panRecognizer.state == UIGestureRecognizerStateBegan )
+        {
+            //PHLogV(@"tap began: %@",recognizer);
+        }
+        else if ( panRecognizer.state == UIGestureRecognizerStateChanged )
+        {
+            //PHLogV(@"tap changed: %@",recognizer);
+        }
+        else if ( panRecognizer.state == UIGestureRecognizerStateEnded )
+        {
+            //PHLogV(@"tap ended: %@",recognizer);
+            if ( self.touchedHandler )
+                self.touchedHandler();
+        }
+        else
+        {
+            //PHLogV(@"tap ???: %@",recognizer);
+        }
+    }
 }
 
 - (void)drawRect:(CGRect)rect
 {
+    self.lastRect = rect;
     CGFloat lineHeight = METER_LINE_HEIGHT;
     
     NSMutableArray *entitiesToDraw = [NSMutableArray new];
@@ -76,8 +175,38 @@
     }
     
     NSUInteger idx = 0;
-    NSUInteger nLines = rect.size.height / lineHeight;
-    for ( ; ( idx < entitiesToDraw.count + 1 && idx < nLines ); idx++ )
+    NSUInteger entitiesBase;
+    //NSInteger rowsHereOrBelow = entitiesToDraw.count - self.currentTopLine - idx;
+    if ( entitiesToDraw.count <= self.currentTopLine )
+    {
+        //PHLogV(@"1");
+        entitiesBase = 0;
+    }
+    else if ( entitiesToDraw.count - self.currentTopLine > self.lastRect.size.height / METER_LINE_HEIGHT )
+    {
+        //PHLogV(@"2");
+        entitiesBase = self.currentTopLine;
+    }
+    else if ( entitiesToDraw.count - self.lastRect.size.height / METER_LINE_HEIGHT > 0 )
+    {
+        //PHLogV(@"3");
+        entitiesBase = entitiesToDraw.count - self.lastRect.size.height / METER_LINE_HEIGHT;
+    }
+    else
+    {
+        //PHLogV(@"4");
+        entitiesBase = 0;
+    }
+    
+//    PHLogV(@"c %u l %u, will draw %u through %u (%u vs %u)",self.currentTopLine,
+//           self.currentLines,
+//           idx + entitiesBase,
+//          (entitiesToDraw.count + 1) < (self.currentLines)?(entitiesToDraw.count + 1):self.currentLines,
+//          (entitiesBase < entitiesToDraw.count + 1),
+//           self.currentLines);
+    
+    self.currentLines = entitiesToDraw.count;
+    for ( ; idx == 0 || ( idx + entitiesBase < entitiesToDraw.count + 1 && idx + entitiesBase < self.currentLines ); idx++ )
     {
         CGRect myRect;
         if ( idx == 0 )
@@ -125,7 +254,10 @@
             continue;
         }
         
-        NSDictionary *entityDict = [entitiesToDraw objectAtIndex:idx - 1];
+        self.currentLines = entitiesToDraw.count;
+        NSUInteger drawIdx = idx + entitiesBase - 1;
+        //NSLog(@"current lines: %lu, top line: %lu (%lu)",(unsigned long)self.currentLines,(unsigned long)self.currentTopLine,(unsigned long)(self.currentLines - self.currentTopLine));
+        NSDictionary *entityDict = [entitiesToDraw objectAtIndex:drawIdx];
         Entity *entity = entityDict[@"e"];
         NSNumber *value = entityDict[@"v"];
         
@@ -152,11 +284,11 @@
     }
 }
 
--(id)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    id hitView = [super hitTest:point withEvent:event];
-    if (hitView == self && self.touchedHandler)
-        self.touchedHandler();
-    return hitView;
-}
+//-(id)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+//    id hitView = [super hitTest:point withEvent:event];
+//    if (hitView == self && self.touchedHandler)
+//        self.touchedHandler();
+//    return hitView;
+//}
 
 @end

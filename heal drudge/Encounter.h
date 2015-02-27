@@ -56,6 +56,8 @@ typedef NS_ENUM(NSUInteger,PlayerCommand)
 
 - (void)start;
 - (void)pause;
+- (BOOL)isPaused;
+- (void)unpause;
 - (void)end;
 
 // called by entities when the a timed spell goes off

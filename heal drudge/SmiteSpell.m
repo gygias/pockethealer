@@ -64,7 +64,7 @@
     ArchangelEffect *currentArchangel = [PriestSpell _archangelForEntity:self.caster];
     if ( currentArchangel )
     {
-        if ( .5 < ( [[NSDate date] timeIntervalSinceDate:currentArchangel.startDate] / currentArchangel.duration ) )
+        if ( .5 < ( [[NSDate date] timeIntervalSinceDateMinusPauseTime:currentArchangel.startDate] / currentArchangel.duration ) )
             priority |= ChargePriority;
     }
     else if ( currentEvangelism )

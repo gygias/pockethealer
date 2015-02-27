@@ -29,5 +29,6 @@ typedef void (^MeterViewTouchedBlock)();
 @property Encounter *encounter;
 @property (nonatomic) MeterMode mode;
 @property (nonatomic,copy) MeterViewTouchedBlock touchedHandler;
+@property CGRect lastRect;
 
 @end

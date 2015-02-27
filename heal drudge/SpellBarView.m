@@ -72,6 +72,7 @@
     else if ( recognizer.state == UIGestureRecognizerStateEnded )
     {
         Spell *replacedSpell = [self _spellAtPoint:myPoint];
+        __block BOOL replaced = NO;
         if ( replacedSpell )
         {
             Spell *replacingSpell = self.currentDragSpell;
@@ -85,11 +86,12 @@
                 {
                     dispatch_async(self.player.encounter.encounterQueue, ^{
                         [self.player replaceSpell:replacedSpell withSpell:replacingSpell persist:YES];
+                        replaced = YES;
                     });
                 }
             }
         }
-        self.dragEndedHandler( replacedSpell ? nil : self.currentDragSpell,dragShiftedUpLeftByOneThumb );
+        self.dragEndedHandler( replaced ? nil : self.currentDragSpell,dragShiftedUpLeftByOneThumb );
         self.currentDragSpell = nil;
     }
     else
@@ -172,8 +174,8 @@ CGSize sSpellBarSpellSize = {0,0};
             [self _drawEmphasisInRect:spellRect spell:spell];
         }
         
-        if ( spell == self.depressedSpell )
-            return;
+        //if ( spell == self.depressedSpell )
+        //    return;
         
         // cooldown clock
         if ( spell.nextCooldownDate )

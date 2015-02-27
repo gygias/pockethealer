@@ -194,20 +194,56 @@ CGSize sRaidFrameSize = {0,0};
         return;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
     
     CGFloat width = ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
     
     CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET, rect.origin.y + RAID_FRAME_HEALTH_INSET, width, rect.size.height - ( RAID_FRAME_HEALTH_INSET * 2 ));
-    CGContextAddRect(context, rectangle);
+//    CGContextAddRect(context, rectangle);
+//    
+//    //PHLogV(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
+//    CGContextSetStrokeColorWithColor(context,
+//                                     self.entity.hdClass.classColor.CGColor);
+//    
+//    CGContextStrokePath(context);
+//    CGContextSetFillColorWithColor(context,
+//                                   self.entity.hdClass.classColor.CGColor);
+//    CGContextFillRect(context, rectangle);
     
-    //PHLogV(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);
-    CGContextSetStrokeColorWithColor(context,
-                                     self.entity.hdClass.classColor.CGColor);
+    CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();    
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGColorRef cgColor = self.entity.hdClass.classColor.CGColor;
+    size_t nComponents = CGColorGetNumberOfComponents(cgColor);
+    CGFloat components[8] = { 0.0, 0.0, 0.0, 1.0,  // Start color
+                            0.25, 0.25, 0.25, 1.0 }; // End color
+    const CGFloat *componentsPtr = CGColorGetComponents(cgColor);
+    NSInteger fillComponentsIdx = 0;
+    for ( ; fillComponentsIdx < 3; fillComponentsIdx++ )
+    {
+        if ( fillComponentsIdx < nComponents )
+            components[fillComponentsIdx] = componentsPtr[fillComponentsIdx];
+        else
+            components[fillComponentsIdx] = componentsPtr[0];
+    }
+    CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components,
+                                                                    locations, num_locations);
+//    CGContextMoveToPoint(context, rectangle.origin.x, rectangle.origin.y);
+//    CGContextAddLineToPoint(context, rectangle.origin.x + rectangle.size.width, rectangle.origin.y);
+//    CGContextAddLineToPoint(context, rectangle.origin.x + rectangle.size.width, rectangle.origin.y + rectangle.size.height);
+//    CGContextAddLineToPoint(context, rectangle.origin.x, rectangle.origin.y + rectangle.size.height);
+//    CGContextClosePath(context);
+    CGContextClipToRect(context, rectangle);
+    if(!CGContextIsPathEmpty(context))
+        CGContextClip(context); // TODO ??
+    CGContextDrawLinearGradient(context,
+                                myGradient,
+                                rectangle.origin,
+                                CGPointMake(rectangle.origin.x,
+                                            rectangle.origin.y + rectangle.size.height),
+                                0);
     
-    CGContextStrokePath(context);
-    CGContextSetFillColorWithColor(context,
-                                   self.entity.hdClass.classColor.CGColor);
-    CGContextFillRect(context, rectangle);
+    CGContextRestoreGState(context);
 }
 
 - (void)_drawIncomingHealsInRect:(CGRect)rect withHealth:(double)health
@@ -532,7 +568,7 @@ CGSize sRaidFrameSize = {0,0};
     if ( ! self.entity.lastHealDate )
         return;
     
-    NSTimeInterval timeSinceLastHeal = [[NSDate date] timeIntervalSinceDate:self.entity.lastHealDate];
+    NSTimeInterval timeSinceLastHeal = [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.entity.lastHealDate];
     if ( timeSinceLastHeal >= LAST_HEAL_DURATION )
         return;
     
@@ -551,7 +587,7 @@ CGSize sRaidFrameSize = {0,0};
     if ( ! self.entity.lastHitDate )
         return;
     
-    NSTimeInterval timeSinceLastHit = [[NSDate date] timeIntervalSinceDate:self.entity.lastHitDate];
+    NSTimeInterval timeSinceLastHit = [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.entity.lastHitDate];
     if ( timeSinceLastHit >= LAST_HIT_DRAW_DURATION )
         return;
     

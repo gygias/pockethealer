@@ -49,6 +49,8 @@
     [self _presentSpeechBubble:speechBubble locateBlock:^{
         return CGPointMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height);
     }];
+    
+    [self.encounter pause];
 }
 
 - (void)_setOrigin:(id)originObject onSpeechBubble:(SpeechBubbleViewController *)speechBubble
@@ -80,7 +82,9 @@ typedef CGPoint (^LocateBlock)();
             [self.encounter handleCommand:command];
         if ( meterMode != NoMode )
             self.meterView.mode = meterMode;
-            
+        
+        if ( self.encounter.isPaused )
+            [self.encounter unpause];
     };
     speechBubble.view.frame = self.view.frame;
     [self.view addSubview:speechBubble.view];

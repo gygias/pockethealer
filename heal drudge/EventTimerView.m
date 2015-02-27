@@ -34,7 +34,7 @@
         
         NSDate *scheduledDate = dateDict[@"scheduledDate"];
         NSDate *fireDate = dateDict[@"fireDate"];
-        NSTimeInterval timeUntilEvent = -[[NSDate date] timeIntervalSinceDateMinusPauseTime:fireDate];
+        NSTimeInterval timeUntilEvent = [fireDate timeIntervalSinceDateMinusPauseTime:[NSDate date]];
         //NSTimeInterval timeSinceScheduled = [[NSDate date] timeIntervalSinceDateMinusPauseTime:scheduledDate];
         NSTimeInterval timeBetweenScheduleAndEvent = [fireDate timeIntervalSinceDateMinusPauseTime:scheduledDate];
         double percentFill = timeUntilEvent / timeBetweenScheduleAndEvent;

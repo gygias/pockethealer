@@ -70,6 +70,25 @@
 
 - (void)pause
 {
+    [NSDate pause];
+    if ( _encounterTimer )
+        dispatch_suspend(_encounterTimer);
+    if ( _encounterQueue )
+        dispatch_suspend(_encounterQueue);
+}
+
+- (BOOL)isPaused
+{
+    return [NSDate isPaused];
+}
+
+- (void)unpause
+{
+    [NSDate unpause];
+    if ( _encounterTimer )
+        dispatch_resume(_encounterTimer);
+    if ( _encounterQueue )
+        dispatch_resume(_encounterQueue);
 }
 
 - (void)end

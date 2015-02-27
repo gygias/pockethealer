@@ -63,7 +63,7 @@
         
         if ( raider.lastHitDate && raider.lastHitSpell.hitRange.integerValue > 0 )
         {
-            NSTimeInterval timeSinceLastAOE = [[NSDate date] timeIntervalSinceDate:raider.lastHitDate];
+            NSTimeInterval timeSinceLastAOE = [[NSDate date] timeIntervalSinceDateMinusPauseTime:raider.lastHitDate];
             if ( timeSinceLastAOE >= LAST_AOE_DRAW_THRESHOLD )
             {
                 raider.lastHitSpell = nil;

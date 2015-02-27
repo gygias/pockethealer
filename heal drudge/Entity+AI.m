@@ -216,15 +216,15 @@
             AISpellPriority highestMatchedPriority = 1 << (AISpellPriority)log2(thisSpellMatchedPriority);
             
             if ( ( spell.cooldownType == CooldownTypeMajor )
-                && self.lastMajorCooldownUsedDate && [[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate] < AI_MAJOR_COOLDOWN_COOLDOWN )
+                && self.lastMajorCooldownUsedDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastMajorCooldownUsedDate] < AI_MAJOR_COOLDOWN_COOLDOWN )
             {
-                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last major CD",spell,[[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate]);
+                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last major CD",spell,[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastMajorCooldownUsedDate]);
                 return;
             }
             if ( ( spell.cooldownType == CooldownTypeMinor )
-                && self.lastMinorCooldownUsedDate && [[NSDate date] timeIntervalSinceDate:self.lastMinorCooldownUsedDate] < AI_MINOR_COOLDOWN_COOLDOWN )
+                && self.lastMinorCooldownUsedDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastMinorCooldownUsedDate] < AI_MINOR_COOLDOWN_COOLDOWN )
             {
-                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last minor CD",spell,[[NSDate date] timeIntervalSinceDate:self.lastMajorCooldownUsedDate]);
+                PHLog(self,@"%@ is currently a priority spell, but it's only been %0.2fs since my last minor CD",spell,[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastMajorCooldownUsedDate]);
                 return;
             }
             

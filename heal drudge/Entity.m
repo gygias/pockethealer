@@ -523,7 +523,11 @@
     dispatch_source_set_event_handler(self.resourceGenerationSource, ^{
         NSNumber *regeneratedResources = [ItemLevelAndStatsConverter resourceGenerationWithEntity:self timeInterval:[[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastResourceGenerationDate]];
         if ( regeneratedResources.doubleValue < 0 )
-            [NSException raise:@"NegativeRegeneratedResources" format:@"%@ regenerated %@ resources since the last timer fire",self,regeneratedResources];
+        {
+            //if ( ! [NSDate isPaused] )
+            //    [NSException raise:@"NegativeRegeneratedResources" format:@"%@ regenerated %@ resources since the last timer fire",self,regeneratedResources];
+            regeneratedResources = @0;
+        }
         double newResources = self.currentResources.doubleValue + regeneratedResources.doubleValue;
         if ( newResources > self.power.doubleValue )
             self.currentResources = self.power;
@@ -700,7 +704,7 @@
     if ( self.currentMoveStartDate )
         return;
     
-    if ( self.lastCommandedMoveDate && [[NSDate date] timeIntervalSinceDate:self.lastCommandedMoveDate] > DONT_MOVE_RANDOMLY_THRESHOLD )
+    if ( self.lastCommandedMoveDate && [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.lastCommandedMoveDate] > DONT_MOVE_RANDOMLY_THRESHOLD )
         return;
     
     if ( self.isPlayingPlayer )
@@ -834,7 +838,7 @@
     CGPoint interpolatedLocation = self.lastRealLocation;
     if ( self.currentMoveStartDate )
     {
-        double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:self.currentMoveStartDate] / self.currentMoveDuration;
+        double currentMoveProgress = [[NSDate date] timeIntervalSinceDateMinusPauseTime:self.currentMoveStartDate] / self.currentMoveDuration;
         if ( currentMoveProgress > 1 )
         {
             //PHLogV(@"*** Bug during interpolatedLocation, move progress exceeds 100%% for %@",self);

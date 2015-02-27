@@ -11,6 +11,7 @@
 @interface NSDate (Pause)
 
 + (void)pause;
++ (BOOL)isPaused;
 + (void)unpause;
 
 - (NSTimeInterval)timeIntervalSinceDateMinusPauseTime:(NSDate *)anotherDate;
