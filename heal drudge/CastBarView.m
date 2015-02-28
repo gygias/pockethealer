@@ -101,5 +101,9 @@
     }
 }
 
+- (PlayViewDrawMode)playViewDrawMode
+{
+    return RealTimeDrawMode;
+}
 
 @end

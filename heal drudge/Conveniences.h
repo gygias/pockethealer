@@ -24,8 +24,8 @@ typedef NS_OPTIONS(NSInteger,PlayViewDrawMode)
     NoDrawMode = 0,
     StateDrawMode =         1 << 0,
     PositionalDrawMode =    1 << 1,
-    FutureEventDrawMode =   1 << 2,
-    AllDrawModes = StateDrawMode | PositionalDrawMode
+    RealTimeDrawMode =   1 << 2,
+    AllDrawModes = StateDrawMode | PositionalDrawMode | RealTimeDrawMode
 };
 
 #endif

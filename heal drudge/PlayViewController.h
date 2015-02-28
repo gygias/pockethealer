@@ -55,4 +55,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 
 @property NSArray *lastAddedConstraints;
 
+@property NSDate *lastDrawDate;
+@property BOOL drawQueued;
+
 @end

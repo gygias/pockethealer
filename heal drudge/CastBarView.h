@@ -10,10 +10,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PlayViewBase.h"
+
 @class Spell;
 @class Entity;
 
-@interface CastBarView : UIView
+@interface CastBarView : PlayViewBase
 {
     CGRect _lastRect;
     BOOL _refreshCachedValues;

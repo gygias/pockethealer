@@ -92,7 +92,7 @@
 
 - (PlayViewDrawMode)playViewDrawMode
 {
-    return FutureEventDrawMode;
+    return RealTimeDrawMode;
 }
 
 @end
