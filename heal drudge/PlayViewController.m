@@ -177,7 +177,7 @@ typedef CGPoint (^LocateBlock)();
     
     Encounter *encounter = [Encounter new];
     encounter.encounterUpdatedHandler = ^(Encounter *encounter){
-        [self _forceDraw:StateDrawMode];
+        [self _draw:StateDrawMode];
     };
     encounter.enemyAbilityHandler = ^(Enemy *enemy, Ability *ability){
         AlertText *alertText = [AlertText new];
@@ -188,7 +188,7 @@ typedef CGPoint (^LocateBlock)();
     };
     encounter.encounterUpdatedEntityPositionsHandler = ^(Encounter *encounter, Entity *entity)
     {
-        [self _forceDraw:PositionalDrawMode];
+        [self _draw:PositionalDrawMode];
     };
     encounter.player = aHealer;
     encounter.raid = raid;
@@ -212,7 +212,7 @@ typedef CGPoint (^LocateBlock)();
         weakSelf.playerAndTargetView.target = target;
         //PHLogV(@"player targeted %@",target);
     };
-    //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_forceDraw:) userInfo:nil repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_draw:) userInfo:nil repeats:YES];
     
     self.playerAndTargetView.player = aHealer;
     self.playerAndTargetView.entityTouchedHandler = ^(Entity *entity){
@@ -292,7 +292,7 @@ typedef CGPoint (^LocateBlock)();
     
     self.castBarView.entity = encounter.player;
     
-    [self _forceDraw:AllDrawModes];
+    [self _draw:AllDrawModes];
     
     [encounter.enemies enumerateObjectsUsingBlock:^(Enemy *enemy, NSUInteger idx, BOOL *stop) {
         enemy.scheduledSpellHandler = ^(Spell *spell, NSDate *date){
@@ -346,7 +346,7 @@ typedef CGPoint (^LocateBlock)();
     self.encounter = encounter;
 }
 
-- (void)_forceDraw:(PlayViewDrawMode)drawMode
+- (void)_draw:(PlayViewDrawMode)drawMode
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         for ( UIView *view in [[self view] subviews] )
@@ -356,7 +356,11 @@ typedef CGPoint (^LocateBlock)();
             {
                 BOOL update = YES;
                 if ( [subview isKindOfClass:[PlayViewBase class]] )
-                    update = ( ((PlayViewBase *)subview).playViewDrawMode & drawMode );
+                {
+                    PlayViewDrawMode subviewDrawMode = ((PlayViewBase *)subview).playViewDrawMode;
+                    update = ( subviewDrawMode & drawMode )
+                            || ( subviewDrawMode == FutureEventDrawMode );
+                }
                 if ( update )
                     [subview setNeedsDisplay];
             }

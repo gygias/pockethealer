@@ -10,9 +10,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PlayViewBase.h"
+
 @class Spell;
 
-@interface EventTimerView : UIView
+@interface EventTimerView : PlayViewBase
 
 @property NSArray *spellEvents;
 

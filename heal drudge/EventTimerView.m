@@ -90,4 +90,9 @@
     });
 }
 
+- (PlayViewDrawMode)playViewDrawMode
+{
+    return FutureEventDrawMode;
+}
+
 @end
