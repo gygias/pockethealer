@@ -19,6 +19,7 @@
 #import "CombatLog.h"
 
 typedef void(^EncounterUpdatedBlock)(Encounter *);
+typedef void(^EncounterUpdatedPositionBlock)(Encounter *, Entity *entity);
 typedef void(^EnemyAbilityBlock)(Enemy *, Ability *);
 typedef void(^DyingEntitiesBlock)(NSArray *);
 
@@ -45,6 +46,7 @@ typedef NS_ENUM(NSUInteger,PlayerCommand)
 @property Advisor *advisor;
 @property CombatLog *combatLog;
 @property (nonatomic,copy) EncounterUpdatedBlock encounterUpdatedHandler;
+@property (nonatomic,copy) EncounterUpdatedPositionBlock encounterUpdatedEntityPositionsHandler;;
 @property (nonatomic,copy) EnemyAbilityBlock enemyAbilityHandler;
 
 @property (nonatomic,readonly) dispatch_queue_t encounterQueue;
@@ -70,6 +72,9 @@ typedef NS_ENUM(NSUInteger,PlayerCommand)
 - (Entity *)currentMainTank;
 
 - (void)handleCommand:(PlayerCommand)command;
+
+- (void)beginOrContinueUpdatesUntil:(NSDate *)endDate;
+@property NSDate *lastUpdateEndDate;
 
 @end
 

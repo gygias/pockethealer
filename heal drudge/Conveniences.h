@@ -16,4 +16,15 @@
 NSString * PointString(CGPoint point);
 NSString * RectString(CGRect rect);
 
+#define REAL_TIME_DRAWING_INTERVAL 0.033
+#define REAL_TIME_DRAWING_LEEWAY 0.01
+
+typedef NS_OPTIONS(NSInteger,PlayViewDrawMode)
+{
+    NoDrawMode = 0,
+    StateDrawMode = 1 << 0,
+    PositionalDrawMode = 1 << 1,
+    AllDrawModes = StateDrawMode | PositionalDrawMode
+};
+
 #endif

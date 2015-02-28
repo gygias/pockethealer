@@ -199,6 +199,7 @@ CGSize sRaidFrameSize = {0,0};
     CGFloat width = ( health * rect.size.width ) - ( RAID_FRAME_HEALTH_INSET * 2 );
     
     CGRect rectangle = CGRectMake( rect.origin.x + RAID_FRAME_HEALTH_INSET, rect.origin.y + RAID_FRAME_HEALTH_INSET, width, rect.size.height - ( RAID_FRAME_HEALTH_INSET * 2 ));
+    // old solid color
 //    CGContextAddRect(context, rectangle);
 //    
 //    //PHLogV(@"%@ is the color %@",self.player,self.player.character.hdClass.classColor);

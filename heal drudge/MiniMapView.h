@@ -10,9 +10,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PlayViewBase.h"
+
 #import "Encounter.h"
 
-@interface MiniMapView : UIView
+@interface MiniMapView : PlayViewBase
 
 @property (nonatomic,retain) Encounter *encounter;
 

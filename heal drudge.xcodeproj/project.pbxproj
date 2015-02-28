@@ -363,6 +363,7 @@
 		63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F42D1A52481400B9AE46 /* HDClass.m */; };
 		63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4331A524A1A00B9AE46 /* Spell.m */; };
 		63C5F4371A524E8100B9AE46 /* QuickPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */; };
+		63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DF544D1AA1A16B0022073E /* PlayViewBase.m */; };
 		63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91BF11A751D8F00505EAE /* BerserkerRush.m */; };
 		63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63F91BF31A751DCA00505EAE /* berserker_rush.jpg */; };
 /* End PBXBuildFile section */
@@ -878,6 +879,8 @@
 		63C5F4331A524A1A00B9AE46 /* Spell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spell.m; sourceTree = "<group>"; };
 		63C5F4351A524E8100B9AE46 /* QuickPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPlayViewController.h; sourceTree = "<group>"; };
 		63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPlayViewController.m; sourceTree = "<group>"; };
+		63DF544C1AA1A16B0022073E /* PlayViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewBase.h; sourceTree = "<group>"; };
+		63DF544D1AA1A16B0022073E /* PlayViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewBase.m; sourceTree = "<group>"; };
 		63F91BF01A751D8F00505EAE /* BerserkerRush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BerserkerRush.h; sourceTree = "<group>"; };
 		63F91BF11A751D8F00505EAE /* BerserkerRush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BerserkerRush.m; sourceTree = "<group>"; };
 		63F91BF31A751DCA00505EAE /* berserker_rush.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = berserker_rush.jpg; sourceTree = "<group>"; };
@@ -997,16 +1000,8 @@
 		632073A31A70934700AA4416 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				63DF544F1AA1A2290022073E /* PlayView */,
 				63C5F40A1A5243E900B9AE46 /* Main.storyboard */,
-				638D90C41A98064200960869 /* PlayView.xib */,
-				638D90C61A98067A00960869 /* PlayViewController.h */,
-				638D90C71A98067A00960869 /* PlayViewController.m */,
-				635906BC1A98830900E56764 /* PlayView.h */,
-				635906BD1A98830900E56764 /* PlayView.m */,
-				635906BF1A992C6800E56764 /* SpellDragView.h */,
-				635906C01A992C6800E56764 /* SpellDragView.m */,
-				638D90CE1A98233200960869 /* MiniMapView.h */,
-				638D90CF1A98233200960869 /* MiniMapView.m */,
 				632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */,
 				632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */,
 				6320739A1A708E2600AA4416 /* LoadCharacterOptionsViewController.h */,
@@ -1021,43 +1016,8 @@
 				632073A11A70912400AA4416 /* BaseViewController.m */,
 				632074281A70D2EC00AA4416 /* LoadingFromArmoryViewController.h */,
 				632074291A70D2EC00AA4416 /* LoadingFromArmoryViewController.m */,
-				63564D5F1A570C8C0025ACDE /* RaidFrameView.h */,
-				63564D601A570C8C0025ACDE /* RaidFrameView.m */,
-				63564D621A57233A0025ACDE /* RaidFramesView.h */,
-				63564D631A57233A0025ACDE /* RaidFramesView.m */,
-				6328FB5B1A731A0200DF6B50 /* SpellBarView.h */,
-				6328FB5C1A731A0200DF6B50 /* SpellBarView.m */,
-				634F48DF1A735CCD008761C6 /* CastBarView.h */,
-				634F48E01A735CCD008761C6 /* CastBarView.m */,
-				634F48F01A744AEA008761C6 /* EnemyFrameView.h */,
-				634F48F11A744AEA008761C6 /* EnemyFrameView.m */,
-				634F48F31A746B86008761C6 /* PlayerAndTargetView.h */,
-				634F48F41A746B86008761C6 /* PlayerAndTargetView.m */,
-				63A37F011A75BE230036C9D0 /* AlertTextView.h */,
-				63A37F021A75BE230036C9D0 /* AlertTextView.m */,
-				63A37F041A75BFA60036C9D0 /* AlertText.h */,
-				63A37F051A75BFA60036C9D0 /* AlertText.m */,
-				636413591A7D835100639007 /* EventTimerView.h */,
-				6364135A1A7D835100639007 /* EventTimerView.m */,
-				630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */,
-				638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */,
-				635906C91A9AA39900E56764 /* SpeechBubbleMeterModeView.xib */,
-				630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */,
-				630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */,
-				630B99891A86CE9D00B186CA /* SpeechBubbleView.h */,
-				630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */,
-				630B998C1A86E50800B186CA /* SpeechBubbleContentView.h */,
-				630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */,
-				630B998F1A882B3000B186CA /* SpeechBubblePassThroughView.h */,
-				630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */,
-				638D90B61A969C7000960869 /* PassThroughView.h */,
-				638D90B71A969C7000960869 /* PassThroughView.m */,
 				638D90BE1A97ED0C00960869 /* UIView+SharedDrawing.h */,
 				638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */,
-				638D90D11A982B5500960869 /* CommandButton.h */,
-				638D90D21A982B5500960869 /* CommandButton.m */,
-				635906C61A9A8D1700E56764 /* MeterView.h */,
-				635906C71A9A8D1700E56764 /* MeterView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1602,6 +1562,59 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		63DF544F1AA1A2290022073E /* PlayView */ = {
+			isa = PBXGroup;
+			children = (
+				638D90C41A98064200960869 /* PlayView.xib */,
+				638D90C61A98067A00960869 /* PlayViewController.h */,
+				638D90C71A98067A00960869 /* PlayViewController.m */,
+				635906BC1A98830900E56764 /* PlayView.h */,
+				635906BD1A98830900E56764 /* PlayView.m */,
+				63DF544C1AA1A16B0022073E /* PlayViewBase.h */,
+				63DF544D1AA1A16B0022073E /* PlayViewBase.m */,
+				635906BF1A992C6800E56764 /* SpellDragView.h */,
+				635906C01A992C6800E56764 /* SpellDragView.m */,
+				63564D5F1A570C8C0025ACDE /* RaidFrameView.h */,
+				63564D601A570C8C0025ACDE /* RaidFrameView.m */,
+				63564D621A57233A0025ACDE /* RaidFramesView.h */,
+				63564D631A57233A0025ACDE /* RaidFramesView.m */,
+				6328FB5B1A731A0200DF6B50 /* SpellBarView.h */,
+				6328FB5C1A731A0200DF6B50 /* SpellBarView.m */,
+				634F48DF1A735CCD008761C6 /* CastBarView.h */,
+				634F48E01A735CCD008761C6 /* CastBarView.m */,
+				638D90CE1A98233200960869 /* MiniMapView.h */,
+				638D90CF1A98233200960869 /* MiniMapView.m */,
+				634F48F01A744AEA008761C6 /* EnemyFrameView.h */,
+				634F48F11A744AEA008761C6 /* EnemyFrameView.m */,
+				634F48F31A746B86008761C6 /* PlayerAndTargetView.h */,
+				634F48F41A746B86008761C6 /* PlayerAndTargetView.m */,
+				63A37F011A75BE230036C9D0 /* AlertTextView.h */,
+				63A37F021A75BE230036C9D0 /* AlertTextView.m */,
+				63A37F041A75BFA60036C9D0 /* AlertText.h */,
+				63A37F051A75BFA60036C9D0 /* AlertText.m */,
+				636413591A7D835100639007 /* EventTimerView.h */,
+				6364135A1A7D835100639007 /* EventTimerView.m */,
+				630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */,
+				638D90D41A98369600960869 /* SpeechBubbleCommandsView.xib */,
+				635906C91A9AA39900E56764 /* SpeechBubbleMeterModeView.xib */,
+				630B99861A86CA5900B186CA /* SpeechBubbleViewController.h */,
+				630B99871A86CA5900B186CA /* SpeechBubbleViewController.m */,
+				630B99891A86CE9D00B186CA /* SpeechBubbleView.h */,
+				630B998A1A86CE9D00B186CA /* SpeechBubbleView.m */,
+				630B998C1A86E50800B186CA /* SpeechBubbleContentView.h */,
+				630B998D1A86E50800B186CA /* SpeechBubbleContentView.m */,
+				630B998F1A882B3000B186CA /* SpeechBubblePassThroughView.h */,
+				630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */,
+				638D90B61A969C7000960869 /* PassThroughView.h */,
+				638D90B71A969C7000960869 /* PassThroughView.m */,
+				638D90D11A982B5500960869 /* CommandButton.h */,
+				638D90D21A982B5500960869 /* CommandButton.m */,
+				635906C61A9A8D1700E56764 /* MeterView.h */,
+				635906C71A9A8D1700E56764 /* MeterView.m */,
+			);
+			name = PlayView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1999,6 +2012,7 @@
 				63027AC81A7984440068E68A /* Entity+ProtPaladin.m in Sources */,
 				63027B0D1A79C4AD0068E68A /* AvengersShieldSpell.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
+				63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				638D90D31A982B5500960869 /* CommandButton.m in Sources */,

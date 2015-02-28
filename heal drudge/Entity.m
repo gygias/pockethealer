@@ -787,6 +787,7 @@
         if ( addPoint )
             [locationCache addObject:[NSValue valueWithCGPoint:aPoint]];
     }
+#warning not saving to cache
     
     double delay = commanded ? ( 1 - self.intelligence ) * 5 : 0;
     [self _moveToLocation:aPoint animated:animated withDelay:delay];
@@ -805,11 +806,29 @@
 
 - (void)_moveToLocation:(CGPoint)location animated:(BOOL)animated withDelay:(NSTimeInterval)delay
 {
-    self.lastCommandedMoveDate = [NSDate date];
+    NSDate *commandedDate = [NSDate date];
+    self.lastCommandedMoveDate = commandedDate;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), self.encounter.encounterQueue, ^{
         
         [self stopCurrentMove];
+        
+        NSDate *startDate = [NSDate date];
+        
+        if ( self.entityMovedHandler )
+        {
+            dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounter.encounterQueue);
+            dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, REAL_TIME_DRAWING_INTERVAL * NSEC_PER_SEC, REAL_TIME_DRAWING_LEEWAY * NSEC_PER_SEC);
+            dispatch_source_set_event_handler(timer, ^{
+                if ( ! self.currentMoveStartDate || ! [startDate isEqual:self.currentMoveStartDate] || ! self.entityMovedHandler )
+                {
+                    dispatch_source_cancel(timer);
+                    return;
+                }
+                self.entityMovedHandler(self);
+            });
+            dispatch_resume(timer);
+        }
         
         if ( animated )
         {
@@ -819,12 +838,15 @@
                 self.currentMoveStartDate = nil;
             });
             
-            self.currentMoveStartDate = [NSDate date];
+            self.currentMoveStartDate = startDate;
             self.currentMoveDuration = moveTime;
             self.currentMoveEndPoint = location;
         }
         else
             self.lastRealLocation = location;
+        
+        if ( self.entityMovedHandler )
+            self.entityMovedHandler(self);
     });
 }
 
@@ -979,6 +1001,13 @@
             self.nextGlobalCooldownDate = nil;
             self.currentGlobalCooldownDuration = 0;
         });
+    }
+    
+    if ( effectiveCastTime.doubleValue > 0 || effectiveGCD > 0 )
+    {
+        NSTimeInterval updateInterval = ( effectiveCastTime.doubleValue > effectiveGCD ) ?
+                                            effectiveCastTime.doubleValue : effectiveGCD;
+        [self.encounter beginOrContinueUpdatesUntil:[[NSDate date] dateByAddingTimeInterval:updateInterval]];
     }
     
     // this was moved outside the dispatch_async to fix automated LoH (first spell w/o triggering gcd)

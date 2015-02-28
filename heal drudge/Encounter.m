@@ -45,10 +45,12 @@
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);
     
+    [self _registerEntityUpdates];
+    
     NSInteger delay = 1;
     [SoundManager playCountdownWithStartIndex:@(delay)];    
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay + 2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay + 2 * NSEC_PER_SEC)), self.encounterQueue, ^{
         
         [self.enemies enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [(Entity *)obj beginEncounter:self];
@@ -59,12 +61,12 @@
         }];
         
         // begin update timer
-        _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
-        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, 0.033 * NSEC_PER_SEC, 0.1 * NSEC_PER_SEC);
-        dispatch_source_set_event_handler(_encounterTimer, ^{
-            [self updateEncounter];
-        });
-        dispatch_resume(_encounterTimer);
+//        _encounterTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _encounterQueue);
+//        dispatch_source_set_timer(_encounterTimer, DISPATCH_TIME_NOW, REAL_TIME_DRAWING_INTERVAL * NSEC_PER_SEC, REAL_TIME_DRAWING_LEEWAY * NSEC_PER_SEC);
+//        dispatch_source_set_event_handler(_encounterTimer, ^{
+//            //[self updateEncounter];
+//        });
+//        dispatch_resume(_encounterTimer);
     });
 }
 
@@ -98,14 +100,11 @@
 
 - (void)updateEncounter
 {
-    [self.enemies enumerateObjectsUsingBlock:^(Entity *enemy, NSUInteger idx, BOOL *stop) {
-        [enemy updateEncounter:self];
+    [[self _allEntities] enumerateObjectsUsingBlock:^(Entity *playerOrEnemy, NSUInteger idx, BOOL *stop) {
+        [playerOrEnemy updateEncounter:self];
     }];
     
-    [self.raid.players enumerateObjectsUsingBlock:^(Entity *player, NSUInteger idx, BOOL *stop) {
-        [player updateEncounter:self];
-    }];
-    
+#warning now that updates are event based, this should be timer based
     [self.advisor updateEncounter];
     
     if ( self.encounterUpdatedHandler )
@@ -133,6 +132,41 @@
     
     if ( self.encounterUpdatedHandler )
         self.encounterUpdatedHandler(self);
+    
+    [self _deregisterEntityUpdates];
+}
+
+- (NSArray *)_allEntities
+{
+    NSMutableArray *allEntities = [NSMutableArray new];
+    if ( self.raid.players.count )
+        [allEntities addObjectsFromArray:self.raid.players];
+    if ( self.enemies.count )
+        [allEntities addObjectsFromArray:self.enemies];
+    return allEntities;
+}
+
+- (void)_registerEntityUpdates
+{
+    [[self _allEntities] enumerateObjectsUsingBlock:^(Entity *playerOrEnemy, NSUInteger idx, BOOL *stop) {
+        playerOrEnemy.entityMovedHandler = ^(Entity *entity){
+            //NSLog(@"entity moved: %@",entity);
+            if ( self.encounterUpdatedEntityPositionsHandler )
+                self.encounterUpdatedEntityPositionsHandler(self,entity);
+        };
+        playerOrEnemy.entityUpdatedHandler = ^(Entity *entity){
+            if ( self.encounterUpdatedHandler )
+                self.encounterUpdatedHandler(self);
+        };
+    }];
+}
+
+- (void)_deregisterEntityUpdates
+{
+    [[self _allEntities] enumerateObjectsUsingBlock:^(Entity *playerOrEnemy, NSUInteger idx, BOOL *stop) {
+        playerOrEnemy.entityMovedHandler = NULL;
+        playerOrEnemy.entityUpdatedHandler = NULL;
+    }];
 }
 
 - (void)handleSpell:(Spell *)spell periodicTick:(BOOL)periodicTick isFirstTick:(BOOL)firstTick dyingEntitiesHandler:(DyingEntitiesBlock)dyingEntitiesHandler
@@ -304,8 +338,8 @@
         }
     }
     
-    if ( self.encounterUpdatedHandler )
-        self.encounterUpdatedHandler(self);
+    //if ( self.encounterUpdatedHandler )
+    //    self.encounterUpdatedHandler(self);
 }
 
 - (NSArray *)_smartTargetsForSpell:(Spell *)spell source:(Entity *)source target:(Entity *)target
@@ -516,6 +550,42 @@
         [nonTankPlayer stopCurrentMove];
         [nonTankPlayer moveToRandomLocation:YES commanded:YES];
     }];
+}
+
+- (void)beginOrContinueUpdatesUntil:(NSDate *)endDate
+{
+    NSTimeInterval untilEnd = -[[NSDate date] timeIntervalSinceDate:endDate];
+    if ( untilEnd <= 0 )
+    {
+        NSLog(@"something calling -beginOrContinueUpdatesUntil: is confused");
+        return;
+    }
+    
+    NSComparisonResult lastComparedToThis = NSOrderedSame;
+    // if we are running updates and the parameter end date is before our current update end date
+    if ( self.lastUpdateEndDate && ( lastComparedToThis = [self.lastUpdateEndDate compare:endDate] ) != NSOrderedAscending )
+        return;
+    
+    BOOL beginTimer = ( self.lastUpdateEndDate == nil );
+    self.lastUpdateEndDate = endDate;
+    
+    if ( beginTimer )
+    {
+        NSLog(@"starting updates");
+        dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, self.encounterQueue);
+        dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, REAL_TIME_DRAWING_INTERVAL * NSEC_PER_SEC, REAL_TIME_DRAWING_LEEWAY * NSEC_PER_SEC);
+        dispatch_source_set_event_handler(timer, ^{
+            if ( ! self.lastUpdateEndDate || [[NSDate date] timeIntervalSinceDate:self.lastUpdateEndDate] >= 0 )
+            {
+                NSLog(@"stopping updates");
+                dispatch_source_cancel(timer);
+                self.lastUpdateEndDate = nil;
+                return;
+            }
+            [self updateEncounter];
+        });
+        dispatch_resume(timer);
+    }
 }
 
 @end

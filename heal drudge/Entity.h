@@ -194,5 +194,11 @@ typedef void(^ScheduledSpellBlock)(Spell *, NSDate *);
 @property Spell *lastMultitargetHitSpell; // not the original target, but hit by aoe
 @property NSDate *lastMultitargetHitDate;
 
+typedef void (^EntityMovedBlock)(Entity *);
+@property (nonatomic,copy) EntityMovedBlock entityMovedHandler;
+
+typedef void (^EntityUpdatedBlock)(Entity *);
+@property (nonatomic,copy) EntityUpdatedBlock entityUpdatedHandler;
+
 @end
 

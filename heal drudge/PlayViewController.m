@@ -177,7 +177,7 @@ typedef CGPoint (^LocateBlock)();
     
     Encounter *encounter = [Encounter new];
     encounter.encounterUpdatedHandler = ^(Encounter *encounter){
-        [self _forceDraw:self];
+        [self _forceDraw:StateDrawMode];
     };
     encounter.enemyAbilityHandler = ^(Enemy *enemy, Ability *ability){
         AlertText *alertText = [AlertText new];
@@ -185,6 +185,10 @@ typedef CGPoint (^LocateBlock)();
         alertText.startDate = [NSDate date];
         alertText.duration = 2;
         [self.alertTextView addAlertText:alertText];
+    };
+    encounter.encounterUpdatedEntityPositionsHandler = ^(Encounter *encounter, Entity *entity)
+    {
+        [self _forceDraw:PositionalDrawMode];
     };
     encounter.player = aHealer;
     encounter.raid = raid;
@@ -288,7 +292,7 @@ typedef CGPoint (^LocateBlock)();
     
     self.castBarView.entity = encounter.player;
     
-    [self _forceDraw:self];
+    [self _forceDraw:AllDrawModes];
     
     [encounter.enemies enumerateObjectsUsingBlock:^(Enemy *enemy, NSUInteger idx, BOOL *stop) {
         enemy.scheduledSpellHandler = ^(Spell *spell, NSDate *date){
@@ -342,14 +346,20 @@ typedef CGPoint (^LocateBlock)();
     self.encounter = encounter;
 }
 
-- (void)_forceDraw:(id)sender
+- (void)_forceDraw:(PlayViewDrawMode)drawMode
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         for ( UIView *view in [[self view] subviews] )
         {
             [view setNeedsDisplay];
             for ( UIView *subview in view.subviews )
-                [subview setNeedsDisplay];
+            {
+                BOOL update = YES;
+                if ( [subview isKindOfClass:[PlayViewBase class]] )
+                    update = ( ((PlayViewBase *)subview).playViewDrawMode & drawMode );
+                if ( update )
+                    [subview setNeedsDisplay];
+            }
         }
         
     });

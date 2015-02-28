@@ -9,6 +9,9 @@
 #import "PocketHealer.h"
 
 #import <UIKit/UIKit.h>
+
+#import "PlayViewBase.h"
+
 #import "Raid.h"
 
 @class Entity;
@@ -17,7 +20,7 @@
 
 typedef void(^TargetedPlayerBlock)(Entity *);
 
-@interface RaidFramesView : UIView
+@interface RaidFramesView : PlayViewBase
 {
     CGRect _lastRect;
     BOOL _refreshCachedValues;

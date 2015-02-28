@@ -313,12 +313,12 @@
                     <exclude reference="EUn-ii-82d"/>
                     <exclude reference="Fi0-nQ-zQS"/>
                     <exclude reference="hGN-0n-nty"/>
-                    <exclude reference="M5c-vc-HUs"/>
-                    <exclude reference="OfZ-k5-WLh"/>
-                    <exclude reference="esU-Sd-lLn"/>
                     <exclude reference="3fY-yw-CM6"/>
                     <exclude reference="Tzt-R9-VFz"/>
                     <exclude reference="tck-vb-sEm"/>
+                    <exclude reference="M5c-vc-HUs"/>
+                    <exclude reference="OfZ-k5-WLh"/>
+                    <exclude reference="esU-Sd-lLn"/>
                 </mask>
             </variation>
             <variation key="heightClass=compact">
@@ -333,15 +333,15 @@
                     <exclude reference="b0e-PS-01f"/>
                     <exclude reference="f2i-uW-mPf"/>
                     <include reference="hGN-0n-nty"/>
-                    <include reference="M5c-vc-HUs"/>
-                    <include reference="OfZ-k5-WLh"/>
-                    <include reference="esU-Sd-lLn"/>
-                    <exclude reference="jDf-oJ-NN7"/>
                     <include reference="3fY-yw-CM6"/>
                     <exclude reference="OIH-H2-5cR"/>
                     <include reference="Tzt-R9-VFz"/>
                     <exclude reference="ZZ2-18-Wea"/>
                     <exclude reference="tck-vb-sEm"/>
+                    <include reference="M5c-vc-HUs"/>
+                    <include reference="OfZ-k5-WLh"/>
+                    <include reference="esU-Sd-lLn"/>
+                    <exclude reference="jDf-oJ-NN7"/>
                     <exclude reference="3Cu-Ay-qpg"/>
                 </mask>
             </variation>
