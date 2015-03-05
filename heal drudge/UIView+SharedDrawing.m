@@ -110,4 +110,55 @@
     CGContextFillPath(context);
 }
 
+- (void)drawGradientFromPoint:(CGPoint)pointA
+                      toPoint:(CGPoint)pointB
+                   startColor:(UIColor *)startColor
+                     endColor:(UIColor *)endColor
+                 clippingPath:(CGPathRef)clippingPath
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    BOOL willClip = ( clippingPath != nil );
+    
+    if ( willClip )
+        CGContextSaveGState(context);
+    
+    CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    
+    CGFloat components[8] = { 0.0, 0.0, 0.0, 1.0,  // Start color
+        0.0, 0.0, 0.0, 1.0 }; // End color
+    NSArray *theColors = @[ startColor, endColor ];
+    NSUInteger colorsIdx = 0;
+    NSUInteger nRGBComponents = 4;
+    
+    for ( ; colorsIdx < theColors.count; colorsIdx++ )
+    {
+        UIColor *uiColor = theColors[colorsIdx];
+        CGFloat red, green, blue, alpha;
+        [uiColor getRed:&red green:&green blue:&blue alpha:&alpha];
+        components[0 + nRGBComponents * colorsIdx] = red;
+        components[1 + nRGBComponents * colorsIdx] = green;
+        components[2 + nRGBComponents * colorsIdx] = blue;
+        components[3 + nRGBComponents * colorsIdx] = alpha;
+    }
+    
+    CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components,
+                                                                    locations, num_locations);
+    if ( willClip )
+    {
+        CGContextAddPath(context, clippingPath);
+        if(!CGContextIsPathEmpty(context))
+            CGContextClip(context); // TODO ??
+    }
+    
+    CGContextDrawLinearGradient(context,
+                                myGradient,
+                                pointA,
+                                pointB,
+                                0);
+    if ( willClip )
+        CGContextRestoreGState(context);
+}
+
 @end

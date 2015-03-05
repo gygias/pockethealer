@@ -216,7 +216,7 @@
                                 rect.origin.y + METER_INSET + idx * lineHeight,
                                 rect.size.width - METER_INSET * 2,
                                 lineHeight - METER_INSET * 2);
-        UIColor *drawColor = [[UIColor blueColor] colorWithAlphaComponent:.75];
+        UIColor *drawColor = [[UIColor blueColor] colorWithAlphaComponent:.5];
         [drawColor setFill];
         [[UIBezierPath bezierPathWithRect:myRect] fill];
         
@@ -266,9 +266,11 @@
                                       rect.origin.y + METER_INSET + idx * lineHeight,
                                       ( rect.size.width - METER_INSET * 2 ) * percentage,
                                       lineHeight - METER_INSET * 2);
-        drawColor = [entity.hdClass classColor];
-        [drawColor setFill];
-        [[UIBezierPath bezierPathWithRect:myBarRect] fill];
+        [self drawGradientFromPoint:rect.origin
+                            toPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y)
+                         startColor:entity.hdClass.classColor
+                           endColor:[UIColor darkGrayColor]
+                       clippingPath:CGPathCreateWithRect(myBarRect, NULL)];
         
         //CGSize nameSize = [entity.name sizeWithAttributes:nil];
         [entity.name drawInRect:myRect withAttributes:@{NSFontAttributeName : textFont}];

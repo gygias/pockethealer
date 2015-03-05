@@ -14,5 +14,10 @@
 
 - (void)drawCooldownClockInRect:(CGRect)rect withPercentage:(double)percentage;
 - (void)drawRoundedRectangleInRect:(CGRect)rect color:(UIColor *)color radius:(CGFloat)radius;
+- (void)drawGradientFromPoint:(CGPoint)pointA
+                      toPoint:(CGPoint)pointB
+                   startColor:(UIColor *)startColor
+                     endColor:(UIColor *)endColor
+                 clippingPath:(CGPathRef)clippingPath;
 
 @end

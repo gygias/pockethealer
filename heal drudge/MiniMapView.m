@@ -34,45 +34,12 @@
     UIBezierPath *path = [theEnemy roomPathWithRect:rect];
     
     // background gradient
-    {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSaveGState(context);
-        
-        CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
-        size_t num_locations = 2;
-        CGFloat locations[2] = { 0.0, 1.0 };
-        CGColorRef cgColor = [UIColor darkGrayColor].CGColor;
-        size_t nComponents = CGColorGetNumberOfComponents(cgColor);
-        CGFloat components[8] = { 0.0, 0.0, 0.0, 1.0,  // Start color
-            0.25, 0.25, 0.25, 1.0 }; // End color
-        const CGFloat *componentsPtr = CGColorGetComponents(cgColor);
-        NSInteger fillComponentsIdx = 0;
-        for ( ; fillComponentsIdx < 3; fillComponentsIdx++ )
-        {
-            if ( fillComponentsIdx < nComponents )
-                components[fillComponentsIdx] = componentsPtr[fillComponentsIdx];
-            else
-                components[fillComponentsIdx] = componentsPtr[0];
-        }
-        CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components,
-                                                                        locations, num_locations);
-        //    CGContextMoveToPoint(context, rectangle.origin.x, rectangle.origin.y);
-        //    CGContextAddLineToPoint(context, rectangle.origin.x + rectangle.size.width, rectangle.origin.y);
-        //    CGContextAddLineToPoint(context, rectangle.origin.x + rectangle.size.width, rectangle.origin.y + rectangle.size.height);
-        //    CGContextAddLineToPoint(context, rectangle.origin.x, rectangle.origin.y + rectangle.size.height);
-        //    CGContextClosePath(context);
-        CGContextAddPath(context, path.CGPath);
-        if(!CGContextIsPathEmpty(context))
-            CGContextClip(context); // TODO ??
-        CGContextDrawLinearGradient(context,
-                                    myGradient,
-                                    rect.origin,
-                                    CGPointMake(rect.origin.x,
-                                                rect.origin.y + rect.size.height),
-                                    0);
-        
-        CGContextRestoreGState(context);
-    }
+    [self drawGradientFromPoint:rect.origin
+                        toPoint:CGPointMake(rect.origin.x,
+                                            rect.origin.y + rect.size.height)
+                     startColor:[UIColor darkGrayColor]
+                       endColor:[UIColor lightGrayColor]
+                   clippingPath:path.CGPath];
     
     [[UIColor whiteColor] setStroke];
     [path stroke];

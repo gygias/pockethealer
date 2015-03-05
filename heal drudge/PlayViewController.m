@@ -351,7 +351,7 @@ typedef CGPoint (^LocateBlock)();
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSDate *now = [NSDate date];
-#define THROTTLE_DRAWS
+//#define THROTTLE_DRAWS
 #ifdef THROTTLE_DRAWS
         NSTimeInterval timeUntilNextRealTimeDraw = 0;
         if ( self.lastDrawDate && ( timeUntilNextRealTimeDraw = [now timeIntervalSinceDate:self.lastDrawDate] ) < REAL_TIME_DRAWING_INTERVAL )
