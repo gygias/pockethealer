@@ -20,8 +20,9 @@ typedef void (^AdvisorViewCallback)(id,SpeechBubbleViewController *);
 typedef NS_ENUM(NSInteger,AdvisorMode)
 {
     NoAdvisor = 0,
-    HowToPlayAdvisor = 1,
-    ClassAdvisor = 2
+    HowToPlayAdvisorManual = 1,
+    HowToPlayAdvisorAuto = 2,
+    ClassAdvisor = 3
 };
 
 typedef NS_ENUM(NSInteger,AdvisorUIExplanationState)

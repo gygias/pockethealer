@@ -20,6 +20,7 @@
 #import "MiniMapView.h"
 #import "SpellDragView.h"
 #import "MeterView.h"
+#import "TouchDemoView.h"
 
 @interface PlayViewController : UIViewController
 
@@ -46,6 +47,7 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet UIView *advisorGuideView;
 @property IBOutlet SpellDragView *spellDragView;
 @property IBOutlet MeterView *meterView;
+@property TouchDemoView *touchDemoView;
 
 @property BOOL isHowToPlayViewController;
 

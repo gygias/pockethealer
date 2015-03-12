@@ -252,19 +252,19 @@ typedef CGPoint (^LocateBlock)();
     
     self.spellBarView.spellCastAttemptHandler = castBlock;
     self.spellBarView.dragBeganHandler = ^(Spell *spell, CGPoint thePoint) {
-        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
+        weakSelf.spellDragView.spellDragDrawHandler = ^(CGRect rect){
             [spell.image drawAtPoint:thePoint blendMode:kCGBlendModeNormal alpha:0.5];
         };
     };
     self.spellBarView.dragUpdatedHandler = ^(Spell *spell, CGPoint thePoint) {
-        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
+        weakSelf.spellDragView.spellDragDrawHandler = ^(CGRect rect){
             [spell.image drawAtPoint:thePoint blendMode:kCGBlendModeNormal alpha:0.5];
         };
     };
     self.spellBarView.dragEndedHandler = ^(Spell *spell, CGPoint thePoint) {
         if ( ! spell )
         {
-            weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
+            weakSelf.spellDragView.spellDragDrawHandler = NULL;
             return;
         }
         
@@ -273,11 +273,11 @@ typedef CGPoint (^LocateBlock)();
         returnPoint.origin = [weakSelf.view convertPoint:returnPoint.origin fromView:weakSelf.spellBarView];
         NSDate *flyBackStartDate = [NSDate date];
         NSTimeInterval flyBackDuration = 0.25;
-        weakSelf.spellDragView.auxiliaryDrawHandler = ^{
+        weakSelf.spellDragView.spellDragDrawHandler = ^(CGRect rect){
             double currentMoveProgress = [[NSDate date] timeIntervalSinceDate:flyBackStartDate] / flyBackDuration;
             if ( currentMoveProgress > 1 )
             {
-                weakSelf.spellDragView.auxiliaryDrawHandler = NULL;
+                weakSelf.spellDragView.spellDragDrawHandler = NULL;
                 return;
             }
             CGFloat xDelta = ( returnPoint.origin.x - thePoint.x ) * currentMoveProgress;
@@ -303,12 +303,91 @@ typedef CGPoint (^LocateBlock)();
     encounter.advisor.encounter = encounter;
     encounter.advisor.playView = self;
     encounter.advisor.callback = ^(id thing, SpeechBubbleViewController *vc) {
+        CGPoint location = [self _originForThing:thing];
         [self _presentSpeechBubble:vc locateBlock:^{
             return [self _originForThing:thing];
         }];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if ( ! weakSelf.touchDemoView )
+                weakSelf.touchDemoView = [TouchDemoView new];
+            weakSelf.spellDragView.touchDemoDrawHandler = ^(CGRect rect){
+                [weakSelf.touchDemoView drawRect:rect];
+            };
+            [weakSelf.touchDemoView moveTo:location];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MOVE_DURATION * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.touchDemoView doTouch];
+                if ( [thing isKindOfClass:[Entity class]] )
+                {
+                    NSLog(@"touching %@",thing);
+                    Entity *entity = thing;
+                    if ( entity.isEnemy )
+                        self.enemyFrameView.enemyTouchedHandler((Enemy *)entity);
+                    else if ( entity.isPlayingPlayer )
+                        self.playerAndTargetView.entityTouchedHandler(entity);
+                    else
+                        self.raidFramesView.targetedPlayerBlock(entity);
+                }
+                else if ( [thing isKindOfClass:[NSNumber class]] )
+                {
+                    Entity *randomNonPlayingPlayer = self.encounter.raid.players.randomObject;
+                    while ( self.encounter.raid.players.count > 1 && randomNonPlayingPlayer.isPlayingPlayer )
+                        randomNonPlayingPlayer = self.encounter.raid.players.randomObject;
+                    
+                    AdvisorUIExplanationState state = ((NSNumber *)thing).integerValue;
+                    switch(state)
+                    {
+                        case UIExplanationEnemyAwaitingTouch:
+                        case UIExplanationEnemyTouched:
+                            NSLog(@"touching random enemy");
+                            self.enemyFrameView.enemyTouchedHandler(self.encounter.enemies.randomObject);
+                            break;
+                        case UIExplanationRaidFramesAwaitingTouch:
+                        case UIExplanationRaidFramesTouched:
+                            NSLog(@"touching random player");
+                            self.raidFramesView.targetedPlayerBlock(randomNonPlayingPlayer);
+                            break;
+                        case UIExplanationPlayerAndTargetAwaitingPlayer:
+                        case UIExplanationPlayerAndTargetPlayer:
+                            NSLog(@"touching player");
+                            self.playerAndTargetView.entityTouchedHandler(self.encounter.player);
+                            break;
+                        case UIExplanationPlayerAndTargetAwaitingTarget:
+                        case UIExplanationPlayerAndTargetTarget:
+                            NSLog(@"touching player target");
+                            self.playerAndTargetView.entityTouchedHandler(randomNonPlayingPlayer);
+                            break;
+                        case UIExplanationPlayerAndTargetAwaitingTargetTarget:
+                        case UIExplanationPlayerAndTargetTargetTarget:
+                            NSLog(@"touching player target target");
+                            self.playerAndTargetView.entityTouchedHandler(self.encounter.player.target.target);
+                            break;
+                        case UIExplanationSpellBarAwaitingCastTimeSpell:
+                        case UIExplanationSpellBarDidCastCastTimeSpell:
+                            NSLog(@"touching spell ???");
+                            break;
+                        case UIExplanationCastBar:
+                            NSLog(@"touching cast bar ???");
+                            break;
+                        case UIExplanationMiniMap:
+                            NSLog(@"touching minimap");
+                            break;
+                        case UIExplanationMeter:
+                            NSLog(@"touching meter");
+                            break;
+                        case UIExplanationCommandButton:
+                            NSLog(@"touching command button");
+                            break;
+                        default:
+                            NSLog(@"touching ???: %@",thing);
+                            break;
+                    }
+                }
+            });
+        });
     };
     if ( self.isHowToPlayViewController )
-        encounter.advisor.mode = HowToPlayAdvisor;
+        encounter.advisor.mode = HowToPlayAdvisorAuto;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

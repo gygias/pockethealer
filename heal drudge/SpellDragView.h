@@ -10,7 +10,8 @@
 
 @interface SpellDragView : UIView
 
-typedef void (^PlayViewAuxiliaryDrawBlock)();
-@property (nonatomic,copy) PlayViewAuxiliaryDrawBlock auxiliaryDrawHandler;
+typedef void (^PlayViewAuxiliaryDrawBlock)(CGRect rect);
+@property (nonatomic,copy) PlayViewAuxiliaryDrawBlock spellDragDrawHandler;
+@property (nonatomic,copy) PlayViewAuxiliaryDrawBlock touchDemoDrawHandler;
 
 @end

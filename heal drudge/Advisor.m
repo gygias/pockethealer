@@ -24,6 +24,19 @@
 
 - (void)_nextUIExplanation
 {
+    if ( self.mode == HowToPlayAdvisorManual )
+        [self _nextUIExplanationManual];
+    else if ( self.mode == HowToPlayAdvisorAuto )
+        [self _nextUIExplanationManual];
+}
+
+- (void)_nextUIExplanationAuto
+{
+    
+}
+
+- (void)_nextUIExplanationManual
+{
     self.isExplainingUI = YES;
     __unsafe_unretained typeof(self) weakSelf = self;
     
@@ -201,7 +214,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        if ( self.mode == HowToPlayAdvisor )
+        if ( self.mode == HowToPlayAdvisorManual || self.mode == HowToPlayAdvisorAuto )
         {
             if ( ! self.didExplainUI )
             {

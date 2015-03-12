@@ -367,6 +367,7 @@
 		63C753781AABCAFB00C15505 /* priest_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C753771AABCAFB00C15505 /* priest_12.png */; };
 		63C7537B1AABCC5700C15505 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C7537A1AABCC5700C15505 /* MainMenuViewController.m */; };
 		63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DF544D1AA1A16B0022073E /* PlayViewBase.m */; };
+		63E091C11AB246720042861E /* TouchDemoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E091C01AB246720042861E /* TouchDemoView.m */; };
 		63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91BF11A751D8F00505EAE /* BerserkerRush.m */; };
 		63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63F91BF31A751DCA00505EAE /* berserker_rush.jpg */; };
 /* End PBXBuildFile section */
@@ -889,6 +890,8 @@
 		63C7537A1AABCC5700C15505 /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
 		63DF544C1AA1A16B0022073E /* PlayViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewBase.h; sourceTree = "<group>"; };
 		63DF544D1AA1A16B0022073E /* PlayViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewBase.m; sourceTree = "<group>"; };
+		63E091BF1AB246720042861E /* TouchDemoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDemoView.h; sourceTree = "<group>"; };
+		63E091C01AB246720042861E /* TouchDemoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDemoView.m; sourceTree = "<group>"; };
 		63F91BF01A751D8F00505EAE /* BerserkerRush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BerserkerRush.h; sourceTree = "<group>"; };
 		63F91BF11A751D8F00505EAE /* BerserkerRush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BerserkerRush.m; sourceTree = "<group>"; };
 		63F91BF31A751DCA00505EAE /* berserker_rush.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = berserker_rush.jpg; sourceTree = "<group>"; };
@@ -1624,6 +1627,8 @@
 				638D90D21A982B5500960869 /* CommandButton.m */,
 				635906C61A9A8D1700E56764 /* MeterView.h */,
 				635906C71A9A8D1700E56764 /* MeterView.m */,
+				63E091BF1AB246720042861E /* TouchDemoView.h */,
+				63E091C01AB246720042861E /* TouchDemoView.m */,
 			);
 			name = PlayView;
 			sourceTree = "<group>";
@@ -1969,6 +1974,7 @@
 				63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
 				6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */,
+				63E091C11AB246720042861E /* TouchDemoView.m in Sources */,
 				638D90D01A98233200960869 /* MiniMapView.m in Sources */,
 				637E8B911A954AEB0002C9DC /* DancingRuneWeaponEffect.m in Sources */,
 				6328FB5D1A731A0200DF6B50 /* SpellBarView.m in Sources */,
