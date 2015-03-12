@@ -40,19 +40,34 @@
         double percentFill = timeUntilEvent / timeBetweenScheduleAndEvent;
         
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGRect rectangle = CGRectMake( rect.origin.x + 1,
-                                      rect.origin.y + yOffset + 1,
-                                      rect.size.width * percentFill - 2,
-                                      size.height - 2);
-        CGContextAddRect(context, rectangle);
+        CGRect thisWholeRect = CGRectMake( rect.origin.x + 1,
+                                          rect.origin.y + yOffset + 1,
+                                          rect.size.width - 2,
+                                          size.height - 2);
+        CGRect thisPartialRect = CGRectMake( thisWholeRect.origin.x + 1,
+                                            thisWholeRect.origin.y + 1,
+                                            thisWholeRect.size.width * percentFill - 2,
+                                            thisWholeRect.size.height - 2);
+//                                CGRectMake( rect.origin.x + 1,
+//                                            rect.origin.y + yOffset + 1,
+//                                            rect.size.width * percentFill - 2,
+//                                            size.height - 2);
+        CGContextAddRect(context, thisWholeRect);
         CGContextSetStrokeColorWithColor(context,
                                          [UIColor whiteColor].CGColor);
         CGContextStrokePath(context);
-        CGContextSetFillColorWithColor(context,
-                                       [UIColor redColor].CGColor);
-        CGContextFillRect(context, rectangle);
+        //CGContextSetFillColorWithColor(context,
+        //                               [UIColor redColor].CGColor);
+        //CGContextFillRect(context, rectangle);
+        
+        [self drawGradientFromPoint:rect.origin
+                            toPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y)
+                         startColor:[UIColor redColor]
+                           endColor:[UIColor darkGrayColor]
+                       clippingPath:CGPathCreateWithRect(thisPartialRect, NULL)];
         
         CGRect aRect = CGRectMake(rect.origin.x + 1, rect.origin.y + yOffset, size.width, size.height);
+        
         [spell.name drawInRect:aRect withAttributes:attributes];
         yOffset += size.height;
     }];

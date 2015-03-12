@@ -13,18 +13,62 @@
 @class Event;
 @class EventModifier;
 @class SpeechBubbleViewController;
+@class PlayViewController;
 
-typedef void (^AdvisorViewCallback)(Entity *,SpeechBubbleViewController *);
+typedef void (^AdvisorViewCallback)(id,SpeechBubbleViewController *);
+
+typedef NS_ENUM(NSInteger,AdvisorMode)
+{
+    NoAdvisor = 0,
+    HowToPlayAdvisor = 1,
+    ClassAdvisor = 2
+};
+
+typedef NS_ENUM(NSInteger,AdvisorUIExplanationState)
+{
+    UIExplanationStateNone = 0,
+    UIExplanationStart,
+    UIExplanationEnemyAwaitingTouch,
+    UIExplanationEnemyTouched,
+    UIExplanationRaidFramesAwaitingTouch,
+    UIExplanationRaidFramesTouched,
+    UIExplanationPlayerAndTargetAwaitingPlayer,
+    UIExplanationPlayerAndTargetPlayer,
+    UIExplanationPlayerAndTargetAwaitingTarget,
+    UIExplanationPlayerAndTargetTarget,
+    UIExplanationPlayerAndTargetAwaitingTargetTarget,
+    UIExplanationPlayerAndTargetTargetTarget,
+    UIExplanationSpellBarAwaitingCastTimeSpell,
+    UIExplanationSpellBarDidCastCastTimeSpell,
+    UIExplanationCastBar,
+    UIExplanationMiniMap,
+    UIExplanationMeter,
+    UIExplanationCommandButton,
+    UIExplanationEnd = UIExplanationMeter
+};
 
 @interface Advisor : NSObject
 
 @property (copy) AdvisorViewCallback callback;
 @property Encounter *encounter;
+@property PlayViewController *playView;
 
 - (void)updateEncounter;
+- (void)handleSpellStart:(Spell *)spell modifiers:(NSArray *)modifiers;
 - (void)handleSpell:(Spell *)spell event:(Event *)event modifier:(EventModifier *)modifier;
 
+@property AdvisorMode mode;
+
+// how to play
+@property BOOL didExplainUI;
+@property BOOL isExplainingUI;
+@property BOOL awaitingCastTimeSpell;
+typedef BOOL (^AdvanceExplanationBlock)();
+@property (copy) AdvanceExplanationBlock advanceExplanationBlock;
+@property AdvisorUIExplanationState currentExplanationState;
+
 @property BOOL didExplainTank;
+
 @property BOOL didExplainArchangel;
 //@property BOOL didExplainEmphasis;
 @property BOOL didExplainOOM;

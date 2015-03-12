@@ -14,6 +14,7 @@
 #import "Event.h"
 #import "EventModifier.h"
 #import "Encounter.h"
+#import "PlayViewController.h"
 
 #import "ArchangelSpell.h"
 
@@ -21,10 +22,201 @@
 
 @implementation Advisor
 
+- (void)_nextUIExplanation
+{
+    self.isExplainingUI = YES;
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    if ( self.currentExplanationState == UIExplanationStart )
+    {
+        NSLog(@"UIExplanationEnemyAwaitingTouch");
+        SpeechBubbleViewController *vc = [self _enemyFrame];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+            return (BOOL)( weakSelf.currentExplanationState != UIExplanationEnemyAwaitingTouch );
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationEnemyAwaitingTouch),vc); });
+        self.currentExplanationState = UIExplanationEnemyAwaitingTouch;
+        self.advanceExplanationBlock = ^{
+            if ( weakSelf.encounter.player.target.isEnemy )
+            {
+                weakSelf.currentExplanationState = UIExplanationEnemyTouched;
+                return YES;
+            }
+            return NO;
+        };
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationEnemyTouched )
+    {
+        NSLog(@"UIExplanationRaidFramesAwaitingTouch");
+        SpeechBubbleViewController *vc = [self _raidFrames];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+            return (BOOL)( weakSelf.currentExplanationState != UIExplanationRaidFramesAwaitingTouch );
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationRaidFramesAwaitingTouch),vc); });
+        self.currentExplanationState = UIExplanationRaidFramesAwaitingTouch;
+        self.advanceExplanationBlock = ^{
+            if ( weakSelf.encounter.player.target.isPlayer && ! weakSelf.encounter.player.target.isPlayingPlayer )
+            {
+                weakSelf.currentExplanationState = UIExplanationRaidFramesTouched;
+                return YES;
+            }
+            return NO;
+        };
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationRaidFramesTouched )
+    {
+        NSLog(@"UIExplanationPlayerAndTargetAwaitingPlayer");
+        SpeechBubbleViewController *vc = [self _playerInPlayerAndTarget];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+            return (BOOL)( weakSelf.currentExplanationState != UIExplanationPlayerAndTargetAwaitingPlayer );
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationPlayerAndTargetAwaitingPlayer),vc); });
+        self.currentExplanationState = UIExplanationPlayerAndTargetAwaitingPlayer;
+        self.advanceExplanationBlock = ^{
+            if ( weakSelf.encounter.player.target.isPlayingPlayer )
+            {
+                weakSelf.currentExplanationState = UIExplanationPlayerAndTargetPlayer;
+                return YES;
+            }
+            return NO;
+        };
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationPlayerAndTargetPlayer )
+    {
+        NSLog(@"UIExplanationPlayerAndTargetAwaitingTarget");
+        SpeechBubbleViewController *vc = [self _targetInPlayerAndTarget];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+            return (BOOL)( weakSelf.currentExplanationState != UIExplanationPlayerAndTargetAwaitingTarget );
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationPlayerAndTargetAwaitingTarget),vc); });
+        self.currentExplanationState = UIExplanationPlayerAndTargetAwaitingTarget;
+        self.advanceExplanationBlock = ^{
+            if ( ! weakSelf.encounter.player.target.isPlayingPlayer ) // XXX
+            {
+                weakSelf.currentExplanationState = UIExplanationPlayerAndTargetTarget;
+                return YES;
+            }
+            return NO;
+        };
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationPlayerAndTargetTarget )
+    {
+        NSLog(@"UIExplanationPlayerAndTargetAwaitingTargetTarget");
+        SpeechBubbleViewController *vc = [self _targetTargetInPlayerAndTarget];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+            return (BOOL)( weakSelf.currentExplanationState != UIExplanationPlayerAndTargetAwaitingTargetTarget );
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationPlayerAndTargetAwaitingTargetTarget),vc); });
+        self.currentExplanationState = UIExplanationPlayerAndTargetAwaitingTargetTarget;
+        Entity *previousTarget = weakSelf.encounter.player.target;
+        self.advanceExplanationBlock = ^{
+            if ( ! weakSelf.encounter.player.target.isPlayingPlayer && weakSelf.encounter.player.target != previousTarget ) // XXX
+            {
+                weakSelf.currentExplanationState = UIExplanationPlayerAndTargetTargetTarget;
+                return YES;
+            }
+            return NO;
+        };
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationPlayerAndTargetTargetTarget )
+    {
+        NSLog(@"UIExplanationSpellBarAwaitingCastTimeSpell");
+        SpeechBubbleViewController *vc = [self _spellBar];
+//        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc) {
+//            if ( ! self.awaitingCastTimeSpell )
+//            {
+//                self.currentExplanationState = UIExplanationSpellBarDidCastCastTimeSpell;
+//                return YES;
+//            }
+//            return NO;
+//        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationSpellBarAwaitingCastTimeSpell),vc); });
+        self.awaitingCastTimeSpell = YES;
+        self.currentExplanationState = UIExplanationSpellBarAwaitingCastTimeSpell;
+        self.advanceExplanationBlock = NULL;
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationSpellBarDidCastCastTimeSpell )
+    {
+        NSLog(@"UIExplanationCastBar");
+        SpeechBubbleViewController *vc = [self _castBar];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
+            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
+            return YES;
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCastBar),vc); });
+        self.currentExplanationState = UIExplanationCastBar;
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationCastBar )
+    {
+        NSLog(@"UIExplanationMiniMap");
+        SpeechBubbleViewController *vc = [self _miniMap];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
+            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
+            return YES;
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationMiniMap),vc); });
+        self.currentExplanationState = UIExplanationMiniMap;
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationMiniMap )
+    {
+        NSLog(@"UIExplanationMeter");
+        SpeechBubbleViewController *vc = [self _meter];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
+            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
+            return YES;
+        };
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationMeter),vc); });
+        self.currentExplanationState = UIExplanationMeter;
+        return;
+    }
+    else if ( self.currentExplanationState == UIExplanationMeter )
+    {
+        NSLog(@"UIExplanationCommandButton");
+        SpeechBubbleViewController *vc = [self _commandButton];
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCommandButton),vc); });
+        self.currentExplanationState = UIExplanationCommandButton;
+        return;
+    }
+    else
+    {
+        NSLog(@"***UIExplanationStateNone***");
+        self.currentExplanationState = UIExplanationStateNone;
+        self.isExplainingUI = NO;
+        self.didExplainUI = YES;
+    }
+}
+
 - (void)updateEncounter
 {
+    if ( self.mode == NoAdvisor )
+        return;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        if ( self.mode == HowToPlayAdvisor )
+        {
+            if ( ! self.didExplainUI )
+            {
+                if ( self.currentExplanationState == UIExplanationStateNone )
+                {
+                    self.currentExplanationState = UIExplanationStart;
+                    [self _nextUIExplanation];
+                    return;
+                }
+                else if ( self.advanceExplanationBlock && self.advanceExplanationBlock() )
+                    [self _nextUIExplanation];
+            }
+            return;
+        }
+    
         __block SpeechBubbleViewController *vc = nil;
         [self.encounter.player.spells enumerateObjectsUsingBlock:^(Spell *spell, NSUInteger idx, BOOL *stop) {
             if ( spell.isEmphasized && self.callback )
@@ -71,8 +263,31 @@
     });
 }
 
+- (void)handleSpellStart:(Spell *)spell modifiers:(NSArray *)modifiers
+{
+    if ( self.mode == NoAdvisor )
+        return;
+    
+    if ( self.currentExplanationState == UIExplanationSpellBarAwaitingCastTimeSpell )
+    {
+        if ( spell.caster.isPlayingPlayer && spell.castTime.doubleValue > 0 )
+        {
+            NSLog(@"%@ cast-time spell %@",spell.caster,spell);
+            self.awaitingCastTimeSpell = NO;
+            self.currentExplanationState = UIExplanationSpellBarDidCastCastTimeSpell;
+            [self _nextUIExplanation];
+            return;
+        }
+    }
+}
+
 - (void)handleSpell:(Spell *)spell event:(Event *)event modifier:(EventModifier *)modifier
 {
+    if ( self.mode == NoAdvisor )
+        return;
+    if ( self.isExplainingUI )
+        return;
+    
     if ( ! self.didExplainTank && spell != BeneficialEffect && spell.caster.isEnemy && spell.target.hdClass.isTank )
     {
         self.didExplainTank = YES;
@@ -112,6 +327,66 @@
 {
     return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
                                                                       text:[NSString stringWithFormat:@"%@ needs healing, heal them up!",entityInNeedOfHealing.name]];
+}
+
+- (SpeechBubbleViewController *)_enemyFrame
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is the enemy your raid is fighting. Target the enemy by tapping here."];
+}
+
+- (SpeechBubbleViewController *)_raidFrames
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is your raid team. Target someone in your raid by tapping them here."];
+}
+
+- (SpeechBubbleViewController *)_playerInPlayerAndTarget
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is a copy of your own frame. You can also target yourself by touching here."];
+}
+
+- (SpeechBubbleViewController *)_targetInPlayerAndTarget
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:[NSString stringWithFormat:@"This is your target. Targeted spells cast now will be directed at %@",self.encounter.player.target.name]];
+}
+
+- (SpeechBubbleViewController *)_targetTargetInPlayerAndTarget
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is the target of your target. You can target them yourself by touching here."];
+}
+
+- (SpeechBubbleViewController *)_spellBar
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is the spell bar. You can cast spells by touching them. You can also rearrange them by pressing them for 1 second and dragging them elsewhere."];
+}
+
+- (SpeechBubbleViewController *)_castBar
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This bar shows the spell you are currently casting, and the time it will take to finish casting."];
+}
+
+- (SpeechBubbleViewController *)_miniMap
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is the mini map. Your location is indicated by ☺, enemies by ☠, and other raiders by colored dots representing their class. You can move yourself around by touching within the map."];
+}
+
+- (SpeechBubbleViewController *)_meter
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"This is the meter. It can show how much healing or damage your raid is doing. Try to top the meters!"];
+}
+
+- (SpeechBubbleViewController *)_commandButton
+{
+    return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
+                                                                      text:@"Touch the command button to bark at your raid, telling them to stack, spread out, or pop heroism/bloodlust!"];
 }
 
 @end

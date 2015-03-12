@@ -16,6 +16,8 @@
 NSString * PointString(CGPoint point);
 NSString * RectString(CGRect rect);
 
+CGPoint CGRectGetMid(CGRect rect);
+
 #define REAL_TIME_DRAWING_INTERVAL 0.033
 #define REAL_TIME_DRAWING_LEEWAY 0.01
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Combobulated Software. All rights reserved.
 //
 
-#import "PocketHealer.h"
-
 #import "QuickPlayViewController.h"
 
 @implementation QuickPlayViewController
@@ -21,7 +19,7 @@
     
     __unsafe_unretained typeof(self) weakSelf = self;
     self.playViewController.dismissHandler = ^(PlayViewController *vc){
-        [weakSelf performSegueWithIdentifier:@"quick-play-main-menu" sender:weakSelf];
+        [weakSelf performSegueWithIdentifier:@"quick-play-to-main-menu" sender:weakSelf];
     };
     
     [self.contentView addSubview:self.playViewController.view];

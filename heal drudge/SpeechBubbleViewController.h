@@ -27,6 +27,8 @@
 @property (nonatomic,retain) UIView *referenceView;
 typedef void (^SpeechBubbleViewControllerDismissedHandler)(SpeechBubbleViewController *,PlayerCommand,MeterMode);
 @property (copy) SpeechBubbleViewControllerDismissedHandler dismissHandler;
+typedef BOOL (^SpeechBubbleViewControllerShouldDismissHandler)(SpeechBubbleViewController *);
+@property (copy) SpeechBubbleViewControllerShouldDismissHandler shouldDismissHandler;
 
 - (IBAction)heroPressed:(id)sender;
 - (IBAction)stackInMeleePressed:(id)sender;

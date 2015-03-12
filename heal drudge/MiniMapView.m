@@ -26,7 +26,7 @@
     return theEnemy.roomSize;
 }
 
-#define LAST_AOE_DRAW_THRESHOLD 2.0
+#define LAST_AOE_DRAW_THRESHOLD 1.0
 
 - (void)drawRect:(CGRect)rect {
     
@@ -38,7 +38,7 @@
                         toPoint:CGPointMake(rect.origin.x,
                                             rect.origin.y + rect.size.height)
                      startColor:[UIColor darkGrayColor]
-                       endColor:[UIColor lightGrayColor]
+                       endColor:[UIColor grayColor]
                    clippingPath:path.CGPath];
     
     [[UIColor whiteColor] setStroke];
@@ -46,7 +46,7 @@
     
     NSDictionary *enemyAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     NSDictionary *playerAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor],
-                                      NSFontAttributeName : [UIFont systemFontOfSize:5]};
+                                      NSFontAttributeName : [UIFont systemFontOfSize:7]};
     
     [self.encounter.raid.players enumerateObjectsUsingBlock:^(Entity *raider, NSUInteger idx, BOOL *stop) {
         

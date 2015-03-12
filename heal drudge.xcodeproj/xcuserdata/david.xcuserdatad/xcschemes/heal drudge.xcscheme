@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "63C5F3FC1A5243E900B9AE46"
-               BuildableName = "heal drudge.app"
-               BlueprintName = "heal drudge"
+               BuildableName = "PocketHealer.app"
+               BlueprintName = "PocketHealer"
                ReferencedContainer = "container:heal drudge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "63C5F3FC1A5243E900B9AE46"
-            BuildableName = "heal drudge.app"
-            BlueprintName = "heal drudge"
+            BuildableName = "PocketHealer.app"
+            BlueprintName = "PocketHealer"
             ReferencedContainer = "container:heal drudge.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "63C5F3FC1A5243E900B9AE46"
-            BuildableName = "heal drudge.app"
-            BlueprintName = "heal drudge"
+            BuildableName = "PocketHealer.app"
+            BlueprintName = "PocketHealer"
             ReferencedContainer = "container:heal drudge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -101,8 +101,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "63C5F3FC1A5243E900B9AE46"
-            BuildableName = "heal drudge.app"
-            BlueprintName = "heal drudge"
+            BuildableName = "PocketHealer.app"
+            BlueprintName = "PocketHealer"
             ReferencedContainer = "container:heal drudge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -112,6 +112,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Pocket-Healer"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

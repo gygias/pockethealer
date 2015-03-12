@@ -110,6 +110,100 @@
     CGContextFillPath(context);
 }
 
+- (void)drawRadialGradientFromPoint:(CGPoint)startPoint
+                        startRadius:(CGFloat)startRadius
+                         startColor:(UIColor *)startColor
+                           endPoint:(CGPoint)endPoint
+                          endRadius:(CGFloat)endRadius
+                           endColor:(UIColor *)endColor
+                       clippingPath:(CGPathRef)clippingPath
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    BOOL willClip = ( clippingPath != nil );
+    
+    if ( willClip )
+        CGContextSaveGState(context);
+    
+    CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    
+    CGFloat components[8] = { 0.0, 0.0, 0.0, 1.0,  // Start color
+        0.0, 0.0, 0.0, 1.0 }; // End color
+    NSArray *theColors = @[ startColor, endColor ];
+    NSUInteger colorsIdx = 0;
+    NSUInteger nRGBComponents = 4;
+    
+    for ( ; colorsIdx < theColors.count; colorsIdx++ )
+    {
+        UIColor *uiColor = theColors[colorsIdx];
+        CGFloat red, green, blue, alpha;
+        [uiColor getRed:&red green:&green blue:&blue alpha:&alpha];
+        components[0 + nRGBComponents * colorsIdx] = red;
+        components[1 + nRGBComponents * colorsIdx] = green;
+        components[2 + nRGBComponents * colorsIdx] = blue;
+        components[3 + nRGBComponents * colorsIdx] = alpha;
+    }
+    
+    CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components,
+                                                                    locations, num_locations);
+    if ( willClip )
+    {
+        CGContextAddPath(context, clippingPath);
+        if(!CGContextIsPathEmpty(context))
+            CGContextClip(context); // TODO ??
+    }
+    
+    CGContextDrawRadialGradient(context,
+                                myGradient,
+                                startPoint,
+                                startRadius,
+                                endPoint,
+                                endRadius,
+                                0);
+    
+    if ( willClip )
+        CGContextRestoreGState(context);
+}
+
+- (void)_componentsWithStart:(UIColor *)startColor
+                         end:(UIColor *)endColor
+                    outSpace:(CGColorSpaceRef *)outSpace
+                outLocations:(CGFloat **)outLocations
+               outNLocations:(size_t *)outNLocations
+               outComponents:(CGFloat **)outComponents
+{
+    CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    
+    CGFloat components[8] = { 0.0, 0.0, 0.0, 1.0,  // Start color
+        0.0, 0.0, 0.0, 1.0 }; // End color
+    NSArray *theColors = @[ startColor, endColor ];
+    NSUInteger colorsIdx = 0;
+    NSUInteger nRGBComponents = 4;
+    
+    for ( ; colorsIdx < theColors.count; colorsIdx++ )
+    {
+        UIColor *uiColor = theColors[colorsIdx];
+        CGFloat red, green, blue, alpha;
+        [uiColor getRed:&red green:&green blue:&blue alpha:&alpha];
+        components[0 + nRGBComponents * colorsIdx] = red;
+        components[1 + nRGBComponents * colorsIdx] = green;
+        components[2 + nRGBComponents * colorsIdx] = blue;
+        components[3 + nRGBComponents * colorsIdx] = alpha;
+    }
+    
+    if ( outSpace )
+        *outSpace = myColorspace;
+    if ( outLocations )
+        *outLocations = locations;
+    if ( outNLocations )
+        *outNLocations = num_locations;
+    if ( outComponents )
+        *outComponents = components;
+}
+
 - (void)drawGradientFromPoint:(CGPoint)pointA
                       toPoint:(CGPoint)pointB
                    startColor:(UIColor *)startColor
@@ -142,6 +236,7 @@
         components[2 + nRGBComponents * colorsIdx] = blue;
         components[3 + nRGBComponents * colorsIdx] = alpha;
     }
+    
     
     CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components,
                                                                     locations, num_locations);

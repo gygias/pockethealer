@@ -84,9 +84,9 @@
             {
                 if ( replacedSpell != replacingSpell )
                 {
+                    replaced = YES;
                     dispatch_async(self.player.encounter.encounterQueue, ^{
                         [self.player replaceSpell:replacedSpell withSpell:replacingSpell persist:YES];
-                        replaced = YES;
                     });
                 }
             }

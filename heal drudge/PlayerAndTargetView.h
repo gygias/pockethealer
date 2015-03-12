@@ -28,4 +28,8 @@ typedef void(^EntityTouchedBlock)(Entity *);
 @property RaidFrameView *lastTargetTargetFrame;
 @property RaidFrameView *lastTargetFrame;
 
+@property (readonly) CGPoint centerOfPlayer;
+@property (readonly) CGPoint centerOfTarget;
+@property (readonly) CGPoint centerOfTargetTarget;
+
 @end

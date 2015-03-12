@@ -971,6 +971,7 @@
     else if ( [target handleSpellStart:spell modifiers:modifiers] )
     {
     }
+    [self.encounter.advisor handleSpellStart:spell modifiers:modifiers];
     
     __block NSNumber *hasteBuff = nil;
     [modifiers enumerateObjectsUsingBlock:^(EventModifier *obj, NSUInteger idx, BOOL *stop) {

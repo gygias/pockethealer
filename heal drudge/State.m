@@ -31,6 +31,8 @@ static State *sSharedState = nil;
     state.forceSlyeri = [defaults boolForKey:@"forceSlyeri"];
     state.forceLireal = [defaults boolForKey:@"forceLireal"];
     state.raidSize = [defaults integerForKey:@"raidSize"];
+    if ( state.raidSize == 0 )
+        state.raidSize = 15;
     state.difficulty = [defaults floatForKey:@"difficulty"];
     state.debugViews = [defaults boolForKey:@"debugViws"];
     state.spellOrdersBySpecID = [[defaults dictionaryForKey:@"spellOrdersBySpecID"] mutableCopy];

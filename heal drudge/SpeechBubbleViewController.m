@@ -63,6 +63,8 @@
     self.speechBubbleContentView.dismissHandler = ^(SpeechBubbleContentView *view) {
         if ( weakSelf.speechBubbleView.isCommandView )
             return;
+        if ( weakSelf.shouldDismissHandler && ! weakSelf.shouldDismissHandler(weakSelf) )
+            return;
         if ( weakSelf.dismissHandler )
             weakSelf.dismissHandler(weakSelf, NoCommand, NoMode);
     };

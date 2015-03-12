@@ -47,6 +47,8 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet SpellDragView *spellDragView;
 @property IBOutlet MeterView *meterView;
 
+@property BOOL isHowToPlayViewController;
+
 // debug
 @property IBOutlet UIView *upLeftView;
 @property IBOutlet UIView *bottomRightView;

@@ -35,13 +35,29 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)textFieldDidBeginEditing:(id)wut
+{
+    if ( wut == self.realmField )
+    {
+        WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
+        if ( ! [self.realmField.text isEqualToString:(NSString *)suggestedRealm.name] )
+            self.realmField.text = @"";
+    }    
+}
+
 - (void)textFieldEndedEditing:(id)wut
 {
     WoWRealm *suggestedRealm = [WoWRealm realmWithString:self.realmField.text];
     if ( suggestedRealm )
+    {
         self.realmField.text = (NSString *)suggestedRealm.name;
+        [self.loadButton setEnabled:YES];
+    }
     
-    [self.loadButton setEnabled:YES];
+    if ( wut == self.nameField )
+        NSLog(@"ZOMG!");
+    else
+        NSLog(@"nah");
 }
 
 - (void)textFieldChanged:(id)huh
@@ -122,9 +138,10 @@
                 [self.loadButton setEnabled:YES];
                 [self.continueButton setEnabled:NO];
                 self.thumbnailView.image = nil;
-                self.nameLabel.text = @"???";
-                self.specLabel.text = @"???";
-                self.guildLabel.text = @"???";
+                self.nameLabel.text = @"armory request failed";
+                self.specLabel.text = @"";
+                self.guildLabel.text = @"";
+                self.ilvlLabel.text = @"";
                 return;
             }
 //            PHLogV(@"%@",[WoWAPIRequest characterNamesFromGuildListResponse:response]);

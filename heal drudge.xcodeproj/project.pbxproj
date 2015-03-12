@@ -351,9 +351,10 @@
 		63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */; };
 		63A37F2D1A75EEB20036C9D0 /* abandon_quest.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F2C1A75EEB20036C9D0 /* abandon_quest.wav */; };
 		63A37F2F1A75EED20036C9D0 /* recuperate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63A37F2E1A75EED20036C9D0 /* recuperate.jpg */; };
+		63C02B251AACEAA900D4A46E /* HowToPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C02B241AACEAA900D4A46E /* HowToPlayViewController.m */; };
 		63C5F4031A5243E900B9AE46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4021A5243E900B9AE46 /* main.m */; };
 		63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4051A5243E900B9AE46 /* AppDelegate.m */; };
-		63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */; };
+		63C5F4091A5243E900B9AE46 /* DebugMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4081A5243E900B9AE46 /* DebugMenuViewController.m */; };
 		63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40A1A5243E900B9AE46 /* Main.storyboard */; };
 		63C5F40E1A5243E900B9AE46 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40D1A5243E900B9AE46 /* Images.xcassets */; };
 		63C5F4111A5243E900B9AE46 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40F1A5243E900B9AE46 /* LaunchScreen.xib */; };
@@ -363,6 +364,8 @@
 		63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F42D1A52481400B9AE46 /* HDClass.m */; };
 		63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4331A524A1A00B9AE46 /* Spell.m */; };
 		63C5F4371A524E8100B9AE46 /* QuickPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */; };
+		63C753781AABCAFB00C15505 /* priest_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C753771AABCAFB00C15505 /* priest_12.png */; };
+		63C7537B1AABCC5700C15505 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C7537A1AABCC5700C15505 /* MainMenuViewController.m */; };
 		63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63DF544D1AA1A16B0022073E /* PlayViewBase.m */; };
 		63F91BF21A751D8F00505EAE /* BerserkerRush.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91BF11A751D8F00505EAE /* BerserkerRush.m */; };
 		63F91BF41A751DCA00505EAE /* berserker_rush.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63F91BF31A751DCA00505EAE /* berserker_rush.jpg */; };
@@ -856,13 +859,15 @@
 		63A37F2A1A75E3CE0036C9D0 /* PainSuppressionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PainSuppressionEffect.m; sourceTree = "<group>"; };
 		63A37F2C1A75EEB20036C9D0 /* abandon_quest.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = abandon_quest.wav; sourceTree = "<group>"; };
 		63A37F2E1A75EED20036C9D0 /* recuperate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = recuperate.jpg; sourceTree = "<group>"; };
-		63C5F3FD1A5243E900B9AE46 /* heal drudge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "heal drudge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63C02B231AACEAA900D4A46E /* HowToPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToPlayViewController.h; sourceTree = "<group>"; };
+		63C02B241AACEAA900D4A46E /* HowToPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToPlayViewController.m; sourceTree = "<group>"; };
+		63C5F3FD1A5243E900B9AE46 /* PocketHealer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PocketHealer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F4011A5243E900B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F4021A5243E900B9AE46 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		63C5F4041A5243E900B9AE46 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		63C5F4051A5243E900B9AE46 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		63C5F4071A5243E900B9AE46 /* MainMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
-		63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		63C5F4071A5243E900B9AE46 /* DebugMenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DebugMenuViewController.h; sourceTree = "<group>"; };
+		63C5F4081A5243E900B9AE46 /* DebugMenuViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DebugMenuViewController.m; sourceTree = "<group>"; };
 		63C5F40B1A5243E900B9AE46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63C5F40D1A5243E900B9AE46 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63C5F4101A5243E900B9AE46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -879,6 +884,9 @@
 		63C5F4331A524A1A00B9AE46 /* Spell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Spell.m; sourceTree = "<group>"; };
 		63C5F4351A524E8100B9AE46 /* QuickPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickPlayViewController.h; sourceTree = "<group>"; };
 		63C5F4361A524E8100B9AE46 /* QuickPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickPlayViewController.m; sourceTree = "<group>"; };
+		63C753771AABCAFB00C15505 /* priest_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = priest_12.png; sourceTree = "<group>"; };
+		63C753791AABCC5700C15505 /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		63C7537A1AABCC5700C15505 /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
 		63DF544C1AA1A16B0022073E /* PlayViewBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewBase.h; sourceTree = "<group>"; };
 		63DF544D1AA1A16B0022073E /* PlayViewBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewBase.m; sourceTree = "<group>"; };
 		63F91BF01A751D8F00505EAE /* BerserkerRush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BerserkerRush.h; sourceTree = "<group>"; };
@@ -1000,14 +1008,15 @@
 		632073A31A70934700AA4416 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				63C753771AABCAFB00C15505 /* priest_12.png */,
 				63DF544F1AA1A2290022073E /* PlayView */,
 				63C5F40A1A5243E900B9AE46 /* Main.storyboard */,
 				632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */,
 				632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */,
 				6320739A1A708E2600AA4416 /* LoadCharacterOptionsViewController.h */,
 				6320739B1A708E2600AA4416 /* LoadCharacterOptionsViewController.m */,
-				63C5F4071A5243E900B9AE46 /* MainMenuViewController.h */,
-				63C5F4081A5243E900B9AE46 /* MainMenuViewController.m */,
+				63C5F4071A5243E900B9AE46 /* DebugMenuViewController.h */,
+				63C5F4081A5243E900B9AE46 /* DebugMenuViewController.m */,
 				63C5F4261A52464300B9AE46 /* CreateHealerViewController.h */,
 				63C5F4271A52464300B9AE46 /* CreateHealerViewController.m */,
 				63C5F4351A524E8100B9AE46 /* QuickPlayViewController.h */,
@@ -1018,6 +1027,10 @@
 				632074291A70D2EC00AA4416 /* LoadingFromArmoryViewController.m */,
 				638D90BE1A97ED0C00960869 /* UIView+SharedDrawing.h */,
 				638D90BF1A97ED0C00960869 /* UIView+SharedDrawing.m */,
+				63C753791AABCC5700C15505 /* MainMenuViewController.h */,
+				63C7537A1AABCC5700C15505 /* MainMenuViewController.m */,
+				63C02B231AACEAA900D4A46E /* HowToPlayViewController.h */,
+				63C02B241AACEAA900D4A46E /* HowToPlayViewController.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1450,8 +1463,8 @@
 		63C5F3F41A5243E900B9AE46 = {
 			isa = PBXGroup;
 			children = (
-				63A37ED11A75A45C0036C9D0 /* AVFoundation.framework */,
 				63C5F3FF1A5243E900B9AE46 /* heal drudge */,
+				63E091BB1AB242740042861E /* Frameworks */,
 				63C5F4191A5243EA00B9AE46 /* heal drudgeTests */,
 				63C5F3FE1A5243E900B9AE46 /* Products */,
 			);
@@ -1460,7 +1473,7 @@
 		63C5F3FE1A5243E900B9AE46 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				63C5F3FD1A5243E900B9AE46 /* heal drudge.app */,
+				63C5F3FD1A5243E900B9AE46 /* PocketHealer.app */,
 				63C5F4161A5243EA00B9AE46 /* heal drudgeTests.xctest */,
 			);
 			name = Products;
@@ -1615,12 +1628,20 @@
 			name = PlayView;
 			sourceTree = "<group>";
 		};
+		63E091BB1AB242740042861E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63A37ED11A75A45C0036C9D0 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		63C5F3FC1A5243E900B9AE46 /* heal drudge */ = {
+		63C5F3FC1A5243E900B9AE46 /* PocketHealer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 63C5F4201A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "heal drudge" */;
+			buildConfigurationList = 63C5F4201A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "PocketHealer" */;
 			buildPhases = (
 				63C5F3F91A5243E900B9AE46 /* Sources */,
 				63C5F3FA1A5243E900B9AE46 /* Frameworks */,
@@ -1630,9 +1651,9 @@
 			);
 			dependencies = (
 			);
-			name = "heal drudge";
+			name = PocketHealer;
 			productName = "heal drudge";
-			productReference = 63C5F3FD1A5243E900B9AE46 /* heal drudge.app */;
+			productReference = 63C5F3FD1A5243E900B9AE46 /* PocketHealer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		63C5F4151A5243EA00B9AE46 /* heal drudgeTests */ = {
@@ -1685,7 +1706,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				63C5F3FC1A5243E900B9AE46 /* heal drudge */,
+				63C5F3FC1A5243E900B9AE46 /* PocketHealer */,
 				63C5F4151A5243EA00B9AE46 /* heal drudgeTests */,
 			);
 		};
@@ -1833,6 +1854,7 @@
 				6320748B1A70E93A00AA4416 /* stone_bulwark.png in Resources */,
 				632074891A70E93A00AA4416 /* starfall.png in Resources */,
 				63A37EFB1A75ABE30036C9D0 /* 9.wav in Resources */,
+				63C753781AABCAFB00C15505 /* priest_12.png in Resources */,
 				632074051A7095B800AA4416 /* hand_of_sacrifice.png in Resources */,
 				637E8BA01A95A1180002C9DC /* mindbender.jpg in Resources */,
 				632074641A70E93A00AA4416 /* arcane.png in Resources */,
@@ -1956,7 +1978,8 @@
 				63027AB61A7849F60068E68A /* GenericDamageSpell.m in Sources */,
 				634F48F51A746B86008761C6 /* PlayerAndTargetView.m in Sources */,
 				637E8B851A9547470002C9DC /* BoneShieldEffect.m in Sources */,
-				63C5F4091A5243E900B9AE46 /* MainMenuViewController.m in Sources */,
+				63C7537B1AABCC5700C15505 /* MainMenuViewController.m in Sources */,
+				63C5F4091A5243E900B9AE46 /* DebugMenuViewController.m in Sources */,
 				63027B3F1A7B0B200068E68A /* FlashOfLightSpell.m in Sources */,
 				63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
@@ -2010,6 +2033,7 @@
 				638D90C21A97F82000960869 /* Conveniences.m in Sources */,
 				631435FB1A72E94100BDD708 /* Attack.m in Sources */,
 				63027AC81A7984440068E68A /* Entity+ProtPaladin.m in Sources */,
+				63C02B251AACEAA900D4A46E /* HowToPlayViewController.m in Sources */,
 				63027B0D1A79C4AD0068E68A /* AvengersShieldSpell.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */,
@@ -2087,7 +2111,7 @@
 /* Begin PBXTargetDependency section */
 		63C5F4181A5243EA00B9AE46 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 63C5F3FC1A5243E900B9AE46 /* heal drudge */;
+			target = 63C5F3FC1A5243E900B9AE46 /* PocketHealer */;
 			targetProxy = 63C5F4171A5243EA00B9AE46 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -2264,7 +2288,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		63C5F4201A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "heal drudge" */ = {
+		63C5F4201A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "PocketHealer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63C5F4211A5243EA00B9AE46 /* Debug */,

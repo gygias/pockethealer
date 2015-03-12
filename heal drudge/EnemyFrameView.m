@@ -50,17 +50,20 @@
     
     CGFloat lineWidth = 1;
     CGContextSetLineWidth(context, 1);
-    
+        
     CGRect healthBorderRect = CGRectMake(rect.origin.x, rect.origin.y + nameSize.height, rect.size.width, rect.size.height - nameSize.height - lineWidth);
-    CGRect healthRect = CGRectMake(healthBorderRect.origin.x, healthBorderRect.origin.y, healthBorderRect.size.width * healthPercentage, healthBorderRect.size.height);
-    
-    CGContextAddRect(context, healthRect);
-    CGContextSetFillColorWithColor(context,
-                                     [UIColor redColor].CGColor);
-    CGContextFillPath(context);
-    CGContextAddRect(context, healthBorderRect);
+    //CGRect healthRect = CGRectMake(healthBorderRect.origin.x, healthBorderRect.origin.y, healthBorderRect.size.width * healthPercentage, healthBorderRect.size.height);
+    [self drawGradientFromPoint:healthBorderRect.origin
+                        toPoint:CGPointMake(healthBorderRect.origin.x + healthBorderRect.size.width, healthBorderRect.origin.y)
+                     startColor:[UIColor redColor]
+                       endColor:[UIColor darkGrayColor]
+                   clippingPath:CGPathCreateWithRect(healthBorderRect, NULL)];
     CGContextSetStrokeColorWithColor(context,
                                    [UIColor grayColor].CGColor);
+    CGContextAddRect(context, healthBorderRect);
+    CGContextSetStrokeColorWithColor(context,
+                                     [UIColor whiteColor].CGColor);
+    CGContextStrokePath(context);
     
     NSString *healthPercentageString = [NSString stringWithFormat:@"%0.0f%%",healthPercentage * 100];
     CGFloat healthBorderRectCenterX = ( healthBorderRect.origin.x + healthBorderRect.size.width ) / 2;

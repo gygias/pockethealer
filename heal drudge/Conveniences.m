@@ -17,3 +17,8 @@ NSString * RectString(CGRect rect)
 {
     return [NSString stringWithFormat:@"%@[w=%0.2f,h=%0.2f]",PointString(rect.origin),rect.size.width,rect.size.height];
 }
+
+CGPoint CGRectGetMid(CGRect rect)
+{
+    return CGPointMake( CGRectGetMidX(rect), CGRectGetMidY(rect) );
+}

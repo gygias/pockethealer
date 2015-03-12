@@ -141,4 +141,19 @@
     }
 }
 
+- (CGPoint)centerOfPlayer
+{
+    return CGRectGetMid([self _playerRectWithRect:_lastDrawnRect]);
+}
+
+- (CGPoint)centerOfTarget
+{
+    return CGRectGetMid([self _targetRectWithRect:_lastDrawnRect]);
+}
+
+- (CGPoint)centerOfTargetTarget
+{
+    return CGRectGetMid([self _targetOfTargetRectWithRect:_lastDrawnRect]);
+}
+
 @end

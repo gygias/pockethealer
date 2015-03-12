@@ -21,6 +21,7 @@
 
 - (NSArray *)partyForEntity:(Entity *)entity includingEntity:(BOOL)includingEntity;
 
+@property Entity *player;
 @property (strong,retain) NSArray *players;
 @property (nonatomic,readonly) NSArray *tankPlayers;
 @property (nonatomic,readonly) NSArray *nonTankPlayers;

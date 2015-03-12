@@ -47,7 +47,7 @@
 {
     SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithCommands];
     [self _presentSpeechBubble:speechBubble locateBlock:^{
-        return CGPointMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height);
+        return [self _absoluteBottomLeft];
     }];
     
     [self.encounter pause];
@@ -123,28 +123,19 @@ typedef CGPoint (^LocateBlock)();
     self.lastAddedConstraints = @[ leadingConstraint, topConstraint ];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    // Do any additional setup after loading the view.
-    
+- (void)_configure
+{
     Entity *gygias = nil, *slyeri = nil, *lireal = nil;
     NSUInteger size = self.state.raidSize;
     NSUInteger nForced = 0;
-    if ( self.state.forceGygias )
+    NSArray *forceKeys = @[ @"forceGygias", @"forceSlyeri", @"forceLireal" ];
+    for ( NSString *forceKey in forceKeys )
     {
-        size++;
-        nForced++;
-    }
-    if ( self.state.forceSlyeri )
-    {
-        size++;
-        nForced++;
-    }
-    if ( self.state.forceLireal )
-    {
-        size++;
-        nForced++;
+        if ( [[self.state valueForKey:forceKey] boolValue] )
+        {
+            size++;
+            nForced++;
+        }
     }
     Raid *raid = [Raid randomRaidWithGygiasTheDiscPriestAndSlyTheProtPaladin:self.state.forceGygias ? &gygias : NULL
                                                                             :self.state.forceSlyeri ? &slyeri : NULL
@@ -166,6 +157,7 @@ typedef CGPoint (^LocateBlock)();
         }];
     }
     aHealer.isPlayingPlayer = YES;
+    raid.player = aHealer;
     
     if ( ! aHealer )
     {
@@ -193,6 +185,9 @@ typedef CGPoint (^LocateBlock)();
     encounter.player = aHealer;
     encounter.raid = raid;
     encounter.enemies = @[ enemy ];
+
+    // FRAME VIEWS
+#pragma mark frame views setup
     
     BOOL (^enemyTouchedBlock)(Enemy *);
     enemyTouchedBlock = ^(Enemy *enemy){
@@ -220,6 +215,9 @@ typedef CGPoint (^LocateBlock)();
         weakSelf.playerAndTargetView.target = entity;
     };
     self.playerAndTargetView.raidFramesView = self.raidFramesView;
+    
+    // CAST AND SPELL BAR
+#pragma mark cast and spell bar setup
     
     self.spellBarView.player = aHealer;
     BOOL (^castBlock)(Spell *);
@@ -292,7 +290,8 @@ typedef CGPoint (^LocateBlock)();
     
     self.castBarView.entity = encounter.player;
     
-    [self _draw:AllDrawModes];
+    // EVENTS
+#pragma mark events setup
     
     [encounter.enemies enumerateObjectsUsingBlock:^(Enemy *enemy, NSUInteger idx, BOOL *stop) {
         enemy.scheduledSpellHandler = ^(Spell *spell, NSDate *date){
@@ -302,11 +301,14 @@ typedef CGPoint (^LocateBlock)();
     
     encounter.advisor = [Advisor new];
     encounter.advisor.encounter = encounter;
-    encounter.advisor.callback = ^(Entity *e, SpeechBubbleViewController *vc) {
+    encounter.advisor.playView = self;
+    encounter.advisor.callback = ^(id thing, SpeechBubbleViewController *vc) {
         [self _presentSpeechBubble:vc locateBlock:^{
-            return [self.raidFramesView absoluteOriginForEntity:e];
+            return [self _originForThing:thing];
         }];
     };
+    if ( self.isHowToPlayViewController )
+        encounter.advisor.mode = HowToPlayAdvisor;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -323,7 +325,7 @@ typedef CGPoint (^LocateBlock)();
     self.meterView.touchedHandler = ^{
         SpeechBubbleViewController *speechBubble = [SpeechBubbleViewController speechBubbleViewControllerWithMeterModes];
         [weakSelf _presentSpeechBubble:speechBubble locateBlock:^{
-            return CGPointMake(weakSelf.view.frame.origin.x, weakSelf.view.frame.origin.y + weakSelf.view.frame.size.height);
+            return [weakSelf _absoluteBottomLeft];
         }];
     };
     
@@ -341,9 +343,75 @@ typedef CGPoint (^LocateBlock)();
         [self.meterView setBackgroundColor:[UIColor clearColor]];
     }
     
-    [encounter start];
-    
     self.encounter = encounter;
+}
+
+- (CGPoint)_originForThing:(id)thing
+{
+    if ( [thing isKindOfClass:[Entity class]] )
+        [self.raidFramesView absoluteOriginForEntity:thing];
+    else if ( [thing isKindOfClass:[UIView class]] )
+        return [self _centerOfView:thing];
+    else if ( [thing isKindOfClass:[NSNumber class]] )
+    {
+        AdvisorUIExplanationState state = ((NSNumber *)thing).integerValue;
+        switch(state)
+        {
+            case UIExplanationEnemyAwaitingTouch:
+            case UIExplanationEnemyTouched:
+                return [self _centerOfView:self.enemyFrameView];
+            case UIExplanationRaidFramesAwaitingTouch:
+            case UIExplanationRaidFramesTouched:
+                return [self _centerOfView:self.raidFramesView];
+            case UIExplanationPlayerAndTargetAwaitingPlayer:
+            case UIExplanationPlayerAndTargetPlayer:
+                return [self.view convertPoint:self.playerAndTargetView.centerOfPlayer fromView:self.playerAndTargetView];
+            case UIExplanationPlayerAndTargetAwaitingTarget:
+            case UIExplanationPlayerAndTargetTarget:
+                return [self.view convertPoint:self.playerAndTargetView.centerOfTarget fromView:self.playerAndTargetView];
+            case UIExplanationPlayerAndTargetAwaitingTargetTarget:
+            case UIExplanationPlayerAndTargetTargetTarget:
+                return [self.view convertPoint:self.playerAndTargetView.centerOfTargetTarget fromView:self.playerAndTargetView];
+            case UIExplanationSpellBarAwaitingCastTimeSpell:
+            case UIExplanationSpellBarDidCastCastTimeSpell:
+                return [self _centerOfView:self.spellBarView];
+            case UIExplanationCastBar:
+                return [self _centerOfView:self.castBarView];
+            case UIExplanationMiniMap:
+                return [self _centerOfView:self.miniMapView];
+            case UIExplanationMeter:
+                return [self _centerOfView:self.meterView];
+            case UIExplanationCommandButton:
+                return [self _centerOfView:self.commandButton];
+            default:
+                break;
+        }
+    }
+    return [self _absoluteBottomRight];
+}
+
+- (CGPoint)_centerOfView:(UIView *)view
+{
+    return [self.view convertPoint:CGRectGetMid(view.frame) fromView:view];
+}
+
+- (CGPoint)_absoluteBottomLeft
+{
+    return CGPointMake(self.view.frame.origin.x, self.view.frame.origin.y + self.view.frame.size.height);
+}
+
+- (CGPoint)_absoluteBottomRight
+{
+    return CGPointMake(self.view.frame.origin.x + self.view.frame.size.width, self.view.frame.origin.y + self.view.frame.size.height);
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self _configure];
+    [self _draw:AllDrawModes];
+    
+    [self.encounter start];
 }
 
 - (void)_draw:(PlayViewDrawMode)drawMode
