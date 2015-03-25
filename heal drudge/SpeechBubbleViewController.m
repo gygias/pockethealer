@@ -70,6 +70,11 @@
     };
 }
 
+- (UIView *)referenceView
+{
+    return ((SpeechBubbleView *)self.view.subviews.firstObject).referenceView;
+}
+
 - (void)setReferenceView:(UIView *)referenceView
 {
     ((SpeechBubbleView *)self.view.subviews.firstObject).referenceView = referenceView;

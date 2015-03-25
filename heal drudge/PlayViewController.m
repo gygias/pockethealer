@@ -73,7 +73,10 @@ typedef CGPoint (^LocateBlock)();
         self.currentSpeechBubble.dismissHandler(self.currentSpeechBubble, NoCommand, NoMode);
     
     speechBubble.bubbleOrigin = locateBlock();
-    speechBubble.referenceView = self.advisorGuideView;
+    if ( CGRectContainsPoint(self.advisorGuideMask.frame, speechBubble.bubbleOrigin) )
+        speechBubble.referenceView = self.advisorGuideViewTop;
+    else
+        speechBubble.referenceView = self.advisorGuideView;
     speechBubble.dismissHandler = ^(SpeechBubbleViewController *vc, PlayerCommand command, MeterMode meterMode){
         [vc.view removeFromSuperview];
         self.currentSpeechBubble = nil;
@@ -115,9 +118,9 @@ typedef CGPoint (^LocateBlock)();
 {
     [speechBubble.speechBubbleContentView.superview removeConstraints:self.lastAddedConstraints];
     
-    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:self.advisorGuideView.frame.origin.x];
+    NSLayoutConstraint *leadingConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeLeading multiplier:1.0 constant:speechBubble.referenceView.frame.origin.x];
     [speechBubble.speechBubbleContentView.superview addConstraint:leadingConstraint];
-    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:self.advisorGuideView.frame.origin.y];
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:speechBubble.speechBubbleContentView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:speechBubble.speechBubbleContentView.superview attribute:NSLayoutAttributeTop multiplier:1.0 constant:speechBubble.referenceView.frame.origin.y];
     [speechBubble.speechBubbleContentView.superview addConstraint:topConstraint];
     
     self.lastAddedConstraints = @[ leadingConstraint, topConstraint ];
@@ -303,6 +306,16 @@ typedef CGPoint (^LocateBlock)();
     encounter.advisor.encounter = encounter;
     encounter.advisor.playView = self;
     encounter.advisor.callback = ^(id thing, SpeechBubbleViewController *vc) {
+        
+        if ( [thing isKindOfClass:[NSNumber class]] && [thing integerValue] == UIExplanationEnd )
+        {
+            NSLog(@"removing touch view");
+            UIView *superview = weakSelf.touchDemoView.superview;
+            [weakSelf.touchDemoView removeFromSuperview];
+            [superview setNeedsDisplay];
+            return;
+        }
+        
         CGPoint location = [self _originForThing:thing];
         [self _presentSpeechBubble:vc locateBlock:^{
             return [self _originForThing:thing];
@@ -365,6 +378,10 @@ typedef CGPoint (^LocateBlock)();
                         case UIExplanationSpellBarAwaitingCastTimeSpell:
                         case UIExplanationSpellBarDidCastCastTimeSpell:
                             NSLog(@"touching spell ???");
+                            {
+                                Spell *touchSpell = [self.spellBarView _explanationSpell];
+                                self.spellBarView.spellCastAttemptHandler(touchSpell);
+                            }
                             break;
                         case UIExplanationCastBar:
                             NSLog(@"touching cast bar ???");
@@ -453,14 +470,19 @@ typedef CGPoint (^LocateBlock)();
                 return [self.view convertPoint:self.playerAndTargetView.centerOfTargetTarget fromView:self.playerAndTargetView];
             case UIExplanationSpellBarAwaitingCastTimeSpell:
             case UIExplanationSpellBarDidCastCastTimeSpell:
+                NSLog(@"-> center of spell bar view");
                 return [self _centerOfView:self.spellBarView];
             case UIExplanationCastBar:
+                NSLog(@"-> center of cast bar view");
                 return [self _centerOfView:self.castBarView];
             case UIExplanationMiniMap:
+                NSLog(@"-> center of mini map view");
                 return [self _centerOfView:self.miniMapView];
             case UIExplanationMeter:
+                NSLog(@"-> center of meter view");
                 return [self _centerOfView:self.meterView];
             case UIExplanationCommandButton:
+                NSLog(@"-> center of command button");
                 return [self _centerOfView:self.commandButton];
             default:
                 break;
@@ -471,7 +493,23 @@ typedef CGPoint (^LocateBlock)();
 
 - (CGPoint)_centerOfView:(UIView *)view
 {
-    return [self.view convertPoint:CGRectGetMid(view.frame) fromView:view];
+    CGPoint subviewMidPoint;
+    if ( view == self.spellBarView )
+        subviewMidPoint = [self.spellBarView _explanationSpellCenter];
+    else
+        subviewMidPoint = CGRectGetMid(view.frame);
+    CGPoint centerPoint;
+    if ( view == self.miniMapView || view == self.meterView )
+        centerPoint = subviewMidPoint;
+    else
+        centerPoint = [self.view convertPoint:subviewMidPoint fromView:view];
+    if ( view == self.commandButton )
+    {
+        centerPoint.x -= 5;
+        centerPoint.y -= 20;
+    }
+    NSLog(@"the center of %@: (%@) is %@",view,PointString(subviewMidPoint),PointString(centerPoint));
+    return centerPoint;
 }
 
 - (CGPoint)_absoluteBottomLeft

@@ -45,6 +45,8 @@ typedef void (^PlayViewControllerDismissBlock)(PlayViewController *);
 @property IBOutlet SpellBarView *spellBarView;
 @property SpeechBubbleViewController *currentSpeechBubble;
 @property IBOutlet UIView *advisorGuideView;
+@property IBOutlet UIView *advisorGuideMask;
+@property IBOutlet UIView *advisorGuideViewTop;
 @property IBOutlet SpellDragView *spellDragView;
 @property IBOutlet MeterView *meterView;
 @property TouchDemoView *touchDemoView;

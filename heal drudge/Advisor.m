@@ -155,18 +155,18 @@
         return;
     }
     else if ( self.currentExplanationState == UIExplanationSpellBarDidCastCastTimeSpell )
-    {
-        NSLog(@"UIExplanationCastBar");
-        SpeechBubbleViewController *vc = [self _castBar];
-        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
-            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
-            return YES;
-        };
-        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCastBar),vc); });
-        self.currentExplanationState = UIExplanationCastBar;
-        return;
-    }
-    else if ( self.currentExplanationState == UIExplanationCastBar )
+//    {
+//        NSLog(@"UIExplanationCastBar");
+//        SpeechBubbleViewController *vc = [self _castBar];
+//        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
+//            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
+//            return YES;
+//        };
+//        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCastBar),vc); });
+//        self.currentExplanationState = UIExplanationCastBar;
+//        return;
+//    }
+//    else if ( self.currentExplanationState == UIExplanationCastBar )
     {
         NSLog(@"UIExplanationMiniMap");
         SpeechBubbleViewController *vc = [self _miniMap];
@@ -194,16 +194,24 @@
     {
         NSLog(@"UIExplanationCommandButton");
         SpeechBubbleViewController *vc = [self _commandButton];
+        vc.shouldDismissHandler = ^(SpeechBubbleViewController *vc){
+            dispatch_async(dispatch_get_main_queue(), ^{[self _nextUIExplanation];});
+            return YES;
+        };
         dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCommandButton),vc); });
         self.currentExplanationState = UIExplanationCommandButton;
         return;
     }
     else
     {
-        NSLog(@"***UIExplanationStateNone***");
+        NSLog(@"UIExplanationEnd");
         self.currentExplanationState = UIExplanationStateNone;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.callback(@(UIExplanationEnd),nil);
+        });
         self.isExplainingUI = NO;
         self.didExplainUI = YES;
+        self.mode = NoAdvisor;
     }
 }
 

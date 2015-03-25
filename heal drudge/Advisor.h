@@ -45,7 +45,7 @@ typedef NS_ENUM(NSInteger,AdvisorUIExplanationState)
     UIExplanationMiniMap,
     UIExplanationMeter,
     UIExplanationCommandButton,
-    UIExplanationEnd = UIExplanationMeter
+    UIExplanationEnd
 };
 
 @interface Advisor : NSObject

@@ -71,10 +71,10 @@
             [[UIColor whiteColor] setStroke];
             [touchPath stroke];
             
-            if ( touchingFor < LOL_DURATION )
-            {
-                [@"lol" drawAtPoint:interpolatedLocation withAttributes:nil];
-            }
+//            if ( touchingFor < LOL_DURATION )
+//            {
+//                [@"lol" drawAtPoint:interpolatedLocation withAttributes:nil];
+//            }
         }
     }
 }

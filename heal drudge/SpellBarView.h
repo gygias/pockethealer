@@ -37,5 +37,7 @@ typedef void(^SpellBarViewDragEnded)(Spell *, CGPoint);
 @property (nonatomic,copy) SpellBarViewDragEnded dragEndedHandler;
 
 - (CGRect)rectForSpell:(Spell *)spell;
+- (Spell *)_explanationSpell;
+- (CGPoint)_explanationSpellCenter;
 
 @end

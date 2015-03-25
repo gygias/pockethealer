@@ -20,5 +20,5 @@ NSString * RectString(CGRect rect)
 
 CGPoint CGRectGetMid(CGRect rect)
 {
-    return CGPointMake( CGRectGetMidX(rect), CGRectGetMidY(rect) );
+    return CGPointMake( rect.origin.x + rect.size.width / 2, rect.origin.y + rect.size.height / 2 );
 }

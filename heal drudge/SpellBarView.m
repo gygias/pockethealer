@@ -288,6 +288,31 @@ static NSUInteger const kTimeToMoveOneLengthTenthsOfASecond   = (4);
     return [self _rectForSpell:spell];
 }
 
+- (Spell *)_explanationSpell
+{
+    __block Spell *spell = nil;
+    [self.player.spells enumerateObjectsUsingBlock:^(Spell *obj, NSUInteger idx, BOOL *stop) {
+        if ( [obj.name isEqual:@"Heal"]
+            || ( idx == ( self.player.spells.count - 1 ) ) )
+        {
+            spell = obj;
+            *stop = YES;
+            return;
+        }
+    }];
+    
+    return spell;
+}
+
+- (CGPoint)_explanationSpellCenter
+{
+    Spell *spell = [self _explanationSpell];
+    CGPoint spellOrigin = [self _rectForSpell:spell].origin;
+    CGPoint centerPoint = CGPointMake(spellOrigin.x + CURRENT_SPELL_WIDTH / 2,
+                                      spellOrigin.y + CURRENT_SPELL_HEIGHT / 2);
+    return centerPoint;
+}
+
 - (CGRect)_rectForSpell:(Spell *)spell
 {
     // TODO this is probably not safe, spell order is mutated on the encounter queue, this method called on the main queue
