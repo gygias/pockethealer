@@ -52,12 +52,12 @@
     CGContextSetLineWidth(context, 1);
         
     CGRect healthBorderRect = CGRectMake(rect.origin.x, rect.origin.y + nameSize.height, rect.size.width, rect.size.height - nameSize.height - lineWidth);
-    //CGRect healthRect = CGRectMake(healthBorderRect.origin.x, healthBorderRect.origin.y, healthBorderRect.size.width * healthPercentage, healthBorderRect.size.height);
+    CGRect healthRect = CGRectMake(healthBorderRect.origin.x, healthBorderRect.origin.y, healthBorderRect.size.width * healthPercentage, healthBorderRect.size.height);
     [self drawGradientFromPoint:healthBorderRect.origin
                         toPoint:CGPointMake(healthBorderRect.origin.x + healthBorderRect.size.width, healthBorderRect.origin.y)
                      startColor:[UIColor redColor]
                        endColor:[UIColor darkGrayColor]
-                   clippingPath:CGPathCreateWithRect(healthBorderRect, NULL)];
+                   clippingPath:CGPathCreateWithRect(healthRect, NULL)];
     CGContextSetStrokeColorWithColor(context,
                                    [UIColor grayColor].CGColor);
     CGContextAddRect(context, healthBorderRect);

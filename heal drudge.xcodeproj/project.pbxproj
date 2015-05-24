@@ -96,6 +96,12 @@
 		630B99911A882B3000B186CA /* SpeechBubblePassThroughView.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99901A882B3000B186CA /* SpeechBubblePassThroughView.m */; };
 		631435F81A72E0BA00BDD708 /* NSCollections+Random.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435F71A72E0BA00BDD708 /* NSCollections+Random.m */; };
 		631435FB1A72E94100BDD708 /* Attack.m in Sources */ = {isa = PBXBuildFile; fileRef = 631435FA1A72E94100BDD708 /* Attack.m */; };
+		6318F9D21B128F1B002F9D9B /* AHealSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9D11B128F1B002F9D9B /* AHealSpell.m */; };
+		6318F9D51B128F3C002F9D9B /* AFastHealSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9D41B128F3C002F9D9B /* AFastHealSpell.m */; };
+		6318F9D81B128F50002F9D9B /* AAoeHealSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9D71B128F50002F9D9B /* AAoeHealSpell.m */; };
+		6318F9DB1B128F62002F9D9B /* AMajorCooldownSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9DA1B128F62002F9D9B /* AMajorCooldownSpell.m */; };
+		6318F9DE1B128F74002F9D9B /* AAbsorbSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9DD1B128F74002F9D9B /* AAbsorbSpell.m */; };
+		6318F9E11B128F88002F9D9B /* AHealOverTimeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6318F9E01B128F88002F9D9B /* AHealOverTimeSpell.m */; };
 		632073961A705DF700AA4416 /* LoadFromArmoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */; };
 		632073991A707AF900AA4416 /* Guild.m in Sources */ = {isa = PBXBuildFile; fileRef = 632073981A707AF900AA4416 /* Guild.m */; };
 		6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6320739B1A708E2600AA4416 /* LoadCharacterOptionsViewController.m */; };
@@ -527,6 +533,18 @@
 		631435F71A72E0BA00BDD708 /* NSCollections+Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCollections+Random.m"; sourceTree = "<group>"; };
 		631435F91A72E94100BDD708 /* Attack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attack.h; sourceTree = "<group>"; };
 		631435FA1A72E94100BDD708 /* Attack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attack.m; sourceTree = "<group>"; };
+		6318F9D01B128F1B002F9D9B /* AHealSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHealSpell.h; sourceTree = "<group>"; };
+		6318F9D11B128F1B002F9D9B /* AHealSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHealSpell.m; sourceTree = "<group>"; };
+		6318F9D31B128F3C002F9D9B /* AFastHealSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFastHealSpell.h; sourceTree = "<group>"; };
+		6318F9D41B128F3C002F9D9B /* AFastHealSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFastHealSpell.m; sourceTree = "<group>"; };
+		6318F9D61B128F50002F9D9B /* AAoeHealSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAoeHealSpell.h; sourceTree = "<group>"; };
+		6318F9D71B128F50002F9D9B /* AAoeHealSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAoeHealSpell.m; sourceTree = "<group>"; };
+		6318F9D91B128F62002F9D9B /* AMajorCooldownSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMajorCooldownSpell.h; sourceTree = "<group>"; };
+		6318F9DA1B128F62002F9D9B /* AMajorCooldownSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMajorCooldownSpell.m; sourceTree = "<group>"; };
+		6318F9DC1B128F73002F9D9B /* AAbsorbSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAbsorbSpell.h; sourceTree = "<group>"; };
+		6318F9DD1B128F74002F9D9B /* AAbsorbSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAbsorbSpell.m; sourceTree = "<group>"; };
+		6318F9DF1B128F88002F9D9B /* AHealOverTimeSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHealOverTimeSpell.h; sourceTree = "<group>"; };
+		6318F9E01B128F88002F9D9B /* AHealOverTimeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHealOverTimeSpell.m; sourceTree = "<group>"; };
 		632073941A705DF700AA4416 /* LoadFromArmoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadFromArmoryViewController.h; sourceTree = "<group>"; };
 		632073951A705DF700AA4416 /* LoadFromArmoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadFromArmoryViewController.m; sourceTree = "<group>"; };
 		632073971A707AF900AA4416 /* Guild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Guild.h; sourceTree = "<group>"; };
@@ -1042,7 +1060,27 @@
 		6307ED131ACC86E800BA9ACB /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				6318F9D01B128F1B002F9D9B /* AHealSpell.h */,
+				6318F9D11B128F1B002F9D9B /* AHealSpell.m */,
+				6318F9D31B128F3C002F9D9B /* AFastHealSpell.h */,
+				6318F9D41B128F3C002F9D9B /* AFastHealSpell.m */,
+				6318F9DC1B128F73002F9D9B /* AAbsorbSpell.h */,
+				6318F9DD1B128F74002F9D9B /* AAbsorbSpell.m */,
+				6318F9DF1B128F88002F9D9B /* AHealOverTimeSpell.h */,
+				6318F9E01B128F88002F9D9B /* AHealOverTimeSpell.m */,
+				6318F9D61B128F50002F9D9B /* AAoeHealSpell.h */,
+				6318F9D71B128F50002F9D9B /* AAoeHealSpell.m */,
+				6318F9D91B128F62002F9D9B /* AMajorCooldownSpell.h */,
+				6318F9DA1B128F62002F9D9B /* AMajorCooldownSpell.m */,
+				6318F9CF1B128DE8002F9D9B /* Hipster */,
 				6307ED141ACC870700BA9ACB /* Combat Medic */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
+		6307ED141ACC870700BA9ACB /* Combat Medic */ = {
+			isa = PBXGroup;
+			children = (
 				6307ED151ACC877E00BA9ACB /* AspirinSpell.h */,
 				6307ED161ACC877E00BA9ACB /* AspirinSpell.m */,
 				6307ED181ACC878A00BA9ACB /* MorphineSpell.h */,
@@ -1054,14 +1092,14 @@
 				6307ED241ACC8A1800BA9ACB /* GroupTherapySpell.h */,
 				6307ED251ACC8A1800BA9ACB /* GroupTherapySpell.m */,
 			);
-			name = Generic;
+			name = "Combat Medic";
 			sourceTree = "<group>";
 		};
-		6307ED141ACC870700BA9ACB /* Combat Medic */ = {
+		6318F9CF1B128DE8002F9D9B /* Hipster */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = "Combat Medic";
+			name = Hipster;
 			sourceTree = "<group>";
 		};
 		632073A31A70934700AA4416 /* UI */ = {
@@ -2024,7 +2062,9 @@
 				632074B61A71A19200AA4416 /* HealSpell.m in Sources */,
 				637E8B8B1A9548EF0002C9DC /* AntiMagicShellEffect.m in Sources */,
 				634F490D1A748E1D008761C6 /* EventModifier.m in Sources */,
+				6318F9D81B128F50002F9D9B /* AAoeHealSpell.m in Sources */,
 				63027B5B1A7B28E90068E68A /* AvengingWrathEffect.m in Sources */,
+				6318F9E11B128F88002F9D9B /* AHealOverTimeSpell.m in Sources */,
 				632074A51A7194C000AA4416 /* HolyFireSpell.m in Sources */,
 				6320739C1A708E2600AA4416 /* LoadCharacterOptionsViewController.m in Sources */,
 				63E091C11AB246720042861E /* TouchDemoView.m in Sources */,
@@ -2043,6 +2083,7 @@
 				63027B421A7B0B790068E68A /* HolyShockSpell.m in Sources */,
 				634F48DB1A734B6C008761C6 /* WeakenedSoulEffect.m in Sources */,
 				63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */,
+				6318F9DB1B128F62002F9D9B /* AMajorCooldownSpell.m in Sources */,
 				634F490A1A748CB8008761C6 /* OpenWoundsEffect.m in Sources */,
 				638D90C81A98067A00960869 /* PlayViewController.m in Sources */,
 				637E8B7E1A95468E0002C9DC /* BoneShieldSpell.m in Sources */,
@@ -2079,6 +2120,7 @@
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
 				6307ED261ACC8A1800BA9ACB /* GroupTherapySpell.m in Sources */,
 				63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */,
+				6318F9DE1B128F74002F9D9B /* AAbsorbSpell.m in Sources */,
 				63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */,
 				63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
@@ -2105,6 +2147,7 @@
 				63A37F2B1A75E3CE0036C9D0 /* PainSuppressionEffect.m in Sources */,
 				638D90D31A982B5500960869 /* CommandButton.m in Sources */,
 				63027B251A79E8760068E68A /* ArdentDefenderEffect.m in Sources */,
+				6318F9D51B128F3C002F9D9B /* AFastHealSpell.m in Sources */,
 				635906C81A9A8D1700E56764 /* MeterView.m in Sources */,
 				6378645C1A74D22700D281B7 /* PenanceSpell.m in Sources */,
 				63027B371A7AF1B40068E68A /* Event.m in Sources */,
@@ -2134,6 +2177,7 @@
 				635906BE1A98830900E56764 /* PlayView.m in Sources */,
 				634F49011A74810A008761C6 /* DivineAegisEffect.m in Sources */,
 				63027B1C1A79E5F00068E68A /* JudgementSpell.m in Sources */,
+				6318F9D21B128F1B002F9D9B /* AHealSpell.m in Sources */,
 				63027AE21A799F450068E68A /* CrusaderStrikeSpell.m in Sources */,
 				630B998B1A86CE9D00B186CA /* SpeechBubbleView.m in Sources */,
 				63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */,
