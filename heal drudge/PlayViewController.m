@@ -312,6 +312,8 @@ typedef CGPoint (^LocateBlock)();
             NSLog(@"removing touch view");
             UIView *superview = weakSelf.touchDemoView.superview;
             [weakSelf.touchDemoView removeFromSuperview];
+            weakSelf.spellDragView.touchDemoDrawHandler = NULL;
+            [self.currentSpeechBubble.view removeFromSuperview];
             [superview setNeedsDisplay];
             return;
         }
@@ -508,7 +510,7 @@ typedef CGPoint (^LocateBlock)();
         centerPoint.x -= 5;
         centerPoint.y -= 20;
     }
-    NSLog(@"the center of %@: (%@) is %@",view,PointString(subviewMidPoint),PointString(centerPoint));
+    //NSLog(@"the center of %@: (%@) is %@",view,PointString(subviewMidPoint),PointString(centerPoint));
     return centerPoint;
 }
 

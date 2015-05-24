@@ -100,7 +100,8 @@ const NSString *SpellLevelHigh = @"high";
                 NSUInteger idx = [orderedByNames indexOfObject:spell.name];
                 if ( idx == NSNotFound )
                     [castableSpells addObject:spell];
-                [castableSpells replaceObjectAtIndex:idx withObject:spell];
+                else
+                    [castableSpells replaceObjectAtIndex:idx withObject:spell];
             }
             else
                 [castableSpells addObject:spell];

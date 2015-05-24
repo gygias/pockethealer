@@ -80,6 +80,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "clip"
                   moduleName = "CoreGraphics"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -88,6 +89,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::CanvasRenderingContext2D::clip(WTF::String const&amp;)"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -96,6 +98,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::CanvasRenderingContext2D::clip(WebCore::DOMPath*, WTF::String const&amp;)"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -104,6 +107,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::ImageBuffer::clip(WebCore::GraphicsContext*, WebCore::FloatRect const&amp;) const"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -112,6 +116,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::GraphicsContext::clip(WebCore::Path const&amp;, WebCore::WindRule)"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -120,6 +125,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::GraphicsContext::clip(WebCore::IntRect const&amp;)"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -128,6 +134,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "WebCore::GraphicsContext::clip(WebCore::FloatRect const&amp;)"
                   moduleName = "WebCore"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
                <Location
@@ -136,6 +143,7 @@
                   continueAfterRunningActions = "No"
                   symbolName = "clip"
                   moduleName = "libGLImage.dylib"
+                  usesParentBreakpointCondition = "Yes"
                   offsetFromSymbolStart = "0">
                </Location>
             </Locations>

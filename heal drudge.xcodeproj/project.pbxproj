@@ -81,6 +81,12 @@
 		63027B5D1A7B29C30068E68A /* avenging_wrath_cast.wav in Resources */ = {isa = PBXBuildFile; fileRef = 63027B5C1A7B29C30068E68A /* avenging_wrath_cast.wav */; };
 		63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */; };
 		63027B631A7B31490068E68A /* HandOfSacrificeEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */; };
+		6307ED171ACC877E00BA9ACB /* AspirinSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307ED161ACC877E00BA9ACB /* AspirinSpell.m */; };
+		6307ED1A1ACC878A00BA9ACB /* MorphineSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307ED191ACC878A00BA9ACB /* MorphineSpell.m */; };
+		6307ED1D1ACC885F00BA9ACB /* JuiceCleanseSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307ED1C1ACC885F00BA9ACB /* JuiceCleanseSpell.m */; };
+		6307ED201ACC888100BA9ACB /* AntidepressantSpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307ED1F1ACC888100BA9ACB /* AntidepressantSpell.m */; };
+		6307ED261ACC8A1800BA9ACB /* GroupTherapySpell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6307ED251ACC8A1800BA9ACB /* GroupTherapySpell.m */; };
+		6307ED281ACC8BDB00BA9ACB /* g_heal.png in Resources */ = {isa = PBXBuildFile; fileRef = 6307ED271ACC8BDB00BA9ACB /* g_heal.png */; };
 		630B99801A86C51C00B186CA /* NSDate+Pause.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B997F1A86C51C00B186CA /* NSDate+Pause.m */; };
 		630B99831A86C61C00B186CA /* Advisor.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B99821A86C61C00B186CA /* Advisor.m */; };
 		630B99851A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 630B99841A86C8C500B186CA /* SpeechBubbleImageAndTextView.xib */; };
@@ -493,6 +499,17 @@
 		63027B5F1A7B2DD80068E68A /* HandOfSacrificeSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeSpell.m; sourceTree = "<group>"; };
 		63027B611A7B31490068E68A /* HandOfSacrificeEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HandOfSacrificeEffect.h; sourceTree = "<group>"; };
 		63027B621A7B31490068E68A /* HandOfSacrificeEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HandOfSacrificeEffect.m; sourceTree = "<group>"; };
+		6307ED151ACC877E00BA9ACB /* AspirinSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AspirinSpell.h; sourceTree = "<group>"; };
+		6307ED161ACC877E00BA9ACB /* AspirinSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AspirinSpell.m; sourceTree = "<group>"; };
+		6307ED181ACC878A00BA9ACB /* MorphineSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MorphineSpell.h; sourceTree = "<group>"; };
+		6307ED191ACC878A00BA9ACB /* MorphineSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MorphineSpell.m; sourceTree = "<group>"; };
+		6307ED1B1ACC885F00BA9ACB /* JuiceCleanseSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JuiceCleanseSpell.h; sourceTree = "<group>"; };
+		6307ED1C1ACC885F00BA9ACB /* JuiceCleanseSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JuiceCleanseSpell.m; sourceTree = "<group>"; };
+		6307ED1E1ACC888100BA9ACB /* AntidepressantSpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AntidepressantSpell.h; sourceTree = "<group>"; };
+		6307ED1F1ACC888100BA9ACB /* AntidepressantSpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AntidepressantSpell.m; sourceTree = "<group>"; };
+		6307ED241ACC8A1800BA9ACB /* GroupTherapySpell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupTherapySpell.h; sourceTree = "<group>"; };
+		6307ED251ACC8A1800BA9ACB /* GroupTherapySpell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupTherapySpell.m; sourceTree = "<group>"; };
+		6307ED271ACC8BDB00BA9ACB /* g_heal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = g_heal.png; sourceTree = "<group>"; };
 		630B997E1A86C51C00B186CA /* NSDate+Pause.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Pause.h"; sourceTree = "<group>"; };
 		630B997F1A86C51C00B186CA /* NSDate+Pause.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Pause.m"; sourceTree = "<group>"; };
 		630B99811A86C61C00B186CA /* Advisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advisor.h; sourceTree = "<group>"; };
@@ -1008,6 +1025,45 @@
 			name = Holy;
 			sourceTree = "<group>";
 		};
+		6307ED121ACC86C100BA9ACB /* Warcraft */ = {
+			isa = PBXGroup;
+			children = (
+				6328FB651A732B5B00DF6B50 /* Shaman */,
+				6328FB641A732B5700DF6B50 /* Priest */,
+				637E8B641A8AE9570002C9DC /* Monk */,
+				637E8B5B1A8AE8730002C9DC /* Druid */,
+				637E8B551A8AE7D70002C9DC /* Death Knight */,
+				637E8B4F1A8AE48D0002C9DC /* Warrior */,
+				63027AC91A7985240068E68A /* Paladin */,
+			);
+			name = Warcraft;
+			sourceTree = "<group>";
+		};
+		6307ED131ACC86E800BA9ACB /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				6307ED141ACC870700BA9ACB /* Combat Medic */,
+				6307ED151ACC877E00BA9ACB /* AspirinSpell.h */,
+				6307ED161ACC877E00BA9ACB /* AspirinSpell.m */,
+				6307ED181ACC878A00BA9ACB /* MorphineSpell.h */,
+				6307ED191ACC878A00BA9ACB /* MorphineSpell.m */,
+				6307ED1B1ACC885F00BA9ACB /* JuiceCleanseSpell.h */,
+				6307ED1C1ACC885F00BA9ACB /* JuiceCleanseSpell.m */,
+				6307ED1E1ACC888100BA9ACB /* AntidepressantSpell.h */,
+				6307ED1F1ACC888100BA9ACB /* AntidepressantSpell.m */,
+				6307ED241ACC8A1800BA9ACB /* GroupTherapySpell.h */,
+				6307ED251ACC8A1800BA9ACB /* GroupTherapySpell.m */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
+		6307ED141ACC870700BA9ACB /* Combat Medic */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Combat Medic";
+			sourceTree = "<group>";
+		};
 		632073A31A70934700AA4416 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1041,6 +1097,7 @@
 		632073A71A70959700AA4416 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				6307ED271ACC8BDB00BA9ACB /* g_heal.png */,
 				637E8B9F1A95A1180002C9DC /* mindbender.jpg */,
 				637E8B981A954BE20002C9DC /* anti-magic_shell.jpg */,
 				637E8B991A954BE20002C9DC /* provoke.jpg */,
@@ -1200,6 +1257,8 @@
 		6320749E1A718DEE00AA4416 /* Player Spells & Effects */ = {
 			isa = PBXGroup;
 			children = (
+				6307ED131ACC86E800BA9ACB /* Generic */,
+				6307ED121ACC86C100BA9ACB /* Warcraft */,
 				63027B351A7AF1B40068E68A /* Event.h */,
 				63027B361A7AF1B40068E68A /* Event.m */,
 				634F48DC1A734B89008761C6 /* Effect.h */,
@@ -1217,13 +1276,6 @@
 				63027AB51A7849F60068E68A /* GenericDamageSpell.m */,
 				63027ABB1A786BEA0068E68A /* GenericPhysicalAttackSpell.h */,
 				63027ABC1A786BEA0068E68A /* GenericPhysicalAttackSpell.m */,
-				637E8B641A8AE9570002C9DC /* Monk */,
-				637E8B5B1A8AE8730002C9DC /* Druid */,
-				637E8B551A8AE7D70002C9DC /* Death Knight */,
-				637E8B4F1A8AE48D0002C9DC /* Warrior */,
-				63027AC91A7985240068E68A /* Paladin */,
-				6328FB651A732B5B00DF6B50 /* Shaman */,
-				6328FB641A732B5700DF6B50 /* Priest */,
 			);
 			name = "Player Spells & Effects";
 			sourceTree = "<group>";
@@ -1803,6 +1855,7 @@
 				63A37EF61A75ABE30036C9D0 /* 4.wav in Resources */,
 				632074231A7095B800AA4416 /* shaman.png in Resources */,
 				6320746C1A70E93A00AA4416 /* clarity_of_will.jpg in Resources */,
+				6307ED281ACC8BDB00BA9ACB /* g_heal.png in Resources */,
 				63A37EF41A75ABE30036C9D0 /* 2.wav in Resources */,
 				63027B111A79C5AC0068E68A /* avengers_shield_hit.wav in Resources */,
 				632074221A7095B800AA4416 /* rogue.png in Resources */,
@@ -1995,11 +2048,13 @@
 				637E8B7E1A95468E0002C9DC /* BoneShieldSpell.m in Sources */,
 				634F49071A748A65008761C6 /* BorrowedTimeEffect.m in Sources */,
 				63C5F4061A5243E900B9AE46 /* AppDelegate.m in Sources */,
+				6307ED171ACC877E00BA9ACB /* AspirinSpell.m in Sources */,
 				63C5F4341A524A1A00B9AE46 /* Spell.m in Sources */,
 				637E8B8E1A954AD90002C9DC /* DancingRuneWeaponSpell.m in Sources */,
 				634F48EF1A744472008761C6 /* EvangelismEffect.m in Sources */,
 				632074981A70F20100AA4416 /* DirectoryGuesser.m in Sources */,
 				63027B141A79C68D0068E68A /* LayOnHandsSpell.m in Sources */,
+				6307ED1D1ACC885F00BA9ACB /* JuiceCleanseSpell.m in Sources */,
 				638D90B81A969C7000960869 /* PassThroughView.m in Sources */,
 				637E8B581A8AE7FD0002C9DC /* DarkCommandSpell.m in Sources */,
 				632074C21A71A65B00AA4416 /* Enemy.m in Sources */,
@@ -2022,11 +2077,13 @@
 				63027AF61A79A6060068E68A /* ShieldOfTheRighteousEffect.m in Sources */,
 				63027B451A7B0BEC0068E68A /* LightOfDawnSpell.m in Sources */,
 				632073991A707AF900AA4416 /* Guild.m in Sources */,
+				6307ED261ACC8A1800BA9ACB /* GroupTherapySpell.m in Sources */,
 				63027B191A79C79A0068E68A /* ForbearanceEffect.m in Sources */,
 				63027B3C1A7B0A520068E68A /* HolyLightSpell.m in Sources */,
 				63027B511A7B223E0068E68A /* DevotionAuraEffect.m in Sources */,
 				63027AE71A79A31C0068E68A /* GuardianOfAncientKingsSpell.m in Sources */,
 				63027B601A7B2DD80068E68A /* HandOfSacrificeSpell.m in Sources */,
+				6307ED1A1ACC878A00BA9ACB /* MorphineSpell.m in Sources */,
 				6320739F1A70910B00AA4416 /* State.m in Sources */,
 				638D90C01A97ED0C00960869 /* UIView+SharedDrawing.m in Sources */,
 				63027AEA1A79A3600068E68A /* GuardianOfAncientKingsEffect.m in Sources */,
@@ -2041,6 +2098,7 @@
 				63027AC81A7984440068E68A /* Entity+ProtPaladin.m in Sources */,
 				63C02B251AACEAA900D4A46E /* HowToPlayViewController.m in Sources */,
 				63027B0D1A79C4AD0068E68A /* AvengersShieldSpell.m in Sources */,
+				6307ED201ACC888100BA9ACB /* AntidepressantSpell.m in Sources */,
 				634F48FB1A7480E4008761C6 /* PrayerOfMendingSpell.m in Sources */,
 				63DF544E1AA1A16B0022073E /* PlayViewBase.m in Sources */,
 				632073A61A70954B00AA4416 /* ImageFactory.m in Sources */,

@@ -35,7 +35,7 @@
         {
             self.moveStartDate = nil;
             self.currentPoint = self.movingToPoint;
-            NSLog(@"end move: %@",PointString(self.currentPoint));
+            //NSLog(@"end move: %@",PointString(self.currentPoint));
         }
         else
         {

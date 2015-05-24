@@ -151,7 +151,16 @@
         dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationSpellBarAwaitingCastTimeSpell),vc); });
         self.awaitingCastTimeSpell = YES;
         self.currentExplanationState = UIExplanationSpellBarAwaitingCastTimeSpell;
-        self.advanceExplanationBlock = NULL;
+        
+        NSDate *cheeseDate = [NSDate date];
+        self.advanceExplanationBlock = ^{
+            if ( [[NSDate date] timeIntervalSinceDate:cheeseDate] >= AUTO_ADVANCE_DELAY )
+            {
+                weakSelf.currentExplanationState = UIExplanationSpellBarDidCastCastTimeSpell;
+                return YES;
+            }
+            return NO;
+        };
         return;
     }
     else if ( self.currentExplanationState == UIExplanationSpellBarDidCastCastTimeSpell )
@@ -176,6 +185,7 @@
         };
         dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationMiniMap),vc); });
         self.currentExplanationState = UIExplanationMiniMap;
+        self.advanceExplanationBlock = ^{ return YES; };
         return;
     }
     else if ( self.currentExplanationState == UIExplanationMiniMap )
@@ -188,6 +198,7 @@
         };
         dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationMeter),vc); });
         self.currentExplanationState = UIExplanationMeter;
+        self.advanceExplanationBlock = ^{ return YES; };
         return;
     }
     else if ( self.currentExplanationState == UIExplanationMeter )
@@ -200,15 +211,14 @@
         };
         dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationCommandButton),vc); });
         self.currentExplanationState = UIExplanationCommandButton;
+        self.advanceExplanationBlock = ^{ return YES; };
         return;
     }
     else
     {
         NSLog(@"UIExplanationEnd");
         self.currentExplanationState = UIExplanationStateNone;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.callback(@(UIExplanationEnd),nil);
-        });
+        dispatch_async(dispatch_get_main_queue(), ^{ self.callback(@(UIExplanationEnd),nil); });
         self.isExplainingUI = NO;
         self.didExplainUI = YES;
         self.mode = NoAdvisor;
@@ -228,12 +238,17 @@
             {
                 if ( self.currentExplanationState == UIExplanationStateNone )
                 {
+                    self.lastAdvanceExplanationDate = [NSDate date];
                     self.currentExplanationState = UIExplanationStart;
                     [self _nextUIExplanation];
                     return;
                 }
-                else if ( self.advanceExplanationBlock && self.advanceExplanationBlock() )
+                else if ( self.advanceExplanationBlock && self.advanceExplanationBlock()
+                         && ( [[NSDate date] timeIntervalSinceDate:self.lastAdvanceExplanationDate] >= AUTO_ADVANCE_DELAY ) )
+                {
+                    self.lastAdvanceExplanationDate = [NSDate date];
                     [self _nextUIExplanation];
+                }
             }
             return;
         }
@@ -288,22 +303,22 @@
 {
     if ( self.mode == NoAdvisor )
         return;
-    
-    if ( self.currentExplanationState == UIExplanationSpellBarAwaitingCastTimeSpell )
-    {
-        if ( spell.caster.isPlayingPlayer && spell.castTime.doubleValue > 0 )
-        {
-            NSLog(@"%@ cast-time spell %@",spell.caster,spell);
-            self.awaitingCastTimeSpell = NO;
-            self.currentExplanationState = UIExplanationSpellBarDidCastCastTimeSpell;
-            [self _nextUIExplanation];
-            return;
-        }
-    }
 }
 
 - (void)handleSpell:(Spell *)spell event:(Event *)event modifier:(EventModifier *)modifier
 {
+//    if ( self.currentExplanationState == UIExplanationSpellBarAwaitingCastTimeSpell )
+//    {
+//        if ( spell.caster.isPlayingPlayer && spell.castTime.doubleValue > 0 )
+//        {
+//            NSLog(@"%@ cast-time spell %@",spell.caster,spell);
+//            self.awaitingCastTimeSpell = NO;
+//            self.currentExplanationState = UIExplanationSpellBarDidCastCastTimeSpell;
+//            [self _nextUIExplanation];
+//            return;
+//        }
+//    }
+    
     if ( self.mode == NoAdvisor )
         return;
     if ( self.isExplainingUI )
@@ -383,7 +398,7 @@
 - (SpeechBubbleViewController *)_spellBar
 {
     return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
-                                                                      text:@"This is the spell bar. You can cast spells by touching them. You can also rearrange them by pressing them for 1 second and dragging them elsewhere."];
+                                                                      text:@"This is the spell bar. You can cast spells by touching them. You can also rearrange them by dragging."];
 }
 
 - (SpeechBubbleViewController *)_castBar
@@ -395,7 +410,7 @@
 - (SpeechBubbleViewController *)_miniMap
 {
     return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
-                                                                      text:@"This is the mini map. Your location is indicated by ☺, enemies by ☠, and other raiders by colored dots representing their class. You can move yourself around by touching within the map."];
+                                                                      text:@"This is the mini map. Your location is indicated by ☺, enemies by ☠, and other raiders by class dots."];
 }
 
 - (SpeechBubbleViewController *)_meter
@@ -407,7 +422,7 @@
 - (SpeechBubbleViewController *)_commandButton
 {
     return [SpeechBubbleViewController speechBubbleViewControllerWithImage:[ImageFactory imageForRole:HealerRole]
-                                                                      text:@"Touch the command button to bark at your raid, telling them to stack, spread out, or pop heroism/bloodlust!"];
+                                                                      text:@"Touch the command button to bark at your raid, telling them to stack, spread out, or pop heroism!"];
 }
 
 @end
