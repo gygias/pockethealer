@@ -8,8 +8,26 @@ you can also download your guild's roster from the armory, and play with them. *
 
 **mea culpa** spells and effects are modeled in code, which is pretty boneheaded.
 
+
+**you know you'd rather be playing wow anyway. isn't this a tantalizing icon?**
 ![Alt text](http://www.gygias.com/img/screens/h1.jpg "one")
+
+
+**it works in portrait mode!**
+
 ![Alt text](http://www.gygias.com/img/screens/h2.jpg "two")
+
+
+**and for the first time ever, it works in LANDSCAPE MODE! looks like this raid is going down, archangel go!**
+
 ![Alt text](http://www.gygias.com/img/screens/h3.jpg "three")
+
+
+**that's better.**
+
 ![Alt text](http://www.gygias.com/img/screens/h4.jpg "four")
+
+
+**you don't want to know how much we pay college grads to design these tasteful menus.**
+
 ![Alt text](http://www.gygias.com/img/screens/h5.jpg "five")
