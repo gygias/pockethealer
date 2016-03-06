@@ -19,7 +19,7 @@ you can also download your guild's roster from the armory, and play with them. *
 ![Alt text](http://www.gygias.com/img/screens/h2.jpg "two")
 
 
-**and for the first time ever, it works in LANDSCAPE MODE! looks like this raid is going down, archangel go!**
+**and for the first in the history of history, it works in LANDSCAPE MODE! looks like this raid is going down, archangel go!**
 
 ![Alt text](http://www.gygias.com/img/screens/h3.jpg "three")
 
