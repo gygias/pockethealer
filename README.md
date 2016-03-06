@@ -8,4 +8,6 @@ you can play as disc priest, holy pally, or (for some reason) prot pally. unimpl
 
 you can also download your guild's roster from the armory, and play with them.
 
+spells and effects are modeled in code, which is pretty boneheaded.
+
 ![Alt text](http://www.gygias.com/img/screens/hd1.jpg "screen")
