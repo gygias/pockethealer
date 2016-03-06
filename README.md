@@ -10,6 +10,7 @@ you can also download your guild's roster from the armory, and play with them. *
 
 
 **you know you'd rather be playing wow anyway. isn't this a tantalizing icon?**
+
 ![Alt text](http://www.gygias.com/img/screens/h1.jpg "one")
 
 
