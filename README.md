@@ -1,8 +1,8 @@
 **pocket healer**
 
-pocket healer is a mostly-complete raid healing sim for ios. features include boss ability timers, an interactive encounter space you can tap to move around in, meters, basic commands for the raid (stack/spread/lust etc.), and of course your spells and raid frames.
+pocket healer is a mostly-complete raid healing sim for ios. features include boss ability timers, an interactive encounter space you can tap to move around in (spell range is modeled), meters, basic commands for the raid (stack/spread/lust etc.), and of course your spells and raid frames.
 
-touch and hold a spell to rearrange spells on the bar. tap the meter to switch modes. you can play as disc priest, holy pally, or (cuz i like pallys i guess) prot pally. unimplemented specs merely spam basic attack, healing, and taunt abilities appropriately, with simple ai.
+touch and hold a spell to rearrange the bar. tap the meter to switch modes. you can play as disc priest, holy pally, or (cuz i like pallys i guess) prot pally. unimplemented specs merely spam basic attack, healing, and taunt abilities appropriately, with simple ai.
 
 you can also download your guild's roster from the armory, and play with them. **edit** well, you could last time i was working on this a year or so ago, but apparently they outsourced their web api to a 3rd party since then. i'll fix that at some point.
 
