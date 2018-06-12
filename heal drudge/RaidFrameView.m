@@ -59,6 +59,7 @@ CGSize sRaidFrameSize = {0,0};
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [self _setDefaults];
 }
 
@@ -443,19 +444,19 @@ CGSize sRaidFrameSize = {0,0};
     [self.entity.statusEffects enumerateObjectsUsingBlock:^(Effect *effect, NSUInteger idx, BOOL *stop) {
         //if ( effect.drawsInFrame || ( effect.source == self.player ) )
         {
-            if ( _refreshCachedValues || ! _statusEffectsRects )
+            if ( self->_refreshCachedValues || ! self->_statusEffectsRects )
             {
-                _statusEffectsRects = [NSMutableArray new];
+                self->_statusEffectsRects = [NSMutableArray new];
                 NSUInteger fillIdx = 0;
                 for ( ; fillIdx < idx; fillIdx++ )
-                    _statusEffectsRects[fillIdx] = [NSNull null];
+                    self->_statusEffectsRects[fillIdx] = [NSNull null];
             }
-            if ( idx >= _statusEffectsRects.count || _statusEffectsRects[idx] == [NSNull null] )
-                _statusEffectsRects[idx] = [NSValue valueWithCGRect:CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + idx * STATUS_EFFECT_WIDTH,
+            if ( idx >= self->_statusEffectsRects.count || self->_statusEffectsRects[idx] == [NSNull null] )
+                self->_statusEffectsRects[idx] = [NSValue valueWithCGRect:CGRectMake(rect.origin.x + STATUS_EFFECT_ORIGIN_OFFSET_X + idx * STATUS_EFFECT_WIDTH,
                                                                                rect.origin.y + STATUS_EFFECT_ORIGIN_OFFSET_Y,
                                                                                STATUS_EFFECT_WIDTH,
                                                                                STATUS_EFFECT_HEIGHT)];
-            CGRect thisEffectRect = ((NSValue *)_statusEffectsRects[idx]).CGRectValue;
+            CGRect thisEffectRect = ((NSValue *)self->_statusEffectsRects[idx]).CGRectValue;
             [effect.image drawInRect:thisEffectRect blendMode:kCGBlendModeNormal alpha:1.0];
             
             if ( effect.duration )
@@ -465,12 +466,12 @@ CGSize sRaidFrameSize = {0,0};
             }
             if ( effect.currentStacks.integerValue > 1 )
             {
-                if ( ! _stacksTextAttributeDict )
-                    _stacksTextAttributeDict = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
+                if ( ! self->_stacksTextAttributeDict )
+                    self->_stacksTextAttributeDict = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
                                                     NSBackgroundColorAttributeName : [UIColor blackColor],
                                                     NSFontAttributeName : [UIFont systemFontOfSize:5]
                                                     };// TODO not scalable
-                [[effect.currentStacks stringValue] drawInRect:thisEffectRect withAttributes:_stacksTextAttributeDict];
+                [[effect.currentStacks stringValue] drawInRect:thisEffectRect withAttributes:self->_stacksTextAttributeDict];
             }
             
             if ( --maxVisibleStatusEffects == 0 )

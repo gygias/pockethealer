@@ -64,7 +64,7 @@ typedef NS_ENUM(NSInteger,AdvisorUIExplanationState)
 @property BOOL didExplainUI;
 @property BOOL isExplainingUI;
 @property BOOL awaitingCastTimeSpell;
-typedef BOOL (^AdvanceExplanationBlock)();
+typedef BOOL (^AdvanceExplanationBlock)(void);
 #define AUTO_ADVANCE_DELAY 6.0
 @property (copy) AdvanceExplanationBlock advanceExplanationBlock;
 @property (copy) NSDate *lastAdvanceExplanationDate;

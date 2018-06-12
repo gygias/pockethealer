@@ -15,7 +15,7 @@
 + (SpeechBubbleViewController *)_speechBubbleViewControllerWithNib:(NSString *)nibName
 {
     __block SpeechBubbleViewController *vc = nil;
-    void (^stuffBlock)() = ^{
+    void (^stuffBlock)(void) = ^{
         vc = [[SpeechBubbleViewController alloc] initWithNibName:nibName bundle:nil];
         [vc loadView];
     };

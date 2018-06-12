@@ -39,7 +39,7 @@
     [(NSMutableArray *)_alertTexts addObject:alertText];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(alertText.duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [(NSMutableArray *)_alertTexts removeObject:alertText];
+        [(NSMutableArray *)self->_alertTexts removeObject:alertText];
     });
 }
 

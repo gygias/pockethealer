@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, EffectType) {
     BeneficialOrDetrimentalEffect
 };
 
-typedef void(^EffectTimeoutBlock)();
+typedef void(^EffectTimeoutBlock)(void);
 
 @interface Effect : NSObject
 

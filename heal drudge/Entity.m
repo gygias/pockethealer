@@ -369,10 +369,10 @@
     statusEffect.source = sourceSpell.caster;
     __unsafe_unretained typeof(statusEffect) weakStatusEffect = statusEffect;
     statusEffect.timeoutHandler = ^{
-        if ( [_statusEffects containsObject:weakStatusEffect] )
+        if ( [self->_statusEffects containsObject:weakStatusEffect] )
         {
             PHLog(self,@"%@'s %@ has timed out",self,weakStatusEffect);
-            [(NSMutableArray *)_statusEffects removeObject:weakStatusEffect];
+            [(NSMutableArray *)self->_statusEffects removeObject:weakStatusEffect];
         }
         else
             PHLog(self,@"something else seems to have removed %@'s %@",self,weakStatusEffect);

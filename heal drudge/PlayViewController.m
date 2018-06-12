@@ -25,7 +25,7 @@
 + (PlayViewController *)playViewController
 {
     __block PlayViewController *vc = nil;
-    void (^stuffBlock)() = ^{
+    void (^stuffBlock)(void) = ^{
         vc = [[PlayViewController alloc] initWithNibName:@"PlayView" bundle:nil];
         [vc loadView];
     };
@@ -66,7 +66,7 @@
     speechBubble.bubbleOrigin = origin;
 }
 
-typedef CGPoint (^LocateBlock)();
+typedef CGPoint (^LocateBlock)(void);
 - (void)_presentSpeechBubble:(SpeechBubbleViewController *)speechBubble locateBlock:(LocateBlock)locateBlock
 {
     if ( self.currentSpeechBubble )

@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger,MeterMode)
     DamageTakenMode
 };
 
-typedef void (^MeterViewTouchedBlock)();
+typedef void (^MeterViewTouchedBlock)(void);
 
 @interface MeterView : UIView
 
