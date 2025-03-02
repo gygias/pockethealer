@@ -1,6 +1,6 @@
 //
 //  WoWAPIRequest.m
-//  heal drudge
+//  pockethealer
 //
 //  Created by david on 1/21/15.
 //  Copyright (c) 2015 Combobulated Software. All rights reserved.
@@ -178,7 +178,7 @@
     return nil;
 }
 
-/*2015-01-21 16:23:03.721 heal drudge[14236:1689842] {
+/*2015-01-21 16:23:03.721 pockethealer[14236:1689842] {
  achievementPoints = 13185;
  battlegroup = Ruin;
  calcClass = X;
@@ -1061,8 +1061,8 @@
  thumbnail = "zuljin/47/156066863-avatar.jpg";
  totalHonorableKills = 12519;
  }
- 2015-01-21 16:23:03.733 heal drudge[14236:1689842] this spec appears to be Iliss's OS (1): Holy
- 2015-01-21 16:23:04.322 heal drudge[14236:1689842] 1: <UIImage: 0x7f9552499260>*/
+ 2015-01-21 16:23:03.733 pockethealer[14236:1689842] this spec appears to be Iliss's OS (1): Holy
+ 2015-01-21 16:23:04.322 pockethealer[14236:1689842] 1: <UIImage: 0x7f9552499260>*/
 
 const NSString *WoWAPIStaminaKey = @"sta";
 const NSString *WoWAPIPowerKey = @"power";
