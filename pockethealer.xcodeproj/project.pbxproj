@@ -370,7 +370,7 @@
 		63C5F40C1A5243E900B9AE46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40A1A5243E900B9AE46 /* Main.storyboard */; };
 		63C5F40E1A5243E900B9AE46 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40D1A5243E900B9AE46 /* Images.xcassets */; };
 		63C5F4111A5243E900B9AE46 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C5F40F1A5243E900B9AE46 /* LaunchScreen.xib */; };
-		63C5F41D1A5243EA00B9AE46 /* heal_drudgeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F41C1A5243EA00B9AE46 /* heal_drudgeTests.m */; };
+		63C5F41D1A5243EA00B9AE46 /* pockethealerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F41C1A5243EA00B9AE46 /* pockethealerTests.m */; };
 		63C5F4281A52464300B9AE46 /* CreateHealerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F4271A52464300B9AE46 /* CreateHealerViewController.m */; };
 		63C5F42B1A5247C400B9AE46 /* Healer.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F42A1A5247C400B9AE46 /* Healer.m */; };
 		63C5F42E1A52481400B9AE46 /* HDClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C5F42D1A52481400B9AE46 /* HDClass.m */; };
@@ -909,7 +909,7 @@
 		63C5F4101A5243E900B9AE46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		63C5F4161A5243EA00B9AE46 /* pockethealerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pockethealerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F41B1A5243EA00B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		63C5F41C1A5243EA00B9AE46 /* heal_drudgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = heal_drudgeTests.m; sourceTree = "<group>"; };
+		63C5F41C1A5243EA00B9AE46 /* pockethealerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pockethealerTests.m; sourceTree = "<group>"; };
 		63C5F4261A52464300B9AE46 /* CreateHealerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateHealerViewController.h; sourceTree = "<group>"; };
 		63C5F4271A52464300B9AE46 /* CreateHealerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateHealerViewController.m; sourceTree = "<group>"; };
 		63C5F4291A5247C400B9AE46 /* Healer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Healer.h; sourceTree = "<group>"; };
@@ -1558,7 +1558,7 @@
 			children = (
 				63C5F3FF1A5243E900B9AE46 /* pockethealer */,
 				63E091BB1AB242740042861E /* Frameworks */,
-				63C5F4191A5243EA00B9AE46 /* heal drudgeTests */,
+				63C5F4191A5243EA00B9AE46 /* pockethealerTests */,
 				63C5F3FE1A5243E900B9AE46 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1651,13 +1651,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		63C5F4191A5243EA00B9AE46 /* heal drudgeTests */ = {
+		63C5F4191A5243EA00B9AE46 /* pockethealerTests */ = {
 			isa = PBXGroup;
 			children = (
-				63C5F41C1A5243EA00B9AE46 /* heal_drudgeTests.m */,
+				63C5F41C1A5243EA00B9AE46 /* pockethealerTests.m */,
 				63C5F41A1A5243EA00B9AE46 /* Supporting Files */,
 			);
-			path = "heal drudgeTests";
+			path = pockethealerTests;
 			sourceTree = "<group>";
 		};
 		63C5F41A1A5243EA00B9AE46 /* Supporting Files */ = {
@@ -2212,7 +2212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63C5F41D1A5243EA00B9AE46 /* heal_drudgeTests.m in Sources */,
+				63C5F41D1A5243EA00B9AE46 /* pockethealerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
