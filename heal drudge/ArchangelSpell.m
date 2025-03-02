@@ -61,6 +61,7 @@
         [NSException raise:@"ArchangelWithoutEvangelism" format:@"%@ only has %@!",self.caster,evangelism];
     
     ArchangelEffect *aa = [ArchangelEffect new];
+    aa.owner = self.caster;
     [aa addStacks:evangelism.currentStacks.unsignedIntegerValue - 1];
     [self.caster addStatusEffect:aa source:self];
     
