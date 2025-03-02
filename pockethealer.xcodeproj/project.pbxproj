@@ -907,7 +907,7 @@
 		63C5F40B1A5243E900B9AE46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		63C5F40D1A5243E900B9AE46 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		63C5F4101A5243E900B9AE46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		63C5F4161A5243EA00B9AE46 /* heal drudgeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "heal drudgeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		63C5F4161A5243EA00B9AE46 /* pockethealerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pockethealerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C5F41B1A5243EA00B9AE46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C5F41C1A5243EA00B9AE46 /* heal_drudgeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = heal_drudgeTests.m; sourceTree = "<group>"; };
 		63C5F4261A52464300B9AE46 /* CreateHealerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateHealerViewController.h; sourceTree = "<group>"; };
@@ -1556,7 +1556,7 @@
 		63C5F3F41A5243E900B9AE46 = {
 			isa = PBXGroup;
 			children = (
-				63C5F3FF1A5243E900B9AE46 /* heal drudge */,
+				63C5F3FF1A5243E900B9AE46 /* pockethealer */,
 				63E091BB1AB242740042861E /* Frameworks */,
 				63C5F4191A5243EA00B9AE46 /* heal drudgeTests */,
 				63C5F3FE1A5243E900B9AE46 /* Products */,
@@ -1567,12 +1567,12 @@
 			isa = PBXGroup;
 			children = (
 				63C5F3FD1A5243E900B9AE46 /* PocketHealer.app */,
-				63C5F4161A5243EA00B9AE46 /* heal drudgeTests.xctest */,
+				63C5F4161A5243EA00B9AE46 /* pockethealerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		63C5F3FF1A5243E900B9AE46 /* heal drudge */ = {
+		63C5F3FF1A5243E900B9AE46 /* pockethealer */ = {
 			isa = PBXGroup;
 			children = (
 				637F42741A84419600B27671 /* PocketHealer.h */,
@@ -1639,7 +1639,7 @@
 				635906C31A9A87B500E56764 /* CombatLog.h */,
 				635906C41A9A87B500E56764 /* CombatLog.m */,
 			);
-			path = "heal drudge";
+			path = pockethealer;
 			sourceTree = "<group>";
 		};
 		63C5F4001A5243E900B9AE46 /* Supporting Files */ = {
@@ -1751,9 +1751,9 @@
 			productReference = 63C5F3FD1A5243E900B9AE46 /* PocketHealer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		63C5F4151A5243EA00B9AE46 /* heal drudgeTests */ = {
+		63C5F4151A5243EA00B9AE46 /* pockethealerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 63C5F4231A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "heal drudgeTests" */;
+			buildConfigurationList = 63C5F4231A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "pockethealerTests" */;
 			buildPhases = (
 				63C5F4121A5243EA00B9AE46 /* Sources */,
 				63C5F4131A5243EA00B9AE46 /* Frameworks */,
@@ -1764,9 +1764,9 @@
 			dependencies = (
 				63C5F4181A5243EA00B9AE46 /* PBXTargetDependency */,
 			);
-			name = "heal drudgeTests";
+			name = pockethealerTests;
 			productName = "heal drudgeTests";
-			productReference = 63C5F4161A5243EA00B9AE46 /* heal drudgeTests.xctest */;
+			productReference = 63C5F4161A5243EA00B9AE46 /* pockethealerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1790,7 +1790,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 63C5F3F81A5243E900B9AE46 /* Build configuration list for PBXProject "heal drudge" */;
+			buildConfigurationList = 63C5F3F81A5243E900B9AE46 /* Build configuration list for PBXProject "pockethealer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1804,7 +1804,7 @@
 			projectRoot = "";
 			targets = (
 				63C5F3FC1A5243E900B9AE46 /* PocketHealer */,
-				63C5F4151A5243EA00B9AE46 /* heal drudgeTests */,
+				63C5F4151A5243EA00B9AE46 /* pockethealerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2360,7 +2360,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = B7CLPV6KGB;
-				INFOPLIST_FILE = "heal drudge/Info.plist";
+				INFOPLIST_FILE = pockethealer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2379,7 +2379,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = B7CLPV6KGB;
-				INFOPLIST_FILE = "heal drudge/Info.plist";
+				INFOPLIST_FILE = pockethealer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2412,7 +2412,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.combobulated.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/heal drudge.app/heal drudge";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pockethealer.app/pockethealer";
 			};
 			name = Debug;
 		};
@@ -2433,14 +2433,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.combobulated.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/heal drudge.app/heal drudge";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pockethealer.app/pockethealer";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		63C5F3F81A5243E900B9AE46 /* Build configuration list for PBXProject "heal drudge" */ = {
+		63C5F3F81A5243E900B9AE46 /* Build configuration list for PBXProject "pockethealer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63C5F41E1A5243EA00B9AE46 /* Debug */,
@@ -2458,7 +2458,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		63C5F4231A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "heal drudgeTests" */ = {
+		63C5F4231A5243EA00B9AE46 /* Build configuration list for PBXNativeTarget "pockethealerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				63C5F4241A5243EA00B9AE46 /* Debug */,
